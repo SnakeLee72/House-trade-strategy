@@ -25,5 +25,6 @@
 
 ### 線上預覽與使用方式
 
-- **本地預覽**：直接以瀏覽器開啟 `index.html` 或 `「談判大叔」陳侯勳｜買房投資與談判理論全集.html`。
-- **GitHub Pages**：至 Repository「Settings」>「Pages」，Source 選擇 `Deploy from a branch`（`main` / root），即可透過 GitHub Pages 建立線上靜態網站。
+- 🌐 **線上瀏覽網址**：[https://snakelee72.github.io/House-trade-strategy/](https://snakelee72.github.io/House-trade-strategy/)
+- 💻 **本地預覽**：直接以瀏覽器開啟 `index.html` 或 `「談判大叔」陳侯勳｜買房投資與談判理論全集.html`。
+
