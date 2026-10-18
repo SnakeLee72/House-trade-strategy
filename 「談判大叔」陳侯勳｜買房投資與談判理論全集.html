@@ -346,16 +346,28 @@
         </div>
 
         <!-- Active Property Metadata Editor -->
-        <div class="mt-5 p-4 rounded-xl bg-slate-900/90 border border-slate-800">
-          <div class="flex items-center justify-between cursor-pointer" id="prop-form-toggle">
-            <div class="flex items-center gap-2 font-bold text-sm text-slate-200">
-              <span>📝 物件基本情報設定</span>
-              <span class="text-xs font-normal text-slate-400">（修改即時同步計算評分與建議出價）</span>
+        <div class="mt-5 p-5 rounded-xl bg-slate-900/90 border border-slate-800 shadow-lg">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="text-base">📝</span>
+              <div class="font-bold text-sm text-slate-200">
+                <span>物件基本情報編輯：</span>
+                <span id="prop-editing-title" class="text-amber-400 font-extrabold">--</span>
+              </div>
+              <span class="text-[11px] text-slate-400">（數值隨打隨存，即時更新評分）</span>
             </div>
-            <span id="prop-form-arrow" class="text-slate-400 text-xs transition">▼</span>
+
+            <div class="flex items-center gap-2">
+              <button type="button" id="btn-save-prop-explicit" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs flex items-center gap-1 shadow transition">
+                <span>💾</span> 儲存修改
+              </button>
+              <button type="button" id="btn-del-active-prop" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-rose-900/70 text-rose-300 border border-slate-700 hover:border-rose-700 text-xs flex items-center gap-1 transition">
+                <span>🗑️</span> 刪除此物件
+              </button>
+            </div>
           </div>
 
-          <div id="prop-form-content" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-4 pt-3 border-t border-slate-800/80 text-xs">
+          <div id="prop-form-content" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 mt-4 text-xs">
             <div>
               <label for="prop-input-name" class="block font-medium text-slate-300 mb-1">物件名稱 / 社區名</label>
               <input id="prop-input-name" type="text" placeholder="例：江子翠捷運水岸高樓兩房" class="w-full px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-white focus:outline-none focus:border-amber-400" />
@@ -1024,6 +1036,49 @@
       };
     }
 
+    function deletePropertyById(targetId) {
+      const targetProp = userProperties.find(p => p.id === targetId);
+      const name = targetProp ? targetProp.name : '此物件';
+      if (confirm(`確定要刪除「${name}」嗎？（此動作無法復原）`)) {
+        userProperties = userProperties.filter(p => p.id !== targetId);
+        if (userProperties.length === 0) {
+          userProperties = [{
+            id: 'prop_' + Date.now(),
+            name: '我的看屋物件 1',
+            district: '',
+            mrt: '',
+            askingPrice: '',
+            regPrice: '',
+            size: '',
+            households: '',
+            notes: '',
+            knives: [1, 2, 3]
+          }];
+        }
+        activePropertyId = userProperties[0].id;
+        saveUserProperties();
+        renderEvaluationView();
+        showToast(`已成功刪除「${name}」`);
+      }
+    }
+
+    function editPropertyById(targetId) {
+      activePropertyId = targetId;
+      renderEvaluationView();
+      const formCard = document.getElementById('prop-form-content');
+      if (formCard) {
+        formCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const nameInput = document.getElementById('prop-input-name');
+        if (nameInput) {
+          nameInput.focus();
+          nameInput.classList.add('ring-2', 'ring-amber-400');
+          setTimeout(() => nameInput.classList.remove('ring-2', 'ring-amber-400'), 1500);
+        }
+      }
+      const prop = getActiveProperty();
+      showToast(`已切換並開啟「${prop.name || '此物件'}」進行編輯`);
+    }
+
     // Render Full Evaluation View
     function renderEvaluationView() {
       const activeProp = getActiveProperty();
@@ -1037,9 +1092,8 @@
       userProperties.forEach(p => {
         const isActive = p.id === activePropertyId;
         const pEval = evaluateProperty(p);
-        const tabBtn = document.createElement('button');
-        tabBtn.type = 'button';
-        tabBtn.className = `px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition flex items-center gap-1.5 border ${
+        const tabBtn = document.createElement('div');
+        tabBtn.className = `px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition flex items-center gap-1.5 border cursor-pointer select-none ${
           isActive
             ? 'bg-amber-500 text-slate-950 border-amber-400 font-bold shadow-md shadow-amber-500/20'
             : 'bg-slate-900 text-slate-300 border-slate-700 hover:bg-slate-800'
@@ -1047,8 +1101,14 @@
         tabBtn.innerHTML = `
           <span>${p.name || '未命名物件'}</span>
           <span class="text-[10px] px-1.5 py-0.2 rounded ${isActive ? 'bg-slate-900 text-amber-300' : 'bg-slate-800 text-slate-400'}">${pEval.count}/9刀</span>
+          <button type="button" class="btn-tab-close ml-1 px-1 rounded text-[11px] font-bold ${isActive ? 'hover:bg-amber-600 text-slate-950' : 'text-slate-400 hover:text-rose-400'}" title="刪除此物件" data-id="${p.id}">✕</button>
         `;
-        tabBtn.addEventListener('click', () => {
+        tabBtn.addEventListener('click', (e) => {
+          if (e.target.classList.contains('btn-tab-close')) {
+            e.stopPropagation();
+            deletePropertyById(p.id);
+            return;
+          }
           activePropertyId = p.id;
           renderEvaluationView();
         });
@@ -1058,6 +1118,8 @@
       document.getElementById('prop-count-badge').textContent = userProperties.length;
 
       // 2. Active Property Inputs Sync
+      const titleEl = document.getElementById('prop-editing-title');
+      if (titleEl) titleEl.textContent = activeProp.name || '未命名物件';
       document.getElementById('prop-input-name').value = activeProp.name || '';
       document.getElementById('prop-input-district').value = activeProp.district || '';
       document.getElementById('prop-input-mrt').value = activeProp.mrt || '';
@@ -1213,22 +1275,44 @@
           </td>
           <td class="p-3 align-middle text-slate-300 text-[11px]">${shortRisk}</td>
           <td class="p-3 align-middle text-right">
-            ${
-              isCurrent
-                ? '<span class="px-2.5 py-1 rounded bg-amber-500/20 text-amber-300 font-bold text-[11px]">評估中</span>'
-                : `<button type="button" class="btn-switch-prop px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] border border-slate-700 transition" data-id="${p.id}">切換評估</button>`
-            }
+            <div class="flex items-center justify-end gap-1.5">
+              <button type="button" class="btn-table-edit px-2 py-1 rounded bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 text-[11px] font-semibold transition" data-id="${p.id}" title="編輯此物件">
+                ✏️ 編輯
+              </button>
+              <button type="button" class="btn-table-del px-2 py-1 rounded bg-slate-800 hover:bg-rose-900/60 text-rose-300 border border-slate-700 hover:border-rose-700 text-[11px] font-semibold transition" data-id="${p.id}" title="刪除此物件">
+                🗑️ 刪除
+              </button>
+              ${
+                isCurrent
+                  ? '<span class="px-2 py-1 rounded bg-amber-500 text-slate-950 font-bold text-[11px]">評估中</span>'
+                  : `<button type="button" class="btn-switch-prop px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] border border-slate-700 transition" data-id="${p.id}">切換</button>`
+              }
+            </div>
           </td>
         `;
         compBody.appendChild(tr);
       });
 
-      // Bind switch buttons
+      // Bind actions in comparison table
       document.querySelectorAll('.btn-switch-prop').forEach(btn => {
         btn.addEventListener('click', (e) => {
           const targetId = e.currentTarget.getAttribute('data-id');
           activePropertyId = targetId;
           renderEvaluationView();
+        });
+      });
+
+      document.querySelectorAll('.btn-table-edit').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const targetId = e.currentTarget.getAttribute('data-id');
+          editPropertyById(targetId);
+        });
+      });
+
+      document.querySelectorAll('.btn-table-del').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const targetId = e.currentTarget.getAttribute('data-id');
+          deletePropertyById(targetId);
         });
       });
     }
@@ -1520,14 +1604,26 @@ ${weaponsText}
 
       const evalResult = evaluateProperty(prop);
 
-      statusEl.className = 'p-3.5 rounded-xl text-xs bg-emerald-500/20 text-emerald-200 border border-emerald-500/40 flex flex-col sm:flex-row sm:items-center justify-between gap-2';
+      statusEl.className = 'p-3.5 rounded-xl text-xs bg-emerald-500/20 text-emerald-200 border border-emerald-500/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3';
       statusEl.innerHTML = `
         <div class="flex items-center gap-2">
           <span class="text-base">🎉</span>
           <span>已自動完成<strong>「${prop.name}」</strong>分析！獲得 <strong>${evalResult.score} 分</strong>（通過 <strong>${evalResult.count} / 9 把刀</strong>，評級：${evalResult.tier}）。</span>
         </div>
-        <span class="text-[11px] text-emerald-300 font-semibold underline cursor-pointer" onclick="document.getElementById('prop-tabs-container').scrollIntoView({behavior:'smooth'})">查看下方詳細診斷與建議出價 ↓</span>
+        <div class="flex items-center gap-2 shrink-0">
+          <button type="button" class="btn-auto-edit-prop px-2.5 py-1 rounded bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow transition">
+            ✏️ 編輯數據
+          </button>
+          <button type="button" class="btn-auto-del-prop px-2.5 py-1 rounded bg-slate-800 hover:bg-rose-900/60 text-rose-300 border border-slate-700 hover:border-rose-700 text-xs transition">
+            🗑️ 刪除此物件
+          </button>
+        </div>
       `;
+
+      const editBtn = statusEl.querySelector('.btn-auto-edit-prop');
+      if (editBtn) editBtn.addEventListener('click', () => editPropertyById(prop.id));
+      const delBtn = statusEl.querySelector('.btn-auto-del-prop');
+      if (delBtn) delBtn.addEventListener('click', () => deletePropertyById(prop.id));
       showToast(`已成功自動分析「${prop.name}」！獲得 ${evalResult.score} 分`);
     }
 
@@ -1905,19 +2001,24 @@ ${weaponsText}
       });
 
       document.getElementById('btn-del-prop').addEventListener('click', () => {
-        if (userProperties.length <= 1) {
-          showToast("至少需保留一個看屋物件！");
-          return;
-        }
-        const cur = getActiveProperty();
-        if (confirm(`確定要刪除「${cur.name || '此物件'}」嗎？`)) {
-          userProperties = userProperties.filter(p => p.id !== activePropertyId);
-          activePropertyId = userProperties[0].id;
+        deletePropertyById(activePropertyId);
+      });
+
+      const delActiveBtn = document.getElementById('btn-del-active-prop');
+      if (delActiveBtn) {
+        delActiveBtn.addEventListener('click', () => {
+          deletePropertyById(activePropertyId);
+        });
+      }
+
+      const saveExplicitBtn = document.getElementById('btn-save-prop-explicit');
+      if (saveExplicitBtn) {
+        saveExplicitBtn.addEventListener('click', () => {
           saveUserProperties();
           renderEvaluationView();
-          showToast("已刪除該物件");
-        }
-      });
+          showToast("✅ 已成功儲存物件資料與更新評分！");
+        });
+      }
 
       document.getElementById('btn-sample-prop').addEventListener('click', () => {
         if (confirm("是否重新載入大叔實戰精選 3 筆看屋範例？（自訂物件將被重設）")) {
