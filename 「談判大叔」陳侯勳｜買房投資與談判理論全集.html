@@ -95,7 +95,7 @@
           1. 總覽與宏觀時機
         </button>
         <button type="button" data-tab="nine-knives" class="tab-btn tab-inactive px-4 py-2.5 rounded-xl text-sm transition">
-          2. 買房九把刀（互動檢核）
+          2. 買房九把刀（看屋評分與決策）
         </button>
         <button type="button" data-tab="money-machine" class="tab-btn tab-inactive px-4 py-2.5 rounded-xl text-sm transition">
           3. 房貸印鈔機與試算器
@@ -251,36 +251,246 @@
       </div>
     </section>
 
-    <!-- TAB 2: NINE KNIVES INTERACTIVE CHECKLIST -->
+    <!-- TAB 2: NINE KNIVES INTERACTIVE EVALUATION & DECISION SYSTEM -->
     <section id="tab-nine-knives" class="tab-panel hidden space-y-6">
+      <!-- Top Property Selector & Action Bar -->
       <div class="glass-card rounded-2xl p-6">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-800 pb-5">
           <div>
-            <h2 class="text-xl font-bold text-white">「買賣房九把刀」選屋框架與互動檢核表</h2>
-            <p class="text-sm text-slate-300 mt-1">
-              大叔數十年買房出手前必跑的 9 道護城河。請勾選你正在評估的物件條件，即時檢測是否符合「只漲難跌」標準（來源：<a href="https://shaprice.ai/posts/skill02" target="_blank" rel="noopener noreferrer" class="text-amber-400 underline">買房九把刀官方文章</a>、<a href="http://www.youtube.com/watch?v=h5dDU_6GLF4" target="_blank" rel="noopener noreferrer" class="text-amber-400 underline">查理的創業化合物一訪</a>）。
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-xs font-semibold">實戰看屋決策工具</span>
+              <span class="text-slate-500 text-xs">•</span>
+              <span class="text-slate-400 text-xs">資料自動儲存於本機</span>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-bold text-white mt-1">「買賣房九把刀」實戰看屋物件評分與決策系統</h2>
+            <p class="text-xs sm:text-sm text-slate-300 mt-1">
+              專為正在看房的你設計。可建立多個候選物件、逐一檢驗 9 道護城河、自動推算大叔四階底價、產出專屬砍價彈藥，並進行多物件橫向比對。
             </p>
           </div>
-          <div class="flex items-center gap-4 shrink-0 bg-slate-900/90 px-4 py-3 rounded-xl border border-slate-700">
-            <div>
-              <div class="text-xs text-slate-400">目前通過刀數</div>
-              <div id="knife-score-text" class="text-2xl font-bold text-amber-400">0 / 9 把刀</div>
-            </div>
-            <button type="button" id="reset-knives-btn" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 border border-slate-600 transition">
-              重置勾選
+
+          <div class="flex flex-wrap items-center gap-2 shrink-0">
+            <button type="button" id="btn-add-prop" class="px-3 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 shadow-lg shadow-amber-500/20 transition">
+              <span>➕</span> 新增看屋物件
+            </button>
+            <button type="button" id="btn-clone-prop" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs border border-slate-700 transition" title="複製目前物件">
+              <span>📑</span> 複製
+            </button>
+            <button type="button" id="btn-del-prop" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-rose-900/60 text-rose-300 text-xs border border-slate-700 hover:border-rose-700 transition" title="刪除目前物件">
+              <span>🗑️</span> 刪除
+            </button>
+            <button type="button" id="btn-sample-prop" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs border border-slate-700 transition" title="重新載入大叔實戰精選範例">
+              <span>🔄</span> 重置範例
+            </button>
+            <button type="button" id="btn-copy-line" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs flex items-center gap-1.5 shadow-lg shadow-emerald-600/20 transition">
+              <span>💬</span> 複製 LINE 評估報告
             </button>
           </div>
         </div>
 
-        <div id="knife-verdict-banner" class="mt-4 p-4 rounded-xl bg-slate-800/70 border border-slate-700 text-sm text-slate-300">
-          💡 請點擊下方各把刀卡片進行勾選，系統將自動評估該物件的投資安全等級。
+        <!-- Property Switcher Tabs -->
+        <div class="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex items-center gap-2 overflow-x-auto py-1" id="prop-tabs-container">
+            <!-- Property pills populated via JS -->
+          </div>
+          <div class="text-xs text-slate-400 shrink-0">
+            已儲存 <span id="prop-count-badge" class="font-bold text-amber-400">0</span> 間看屋物件
+          </div>
         </div>
 
-        <div id="knives-container" class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+        <!-- Active Property Metadata Editor -->
+        <div class="mt-5 p-4 rounded-xl bg-slate-900/90 border border-slate-800">
+          <div class="flex items-center justify-between cursor-pointer" id="prop-form-toggle">
+            <div class="flex items-center gap-2 font-bold text-sm text-slate-200">
+              <span>📝 物件基本情報設定</span>
+              <span class="text-xs font-normal text-slate-400">（修改即時同步計算評分與建議出價）</span>
+            </div>
+            <span id="prop-form-arrow" class="text-slate-400 text-xs transition">▼</span>
+          </div>
+
+          <div id="prop-form-content" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-4 pt-3 border-t border-slate-800/80 text-xs">
+            <div>
+              <label for="prop-input-name" class="block font-medium text-slate-300 mb-1">物件名稱 / 社區名</label>
+              <input id="prop-input-name" type="text" placeholder="例：江子翠捷運水岸高樓兩房" class="w-full px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-white focus:outline-none focus:border-amber-400" />
+            </div>
+            <div>
+              <label for="prop-input-district" class="block font-medium text-slate-300 mb-1">所在商圈 / 地段</label>
+              <input id="prop-input-district" type="text" placeholder="例：新北市板橋區文化路二段" class="w-full px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-white focus:outline-none focus:border-amber-400" />
+            </div>
+            <div>
+              <label for="prop-input-mrt" class="block font-medium text-slate-300 mb-1">鄰近捷運站 / 步行距離</label>
+              <input id="prop-input-mrt" type="text" placeholder="例：江子翠站（步行5分鐘）" class="w-full px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-white focus:outline-none focus:border-amber-400" />
+            </div>
+            <div>
+              <label for="prop-input-households" class="block font-medium text-slate-300 mb-1">社區總戶數（戶）</label>
+              <input id="prop-input-households" type="number" placeholder="例：180" class="w-full px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-white focus:outline-none focus:border-amber-400" />
+            </div>
+            <div>
+              <label for="prop-input-asking" class="block font-medium text-slate-300 mb-1">屋主開價（萬元）</label>
+              <input id="prop-input-asking" type="number" placeholder="例：2380" class="w-full px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-white focus:outline-none focus:border-amber-400" />
+            </div>
+            <div>
+              <label for="prop-input-reg" class="block font-medium text-slate-300 mb-1">社區實價登錄均價（萬元）</label>
+              <input id="prop-input-reg" type="number" placeholder="例：2100" class="w-full px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-white focus:outline-none focus:border-amber-400" />
+            </div>
+            <div>
+              <label for="prop-input-size" class="block font-medium text-slate-300 mb-1">權狀建坪 / 主建物坪數</label>
+              <input id="prop-input-size" type="text" placeholder="例：28.5坪（主建19坪）" class="w-full px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-white focus:outline-none focus:border-amber-400" />
+            </div>
+            <div>
+              <label for="prop-input-notes" class="block font-medium text-slate-300 mb-1">看屋手記 / 屋況備註</label>
+              <input id="prop-input-notes" type="text" placeholder="例：邊間採光佳、屋主換屋急售、無暗房" class="w-full px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-white focus:outline-none focus:border-amber-400" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Score & Valuation Dashboard -->
+        <div class="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-5">
+          <!-- Left: Score & Tier Card -->
+          <div class="lg:col-span-5 p-5 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 flex flex-col justify-between space-y-4">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">物件綜合安全指數</span>
+                <span id="prop-badge-tier" class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                  評估中
+                </span>
+              </div>
+
+              <div class="flex items-baseline gap-3 mt-3">
+                <div id="prop-score-num" class="text-4xl sm:text-5xl font-black text-amber-400">--</div>
+                <div class="text-xs text-slate-400">
+                  <div>滿分 100 分</div>
+                  <div id="prop-knives-count" class="text-slate-300 font-semibold mt-0.5">通過 -- / 9 把刀</div>
+                </div>
+              </div>
+
+              <div id="prop-verdict-desc" class="text-xs sm:text-sm text-slate-300 mt-3 leading-relaxed">
+                正在分析該物件九把刀指標...
+              </div>
+            </div>
+
+            <!-- Red Line Warning (Conditional) -->
+            <div id="prop-redline-alert" class="hidden p-3.5 rounded-xl text-xs font-medium border leading-relaxed">
+              <!-- Injected via JS -->
+            </div>
+          </div>
+
+          <!-- Right: Four-Stage Pricing Formula -->
+          <div class="lg:col-span-7 p-5 rounded-2xl bg-slate-900/90 border border-slate-800 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+                <div class="flex items-center gap-2">
+                  <span class="text-base font-bold text-white">🎯 大叔定錨出價與攻防階梯</span>
+                  <span class="text-xs px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20">實價登錄打8折心法</span>
+                </div>
+                <span class="text-xs text-slate-400">天花板價：<strong id="price-ceiling-val" class="text-white">-- 萬</strong></span>
+              </div>
+
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mt-3.5 text-center">
+                <div class="p-2.5 rounded-xl bg-slate-950/80 border border-emerald-500/30">
+                  <div class="text-[10px] text-emerald-400 font-medium">🥊 第一口敲門價</div>
+                  <div class="text-[11px] text-slate-400 mt-0.5">實登 × 60%</div>
+                  <div id="val-fake-1" class="text-base sm:text-lg font-bold text-emerald-400 mt-1">-- 萬</div>
+                </div>
+                <div class="p-2.5 rounded-xl bg-slate-950/80 border border-sky-500/30">
+                  <div class="text-[10px] text-sky-400 font-medium">🛡️ 第二階試探價</div>
+                  <div class="text-[11px] text-slate-400 mt-0.5">實登 × 68%</div>
+                  <div id="val-fake-2" class="text-base sm:text-lg font-bold text-sky-400 mt-1">-- 萬</div>
+                </div>
+                <div class="p-2.5 rounded-xl bg-slate-950/80 border border-purple-500/30">
+                  <div class="text-[10px] text-purple-400 font-medium">🔒 第三階防守價</div>
+                  <div class="text-[11px] text-slate-400 mt-0.5">實登 × 75%</div>
+                  <div id="val-fake-3" class="text-base sm:text-lg font-bold text-purple-400 mt-1">-- 萬</div>
+                </div>
+                <div class="p-2.5 rounded-xl bg-slate-950/80 border border-amber-500/40">
+                  <div class="text-[10px] text-amber-400 font-bold">🎯 心中真實底價</div>
+                  <div class="text-[11px] text-slate-400 mt-0.5">實登 × 80%</div>
+                  <div id="val-true-bottom" class="text-base sm:text-lg font-bold text-amber-400 mt-1">-- 萬</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-3 pt-3 border-t border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between text-xs text-slate-400 gap-2">
+              <div>
+                💡 屋主開價 <span id="price-asking-val" class="font-bold text-slate-200">-- 萬</span> ➔ 推算屋主實拿底價約：<strong id="price-net-seller" class="text-rose-300">-- 萬</strong>（開價 ÷ 1.04）
+              </div>
+              <div class="text-[11px] text-slate-500">
+                出價鐵律：要價是進攻，放價是防守，要到 2 次才放 1 次
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section Header for Knives -->
+        <div class="mt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+          <div class="flex items-center gap-2">
+            <h3 class="font-bold text-white text-base">🗡️ 該物件「買房九把刀」逐項檢測</h3>
+            <span class="text-xs text-slate-400">（點擊卡片切換 通過/未通過）</span>
+          </div>
+          <div class="text-xs text-slate-400">
+            綠色勾選 <span class="text-emerald-400 font-bold">✓</span> = 通過護城河 ｜ 灰色叉叉 <span class="text-rose-400 font-bold">✗</span> = 存在短板或砍價破口
+          </div>
+        </div>
+
+        <!-- 9 Knives Grid -->
+        <div id="knives-container" class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
           <!-- Populated dynamically via JS -->
         </div>
+
+        <!-- Dynamic Bargaining Weapons (Generated from Failed Knives) -->
+        <div class="mt-8 p-5 rounded-2xl bg-slate-900/90 border border-slate-800">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="text-lg">⚔️</span>
+              <h3 class="font-bold text-white text-base">此物件專屬「現場挑缺點砍價武器庫」</h3>
+              <span id="weapons-count-badge" class="px-2 py-0.5 rounded-full text-xs font-semibold bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                0 個砍價破口
+              </span>
+            </div>
+            <span class="text-xs text-slate-400">依未達標把刀自動生成現場談判話術</span>
+          </div>
+
+          <div id="bargaining-weapons-list" class="space-y-3 mt-4 text-xs">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+
+        <!-- Comparison Table of All Properties -->
+        <div class="mt-8 p-5 rounded-2xl bg-slate-900/90 border border-slate-800">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+            <div>
+              <h3 class="font-bold text-white text-base">📊 我的看屋候選清單（橫向比對總表）</h3>
+              <p class="text-xs text-slate-400 mt-0.5">點擊各列「切換評估」可即時切換至該物件詳細檢核</p>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto mt-4">
+            <table class="w-full text-left text-xs text-slate-300 min-w-[700px]">
+              <thead class="bg-slate-950 text-slate-400 uppercase border-b border-slate-800">
+                <tr>
+                  <th class="p-3">物件名稱 / 商圈</th>
+                  <th class="p-3">開價 / 實登均價</th>
+                  <th class="p-3">通過刀數</th>
+                  <th class="p-3">綜合得分</th>
+                  <th class="p-3">安全等級</th>
+                  <th class="p-3">核心短板 / 風險</th>
+                  <th class="p-3 text-right">操作</th>
+                </tr>
+              </thead>
+              <tbody id="comparison-table-body" class="divide-y divide-slate-800/80">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
       </div>
     </section>
+
+    <!-- Global Toast Notification -->
+    <div id="app-toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 px-4 py-3 rounded-xl bg-emerald-600 text-white text-xs sm:text-sm font-semibold shadow-2xl flex items-center gap-2 pointer-events-none">
+      <span class="text-base">✅</span>
+      <span id="toast-message">訊息提示</span>
+    </div>
 
     <!-- TAB 3: MONEY MACHINE & INTERACTIVE CALCULATOR -->
     <section id="tab-money-machine" class="tab-panel hidden space-y-8">
@@ -534,119 +744,521 @@
         group: "選對商圈（第 1～3 把刀）",
         title: "第一把刀：定位強勢辦公區",
         rule: "房價跟著人跑，人跟著工作機會跑",
-        detail: "鎖定上市公司、財星 500 大、金融業與高科技/AI 聚集區（如信義計畫區、內科、北士科、竹科），方圓 5 公里公司行號與高薪上班族多。金融業特愛高價租屋，是最佳現金流來源。"
+        detail: "鎖定上市公司、財星 500 大、金融業與高科技/AI 聚集區（如信義計畫區、內科、北士科、竹科），方圓 5 公里公司行號與高薪上班族多。金融業特愛高價租屋，是最佳現金流來源。",
+        checkTip: "現場確認：打開地圖確認 5km 內是否有大型總部/科技園區/外商銀行聚集，上班族下班步行用餐熱區。",
+        weapon: "現場砍價話術：「這附近就業聚落主要是傳統小店家，缺乏上市櫃或金融科技高薪客群支撐高租金與接盤力，未來保值抗跌性不足，價格必須折讓。」"
       },
       {
         id: 2,
         group: "選對商圈（第 1～3 把刀）",
         title: "第二把刀：捷運通勤 30 分鐘內",
         rule: "通勤 30 分鐘是房價的剎車距離",
-        detail: "從強勢辦公區核心捷運站出發，搭捷運 30 分鐘內可達的站點（如市政府站至江子翠站）。超過 30 分鐘租客嫌、買方跑、剛需崩，省幾十萬買外圍，未來 5 年少漲幾百萬。"
+        detail: "從強勢辦公區核心捷運站出發，搭捷運 30 分鐘內可達的站點（如市政府站至江子翠站）。超過 30 分鐘租客嫌、買方跑、剛需崩，省幾十萬買外圍，未來 5 年少漲幾百萬。",
+        checkTip: "現場確認：用捷運 App 實測從該站搭到台北車站/市政府/南港/西湖站的行車時間（含轉乘）。",
+        weapon: "現場砍價話術：「搭捷運到信義區或市中心超過 35 分鐘，上下班轉乘太耗時，我太太極度在意通勤疲乏，這點如果屋主不在價格上補償我們至少 10%，我們只能去看更近的案子。」"
       },
       {
         id: 3,
         group: "選對商圈（第 1～3 把刀）",
         title: "第三把刀：走路到捷運 10 分鐘內",
         rule: "10 分鐘是核心輻射的安全邊界",
-        detail: "步行至捷運站 10 分鐘內，市場下修時跌得比別人少、市場上揚時漲得比別人快。每往外多走 1 分鐘，抗跌與補漲力道便大幅衰退。"
+        detail: "步行至捷運站 10 分鐘內，市場下修時跌得比別人少、市場上揚時漲得比別人快。每往外多走 1 分鐘，抗跌與補漲力道便大幅衰退。",
+        checkTip: "現場確認：看屋後親自用正常步伐從社區大門走到最近捷運出口碼表計時，避開誇大的『直線距離』。",
+        weapon: "現場砍價話術：「剛剛我們親自走過，到捷運站要走 14 分鐘，夏天走過來滿身大汗、下雨天更不便，未來轉手買方一定挑剔，這不是真正捷運宅，不能用捷運宅行情開價。」"
       },
       {
         id: 4,
         group: "選對產品（第 4～7 把刀）",
         title: "第四把刀：單價比較與套房例外法則",
         rule: "同社區選低單價；但套房絕不買最低價",
-        detail: "一般兩房三房選同社區相對低單價；但若買套房或一房一廳，千萬別買商圈內單價/租金最便宜的物件（易聚集繳不出房租或吸毒、治安問題租客），應選中高價位篩選優質租客。"
+        detail: "一般兩房三房選同社區相對低單價；但若買套房或一房一廳，千萬別買商圈內單價/租金最便宜的物件（易聚集繳不出房租或吸毒、治安問題租客），應選中高價位篩選優質租客。",
+        checkTip: "現場確認：兩三房調出社區近 2 年同坪數實價登錄找低單；套房則確認同棟住戶素質與管委會進出管制。",
+        weapon: "現場砍價話術：「我們調過社區近一年同房型實價登錄，去年高樓層成交才 XX 萬，你們這戶開價高出社區均價不少，屋況一般，請仲介直接回報屋主我們只願比照低單均價。」"
       },
       {
         id: 5,
         group: "選對產品（第 4～7 把刀）",
         title: "第五把刀：避開總價帶天花板陷阱",
         rule: "單價便宜但總價破頂，買進即卡死",
-        detail: "每個區域都有買方能承受的總價上限（如台北市三房不超過 3,500～4,000 萬、新北市不超過 3,500 萬）。勿貪圖大坪數樓中樓低單價而突破區域總價天花板，否則極難流通。"
+        detail: "每個區域都有買方能承受的總價上限（如台北市三房不超過 3,500～4,000 萬、新北市不超過 3,500 萬）。勿貪圖大坪數樓中樓低單價而突破區域總價天花板，否則極難流通。",
+        checkTip: "現場確認：確認該行政區主流買盤總價帶（例如新北首購 1500~2200 萬、換屋 2500~3200 萬）。",
+        weapon: "現場砍價話術：「這間總價已經突破 3,500 萬，已經超出一般雙薪家庭新青安與貸款首購極限，有這預算的人都去看台北市了，屋主若堅持這種破頂總價，在市場上只會繼續被冷凍。」"
       },
       {
         id: 6,
         group: "選對產品（第 4～7 把刀）",
         title: "第六把刀：排除三大地雷產品類型",
         rule: "不碰酒店式公寓、小基地危老、現成隔套",
-        detail: "酒店式公寓物業難管理易劣幣驅逐良幣；小基地危老案坡道過陡刮超跑底盤（富人不買、一般人買不起）；投資客現成隔套老屋管線與防火不明，風險極高。"
+        detail: "酒店式公寓物業難管理易劣幣驅逐良幣；小基地危老案坡道過陡刮超跑底盤（富人不買、一般人買不起）；投資客現成隔套老屋管線與防火不明，風險極高。",
+        checkTip: "現場確認：地下停車場車道寬度與坡度、基地面積是否小於 100 坪、老屋天花板與電箱是否為投資客廉價隔間。",
+        weapon: "現場砍價話術：「這種小基地車道機械塔進出非常不便，以後修繕費驚人；或是這種現成隔套管線漏水隱患太大，銀行鑑價也給很低，接手風險極高，價格沒大幅讓利根本沒人敢接。」"
       },
       {
         id: 7,
         group: "選對產品（第 4～7 把刀）",
         title: "第七把刀：控制社區總戶數（量體）",
         rule: "城市人口去掉「萬」字即為社區戶數上限",
-        detail: "台北市社區建議不超過 200～220 戶，新北市不超過 400 戶。戶數過多代表未來賣房時同社區同時有十幾戶同房型競價拋售，價格難以拉抬。"
+        detail: "台北市社區建議不超過 200～220 戶，新北市不超過 400 戶。戶數過多代表未來賣房時同社區同時有十幾戶同房型競價拋售，價格難以拉抬。",
+        checkTip: "現場確認：向管委會或警衛詢問全社區總戶數，並上 591 查詢目前同社區同時掛售戶數是否超過 10 戶。",
+        weapon: "現場砍價話術：「這個社區總戶數超過 600 戶，目前同戶型在網路上掛售就有 15 戶，競爭太激烈、賣壓沉重，彼此踩踏，屋主如果價格不比其他戶更甜，買方根本不用買這間。」"
       },
       {
         id: 8,
         group: "時機與財務（第 8～9 把刀）",
         title: "第八把刀：買「甘蔗中段」不買前段",
         rule: "把重劃區前段價差當保險費讓別人賺",
-        detail: "重劃區初期雖然賣 20 萬看似便宜，但機能與就業未兌現易卡死；寧可等人口、企業與配套明確進駐（如漲到 40 萬）的「甘蔗中段」再出手，確定性最高。"
+        detail: "重劃區初期雖然賣 20 萬看似便宜，但機能與就業未兌現易卡死；寧可等人口、企業與配套明確進駐（如漲到 40 萬）的「甘蔗中段」再出手，確定性最高。",
+        checkTip: "現場確認：周邊 500 公尺是否有全聯/7-11/星巴克/診所開業？國小國中是否已招生？夜間點燈率是否超過 5 成？",
+        weapon: "現場砍價話術：「重劃區周圍荒涼、生活機能完全沒到位，晚上像空城，買了一杯咖啡都要開車 10 分鐘，生活成本與風險全轉嫁給買方，不能把未來十年後的畫餅折現到現在的價格！」"
       },
       {
         id: 9,
         group: "時機與財務（第 8～9 把刀）",
         title: "第九把刀：現金流三年不斷鏈紅線",
         rule: "唯一財務鐵律：持有滿 3 年不賣房且不斷鏈",
-        detail: "不必理會僵化的所得負債比，唯一要問自己的是：買下這間房後，未來 3 年能否不賣房且現金流完全不斷鏈？若撐不過 3 年，再賺錢的物件都不可買。"
+        detail: "不必理會僵化的所得負債比，唯一要問自己的是：買下這間房後，未來 3 年能否不賣房且現金流完全不斷鏈？若撐不過 3 年，再賺錢的物件都不可買。",
+        checkTip: "現場確認：試算極端情況（本金寬限期結束、升息 2 碼、個人留職停薪 6 個月），存款儲備能否撐過 36 個月利息？",
+        weapon: "現場砍價話術：「現在央行信用管制縮銀根、銀行房貸卡得緊，我們自備款與每月利息支出壓力非常大，價格如果壓不到我們安全負擔線內，我們絕對不可能冒險簽約。」"
       }
     ];
 
-    const checkedKnives = new Set([1, 2, 3]);
+    // Default Sample Properties for House Hunting
+    const defaultSampleProperties = [
+      {
+        id: "prop_1",
+        name: "板橋江子翠捷運水岸高樓兩房",
+        district: "新北市板橋區文化路二段",
+        mrt: "江子翠站（步行5分鐘）",
+        askingPrice: 2380,
+        regPrice: 2100,
+        size: "28.5坪（主建物19.2坪）",
+        households: 180,
+        notes: "高樓水岸採光極佳、屋主換屋急售、近學區生活機能完善",
+        knives: [1, 2, 3, 4, 6, 7, 8, 9] // 8 knives, knife 5 (總價帶略高) not passed
+      },
+      {
+        id: "prop_2",
+        name: "淡海輕軌重劃區景觀大三房",
+        district: "新北市淡水區濱海路一段",
+        mrt: "輕軌濱海沙崙站（步行12分鐘）",
+        askingPrice: 1680,
+        regPrice: 1480,
+        size: "48.2坪（含平面大車位）",
+        households: 720,
+        notes: "視野開闊景觀美、但通勤台北市超過50分鐘、社區戶數過多賣壓大",
+        knives: [4, 6] // 2 knives
+      },
+      {
+        id: "prop_3",
+        name: "內湖文德站近捷運優質雙併公寓",
+        district: "台北市內湖區成功路三段",
+        mrt: "文德站（步行3分鐘）",
+        askingPrice: 1980,
+        regPrice: 1850,
+        size: "31.8坪（土地持分大）",
+        households: 36,
+        notes: "近內科高薪商圈、無暗房、住戶單純、具都更危老潛力",
+        knives: [1, 2, 3, 4, 5, 6, 7, 8, 9] // 9 knives full pass
+      }
+    ];
 
-    function renderKnives() {
+    const STORAGE_KEY = "house_strategy_user_props_v1";
+    let userProperties = [];
+    let activePropertyId = null;
+
+    function initUserProperties() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          userProperties = JSON.parse(saved);
+        }
+      } catch (e) {
+        console.warn("Failed to parse saved properties from localStorage", e);
+      }
+      if (!userProperties || userProperties.length === 0) {
+        userProperties = JSON.parse(JSON.stringify(defaultSampleProperties));
+      }
+      activePropertyId = userProperties[0].id;
+      saveUserProperties();
+    }
+
+    function saveUserProperties() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(userProperties));
+      } catch (e) {
+        console.warn("Failed to save properties to localStorage", e);
+      }
+    }
+
+    function getActiveProperty() {
+      return userProperties.find(p => p.id === activePropertyId) || userProperties[0];
+    }
+
+    // Evaluation & Scoring Engine
+    function evaluateProperty(prop) {
+      const knives = prop.knives || [];
+      const count = knives.length;
+      const hasKnife9 = knives.includes(9);
+      const hasKnife6 = knives.includes(6);
+      const asking = parseFloat(prop.askingPrice) || 0;
+      const reg = parseFloat(prop.regPrice) || 0;
+
+      let score = count * 10; // max 90 pts from knives
+
+      // Price ratio adjustment (max 10 pts)
+      if (reg > 0 && asking > 0) {
+        const premium = (asking - reg) / reg;
+        if (premium <= 0.05) score += 10;
+        else if (premium <= 0.15) score += 6;
+        else if (premium <= 0.25) score += 2;
+        else score -= 8;
+      } else {
+        score += 5;
+      }
+
+      // Red line deductions
+      const redAlerts = [];
+      if (!hasKnife9) {
+        score -= 25;
+        redAlerts.push("⛔ 致命財務紅線：未通過「第九把刀：三年現金流不斷鏈」，若無法承受極端下修與利息支出，再便宜都絕對不能碰！");
+      }
+      if (!hasKnife6) {
+        score -= 15;
+        redAlerts.push("⚠️ 致命產品紅線：踩中「第六把刀：三大地雷產品」（酒店式/小基地/現成隔套），流動性受限、未來轉手難以脫身！");
+      }
+
+      score = Math.max(10, Math.min(100, Math.round(score)));
+
+      let tier = "C 級 高風險";
+      let tierClass = "bg-rose-500/20 text-rose-300 border-rose-500/40";
+      let verdict = "";
+
+      if (count === 9 && hasKnife9 && hasKnife6) {
+        tier = "🌟 SSS 級 神案";
+        tierClass = "bg-amber-500/25 text-amber-300 border-amber-500/50 shadow-md shadow-amber-500/10";
+        verdict = "🏆 完美通過九把刀護城河！具備「只漲難跌」抗跌體質。強烈建議鎖定該案，立即啟動大叔「實登8折心中底價，以60%~68%開價敲門」被動談判議價！";
+      } else if (count >= 7 && hasKnife9) {
+        tier = "💎 A 級 優質標的";
+        tierClass = "bg-emerald-500/20 text-emerald-300 border-emerald-500/40";
+        verdict = "🎯 通過 7~8 把刀，基本盤扎實，具備良好抗通膨與保值力。請鎖定少數未通過之短板，在現場作為向屋主砍價 5%~10% 的核心籌碼！";
+      } else if (count >= 5 && hasKnife9) {
+        tier = "⚖️ B 級 中規中矩";
+        tierClass = "bg-sky-500/20 text-sky-300 border-sky-500/40";
+        verdict = "⚠️ 通過 5~6 把刀，存在明顯先天短板（如通勤過久、戶數過多）。必須靠大幅殺價（殺到實登 75 折以下）拉高性價比，否則未來轉手競爭力普通。";
+      } else {
+        tier = "🛑 C 級 高風險地雷";
+        tierClass = "bg-rose-500/20 text-rose-300 border-rose-500/40";
+        verdict = "🛑 通過刀數不足 5 把或踩中財務/產品紅線！依談判大叔標準，此類物件抗跌防禦力極弱，未來可能陷入流通停滯，建議果斷放棄，執行「百戶長看房計畫」看下一間！";
+      }
+
+      const fake1 = reg > 0 ? Math.round(reg * 0.6) : "--";
+      const fake2 = reg > 0 ? Math.round(reg * 0.68) : "--";
+      const fake3 = reg > 0 ? Math.round(reg * 0.75) : "--";
+      const trueBottom = reg > 0 ? Math.round(reg * 0.8) : "--";
+      const netSeller = asking > 0 ? Math.round(asking / 1.04) : "--";
+
+      return {
+        count,
+        score,
+        tier,
+        tierClass,
+        verdict,
+        redAlerts,
+        pricing: {
+          reg,
+          asking,
+          fake1,
+          fake2,
+          fake3,
+          trueBottom,
+          netSeller
+        }
+      };
+    }
+
+    // Render Full Evaluation View
+    function renderEvaluationView() {
+      const activeProp = getActiveProperty();
+      if (!activeProp) return;
+
+      const evalResult = evaluateProperty(activeProp);
+
+      // 1. Property Tabs
+      const tabsContainer = document.getElementById('prop-tabs-container');
+      tabsContainer.innerHTML = '';
+      userProperties.forEach(p => {
+        const isActive = p.id === activePropertyId;
+        const pEval = evaluateProperty(p);
+        const tabBtn = document.createElement('button');
+        tabBtn.type = 'button';
+        tabBtn.className = `px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition flex items-center gap-1.5 border ${
+          isActive
+            ? 'bg-amber-500 text-slate-950 border-amber-400 font-bold shadow-md shadow-amber-500/20'
+            : 'bg-slate-900 text-slate-300 border-slate-700 hover:bg-slate-800'
+        }`;
+        tabBtn.innerHTML = `
+          <span>${p.name || '未命名物件'}</span>
+          <span class="text-[10px] px-1.5 py-0.2 rounded ${isActive ? 'bg-slate-900 text-amber-300' : 'bg-slate-800 text-slate-400'}">${pEval.count}/9刀</span>
+        `;
+        tabBtn.addEventListener('click', () => {
+          activePropertyId = p.id;
+          renderEvaluationView();
+        });
+        tabsContainer.appendChild(tabBtn);
+      });
+
+      document.getElementById('prop-count-badge').textContent = userProperties.length;
+
+      // 2. Active Property Inputs Sync
+      document.getElementById('prop-input-name').value = activeProp.name || '';
+      document.getElementById('prop-input-district').value = activeProp.district || '';
+      document.getElementById('prop-input-mrt').value = activeProp.mrt || '';
+      document.getElementById('prop-input-households').value = activeProp.households || '';
+      document.getElementById('prop-input-asking').value = activeProp.askingPrice || '';
+      document.getElementById('prop-input-reg').value = activeProp.regPrice || '';
+      document.getElementById('prop-input-size').value = activeProp.size || '';
+      document.getElementById('prop-input-notes').value = activeProp.notes || '';
+
+      // 3. Score & Tier Dashboard
+      const scoreNum = document.getElementById('prop-score-num');
+      scoreNum.textContent = evalResult.score;
+      if (evalResult.score >= 85) scoreNum.className = "text-4xl sm:text-5xl font-black text-amber-400";
+      else if (evalResult.score >= 70) scoreNum.className = "text-4xl sm:text-5xl font-black text-emerald-400";
+      else if (evalResult.score >= 55) scoreNum.className = "text-4xl sm:text-5xl font-black text-sky-400";
+      else scoreNum.className = "text-4xl sm:text-5xl font-black text-rose-400";
+
+      document.getElementById('prop-knives-count').textContent = `通過 ${evalResult.count} / 9 把刀`;
+
+      const badgeTier = document.getElementById('prop-badge-tier');
+      badgeTier.textContent = evalResult.tier;
+      badgeTier.className = `px-3 py-1 rounded-full text-xs font-bold border ${evalResult.tierClass}`;
+
+      document.getElementById('prop-verdict-desc').textContent = evalResult.verdict;
+
+      // Red line alert
+      const redAlertBox = document.getElementById('prop-redline-alert');
+      if (evalResult.redAlerts.length > 0) {
+        redAlertBox.classList.remove('hidden');
+        redAlertBox.className = "p-3.5 rounded-xl text-xs font-medium border bg-rose-950/60 border-rose-800 text-rose-200 space-y-1.5";
+        redAlertBox.innerHTML = evalResult.redAlerts.map(a => `<div>${a}</div>`).join('');
+      } else {
+        redAlertBox.classList.add('hidden');
+      }
+
+      // 4. Pricing Calculation
+      const p = evalResult.pricing;
+      document.getElementById('price-ceiling-val').textContent = p.reg ? `${p.reg.toLocaleString()} 萬` : '-- 萬';
+      document.getElementById('price-asking-val').textContent = p.asking ? `${p.asking.toLocaleString()} 萬` : '-- 萬';
+      document.getElementById('val-fake-1').textContent = p.fake1 !== '--' ? `${p.fake1.toLocaleString()} 萬` : '-- 萬';
+      document.getElementById('val-fake-2').textContent = p.fake2 !== '--' ? `${p.fake2.toLocaleString()} 萬` : '-- 萬';
+      document.getElementById('val-fake-3').textContent = p.fake3 !== '--' ? `${p.fake3.toLocaleString()} 萬` : '-- 萬';
+      document.getElementById('val-true-bottom').textContent = p.trueBottom !== '--' ? `${p.trueBottom.toLocaleString()} 萬` : '-- 萬';
+      document.getElementById('price-net-seller').textContent = p.netSeller !== '--' ? `${p.netSeller.toLocaleString()} 萬` : '-- 萬';
+
+      // 5. Render Nine Knives
       const container = document.getElementById('knives-container');
       container.innerHTML = '';
       nineKnivesData.forEach(item => {
-        const isChecked = checkedKnives.has(item.id);
+        const isPassed = (activeProp.knives || []).includes(item.id);
         const card = document.createElement('div');
-        card.className = `p-4 rounded-xl border transition cursor-pointer select-none ${
-          isChecked
-            ? 'bg-amber-500/15 border-amber-500/60 shadow-md'
-            : 'bg-slate-900/70 border-slate-800 hover:border-slate-700'
+        card.className = `p-4 rounded-xl border transition cursor-pointer select-none relative ${
+          isPassed
+            ? 'bg-amber-500/15 border-amber-500/60 shadow-md ring-1 ring-amber-500/20'
+            : 'bg-slate-900/70 border-slate-800 hover:border-slate-700 opacity-90'
         }`;
         card.innerHTML = `
           <div class="flex items-start justify-between gap-2">
-            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-slate-800 text-slate-300">${item.group}</span>
+            <span class="text-[11px] font-semibold px-2 py-0.5 rounded ${isPassed ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-400'}">${item.group}</span>
             <span class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-              isChecked ? 'bg-amber-500 text-slate-950' : 'bg-slate-800 text-slate-400 border border-slate-600'
-            }">${isChecked ? '✓' : item.id}</span>
+              isPassed ? 'bg-amber-500 text-slate-950 shadow' : 'bg-slate-800 text-slate-400 border border-slate-600'
+            }">${isPassed ? '✓' : '✗'}</span>
           </div>
-          <h3 class="font-bold text-white text-base mt-2.5">${item.title}</h3>
+          <h3 class="font-bold text-white text-base mt-2.5 flex items-center gap-1.5">
+            <span>${item.title}</span>
+          </h3>
           <div class="text-xs font-semibold text-amber-400 mt-1">「${item.rule}」</div>
           <p class="text-xs text-slate-300 mt-2 leading-relaxed">${item.detail}</p>
+          <div class="mt-3 pt-2.5 border-t border-slate-800/80 text-[11px] text-sky-300/90 leading-normal">
+            🔍 <strong>現場檢核：</strong>${item.checkTip}
+          </div>
+          <div class="mt-2 text-right">
+            <span class="text-[10px] px-2 py-0.5 rounded font-medium ${isPassed ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' : 'bg-rose-950 text-rose-300 border border-rose-800'}">
+              ${isPassed ? '✓ 此物件符合' : '✗ 此物件未通過（點擊切換）'}
+            </span>
+          </div>
         `;
         card.addEventListener('click', () => {
-          if (checkedKnives.has(item.id)) {
-            checkedKnives.delete(item.id);
+          if (!activeProp.knives) activeProp.knives = [];
+          if (activeProp.knives.includes(item.id)) {
+            activeProp.knives = activeProp.knives.filter(id => id !== item.id);
           } else {
-            checkedKnives.add(item.id);
+            activeProp.knives.push(item.id);
+            activeProp.knives.sort((a, b) => a - b);
           }
-          renderKnives();
-          updateKnifeScore();
+          saveUserProperties();
+          renderEvaluationView();
         });
         container.appendChild(card);
       });
+
+      // 6. Bargaining Weapons List
+      const weaponsList = document.getElementById('bargaining-weapons-list');
+      weaponsList.innerHTML = '';
+      const failedKnives = nineKnivesData.filter(k => !(activeProp.knives || []).includes(k.id));
+      document.getElementById('weapons-count-badge').textContent = `${failedKnives.length} 個砍價破口`;
+
+      if (failedKnives.length === 0) {
+        weaponsList.innerHTML = `
+          <div class="p-4 rounded-xl bg-emerald-950/40 border border-emerald-800/60 text-emerald-200">
+            🎉 恭喜！此物件 9 把刀護城河全數過關，無重大結構性缺陷。請堅持以「實價登錄 8 折」作為心中真實底價，並直接拋出第一口敲門價（實登 60%）展開談判！
+          </div>
+        `;
+      } else {
+        failedKnives.forEach(k => {
+          const itemDiv = document.createElement('div');
+          itemDiv.className = 'p-3.5 rounded-xl bg-slate-950/80 border border-rose-900/40 space-y-1.5';
+          itemDiv.innerHTML = `
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-rose-300">${k.title} 未通過</span>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-rose-950 text-rose-300 border border-rose-800">可壓價籌碼</span>
+            </div>
+            <div class="text-slate-300 font-medium">💬 <strong>現場挑缺點話術：</strong></div>
+            <p class="text-amber-200/90 pl-3 border-l-2 border-amber-500/50 italic leading-relaxed">
+              ${k.weapon.replace('現場砍價話術：', '')}
+            </p>
+          `;
+          weaponsList.appendChild(itemDiv);
+        });
+      }
+
+      // 7. Comparison Table
+      const compBody = document.getElementById('comparison-table-body');
+      compBody.innerHTML = '';
+      userProperties.forEach(p => {
+        const pEval = evaluateProperty(p);
+        const isCurrent = p.id === activePropertyId;
+        const tr = document.createElement('tr');
+        tr.className = `hover:bg-slate-800/40 transition ${isCurrent ? 'bg-amber-500/10' : ''}`;
+
+        const shortRisk = (p.knives && p.knives.length < 9)
+          ? `未過 ${9 - p.knives.length} 刀（${p.knives.includes(9) ? '' : '⚠️無三年現金流 '}${p.knives.includes(6) ? '' : '⚠️地雷產品 '}）`
+          : '🌟 9刀全過無短板';
+
+        tr.innerHTML = `
+          <td class="p-3 align-middle font-semibold text-white">
+            <div class="flex items-center gap-1.5">
+              ${isCurrent ? '<span class="text-amber-400">▶</span>' : ''}
+              <span>${p.name || '未命名物件'}</span>
+            </div>
+            <div class="text-[11px] text-slate-400 font-normal">${p.district || '--'}</div>
+          </td>
+          <td class="p-3 align-middle">
+            <div class="text-slate-200 font-semibold">${p.askingPrice ? p.askingPrice + ' 萬' : '--'}</div>
+            <div class="text-[11px] text-slate-400">實登：${p.regPrice ? p.regPrice + ' 萬' : '--'}</div>
+          </td>
+          <td class="p-3 align-middle font-bold text-amber-400">${pEval.count} / 9 刀</td>
+          <td class="p-3 align-middle font-extrabold text-white text-sm">${pEval.score} 分</td>
+          <td class="p-3 align-middle">
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${pEval.tierClass}">
+              ${pEval.tier}
+            </span>
+          </td>
+          <td class="p-3 align-middle text-slate-300 text-[11px]">${shortRisk}</td>
+          <td class="p-3 align-middle text-right">
+            ${
+              isCurrent
+                ? '<span class="px-2.5 py-1 rounded bg-amber-500/20 text-amber-300 font-bold text-[11px]">評估中</span>'
+                : `<button type="button" class="btn-switch-prop px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] border border-slate-700 transition" data-id="${p.id}">切換評估</button>`
+            }
+          </td>
+        `;
+        compBody.appendChild(tr);
+      });
+
+      // Bind switch buttons
+      document.querySelectorAll('.btn-switch-prop').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const targetId = e.currentTarget.getAttribute('data-id');
+          activePropertyId = targetId;
+          renderEvaluationView();
+        });
+      });
     }
 
-    function updateKnifeScore() {
-      const count = checkedKnives.size;
-      const scoreText = document.getElementById('knife-score-text');
-      const banner = document.getElementById('knife-verdict-banner');
-      scoreText.textContent = `${count} / 9 把刀`;
+    // Toast helper
+    function showToast(message) {
+      const toast = document.getElementById('app-toast');
+      const msg = document.getElementById('toast-message');
+      msg.textContent = message;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2500);
+    }
 
-      if (count === 9) {
-        banner.className = "mt-4 p-4 rounded-xl bg-emerald-500/20 border border-emerald-500/50 text-sm text-emerald-200 font-medium";
-        banner.textContent = "🏆 完美通過 9 把刀檢核！依談判大叔標準，此物件具備 97.9% 以上一出手即立於不敗之地的護城河，可進入實價登錄 8 折定錨議價流程。";
-      } else if (count >= 6) {
-        banner.className = "mt-4 p-4 rounded-xl bg-amber-500/15 border border-amber-500/40 text-sm text-amber-200";
-        banner.textContent = `⚠️ 目前通過 ${count} 把刀。請特別留意未勾選的指標（尤其是第 1~3 把商圈定位刀與第 9 把三年現金流紅線），切勿因單價便宜而妥協買進蛋白蛋殼區。`;
+    // Line export generator
+    function copyLineSummary() {
+      const activeProp = getActiveProperty();
+      if (!activeProp) return;
+      const evaluation = evaluateProperty(activeProp);
+      const failedKnives = nineKnivesData.filter(k => !(activeProp.knives || []).includes(k.id));
+      const weaponsText = failedKnives.length > 0 
+        ? failedKnives.map(k => `• 【${k.title}未過】${k.weapon.replace('現場砍價話術：', '')}`).join('\n')
+        : '• 9把刀全數過關，護城河極強，以實價登錄8折為基準開刀議價！';
+
+      const text = `🏠【「談判大叔」買房九把刀・看屋評估報告】
+━━━━━━━━━━━━━━━
+📌 物件名稱：${activeProp.name || '未命名物件'}
+📍 所在商圈：${activeProp.district || '未填寫'}｜${activeProp.mrt || '未填寫'}
+📐 坪數/戶數：${activeProp.size || '--'}｜社區總戶數：${activeProp.households ? activeProp.households + ' 戶' : '--'}
+💰 價格數據：開價 ${activeProp.askingPrice ? activeProp.askingPrice + ' 萬' : '--'}｜實登天花板 ${activeProp.regPrice ? activeProp.regPrice + ' 萬' : '--'}
+━━━━━━━━━━━━━━━
+📊 評分診斷：【${evaluation.tier}】
+🎯 綜合評分：${evaluation.score} 分（通過 ${evaluation.count} / 9 把刀）
+💡 大叔判讀：${evaluation.verdict}
+${evaluation.redAlerts.length > 0 ? '\n' + evaluation.redAlerts.join('\n') + '\n' : ''}
+🎯 建議大叔四階出價法：
+  1. 第一口敲門價(60%)：${evaluation.pricing.fake1} 萬
+  2. 第二階試探價(68%)：${evaluation.pricing.fake2} 萬
+  3. 第三階防守價(75%)：${evaluation.pricing.fake3} 萬
+  4. 心中真實底價(80%)：${evaluation.pricing.trueBottom} 萬
+  5. 屋主實拿底價推算：${evaluation.pricing.netSeller} 萬
+
+⚔️ 現場挑缺點砍價武器（對房仲/屋主）：
+${weaponsText}
+
+📝 看屋筆記：${activeProp.notes || '無'}
+━━━━━━━━━━━━━━━
+線上檢視與試算：https://snakelee72.github.io/House-trade-strategy/`;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast("已成功複製 LINE 評估報告！可直接貼給家人朋友討論");
+        }).catch(() => {
+          fallbackCopyText(text);
+        });
       } else {
-        banner.className = "mt-4 p-4 rounded-xl bg-rose-500/15 border border-rose-500/40 text-sm text-rose-200";
-        banner.textContent = `🛑 目前僅通過 ${count} 把刀（未達安全標準）。光是前 3 把刀就能幫你避開市場上 70% 的地雷房，建議果斷放棄此物件，繼續執行「百戶長看房計畫」。`;
+        fallbackCopyText(text);
       }
+    }
+
+    function fallbackCopyText(text) {
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.style.position = "fixed";
+      textarea.style.left = "-9999px";
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        showToast("已成功複製 LINE 評估報告！可直接貼給家人朋友討論");
+      } catch (err) {
+        prompt("請手動複製以下報告內容：", text);
+      }
+      document.body.removeChild(textarea);
     }
 
     // 2. Data for Tactics
@@ -982,14 +1594,106 @@
         });
       });
 
-      // Nine Knives
-      renderKnives();
-      updateKnifeScore();
-      document.getElementById('reset-knives-btn').addEventListener('click', () => {
-        checkedKnives.clear();
-        renderKnives();
-        updateKnifeScore();
+      // 2. Initialize Nine Knives Property Evaluation System
+      initUserProperties();
+      renderEvaluationView();
+
+      // Property Management Buttons
+      document.getElementById('btn-add-prop').addEventListener('click', () => {
+        const newId = 'prop_' + Date.now();
+        const newProp = {
+          id: newId,
+          name: `候選物件 ${userProperties.length + 1}`,
+          district: '',
+          mrt: '',
+          askingPrice: '',
+          regPrice: '',
+          size: '',
+          households: '',
+          notes: '',
+          knives: [1, 2, 3]
+        };
+        userProperties.push(newProp);
+        activePropertyId = newId;
+        saveUserProperties();
+        renderEvaluationView();
+        showToast("已成功新增看屋物件！請填寫資料與勾選九把刀");
       });
+
+      document.getElementById('btn-clone-prop').addEventListener('click', () => {
+        const cur = getActiveProperty();
+        if (!cur) return;
+        const newId = 'prop_' + Date.now();
+        const cloned = JSON.parse(JSON.stringify(cur));
+        cloned.id = newId;
+        cloned.name = `${cur.name || '物件'} (複製案)`;
+        userProperties.push(cloned);
+        activePropertyId = newId;
+        saveUserProperties();
+        renderEvaluationView();
+        showToast("已成功複製該物件！");
+      });
+
+      document.getElementById('btn-del-prop').addEventListener('click', () => {
+        if (userProperties.length <= 1) {
+          showToast("至少需保留一個看屋物件！");
+          return;
+        }
+        const cur = getActiveProperty();
+        if (confirm(`確定要刪除「${cur.name || '此物件'}」嗎？`)) {
+          userProperties = userProperties.filter(p => p.id !== activePropertyId);
+          activePropertyId = userProperties[0].id;
+          saveUserProperties();
+          renderEvaluationView();
+          showToast("已刪除該物件");
+        }
+      });
+
+      document.getElementById('btn-sample-prop').addEventListener('click', () => {
+        if (confirm("是否重新載入大叔實戰精選 3 筆看屋範例？（自訂物件將被重設）")) {
+          userProperties = JSON.parse(JSON.stringify(defaultSampleProperties));
+          activePropertyId = userProperties[0].id;
+          saveUserProperties();
+          renderEvaluationView();
+          showToast("已成功載入精選範例物件！");
+        }
+      });
+
+      document.getElementById('btn-copy-line').addEventListener('click', copyLineSummary);
+
+      // Toggle Form Collapsible
+      const formToggle = document.getElementById('prop-form-toggle');
+      const formContent = document.getElementById('prop-form-content');
+      const formArrow = document.getElementById('prop-form-arrow');
+      if (formToggle) {
+        formToggle.addEventListener('click', () => {
+          formContent.classList.toggle('hidden');
+          formArrow.textContent = formContent.classList.contains('hidden') ? '▶' : '▼';
+        });
+      }
+
+      // Input change listeners
+      const bindPropInput = (elementId, propKey) => {
+        const input = document.getElementById(elementId);
+        if (!input) return;
+        input.addEventListener('input', (e) => {
+          const active = getActiveProperty();
+          if (active) {
+            active[propKey] = e.target.value;
+            saveUserProperties();
+            renderEvaluationView();
+          }
+        });
+      };
+
+      bindPropInput('prop-input-name', 'name');
+      bindPropInput('prop-input-district', 'district');
+      bindPropInput('prop-input-mrt', 'mrt');
+      bindPropInput('prop-input-households', 'households');
+      bindPropInput('prop-input-asking', 'askingPrice');
+      bindPropInput('prop-input-reg', 'regPrice');
+      bindPropInput('prop-input-size', 'size');
+      bindPropInput('prop-input-notes', 'notes');
 
       // Calculators
       document.getElementById('input-asking-price').addEventListener('input', updatePriceCalculator);
