@@ -7,6 +7,18 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   <title>吳淡如《房商必修課》＆買房實戰談話全集｜跨頻道深度整理與互動工具</title>
+  
+  <!-- PWA Manifest & App Configuration -->
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="房商智庫">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="./icons/icon-512x512.png">
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1493,6 +1505,17 @@
       });
 
       updateFiveForces();
+
+      // Register Service Worker for PWA support
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js').then((registration) => {
+            console.log('[PWA] ServiceWorker registered from Wu Dan-ru page:', registration.scope);
+          }).catch((err) => {
+            console.log('[PWA] ServiceWorker registration failed:', err);
+          });
+        });
+      }
     });
   </script>
 </body>

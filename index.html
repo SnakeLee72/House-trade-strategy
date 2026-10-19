@@ -7,6 +7,18 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   <title>HOUSE TRADE STRATEGY｜房產交易策略與買房實戰雙師智庫（吳淡如 × 陳侯勳）</title>
+  
+  <!-- PWA Manifest & App Configuration -->
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="房商智庫">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="./icons/icon-512x512.png">
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -146,6 +158,10 @@
 
       <!-- Direct Portal Buttons -->
       <div class="flex items-center gap-2">
+        <button id="pwaInstallBtn" type="button" class="px-3 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-sky-600 hover:from-purple-500 hover:to-sky-500 text-white font-black text-xs sm:text-sm transition flex items-center gap-1.5 shadow-lg shadow-purple-500/25 border border-purple-400/40 cursor-pointer" title="將房商智庫安裝至桌面或手機主畫面">
+          <span>📲</span>
+          <span class="hidden md:inline">下載設成</span><span>App</span>
+        </button>
         <a href="吳淡如_房商必修課.html" class="px-3 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs sm:text-sm transition flex items-center gap-1.5 shadow-lg shadow-amber-500/20">
           <span>🐎 吳淡如專區</span>
           <span>↗</span>
@@ -212,6 +228,29 @@
             <div class="text-xl sm:text-2xl font-black text-purple-400 font-mono-num mt-0.5">實登 × 80%</div>
             <div class="text-[10px] text-slate-400">60% 敲門 / 雙斡旋破錨定</div>
           </div>
+        </div>
+      <!-- PWA APP INSTALL HERO BANNER (像靈蛇週報) -->
+      <div id="pwaHeroBanner" class="mt-8 max-w-4xl mx-auto rounded-3xl p-5 sm:p-6 bg-gradient-to-r from-purple-950/60 via-slate-900/90 to-indigo-950/60 border-2 border-purple-500/40 shadow-2xl backdrop-blur-xl flex flex-col md:flex-row items-center justify-between gap-5">
+        <div class="flex items-center gap-4 text-left w-full md:w-auto">
+          <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl overflow-hidden shadow-lg shadow-purple-500/20 border-2 border-purple-400/50 shrink-0 bg-slate-950 p-1">
+            <img src="./icons/icon-192x192.png" alt="房商智庫 App 圖示" class="w-full h-full object-cover rounded-xl">
+          </div>
+          <div class="space-y-1">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="font-black text-white text-base sm:text-lg">下載安裝《房商智庫》官方原生 App</span>
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-purple-500/20 text-purple-300 border border-purple-400/30">PWA 離線快取</span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">iOS / Android / PC 通用</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              免開商店、不佔手機容量！點擊一鍵「加入主畫面」，立即享有獨立全螢幕極速開啟、離線隨身查房與首頁雙師試算工具。
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3 shrink-0 w-full md:w-auto justify-end">
+          <button type="button" id="pwaHeroInstallBtn" class="w-full md:w-auto px-6 py-3.5 rounded-2xl bg-gradient-to-r from-purple-500 via-indigo-600 to-sky-500 hover:from-purple-400 hover:to-sky-400 text-white font-black text-sm flex items-center justify-center gap-2 shadow-xl shadow-purple-500/30 hover:shadow-purple-500/50 transition cursor-pointer">
+            <span class="text-base">📲</span>
+            <span>下載設成 App</span>
+          </button>
         </div>
       </div>
 
@@ -1097,7 +1136,152 @@
           }
         }
       });
+
+      // --- Progressive Web App (PWA) Installation Logic (像靈蛇週報) ---
+      let deferredPrompt = null;
+      const pwaNavBtn = document.getElementById('pwaInstallBtn');
+      const pwaHeroBtn = document.getElementById('pwaHeroInstallBtn');
+      const pwaModal = document.getElementById('pwaGuideModal');
+      const closePwaModalBtn = document.getElementById('closePwaModal');
+      const confirmPwaModalBtn = document.getElementById('confirmPwaModal');
+      const pwaGuideContent = document.getElementById('pwaGuideContent');
+
+      // 偵測裝置與是否已處於獨立 App 模式
+      const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+      function openPwaGuide(type) {
+        if (!pwaGuideContent || !pwaModal) return;
+        if (type === 'ios' || isIos) {
+          pwaGuideContent.innerHTML = `
+            <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-purple-500/30 space-y-2">
+              <div class="font-bold text-amber-400 text-xs flex items-center gap-1.5">
+                <span>🍎 iPhone / iPad (Safari) 快速安裝步驟：</span>
+              </div>
+              <ol class="list-decimal list-inside space-y-1.5 text-slate-300 text-[11px] leading-relaxed">
+                <li>點擊 Safari 瀏覽器正下方工具列的 <strong>「分享」</strong> 按鈕（<span class="text-sky-300 font-mono">⬆️ 帶箭頭方框圖示</span>）。</li>
+                <li>在彈出的選單中往下滑動，點選 <strong>「加入主畫面」</strong>（<span class="text-emerald-300 font-mono">➕ Add to Home Screen</span>）。</li>
+                <li>點選右上角 <strong>「新增」</strong>，即可在手機桌面生成專屬《房商智庫》App 圖示！</li>
+              </ol>
+            </div>
+            <div class="p-2.5 rounded-xl bg-purple-500/10 border border-purple-500/20 text-[11px] text-purple-200">
+              💡 設成 App 後，直接點開即可享受如同原生 App 的無網址列全螢幕體驗與極速載入！
+            </div>
+          `;
+        } else if (isStandalone) {
+          pwaGuideContent.innerHTML = `
+            <div class="p-4 rounded-2xl bg-emerald-950/40 border border-emerald-500/30 text-center space-y-2">
+              <div class="text-3xl">🎉</div>
+              <div class="font-bold text-emerald-400 text-sm">您已成功安裝《房商智庫》App！</div>
+              <p class="text-[11px] text-slate-300 leading-relaxed">目前正以獨立 App 全螢幕模式運行中，支援離線資料讀取、動態快取與最快啟動速度。</p>
+            </div>
+          `;
+        } else {
+          pwaGuideContent.innerHTML = `
+            <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-sky-500/30 space-y-2">
+              <div class="font-bold text-sky-400 text-xs flex items-center gap-1.5">
+                <span>💻 Android / Chrome / Edge 快速安裝指南：</span>
+              </div>
+              <p class="text-[11px] text-slate-300 leading-relaxed">
+                若瀏覽器未自動彈出安裝視窗，請點擊瀏覽器<strong>網址列右側的「安裝」圖示</strong>（電腦版），或點擊瀏覽器右上角<strong>「⋮」選單 ➔ 選擇「安裝應用程式」或「加到主螢幕」</strong>即可安裝！
+              </p>
+            </div>
+          `;
+        }
+        pwaModal.classList.remove('hidden');
+      }
+
+      function closePwaGuide() {
+        if (pwaModal) pwaModal.classList.add('hidden');
+      }
+
+      if (closePwaModalBtn) closePwaModalBtn.addEventListener('click', closePwaGuide);
+      if (confirmPwaModalBtn) confirmPwaModalBtn.addEventListener('click', closePwaGuide);
+      if (pwaModal) {
+        pwaModal.addEventListener('click', (e) => {
+          if (e.target === pwaModal) closePwaGuide();
+        });
+      }
+
+      // 監聽 PWA 安裝事件（Android / Chrome / Edge / Windows）
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        if (pwaNavBtn) pwaNavBtn.style.display = 'inline-flex';
+        if (pwaHeroBtn) pwaHeroBtn.innerHTML = '<span>📲</span><span>下載設成 App</span>';
+      });
+
+      function handleInstallClick() {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+              console.log('[PWA] 使用者同意安裝 App');
+              if (pwaNavBtn) pwaNavBtn.style.display = 'none';
+              if (pwaHeroBtn) pwaHeroBtn.innerHTML = '<span>✅</span><span>已安裝為 App</span>';
+            }
+            deferredPrompt = null;
+          });
+        } else if (isIos) {
+          openPwaGuide('ios');
+        } else if (isStandalone) {
+          openPwaGuide('standalone');
+        } else {
+          openPwaGuide('manual');
+        }
+      }
+
+      if (pwaNavBtn) pwaNavBtn.addEventListener('click', handleInstallClick);
+      if (pwaHeroBtn) pwaHeroBtn.addEventListener('click', handleInstallClick);
+
+      // 安裝成功監聽
+      window.addEventListener('appinstalled', () => {
+        console.log('[PWA] 房商智庫 App 已成功安裝');
+        if (pwaNavBtn) pwaNavBtn.style.display = 'none';
+        if (pwaHeroBtn) pwaHeroBtn.innerHTML = '<span>✅</span><span>已安裝為 App</span>';
+        deferredPrompt = null;
+      });
+
+      // 註冊 Service Worker (sw.js)
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js').then((registration) => {
+            console.log('[PWA] ServiceWorker 註冊成功，Scope:', registration.scope);
+          }).catch((err) => {
+            console.log('[PWA] ServiceWorker 註冊失敗:', err);
+          });
+        });
+      }
     });
   </script>
+
+  <!-- PWA Installation Guide Modal (iOS / Android / Desktop) -->
+  <div id="pwaGuideModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden transition-opacity duration-300">
+    <div class="bg-slate-900 border-2 border-purple-500/40 rounded-3xl p-6 sm:p-7 max-w-md w-full shadow-2xl space-y-4 relative">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl overflow-hidden border border-purple-400/40 p-0.5 bg-slate-950 shadow-md">
+            <img src="./icons/icon-192x192.png" class="w-full h-full object-cover rounded-lg" alt="App Icon">
+          </div>
+          <div>
+            <h3 class="font-black text-white text-base">將《房商智庫》設成 App</h3>
+            <p class="text-[11px] text-purple-300 font-medium">加入手機主畫面・全螢幕秒開體驗</p>
+          </div>
+        </div>
+        <button type="button" id="closePwaModal" class="w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center text-sm transition">✕</button>
+      </div>
+
+      <!-- Dynamic instructions based on platform -->
+      <div id="pwaGuideContent" class="space-y-3 text-xs text-slate-300 leading-relaxed">
+        <!-- Injected by JS -->
+      </div>
+
+      <div class="pt-2">
+        <button type="button" id="confirmPwaModal" class="w-full py-3 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-sky-600 hover:from-purple-500 hover:to-sky-500 text-white font-black text-xs sm:text-sm shadow-xl shadow-purple-500/25 transition cursor-pointer">
+          我知道了，立即體驗
+        </button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

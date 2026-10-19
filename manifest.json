@@ -1,0 +1,86 @@
+{
+  "name": "HOUSE TRADE STRATEGY｜房產交易策略與買房實戰雙師智庫",
+  "short_name": "房商智庫",
+  "description": "吳淡如《房商必修課》×「談判大叔」陳侯勳《房產剎價學》一站式買房決策、九把刀AI診斷、實登拆算與被動談判指揮中心",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#050811",
+  "theme_color": "#0f172a",
+  "categories": ["finance", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "./icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "吳淡如《房商必修課》",
+      "short_name": "吳淡如專區",
+      "description": "馬雞豬理論、五力分析、25年無限寬限之術與22部片單",
+      "url": "./吳淡如_房商必修課.html",
+      "icons": [
+        {
+          "src": "./icons/icon-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "「談判大叔」陳侯勳專區",
+      "short_name": "陳侯勳專區",
+      "description": "買房九把刀AI評分器、實價拆算打8折與被動談判話術",
+      "url": "./「談判大叔」陳侯勳｜買房投資與談判理論全集.html",
+      "icons": [
+        {
+          "src": "./icons/icon-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "第二屋實戰決策方案",
+      "short_name": "第二屋決策",
+      "description": "首購8成寬限期、第一屋科目一轉四、0050套利現金流試算",
+      "url": "./second_house.html",
+      "icons": [
+        {
+          "src": "./icons/icon-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "雙師聯合戰略試算儀",
+      "short_name": "戰略試算儀",
+      "description": "四階出價錨點、35%房貸收支紅線與+4300印鈔機試算",
+      "url": "./index.html#simulator-section",
+      "icons": [
+        {
+          "src": "./icons/icon-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}
