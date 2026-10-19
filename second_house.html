@@ -553,7 +553,159 @@
         </div>
       </div>
 
-      <!-- NEW: Rent-to-Loan 4,300 Formula & Wealth Management Mortgage Amount Chooser -->
+      <!-- NEW: Down Payment & Renovation Affordability & Cover Diagnostic Engine -->
+      <div class="p-5 rounded-2xl bg-gradient-to-r from-sky-500/10 via-slate-900/95 to-indigo-500/10 border-2 border-sky-500/40 shadow-xl space-y-4">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-800 pb-3">
+          <div class="flex items-center gap-2.5">
+            <span class="text-2xl">🎯</span>
+            <div>
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="font-black text-white text-sm sm:text-base">第二屋購屋力評估：自備款 ＆ 裝潢費反推買房總價與 Cover 壓力診斷</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-500/20 text-sky-300 border border-sky-500/30">首購 8 成 vs 二屋 5 成深度精算</span>
+              </div>
+              <p class="text-xs text-slate-300 mt-0.5">
+                輸入您的自有資金與裝潢家電預算，系統即時精算：<strong>「我最高能買多少總價的房子還 Cover 得過來？」</strong>以及<strong>「目前的目標總價現金與月付金能否安全自償？」</strong>
+              </p>
+            </div>
+          </div>
+          <div class="text-xs text-left md:text-right shrink-0">
+            <span class="text-slate-400">目前看中目標總價：</span>
+            <strong id="disp-eval-target-price" class="text-sky-400 font-mono-num font-bold text-sm sm:text-base">3,350 萬</strong>
+          </div>
+        </div>
+
+        <!-- 4 Down Payment & Renovation Input Controls -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+          <div class="p-3.5 rounded-2xl bg-slate-950/90 border border-sky-500/30">
+            <label for="inp-buyer-cash" class="block font-bold text-sky-300 mb-1">💰 手頭可用自備款 (萬)</label>
+            <input id="inp-buyer-cash" type="number" value="850" step="10" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-sky-300 font-mono-num font-bold text-sm focus:outline-none focus:border-sky-400" />
+            <span class="text-[10px] text-slate-400 mt-1 block">包含現有活存、股票變現等現金</span>
+          </div>
+          <div class="p-3.5 rounded-2xl bg-slate-950/90 border border-amber-500/30">
+            <label for="inp-renovation" class="block font-bold text-amber-300 mb-1">🛋️ 預估裝潢與家具家電 (萬)</label>
+            <input id="inp-renovation" type="number" value="150" step="10" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-amber-300 font-mono-num font-bold text-sm focus:outline-none focus:border-amber-400" />
+            <span class="text-[10px] text-slate-400 mt-1 block">新屋軟硬裝潢、冷氣與家電預算</span>
+          </div>
+          <div class="p-3.5 rounded-2xl bg-slate-950/90 border border-slate-800">
+            <label for="inp-reserve-fund" class="block font-bold text-emerald-300 mb-1">🛡️ 預留緊急預備金 (萬)</label>
+            <input id="inp-reserve-fund" type="number" value="50" step="10" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-emerald-300 font-mono-num font-bold text-sm focus:outline-none focus:border-emerald-400" />
+            <span class="text-[10px] text-slate-400 mt-1 block">交屋後戶頭保留的週轉金（可填0）</span>
+          </div>
+          <div class="p-3.5 rounded-2xl bg-slate-950/90 border border-slate-800">
+            <label for="inp-fee-rate" class="block font-bold text-purple-300 mb-1">📝 契稅代書等各項規費率 (%)</label>
+            <input id="inp-fee-rate" type="number" value="1.5" step="0.1" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-purple-300 font-mono-num font-bold text-sm focus:outline-none focus:border-purple-400" />
+            <span class="text-[10px] text-slate-400 mt-1 block">契稅、印花、地政登記、仲介等（約1.5%）</span>
+          </div>
+        </div>
+
+        <!-- 2 Main Analytical Panels: Affordability Capacity vs Current Target Cover Pressure -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+          <!-- Left 6 Cols: Affordability Max Price Calculation -->
+          <div class="lg:col-span-6 p-4 rounded-2xl bg-slate-950/90 border border-sky-500/30 flex flex-col justify-between space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+              <span class="font-bold text-sky-400 text-xs flex items-center gap-1.5">
+                <span>🏡 購屋上限反推：自備款到底能買多少總價？</span>
+              </span>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 font-bold">消除科目一首購8成</span>
+            </div>
+
+            <div class="space-y-2 text-xs">
+              <div class="p-3 rounded-xl bg-gradient-to-r from-emerald-500/15 to-slate-900 border border-emerald-500/30 space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-slate-300 font-bold">🎯 安全推薦購屋總價（預留預備金）：</span>
+                  <strong id="out-safe-h2-price" class="text-xl sm:text-2xl font-black text-emerald-400 font-mono-num">3,023 萬元</strong>
+                </div>
+                <div class="text-[11px] text-emerald-300/90 leading-relaxed flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <span>保留 <span id="disp-safe-reserve" class="font-mono-num font-bold">50</span> 萬備用金＋扣除裝潢規費後，首購 2 成可負擔總價</span>
+                  <button type="button" id="btn-apply-safe-price" class="shrink-0 px-2.5 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-[11px] shadow transition">
+                    👉 一鍵套用至目標價
+                  </button>
+                </div>
+              </div>
+
+              <div class="p-3 rounded-xl bg-gradient-to-r from-sky-500/15 to-slate-900 border border-sky-500/30 space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-slate-300 font-bold">🚀 極限衝刺購屋總價（零備用金全出）：</span>
+                  <strong id="out-extreme-h2-price" class="text-lg sm:text-xl font-black text-sky-400 font-mono-num">3,256 萬元</strong>
+                </div>
+                <div class="text-[11px] text-sky-300/90 leading-relaxed flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <span>自備款扣除裝潢與規費全部投入頭期款之極限能力</span>
+                  <button type="button" id="btn-apply-max-price" class="shrink-0 px-2.5 py-1 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 font-black text-[11px] shadow transition">
+                    🚀 一鍵套用至目標價
+                  </button>
+                </div>
+              </div>
+
+              <div class="p-2.5 rounded-xl bg-rose-950/30 border border-rose-500/30 text-[11px] text-slate-300 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+                <div>
+                  <span class="text-rose-400 font-bold">⚠️ 殘酷對照（卡二屋 5 成限制）：</span>
+                  <span class="text-slate-400">若未消除科目一僅能買</span>
+                  <strong id="out-second-50-price" class="text-rose-300 font-mono-num font-bold ml-1">約 1,262 萬</strong>
+                </div>
+                <div class="text-right text-[10px] text-amber-400 font-bold">
+                  作法1/3多釋放 <span id="out-leverage-gap" class="font-mono-num">+1,761 萬</span> 額度！
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right 6 Cols: Current Target Price Cover Pressure Diagnostic -->
+          <div class="lg:col-span-6 p-4 rounded-2xl bg-slate-950/90 border border-amber-500/30 flex flex-col justify-between space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+              <span class="font-bold text-amber-400 text-xs flex items-center gap-1.5">
+                <span>⚖️ 當前看中物件（<span id="disp-curr-target-price-title" class="font-mono-num">3,350萬</span>）能否 Cover 得過來？</span>
+              </span>
+              <span id="out-cash-status-badge" class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30">
+                ✅ 現金充足
+              </span>
+            </div>
+
+            <div class="space-y-2 text-xs text-slate-300">
+              <!-- Cash Balance vs Required Breakdown -->
+              <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                <div class="flex justify-between items-center">
+                  <span class="text-slate-400">• 購買此總價所需總現金（頭期+裝潢+規費）：</span>
+                  <strong id="out-total-cash-needed" class="font-mono-num text-white font-bold text-sm">870 萬元</strong>
+                </div>
+                <div class="flex justify-between text-[11px] text-slate-400 pl-2">
+                  <span>↳ 首購 2 成頭期 <strong id="out-h2-down-pure" class="text-slate-300 font-mono-num">670萬</strong> ＋ 裝潢 <strong id="out-renov-display" class="text-amber-300 font-mono-num">150萬</strong> ＋ 規費 <strong id="out-fee-display" class="text-purple-300 font-mono-num">50萬</strong></span>
+                </div>
+                <div class="flex justify-between items-center pt-1 border-t border-slate-800">
+                  <span class="font-bold">• 與現有自備款對比現金差額：</span>
+                  <strong id="out-cash-diff" class="font-mono-num text-emerald-400 font-bold text-sm">+30 萬元 (結餘)</strong>
+                </div>
+              </div>
+
+              <!-- Monthly Cashflow Payment & Rent Support -->
+              <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                <div class="flex justify-between items-center">
+                  <span>• 第二屋寬限期月付（利率 2.2%）：</span>
+                  <strong id="out-h2-raw-io" class="font-mono-num text-slate-300">49,133 元/月</strong>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span>• 第一屋淨支援（月租扣除科目四月息）：</span>
+                  <strong id="out-h1-support-display" class="font-mono-num text-emerald-400 font-bold">+5,333 元/月</strong>
+                </div>
+                <div class="flex justify-between items-center bg-amber-500/10 px-2 py-1 rounded-lg border border-amber-500/20">
+                  <span class="text-white font-semibold">• 經第一屋抵付後【實質自掏腰包】：</span>
+                  <strong id="out-real-monthly-io" class="font-mono-num text-amber-300 font-bold text-sm">43,800 元/月</strong>
+                </div>
+                <div class="flex justify-between text-[11px] text-slate-400">
+                  <span>• 30 年本息攤還實質自掏腰包：</span>
+                  <span id="out-real-monthly-pi" class="font-mono-num text-slate-300 font-bold">96,427 元/月</span>
+                </div>
+              </div>
+
+              <!-- Cover Verdict Box -->
+              <div id="out-cover-verdict" class="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-[11px] text-emerald-200 leading-relaxed">
+                <!-- Dynamically generated verdict text -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rent-to-Loan 4,300 Formula & Wealth Management Mortgage Amount Chooser -->
       <div class="p-5 rounded-2xl bg-gradient-to-r from-amber-500/10 via-slate-900/95 to-emerald-500/10 border-2 border-amber-500/40 shadow-xl space-y-4">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-800 pb-3">
           <div class="flex items-center gap-2.5">
@@ -746,6 +898,10 @@
                 <div class="flex justify-between">
                   <span>• 第二屋 30 年本息攤還月付金：</span>
                   <strong id="out-h2-pi" class="font-mono-num text-slate-300">101,760 元/月</strong>
+                </div>
+                <div class="flex justify-between bg-sky-500/10 px-2 py-1 rounded-lg border border-sky-500/20 font-bold">
+                  <span class="text-white">• 扣除第一屋租金支援後實質月付：</span>
+                  <strong id="out-h2-real-pay" class="font-mono-num text-sky-300">43,800 元/月</strong>
                 </div>
               </div>
               <div class="p-2.5 rounded-xl bg-sky-500/10 border border-sky-500/30 text-[11px] text-sky-200 leading-relaxed">
@@ -1054,11 +1210,115 @@
       const h2Io = Math.round(h2Loan80 * 10000 * mRate);
       const h2Pi = Math.round(h2Loan80 * 10000 * (mRate * Math.pow(1 + mRate, months)) / (Math.pow(1 + mRate, months) - 1));
 
+      // Net real out-of-pocket for House 2 after First House rent surplus/subsidy
+      const realH2MonthlyIo = Math.max(0, h2Io - netRentDiff);
+      const realH2MonthlyPi = Math.max(0, h2Pi - netRentDiff);
+
       document.getElementById('out-h2-loan80').textContent = `${h2Loan80.toLocaleString()} 萬 (自備 ${h2Down20.toLocaleString()}萬)`;
       document.getElementById('out-h2-loan50').textContent = `${h2Loan50.toLocaleString()} 萬 (自備 ${h2Down50.toLocaleString()}萬)`;
       document.getElementById('out-saved-down').textContent = `省下 ${savedDown.toLocaleString()} 萬現金！`;
       document.getElementById('out-h2-io').textContent = `${h2Io.toLocaleString()} 元/月`;
       document.getElementById('out-h2-pi').textContent = `${h2Pi.toLocaleString()} 元/月`;
+      const outH2RealPayEl = document.getElementById('out-h2-real-pay');
+      if (outH2RealPayEl) outH2RealPayEl.textContent = `${realH2MonthlyIo.toLocaleString()} 元/月`;
+
+      // -------------------------------------------------------------
+      // NEW: Down Payment & Renovation Affordability & Cover Diagnostics
+      // -------------------------------------------------------------
+      const buyerCash = parseFloat(document.getElementById('inp-buyer-cash')?.value) || 0;
+      const renovation = parseFloat(document.getElementById('inp-renovation')?.value) || 0;
+      const reserveFund = parseFloat(document.getElementById('inp-reserve-fund')?.value) || 0;
+      const feeRatePct = parseFloat(document.getElementById('inp-fee-rate')?.value) || 1.5;
+      const feeRate = feeRatePct / 100;
+
+      // 1. Capacity to purchase (Back-calculation from cash)
+      const netDownCashSafe = Math.max(0, buyerCash - renovation - reserveFund);
+      const netDownCashMax = Math.max(0, buyerCash - renovation);
+      const safeMaxH2Price = Math.round(netDownCashSafe / (0.20 + feeRate));
+      const extremeMaxH2Price = Math.round(netDownCashMax / (0.20 + feeRate));
+      const secondHouse50MaxPrice = Math.round(netDownCashSafe / (0.50 + feeRate));
+      const leverageGap = safeMaxH2Price - secondHouse50MaxPrice;
+
+      const outSafeH2PriceEl = document.getElementById('out-safe-h2-price');
+      if (outSafeH2PriceEl) outSafeH2PriceEl.textContent = `${safeMaxH2Price.toLocaleString()} 萬元`;
+      const outExtremeH2PriceEl = document.getElementById('out-extreme-h2-price');
+      if (outExtremeH2PriceEl) outExtremeH2PriceEl.textContent = `${extremeMaxH2Price.toLocaleString()} 萬元`;
+      const outSecond50PriceEl = document.getElementById('out-second-50-price');
+      if (outSecond50PriceEl) outSecond50PriceEl.textContent = `約 ${secondHouse50MaxPrice.toLocaleString()} 萬`;
+      const outLeverageGapEl = document.getElementById('out-leverage-gap');
+      if (outLeverageGapEl) outLeverageGapEl.textContent = `+${leverageGap.toLocaleString()} 萬`;
+      const dispSafeReserveEl = document.getElementById('disp-safe-reserve');
+      if (dispSafeReserveEl) dispSafeReserveEl.textContent = reserveFund;
+
+      // 2. Cover Pressure on Current Target Price (h2Price)
+      const dispEvalTargetEl = document.getElementById('disp-eval-target-price');
+      if (dispEvalTargetEl) dispEvalTargetEl.textContent = `${h2Price.toLocaleString()} 萬`;
+      const dispTargetTitleEl = document.getElementById('disp-curr-target-price-title');
+      if (dispTargetTitleEl) dispTargetTitleEl.textContent = `${h2Price.toLocaleString()} 萬`;
+
+      const pureDown20 = Math.round(h2Price * 0.20);
+      const pureFee = Math.round(h2Price * feeRate);
+      const totalCashNeeded = pureDown20 + renovation + pureFee;
+      const cashDiff = buyerCash - totalCashNeeded;
+
+      const outTotalCashNeededEl = document.getElementById('out-total-cash-needed');
+      if (outTotalCashNeededEl) outTotalCashNeededEl.textContent = `${totalCashNeeded.toLocaleString()} 萬元`;
+      const outH2DownPureEl = document.getElementById('out-h2-down-pure');
+      if (outH2DownPureEl) outH2DownPureEl.textContent = `${pureDown20.toLocaleString()}萬`;
+      const outRenovDisplayEl = document.getElementById('out-renov-display');
+      if (outRenovDisplayEl) outRenovDisplayEl.textContent = `${renovation.toLocaleString()}萬`;
+      const outFeeDisplayEl = document.getElementById('out-fee-display');
+      if (outFeeDisplayEl) outFeeDisplayEl.textContent = `${pureFee.toLocaleString()}萬`;
+
+      const cashStatusBadgeEl = document.getElementById('out-cash-status-badge');
+      const cashDiffEl = document.getElementById('out-cash-diff');
+      if (cashDiffEl) {
+        if (cashDiff >= 0) {
+          cashDiffEl.textContent = `+${cashDiff.toLocaleString()} 萬元 (充足結餘)`;
+          cashDiffEl.className = "font-mono-num text-emerald-400 font-bold text-sm";
+          if (cashStatusBadgeEl) {
+            cashStatusBadgeEl.className = "text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30";
+            cashStatusBadgeEl.textContent = `✅ 現金充足 (+${cashDiff}萬)`;
+          }
+        } else {
+          cashDiffEl.textContent = `-${Math.abs(cashDiff).toLocaleString()} 萬元 (資金缺口)`;
+          cashDiffEl.className = "font-mono-num text-rose-400 font-bold text-sm";
+          if (cashStatusBadgeEl) {
+            cashStatusBadgeEl.className = "text-[10px] px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold border border-rose-500/30";
+            cashStatusBadgeEl.textContent = `⚠️ 現金尚缺 -${Math.abs(cashDiff)}萬`;
+          }
+        }
+      }
+
+      const outH2RawIoEl = document.getElementById('out-h2-raw-io');
+      if (outH2RawIoEl) outH2RawIoEl.textContent = `${h2Io.toLocaleString()} 元/月`;
+      const outH1SupportEl = document.getElementById('out-h1-support-display');
+      if (outH1SupportEl) {
+        outH1SupportEl.textContent = netRentDiff >= 0 ? `+${netRentDiff.toLocaleString()} 元/月 (淨租金全額補貼)` : `${netRentDiff.toLocaleString()} 元/月 (第一屋月息需貼補)`;
+        outH1SupportEl.className = netRentDiff >= 0 ? "font-mono-num text-emerald-400 font-bold" : "font-mono-num text-amber-300 font-bold";
+      }
+      const outRealIoEl = document.getElementById('out-real-monthly-io');
+      if (outRealIoEl) outRealIoEl.textContent = `${realH2MonthlyIo.toLocaleString()} 元/月`;
+      const outRealPiEl = document.getElementById('out-real-monthly-pi');
+      if (outRealPiEl) outRealPiEl.textContent = `${realH2MonthlyPi.toLocaleString()} 元/月`;
+
+      // Diagnostic Verdict
+      const coverVerdictEl = document.getElementById('out-cover-verdict');
+      if (coverVerdictEl) {
+        const suggestMonthlyIncomeIo = Math.round((realH2MonthlyIo * 3) / 10000);
+        const suggestMonthlyIncomePi = Math.round((realH2MonthlyPi * 3) / 10000);
+
+        if (cashDiff >= 0) {
+          coverVerdictEl.className = "p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-[11px] text-emerald-200 leading-relaxed";
+          coverVerdictEl.innerHTML = `🎉 <strong>【完全 Cover 得過來・資金超穩健】：</strong>您的自備款（${buyerCash}萬）完全足以支付 <strong>${h2Price} 萬</strong>新房的 2 成頭期（${pureDown20}萬）、裝潢家電（${renovation}萬）與各項規費（${pureFee}萬），交屋後戶頭仍保有 <strong>+${cashDiff} 萬</strong> 餘裕！每月房貸經第一屋租金支援後，寬限期實質自付僅需 <strong>${realH2MonthlyIo.toLocaleString()} 元/月</strong>（建議家庭月收 ≥ ${suggestMonthlyIncomeIo} 萬即可無痛負擔）！`;
+        } else {
+          coverVerdictEl.className = "p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-[11px] text-amber-200 leading-relaxed";
+          coverVerdictEl.innerHTML = `💡 <strong>【頭期現金稍吃緊・教您如何順利 Cover】：</strong>買 <strong>${h2Price} 萬</strong>新房共需現金 ${totalCashNeeded} 萬，對比自備款尚缺 <strong>${Math.abs(cashDiff)} 萬</strong>。建議解法：<br>
+          1️⃣ <strong>點擊上方「一鍵套用安全總價（${safeMaxH2Price}萬）」</strong>，以您的自備款買進最無負擔；或<br>
+          2️⃣ <strong>微調裝潢預算</strong>（降至 ${(Math.max(0, renovation - Math.abs(cashDiff))).toFixed(0)} 萬）或動用作法 3 借新還舊轉科目四釋出之資金作為合法週轉金；<br>
+          3️⃣ 金流方面第一屋租金強力後援，寬限期實質自付僅需 <strong>${realH2MonthlyIo.toLocaleString()} 元/月</strong>，只要備妥交屋頭期款，後續月付完全 Cover 得過來！`;
+        }
+      }
 
       // 10-Year Net Worth Projection (Assuming 3% annual property appreciation)
       const propGrowth10Yr = Math.pow(1.03, 10); // ~1.3439
@@ -1199,7 +1459,7 @@
       initCanvas();
       updateSimulation();
 
-      ['inp-h1-val', 'inp-h1-loan', 'inp-h1-rent', 'inp-h2-price', 'inp-etf-return', 'inp-loan-rate'].forEach(id => {
+      ['inp-h1-val', 'inp-h1-loan', 'inp-h1-rent', 'inp-h2-price', 'inp-etf-return', 'inp-loan-rate', 'inp-buyer-cash', 'inp-renovation', 'inp-reserve-fund', 'inp-fee-rate'].forEach(id => {
         document.getElementById(id)?.addEventListener('input', updateSimulation);
       });
 
@@ -1214,6 +1474,35 @@
       numInputEl?.addEventListener('input', (e) => {
         if (rangeInputEl) rangeInputEl.value = e.target.value;
         updateSimulation();
+      });
+
+      document.getElementById('btn-apply-safe-price')?.addEventListener('click', () => {
+        const buyerCash = parseFloat(document.getElementById('inp-buyer-cash')?.value) || 0;
+        const renovation = parseFloat(document.getElementById('inp-renovation')?.value) || 0;
+        const reserveFund = parseFloat(document.getElementById('inp-reserve-fund')?.value) || 0;
+        const feeRate = (parseFloat(document.getElementById('inp-fee-rate')?.value) || 1.5) / 100;
+        const netDown = Math.max(0, buyerCash - renovation - reserveFund);
+        const safePrice = Math.round(netDown / (0.20 + feeRate));
+        const inpTargetEl = document.getElementById('inp-h2-price');
+        if (inpTargetEl) {
+          inpTargetEl.value = safePrice;
+          updateSimulation();
+          showToast(`已將第二屋目標價套用為安全推薦總價：${safePrice} 萬元！`);
+        }
+      });
+
+      document.getElementById('btn-apply-max-price')?.addEventListener('click', () => {
+        const buyerCash = parseFloat(document.getElementById('inp-buyer-cash')?.value) || 0;
+        const renovation = parseFloat(document.getElementById('inp-renovation')?.value) || 0;
+        const feeRate = (parseFloat(document.getElementById('inp-fee-rate')?.value) || 1.5) / 100;
+        const netDown = Math.max(0, buyerCash - renovation);
+        const maxPrice = Math.round(netDown / (0.20 + feeRate));
+        const inpTargetEl = document.getElementById('inp-h2-price');
+        if (inpTargetEl) {
+          inpTargetEl.value = maxPrice;
+          updateSimulation();
+          showToast(`已將第二屋目標價套用為極限衝刺總價：${maxPrice} 萬元！`);
+        }
       });
 
       document.getElementById('btn-preset-safe')?.addEventListener('click', () => {
@@ -1275,11 +1564,34 @@
         const etfAnnualGain = (etfPrincipal * etfReturn) / 100;
         const diffAdvantage = document.getElementById('out-10yr-advantage')?.textContent || '';
 
+        const buyerCash = parseFloat(document.getElementById('inp-buyer-cash')?.value) || 0;
+        const renovation = parseFloat(document.getElementById('inp-renovation')?.value) || 0;
+        const reserveFund = parseFloat(document.getElementById('inp-reserve-fund')?.value) || 0;
+        const feeRatePct = parseFloat(document.getElementById('inp-fee-rate')?.value) || 1.5;
+        const feeRate = feeRatePct / 100;
+        const netDownCashSafe = Math.max(0, buyerCash - renovation - reserveFund);
+        const safeMaxH2Price = Math.round(netDownCashSafe / (0.20 + feeRate));
+        const extremeMaxH2Price = Math.round(Math.max(0, buyerCash - renovation) / (0.20 + feeRate));
+        const pureDown20 = Math.round(h2Price * 0.20);
+        const pureFee = Math.round(h2Price * feeRate);
+        const totalCashNeeded = pureDown20 + renovation + pureFee;
+        const cashDiff = buyerCash - totalCashNeeded;
+        const h2Loan80 = Math.round(h2Price * 0.8);
+        const h2Io = Math.round(h2Loan80 * 10000 * ((2.2 / 100) / 12));
+        const realH2MonthlyIo = Math.max(0, h2Io - netRentDiff);
+
         const summaryText = `🏦【第二間購屋＆科目四財務槓桿決策總結】
 ━━━━━━━━━━━━━━━
 📌 目前資產底牌：
 • 第一屋鑑價：${h1Val.toLocaleString()} 萬 ｜ 原貸款：${h1Loan.toLocaleString()} 萬 ｜ 預估月租金：${h1Rent.toLocaleString()} 元
-• 第二屋目標：${h2Price.toLocaleString()} 萬（首購 8 成可貸 ${Math.round(h2Price * 0.8).toLocaleString()} 萬，自備僅需 ${Math.round(h2Price * 0.2).toLocaleString()} 萬）
+• 第二屋目標：${h2Price.toLocaleString()} 萬（首購 8 成可貸 ${h2Loan80.toLocaleString()} 萬，自備僅需 ${pureDown20.toLocaleString()} 萬）
+
+🎯【自備款 ＆ 裝潢費買房能力反推與 Cover 診斷】：
+• 可用自備款：${buyerCash} 萬 ｜ 裝潢家電預算：${renovation} 萬 ｜ 預留緊急金：${reserveFund} 萬
+• 首購 8 成安全推薦總價：${safeMaxH2Price.toLocaleString()} 萬（極限衝刺總價 ${extremeMaxH2Price.toLocaleString()} 萬）
+• 當前目標總價 (${h2Price}萬) 現金檢核：總需現金 ${totalCashNeeded.toLocaleString()} 萬（頭期 ${pureDown20}萬 + 裝潢 ${renovation}萬 + 規費 ${pureFee}萬）
+  ➔ 現金判定：${cashDiff >= 0 ? `充足結餘 +${cashDiff.toLocaleString()} 萬元` : `尚缺 -${Math.abs(cashDiff).toLocaleString()} 萬元`}
+• 第二屋寬限期實質月自付：${realH2MonthlyIo.toLocaleString()} 元/月（已由第一屋淨租金全額抵扣）
 
 💡【陳侯勳・每4,300元租金印鈔機＆科目四申貸決策】：
 • 您選擇申貸額度：${chosenLoan.toLocaleString()} 萬（利率 ${rate}%，每月只繳息 ${h1MonthlyInterest.toLocaleString()} 元）
