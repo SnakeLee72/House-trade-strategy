@@ -86,6 +86,9 @@
     ::-webkit-scrollbar-track { background: #050811; }
     ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #334155; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .mobile-scroll-x { -webkit-overflow-scrolling: touch; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col cyber-grid selection:bg-amber-400 selection:text-slate-950">
@@ -106,30 +109,60 @@
     </div>
   </div>
 
-  <!-- Sticky Cross-Page Navigation Header -->
-  <nav class="sticky top-0 z-50 bg-slate-950/85 backdrop-blur-xl border-b border-slate-800/80 text-white shadow-lg">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between gap-3 text-xs sm:text-sm">
-      <div class="flex items-center gap-3">
-        <a href="./index.html" class="inline-flex items-center gap-2 text-slate-300 hover:text-amber-400 font-bold transition group">
-          <span class="px-2.5 py-1 rounded-lg bg-slate-900 group-hover:bg-amber-500/20 text-amber-400 border border-slate-700 group-hover:border-amber-500/40 transition">
-            ⬅ 雙師總首頁
+  <!-- Sticky Cross-Page Navigation Header (支援選單左右滑動與下拉式選單) -->
+  <nav class="sticky top-0 z-50 bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/80 text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5">
+      <!-- Top Row: Logo / Back + Mobile Dropdown + Desktop Links -->
+      <div class="flex items-center justify-between gap-3 text-xs sm:text-sm">
+        <div class="flex items-center gap-2 shrink-0">
+          <a href="./index.html" class="inline-flex items-center gap-1.5 text-slate-300 hover:text-amber-400 font-bold transition group">
+            <span class="px-2.5 py-1 rounded-lg bg-slate-900 group-hover:bg-amber-500/20 text-amber-400 border border-slate-700 group-hover:border-amber-500/40 transition">
+              🏛️ 總首頁
+            </span>
+            <span class="hidden md:inline text-slate-300 group-hover:text-white">指揮中心</span>
+          </a>
+        </div>
+
+        <!-- Mobile Dropdown Selector (支援下拉式選單) -->
+        <div class="sm:hidden flex-1 max-w-[210px]">
+          <select id="mobilePageNavSelect" class="w-full bg-slate-900 text-emerald-300 border border-emerald-500/40 rounded-xl px-2.5 py-1.5 text-xs font-bold focus:outline-none focus:ring-1 focus:ring-emerald-400 cursor-pointer shadow-sm" aria-label="切換專區選單">
+            <option value="./index.html">🏛️ 總首頁 (雙師指揮中心)</option>
+            <option value="./吳淡如_房商必修課.html">🐎 吳淡如《房商必修課》</option>
+            <option value="./「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261019_03">🗡️ 陳侯勳《房產剎價學》</option>
+            <option value="./second_house.html" selected>🏦 第二屋決策 (本頁)</option>
+          </select>
+        </div>
+
+        <!-- Desktop Nav Items -->
+        <div class="hidden sm:flex items-center gap-2">
+          <a href="./吳淡如_房商必修課.html" class="px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 bg-slate-900 text-amber-300 hover:bg-amber-500 hover:text-slate-950 border border-amber-500/30">
+            <span>🐎</span>
+            <span>吳淡如《房商必修課》</span>
+          </a>
+          <a href="./「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261019_03" class="px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 bg-slate-900 text-sky-300 hover:bg-sky-400 hover:text-slate-950 border border-sky-500/30">
+            <span>🗡️</span>
+            <span>陳侯勳《房產剎價學》</span>
+          </a>
+          <span class="px-3 py-1.5 rounded-xl font-black flex items-center gap-1.5 bg-gradient-to-r from-emerald-400 to-sky-400 text-slate-950 shadow-md">
+            <span>🏦</span>
+            <span>第二屋決策 (V3統一模型)</span>
           </span>
-          <span class="hidden md:inline text-slate-300 group-hover:text-white">HOUSE TRADE STRATEGY 指揮中心</span>
-        </a>
+        </div>
       </div>
 
-      <div class="flex items-center gap-2">
-        <a href="./吳淡如_房商必修課.html" class="px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 bg-slate-900 text-amber-300 hover:bg-amber-500 hover:text-slate-950 border border-amber-500/30">
-          <span>🐎</span>
-          <span class="hidden sm:inline">吳淡如《房商必修課》</span>
+      <!-- Mobile Horizontal Scrollable Pill Bar (選單左右移動) -->
+      <div class="sm:hidden flex items-center gap-2 pt-2 mt-2 border-t border-slate-800/80 overflow-x-auto whitespace-nowrap no-scrollbar mobile-scroll-x">
+        <a href="./index.html" class="shrink-0 px-3 py-1 rounded-lg text-xs font-bold bg-slate-900 text-slate-300 border border-slate-800 hover:text-white transition">
+          🏛️ 總首頁
         </a>
-        <a href="./「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261019_03" class="px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 bg-slate-900 text-sky-300 hover:bg-sky-400 hover:text-slate-950 border border-sky-500/30">
-          <span>🗡️</span>
-          <span class="hidden sm:inline">陳侯勳《房產剎價學》</span>
+        <a href="./吳淡如_房商必修課.html" class="shrink-0 px-3 py-1 rounded-lg text-xs font-bold bg-slate-900 text-amber-300 border border-amber-500/30 hover:bg-amber-500 hover:text-slate-950 transition">
+          🐎 吳淡如專區 ↗
         </a>
-        <span class="px-3 py-1.5 rounded-xl font-black flex items-center gap-1.5 bg-gradient-to-r from-emerald-400 to-sky-400 text-slate-950 shadow-md">
-          <span>🏦</span>
-          <span>第二屋決策 (V3統一模型)</span>
+        <a href="./「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261019_03" class="shrink-0 px-3 py-1 rounded-lg text-xs font-bold bg-slate-900 text-sky-300 border border-sky-500/30 hover:bg-sky-400 hover:text-slate-950 transition">
+          🗡️ 陳侯勳專區 ↗
+        </a>
+        <span class="shrink-0 px-3 py-1 rounded-lg text-xs font-black bg-gradient-to-r from-emerald-400 to-sky-400 text-slate-950 shadow-sm">
+          🏦 第二屋決策 (本頁)
         </span>
       </div>
     </div>
@@ -154,14 +187,14 @@
             您的第一間房從 <strong>1,420 萬漲至 2,000 萬</strong>，且房貸僅剩 <strong>450 萬</strong>（淨值高達 <strong>1,550 萬</strong>，負債比僅 22.5%）。本 V3 版已將<strong>「初始資金池、裝潢規費、有效淨租金折算、科目四動態利率、央行名下有房無寬限期規範，以及 10 年本息攤還餘額」</strong>整合為單一連動模型。
           </p>
         </div>
-        <div class="flex flex-wrap gap-2 shrink-0">
-          <a href="#ranking-section" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs sm:text-sm transition shadow-lg shadow-amber-500/20">
+        <div class="flex items-center gap-2 overflow-x-auto whitespace-nowrap no-scrollbar py-1 mobile-scroll-x shrink-0 w-full lg:w-auto">
+          <a href="#ranking-section" class="shrink-0 px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs sm:text-sm transition shadow-lg shadow-amber-500/20">
             🏆 看 4 大方案優先順序
           </a>
-          <a href="#matrix-section" class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-sky-300 border border-sky-500/40 font-bold text-xs sm:text-sm transition">
+          <a href="#matrix-section" class="shrink-0 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-sky-300 border border-sky-500/40 font-bold text-xs sm:text-sm transition">
             📊 看完整比較總表
           </a>
-          <a href="#simulator-section" class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-emerald-300 border border-emerald-500/40 font-bold text-xs sm:text-sm transition">
+          <a href="#simulator-section" class="shrink-0 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-emerald-300 border border-emerald-500/40 font-bold text-xs sm:text-sm transition">
             🧮 V3 統一財務模擬器
           </a>
         </div>
@@ -336,6 +369,9 @@
         <button type="button" id="btn-copy-summary" class="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs flex items-center gap-1.5 shadow-lg shadow-emerald-500/20 transition shrink-0">
           <span>📋 複製 V3 完整分析報告 (LINE格式)</span>
         </button>
+      <!-- Mobile Horizontal Scroll Hint -->
+      <div class="sm:hidden text-center text-xs text-amber-400 font-bold py-1.5 px-3 bg-amber-500/10 border border-amber-500/20 rounded-xl mb-3 shadow-sm">
+        👈 左右滑動查看四大方案完整比較總表 👉
       </div>
 
       <div class="overflow-x-auto">
@@ -479,13 +515,21 @@
         </div>
 
         <!-- NEW: Borrower Identity Switcher (Central Bank 7th Wave Calibration) -->
-        <div class="p-2.5 rounded-2xl bg-slate-950 border border-purple-500/40 flex flex-col sm:flex-row sm:items-center gap-2 shrink-0">
-          <span class="text-xs font-bold text-purple-300 px-1">👤 第二屋買方與借款人名義：</span>
-          <div class="flex items-center gap-1.5">
-            <button type="button" id="btn-buyer-spouse" class="px-3 py-1.5 rounded-xl text-xs font-black bg-purple-500 text-slate-950 shadow transition">
+        <div class="p-2.5 rounded-2xl bg-slate-950 border border-purple-500/40 flex flex-col sm:flex-row sm:items-center gap-2 shrink-0 w-full lg:w-auto">
+          <span class="text-xs font-bold text-purple-300 px-1 shrink-0">👤 第二屋買方名義：</span>
+          <!-- Mobile Dropdown Selector (支援下拉式選單) -->
+          <div class="sm:hidden w-full">
+            <select id="mobileBorrowerSelect" class="w-full bg-slate-900 text-purple-200 border border-purple-500/50 rounded-xl px-3 py-2 text-xs font-bold focus:outline-none focus:ring-1 focus:ring-purple-400 cursor-pointer shadow-sm" aria-label="借款人名義下拉選單">
+              <option value="spouse" selected>👩‍❤️‍👨 配偶名下無房首購 (享8成+寬限期)</option>
+              <option value="self">🙋‍♂️ 本人名下有第一屋 (8成但無寬限期)</option>
+            </select>
+          </div>
+          <!-- Desktop / Tablet Buttons (選單左右滑動支援) -->
+          <div class="hidden sm:flex items-center gap-1.5 overflow-x-auto whitespace-nowrap no-scrollbar mobile-scroll-x" id="buyer-btn-group">
+            <button type="button" id="btn-buyer-spouse" class="shrink-0 px-3 py-1.5 rounded-xl text-xs font-black bg-purple-500 text-slate-950 shadow transition">
               👩‍❤️‍👨 配偶名下無房首購 (享8成+寬限期)
             </button>
-            <button type="button" id="btn-buyer-self" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-700 transition">
+            <button type="button" id="btn-buyer-self" class="shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-700 transition">
               🙋‍♂️ 本人名下有第一屋 (8成但無寬限期)
             </button>
           </div>
@@ -807,13 +851,23 @@
         <!-- Loan Configuration Interactive Bar -->
         <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3 text-xs">
           <div class="p-3.5 rounded-2xl bg-slate-950/90 border border-purple-500/30 col-span-2 sm:col-span-2 lg:col-span-2 space-y-2">
-            <div class="flex items-center justify-between">
-              <label for="inp-loan-calc-amt" class="font-bold text-purple-300">🏦 第二屋貸款本金 (萬元)</label>
-              <div class="flex items-center gap-1" id="ltv-btn-group">
-                <button type="button" data-ltv="0.80" id="btn-ltv-80" class="ltv-btn px-2 py-0.5 rounded text-[10px] bg-purple-500 text-slate-950 font-black border border-purple-400 transition">8成(首購)</button>
-                <button type="button" data-ltv="0.75" id="btn-ltv-75" class="ltv-btn px-2 py-0.5 rounded text-[10px] bg-slate-900 text-slate-400 hover:text-slate-200 font-bold border border-slate-700 transition">7.5成</button>
-                <button type="button" data-ltv="0.70" id="btn-ltv-70" class="ltv-btn px-2 py-0.5 rounded text-[10px] bg-slate-900 text-slate-400 hover:text-slate-200 font-bold border border-slate-700 transition">7成</button>
-                <button type="button" data-ltv="0.50" id="btn-ltv-50" class="ltv-btn px-2 py-0.5 rounded text-[10px] bg-rose-500/20 text-rose-300 hover:bg-rose-500/40 font-bold border border-rose-500/30 transition">5成(二屋)</button>
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+              <label for="inp-loan-calc-amt" class="font-bold text-purple-300 shrink-0">🏦 第二屋貸款本金 (萬元)</label>
+              <!-- Mobile Dropdown Selector (支援下拉式選單) -->
+              <div class="sm:hidden w-full">
+                <select id="mobileLtvSelect" class="w-full bg-slate-900 text-purple-200 border border-purple-500/40 rounded-lg px-2.5 py-1 text-xs font-bold focus:outline-none focus:ring-1 focus:ring-purple-400 cursor-pointer shadow-sm" aria-label="切換成數選單">
+                  <option value="0.80" selected>8成 (首購標準 80%)</option>
+                  <option value="0.75">7.5成 (75%)</option>
+                  <option value="0.70">7成 (70%)</option>
+                  <option value="0.50">5成 (第二屋限貸 50%)</option>
+                </select>
+              </div>
+              <!-- Horizontal Scrollable Buttons (選單左右移動) -->
+              <div class="hidden sm:flex items-center gap-1 overflow-x-auto whitespace-nowrap no-scrollbar mobile-scroll-x" id="ltv-btn-group">
+                <button type="button" data-ltv="0.80" id="btn-ltv-80" class="ltv-btn shrink-0 px-2 py-0.5 rounded text-[10px] bg-purple-500 text-slate-950 font-black border border-purple-400 transition">8成(首購)</button>
+                <button type="button" data-ltv="0.75" id="btn-ltv-75" class="ltv-btn shrink-0 px-2 py-0.5 rounded text-[10px] bg-slate-900 text-slate-400 hover:text-slate-200 font-bold border border-slate-700 transition">7.5成</button>
+                <button type="button" data-ltv="0.70" id="btn-ltv-70" class="ltv-btn shrink-0 px-2 py-0.5 rounded text-[10px] bg-slate-900 text-slate-400 hover:text-slate-200 font-bold border border-slate-700 transition">7成</button>
+                <button type="button" data-ltv="0.50" id="btn-ltv-50" class="ltv-btn shrink-0 px-2 py-0.5 rounded text-[10px] bg-rose-500/20 text-rose-300 hover:bg-rose-500/40 font-bold border border-rose-500/30 transition">5成(二屋)</button>
               </div>
             </div>
             <input id="inp-loan-calc-amt" type="number" value="2680" step="10" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-purple-300 font-mono-num font-bold text-sm focus:outline-none focus:border-purple-400" />
@@ -1179,13 +1233,20 @@
       document.querySelectorAll('.ltv-btn').forEach(btn => {
         const f = parseFloat(btn.getAttribute('data-ltv'));
         if (Math.abs(f - activeFactor) < 0.01) {
-          btn.className = 'ltv-btn px-2 py-0.5 rounded text-[10px] bg-purple-500 text-slate-950 font-black border border-purple-400 transition shadow';
+          btn.className = 'ltv-btn shrink-0 px-2 py-0.5 rounded text-[10px] bg-purple-500 text-slate-950 font-black border border-purple-400 transition shadow';
         } else if (f === 0.50) {
-          btn.className = 'ltv-btn px-2 py-0.5 rounded text-[10px] bg-rose-500/20 text-rose-300 hover:bg-rose-500/40 font-bold border border-rose-500/30 transition';
+          btn.className = 'ltv-btn shrink-0 px-2 py-0.5 rounded text-[10px] bg-rose-500/20 text-rose-300 hover:bg-rose-500/40 font-bold border border-rose-500/30 transition';
         } else {
-          btn.className = 'ltv-btn px-2 py-0.5 rounded text-[10px] bg-slate-900 text-slate-400 hover:text-slate-200 font-bold border border-slate-700 transition';
+          btn.className = 'ltv-btn shrink-0 px-2 py-0.5 rounded text-[10px] bg-slate-900 text-slate-400 hover:text-slate-200 font-bold border border-slate-700 transition';
         }
       });
+      const mobileLtvSelect = document.getElementById('mobileLtvSelect');
+      if (mobileLtvSelect) {
+        const matched = [0.80, 0.75, 0.70, 0.50].find(f => Math.abs(f - activeFactor) < 0.01);
+        if (matched !== undefined && mobileLtvSelect.value !== matched.toFixed(2)) {
+          mobileLtvSelect.value = matched.toFixed(2);
+        }
+      }
     }
 
     function drawFallbackBarChart(values) {
@@ -1692,6 +1753,14 @@
         if (!strategyChartInstance) updateSimulation();
       });
 
+      // Cross-Page Mobile Navigation Select
+      const mobilePageNavSelect = document.getElementById('mobilePageNavSelect');
+      if (mobilePageNavSelect) {
+        mobilePageNavSelect.addEventListener('change', (e) => {
+          if (e.target.value) window.location.href = e.target.value;
+        });
+      }
+
       // Borrower Identity Switcher
       const btnSpouse = document.getElementById('btn-buyer-spouse');
       const btnSelf = document.getElementById('btn-buyer-self');
@@ -1699,36 +1768,46 @@
       const cbText = document.getElementById('cb-rule-text');
       const graceSel = document.getElementById('sel-h2-grace-years');
       const graceHint = document.getElementById('grace-hint-text');
+      const mobileBorrowerSelect = document.getElementById('mobileBorrowerSelect');
 
-      btnSpouse?.addEventListener('click', () => {
-        buyerMode = 'spouse';
-        btnSpouse.className = 'px-3 py-1.5 rounded-xl text-xs font-black bg-purple-500 text-slate-950 shadow transition';
-        btnSelf.className = 'px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-700 transition';
-        if (graceSel) {
-          graceSel.disabled = false;
-          graceSel.value = '3';
+      function switchBuyerMode(mode) {
+        buyerMode = mode;
+        if (mode === 'spouse') {
+          if (btnSpouse) btnSpouse.className = 'shrink-0 px-3 py-1.5 rounded-xl text-xs font-black bg-purple-500 text-slate-950 shadow transition';
+          if (btnSelf) btnSelf.className = 'shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-700 transition';
+          if (graceSel) {
+            graceSel.disabled = false;
+            graceSel.value = '3';
+          }
+          if (graceHint) graceHint.textContent = '配偶無房首購可爭取 3~5 年';
+          if (cbBanner) cbBanner.className = 'p-3.5 rounded-2xl bg-purple-500/10 border border-purple-500/30 text-xs text-purple-200 flex items-start gap-2.5 leading-relaxed';
+          if (cbText) cbText.innerHTML = '<strong>【央行第七波授信校準：配偶名下無房首購模式】</strong> 當第一屋消除「科目一」或登記於您名下，並由<strong>「名下無自有住宅之配偶」</strong>擔任第二屋買方與借款人（或先將第一屋夫妻贈與過戶予配偶），第二屋即可合法享有<strong>最高 8 成貸款 ＋ 3~5 年寬限期</strong>！';
+          showToast('已切換為【配偶名下無房首購】模式：啟用 8 成 ＋ 3 年寬限期');
+        } else {
+          if (btnSelf) btnSelf.className = 'shrink-0 px-3 py-1.5 rounded-xl text-xs font-black bg-amber-500 text-slate-950 shadow transition';
+          if (btnSpouse) btnSpouse.className = 'shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-700 transition';
+          if (graceSel) {
+            graceSel.value = '0';
+            graceSel.disabled = true;
+          }
+          if (graceHint) graceHint.textContent = '⚠️ 名下有房受央行管制無寬限期';
+          if (cbBanner) cbBanner.className = 'p-3.5 rounded-2xl bg-amber-500/15 border border-amber-500/40 text-xs text-amber-200 flex items-start gap-2.5 leading-relaxed';
+          if (cbText) cbText.innerHTML = '<strong>⚠️【央行第七波授信警示：本人名下已有第一屋模式】</strong> 即使您已塗銷第一屋 450 萬「科目一」（名下無房貸），使第二屋可貸 <strong>8 成</strong>；但因您本人名下仍持有第一屋產權，依央行第七波信用管制規定，<strong>新申辦之第 1 戶購屋貸款「不得有寬限期（寬限期強制鎖定為 0 年）」</strong>！建議改由名下無房之配偶購買以取得寬限期。';
+          showToast('已切換為【本人名下有第一屋】模式：依央行規範鎖定無寬限期');
         }
-        if (graceHint) graceHint.textContent = '配偶無房首購可爭取 3~5 年';
-        cbBanner.className = 'p-3.5 rounded-2xl bg-purple-500/10 border border-purple-500/30 text-xs text-purple-200 flex items-start gap-2.5 leading-relaxed';
-        cbText.innerHTML = '<strong>【央行第七波授信校準：配偶名下無房首購模式】</strong> 當第一屋消除「科目一」或登記於您名下，並由<strong>「名下無自有住宅之配偶」</strong>擔任第二屋買方與借款人（或先將第一屋夫妻贈與過戶予配偶），第二屋即可合法享有<strong>最高 8 成貸款 ＋ 3~5 年寬限期</strong>！';
+        if (mobileBorrowerSelect && mobileBorrowerSelect.value !== mode) {
+          mobileBorrowerSelect.value = mode;
+        }
         updateSimulation();
-        showToast('已切換為【配偶名下無房首購】模式：啟用 8 成 ＋ 3 年寬限期');
-      });
+      }
 
-      btnSelf?.addEventListener('click', () => {
-        buyerMode = 'self';
-        btnSelf.className = 'px-3 py-1.5 rounded-xl text-xs font-black bg-amber-500 text-slate-950 shadow transition';
-        btnSpouse.className = 'px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-700 transition';
-        if (graceSel) {
-          graceSel.value = '0';
-          graceSel.disabled = true;
-        }
-        if (graceHint) graceHint.textContent = '⚠️ 名下有房受央行管制無寬限期';
-        cbBanner.className = 'p-3.5 rounded-2xl bg-amber-500/15 border border-amber-500/40 text-xs text-amber-200 flex items-start gap-2.5 leading-relaxed';
-        cbText.innerHTML = '<strong>⚠️【央行第七波授信警示：本人名下已有第一屋模式】</strong> 即使您已塗銷第一屋 450 萬「科目一」（名下無房貸），使第二屋可貸 <strong>8 成</strong>；但因您本人名下仍持有第一屋產權，依央行第七波信用管制規定，<strong>新申辦之第 1 戶購屋貸款「不得有寬限期（寬限期強制鎖定為 0 年）」</strong>！建議改由名下無房之配偶購買以取得寬限期。';
-        updateSimulation();
-        showToast('已切換為【本人名下有第一屋】模式：依央行規範鎖定無寬限期');
-      });
+      btnSpouse?.addEventListener('click', () => switchBuyerMode('spouse'));
+      btnSelf?.addEventListener('click', () => switchBuyerMode('self'));
+      if (mobileBorrowerSelect) {
+        mobileBorrowerSelect.addEventListener('change', (e) => {
+          if (e.target.value) switchBuyerMode(e.target.value);
+        });
+      }
 
       const h2PriceEl = document.getElementById('inp-h2-price');
       h2PriceEl?.addEventListener('input', () => {
@@ -1744,6 +1823,7 @@
         }
       });
 
+      const mobileLtvSelect = document.getElementById('mobileLtvSelect');
       const setLtvLoan = (factor, label) => {
         currentLtvFactor = factor;
         const h2Price = numericInput('inp-h2-price', 3350);
@@ -1754,12 +1834,21 @@
           updateSimulation();
           showToast(`已套用【${label}】貸款本金：${targetLoan} 萬元`);
         }
+        updateLtvButtonStyles(factor);
       };
 
       document.getElementById('btn-ltv-80')?.addEventListener('click', () => setLtvLoan(0.80, '8成 (首購)'));
       document.getElementById('btn-ltv-75')?.addEventListener('click', () => setLtvLoan(0.75, '7.5成'));
       document.getElementById('btn-ltv-70')?.addEventListener('click', () => setLtvLoan(0.70, '7成'));
       document.getElementById('btn-ltv-50')?.addEventListener('click', () => setLtvLoan(0.50, '5成 (二屋)'));
+
+      if (mobileLtvSelect) {
+        mobileLtvSelect.addEventListener('change', (e) => {
+          const val = parseFloat(e.target.value);
+          const labelMap = { '0.80': '8成 (首購)', '0.75': '7.5成', '0.70': '7成', '0.50': '5成 (二屋)' };
+          setLtvLoan(val, labelMap[e.target.value] || `${(val * 100).toFixed(0)}成`);
+        });
+      }
 
       const numInputEl = document.getElementById('inp-t4-loan');
       const rangeInputEl = document.getElementById('range-t4-loan');

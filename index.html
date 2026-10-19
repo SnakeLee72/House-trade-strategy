@@ -107,6 +107,14 @@
     ::-webkit-scrollbar-track { background: #050811; }
     ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #334155; }
+    /* Hide scrollbar for clean horizontal mobile menus */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .mobile-scroll-x {
+      overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col cyber-grid selection:bg-amber-500 selection:text-slate-950">
@@ -132,21 +140,21 @@
 
   <!-- Sticky Navigation Header -->
   <header class="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/85 backdrop-blur-xl">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
-      <a href="index.html" class="flex items-center gap-3 hover:opacity-90 transition">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 via-amber-500 to-sky-500 p-[1px] shadow-lg shadow-amber-500/20">
-          <div class="w-full h-full bg-slate-950 rounded-[11px] flex items-center justify-center text-lg">🏛️</div>
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2 sm:gap-4">
+      <a href="index.html" class="flex items-center gap-2.5 sm:gap-3 hover:opacity-90 transition shrink-0">
+        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-400 via-amber-500 to-sky-500 p-[1px] shadow-lg shadow-amber-500/20 shrink-0">
+          <div class="w-full h-full bg-slate-950 rounded-[11px] flex items-center justify-center text-base sm:text-lg">🏛️</div>
         </div>
         <div>
-          <div class="flex items-center gap-2">
-            <span class="font-black text-white text-sm sm:text-base tracking-tight">HOUSE TRADE STRATEGY</span>
+          <div class="flex items-center gap-1.5 sm:gap-2">
+            <span class="font-black text-white text-xs sm:text-base tracking-tight">HOUSE TRADE STRATEGY</span>
             <span class="hidden md:inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">雙師戰略指揮中心</span>
           </div>
           <div class="text-[11px] text-slate-400 hidden sm:block">吳淡如《房商必修課》 × 「談判大叔」陳侯勳《房產剎價學》</div>
         </div>
       </a>
 
-      <!-- Quick Jump Links -->
+      <!-- Quick Jump Links (Desktop) -->
       <nav class="hidden xl:flex items-center gap-5 text-xs font-semibold text-slate-300">
         <a href="#portal-section" class="hover:text-amber-400 transition">雙師入口</a>
         <a href="#second-house-case" class="hover:text-emerald-400 transition">🏦 第二屋實戰決策</a>
@@ -156,25 +164,75 @@
         <a href="#matrix-section" class="hover:text-amber-400 transition">深度對照表</a>
       </nav>
 
-      <!-- Direct Portal Buttons -->
-      <div class="flex items-center gap-2">
-        <button id="pwaInstallBtn" type="button" class="px-3 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-sky-600 hover:from-purple-500 hover:to-sky-500 text-white font-black text-xs sm:text-sm transition flex items-center gap-1.5 shadow-lg shadow-purple-500/25 border border-purple-400/40 cursor-pointer" title="將房商智庫安裝至桌面或手機主畫面">
+      <!-- Direct Portal Buttons & Mobile Dropdown Controls -->
+      <div class="flex items-center gap-1.5 sm:gap-2">
+        <button id="pwaInstallBtn" type="button" class="px-2.5 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-sky-600 hover:from-purple-500 hover:to-sky-500 text-white font-black text-xs sm:text-sm transition flex items-center gap-1 shadow-lg shadow-purple-500/25 border border-purple-400/40 cursor-pointer shrink-0" title="將房商智庫安裝至桌面或手機主畫面">
           <span>📲</span>
-          <span class="hidden md:inline">下載設成</span><span>App</span>
+          <span class="hidden sm:inline">下載設成</span><span>App</span>
         </button>
-        <a href="吳淡如_房商必修課.html" class="px-3 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs sm:text-sm transition flex items-center gap-1.5 shadow-lg shadow-amber-500/20">
-          <span>🐎 吳淡如專區</span>
-          <span>↗</span>
-        </a>
-        <a href="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261019_03" class="px-3 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-sky-400 to-sky-600 hover:from-sky-300 hover:to-sky-500 text-slate-950 font-black text-xs sm:text-sm transition flex items-center gap-1.5 shadow-lg shadow-sky-500/20">
-          <span>🗡️ 陳侯勳專區</span>
-          <span>↗</span>
-        </a>
-        <a href="second_house.html" class="px-3 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-300 hover:to-teal-400 text-slate-950 font-black text-xs sm:text-sm transition flex items-center gap-1.5 shadow-lg shadow-emerald-500/20">
-          <span>🏦 第二屋實戰</span>
-          <span>↗</span>
-        </a>
+
+        <!-- Mobile Quick Jump Dropdown Menu (支援下拉式選單) -->
+        <div class="md:hidden relative shrink-0">
+          <select id="mobileHeaderJump" class="bg-slate-900 text-amber-300 border border-slate-700 hover:border-amber-500/50 text-xs font-bold rounded-xl px-2.5 py-2 pr-7 appearance-none focus:outline-none focus:ring-1 focus:ring-amber-500 cursor-pointer max-w-[130px] sm:max-w-none truncate" aria-label="手機快速導覽下拉選單">
+            <option value="">☰ 快速選單 ▾</option>
+            <option value="吳淡如_房商必修課.html">🐎 吳淡如《房商必修課》</option>
+            <option value="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261019_03">🗡️ 陳侯勳《房產剎價學》</option>
+            <option value="second_house.html">🏦 第二屋實戰決策</option>
+            <option value="#portal-section">🏛️ 雙師入口介紹</option>
+            <option value="#second-house-case">💡 第一屋增值580萬案例</option>
+            <option value="#simulator-section">⚡ 聯合戰略試算儀</option>
+            <option value="#pillars-section">🧭 買房四大支柱</option>
+            <option value="#charts-section">📊 雙流派戰力圖譜</option>
+            <option value="#matrix-section">📋 深度對照矩陣</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-1.5 text-amber-400 text-[10px]">▼</div>
+        </div>
+
+        <!-- Desktop Direct Portal Buttons -->
+        <div class="hidden md:flex items-center gap-2">
+          <a href="吳淡如_房商必修課.html" class="px-3 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs sm:text-sm transition flex items-center gap-1.5 shadow-lg shadow-amber-500/20">
+            <span>🐎 吳淡如專區</span>
+            <span>↗</span>
+          </a>
+          <a href="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261019_03" class="px-3 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-sky-400 to-sky-600 hover:from-sky-300 hover:to-sky-500 text-slate-950 font-black text-xs sm:text-sm transition flex items-center gap-1.5 shadow-lg shadow-sky-500/20">
+            <span>🗡️ 陳侯勳專區</span>
+            <span>↗</span>
+          </a>
+          <a href="second_house.html" class="px-3 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-300 hover:to-teal-400 text-slate-950 font-black text-xs sm:text-sm transition flex items-center gap-1.5 shadow-lg shadow-emerald-500/20">
+            <span>🏦 第二屋實戰</span>
+            <span>↗</span>
+          </a>
+        </div>
       </div>
+    </div>
+
+    <!-- Mobile Horizontal Scrolling Pill Bar (選單左右移動) -->
+    <div class="md:hidden border-t border-slate-800/90 bg-slate-950/95 px-3 py-2 flex items-center gap-2 overflow-x-auto whitespace-nowrap no-scrollbar mobile-scroll-x" aria-label="手機橫向滑動選單">
+      <span class="text-[10px] font-bold text-slate-400 shrink-0">快速跳轉 ➔</span>
+      <a href="吳淡如_房商必修課.html" class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 text-xs font-bold shrink-0 flex items-center gap-1">
+        <span>🐎 吳淡如專區 ↗</span>
+      </a>
+      <a href="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261019_03" class="px-3 py-1.5 rounded-lg bg-sky-500/20 text-sky-300 border border-sky-500/40 text-xs font-bold shrink-0 flex items-center gap-1">
+        <span>🗡️ 陳侯勳專區 ↗</span>
+      </a>
+      <a href="second_house.html" class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs font-bold shrink-0 flex items-center gap-1">
+        <span>🏦 第二屋決策 ↗</span>
+      </a>
+      <a href="#second-house-case" class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 border border-slate-700 text-xs font-semibold shrink-0">
+        <span>💡 專屬案例</span>
+      </a>
+      <a href="#simulator-section" class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 border border-slate-700 text-xs font-semibold shrink-0">
+        <span>⚡ 聯合試算儀</span>
+      </a>
+      <a href="#pillars-section" class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 border border-slate-700 text-xs font-semibold shrink-0">
+        <span>🧭 四大支柱</span>
+      </a>
+      <a href="#charts-section" class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 border border-slate-700 text-xs font-semibold shrink-0">
+        <span>📊 戰力圖譜</span>
+      </a>
+      <a href="#matrix-section" class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 border border-slate-700 text-xs font-semibold shrink-0">
+        <span>📋 深度對照</span>
+      </a>
     </div>
   </header>
 
@@ -723,11 +781,23 @@
           <span class="px-2.5 py-1 rounded-md bg-amber-500/20 text-amber-300 text-xs font-bold">互動決策導航</span>
           <h2 class="text-xl sm:text-2xl font-bold text-white mt-2">我現在該先看哪一頁？點擊您目前遇到的買房痛點：</h2>
         </div>
-        <div class="flex flex-wrap gap-2" id="scenario-btns">
-          <button type="button" data-scene="s1" class="scene-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 transition">1. 猶豫買房或存股？</button>
-          <button type="button" data-scene="s2" class="scene-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">2. 看到 591 物件想算底價？</button>
-          <button type="button" data-scene="s3" class="scene-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">3. 準備下斡旋進小房間？</button>
-          <button type="button" data-scene="s4" class="scene-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">4. 想用寬限期與收租滾資產？</button>
+
+        <!-- Mobile Scenario Dropdown (支援下拉式選單) -->
+        <div class="lg:hidden w-full mb-1">
+          <select id="mobileScenarioSelect" class="w-full bg-slate-900 text-amber-300 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs font-bold focus:outline-none focus:ring-1 focus:ring-amber-500 shadow-sm" aria-label="情境導航下拉選單">
+            <option value="s1">📍 1. 猶豫買房或存股？</option>
+            <option value="s2">📍 2. 看到 591 物件想算底價？</option>
+            <option value="s3">📍 3. 準備下斡旋進小房間？</option>
+            <option value="s4">📍 4. 想用寬限期與收租滾資產？</option>
+          </select>
+        </div>
+
+        <!-- Horizontal Scrollable Scenario Buttons (選單左右移動) -->
+        <div class="flex items-center gap-2 overflow-x-auto whitespace-nowrap no-scrollbar py-1 w-full lg:w-auto mobile-scroll-x" id="scenario-btns">
+          <button type="button" data-scene="s1" class="scene-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 transition">1. 猶豫買房或存股？</button>
+          <button type="button" data-scene="s2" class="scene-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">2. 看到 591 物件想算底價？</button>
+          <button type="button" data-scene="s3" class="scene-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">3. 準備下斡旋進小房間？</button>
+          <button type="button" data-scene="s4" class="scene-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">4. 想用寬限期與收租滾資產？</button>
         </div>
       </div>
 
@@ -738,11 +808,18 @@
 
     <!-- SECTION E: Master Comparison Table -->
     <section id="matrix-section" class="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-800">
-      <h2 class="text-xl sm:text-2xl font-bold text-white mb-2">📊 兩大房產實戰體系深度對照矩陣</h2>
-      <p class="text-xs sm:text-sm text-slate-400 mb-6">一表看懂兩位專家在「第一間房定位、地段鐵律、實價登錄解讀、殺價戰術、房貸操作」上的互補策略：</p>
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-white">📊 兩大房產實戰體系深度對照矩陣</h2>
+          <p class="text-xs sm:text-sm text-slate-400 mt-1">一表看懂兩位專家在「第一間房定位、地段鐵律、實價登錄解讀、殺價戰術、房貸操作」上的互補策略：</p>
+        </div>
+        <div class="md:hidden inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-semibold shrink-0">
+          <span>👈 左右滑動可瀏覽完整對照 👉</span>
+        </div>
+      </div>
 
-      <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse text-xs sm:text-sm">
+      <div class="overflow-x-auto no-scrollbar mobile-scroll-x">
+        <table class="w-full text-left border-collapse text-xs sm:text-sm min-w-[620px]">
           <thead>
             <tr class="border-b border-slate-700 bg-slate-900/90 text-slate-300">
               <th class="p-3.5 font-bold w-1/5">決策維度</th>
@@ -1034,15 +1111,48 @@
       renderScenario('s1');
       initCanvas();
 
+      const mobileScenarioSelect = document.getElementById('mobileScenarioSelect');
+      const mobileHeaderJump = document.getElementById('mobileHeaderJump');
+
+      if (mobileHeaderJump) {
+        mobileHeaderJump.addEventListener('change', (e) => {
+          const val = e.target.value;
+          if (!val) return;
+          if (val.startsWith('#')) {
+            const target = document.querySelector(val);
+            if (target) {
+              target.scrollIntoView({ behavior: 'smooth' });
+            }
+          } else {
+            window.location.href = val;
+          }
+          mobileHeaderJump.value = '';
+        });
+      }
+
+      function selectScenario(sceneId) {
+        document.querySelectorAll('.scene-btn').forEach(b => {
+          if (b.getAttribute('data-scene') === sceneId) {
+            b.className = 'scene-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 transition';
+          } else {
+            b.className = 'scene-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition';
+          }
+        });
+        if (mobileScenarioSelect) mobileScenarioSelect.value = sceneId;
+        renderScenario(sceneId);
+      }
+
       document.querySelectorAll('.scene-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-          document.querySelectorAll('.scene-btn').forEach(b => {
-            b.className = 'scene-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition';
-          });
-          btn.className = 'scene-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 transition';
-          renderScenario(btn.getAttribute('data-scene'));
+          selectScenario(btn.getAttribute('data-scene'));
         });
       });
+
+      if (mobileScenarioSelect) {
+        mobileScenarioSelect.addEventListener('change', (e) => {
+          selectScenario(e.target.value);
+        });
+      }
 
       // Chart 1: Synergy Radar Chart
       const ctxRadar = document.getElementById('synergyRadarChart').getContext('2d');

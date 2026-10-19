@@ -90,6 +90,13 @@
     ::-webkit-scrollbar-track { background: #FAF8F5; }
     ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .mobile-scroll-x {
+      overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-amber-200 selection:text-slate-900">
@@ -111,31 +118,63 @@
 
   <!-- Sticky Cross-Page Navigation Header -->
   <nav class="sticky top-0 z-50 bg-slate-950/85 backdrop-blur-xl border-b border-slate-800/80 text-white shadow-lg">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between gap-3 text-xs sm:text-sm">
-      <div class="flex items-center gap-3">
-        <a href="./index.html" class="inline-flex items-center gap-2 text-slate-300 hover:text-amber-400 font-bold transition group">
-          <span class="px-2.5 py-1 rounded-lg bg-slate-900 group-hover:bg-amber-500/20 text-amber-400 border border-slate-700 group-hover:border-amber-500/40 transition">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-14 flex items-center justify-between gap-2 sm:gap-3 text-xs sm:text-sm">
+      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+        <a href="./index.html" class="inline-flex items-center gap-1.5 text-slate-300 hover:text-amber-400 font-bold transition group">
+          <span class="px-2 py-1 rounded-lg bg-slate-900 group-hover:bg-amber-500/20 text-amber-400 border border-slate-700 group-hover:border-amber-500/40 transition text-xs">
             ⬅ 雙師總首頁
           </span>
-          <span class="hidden md:inline text-slate-300 group-hover:text-white">HOUSE TRADE STRATEGY 指揮中心</span>
+          <span class="hidden md:inline text-slate-300 group-hover:text-white">HOUSE TRADE STRATEGY</span>
         </a>
       </div>
 
-      <div class="flex items-center gap-2">
-        <span class="text-slate-500 text-xs hidden lg:inline mr-1">切換導師專區：</span>
-        <a href="./吳淡如_房商必修課.html" class="px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 bg-slate-900 text-amber-300 hover:bg-amber-500 hover:text-slate-950 border border-amber-500/30">
-          <span>🐎</span>
-          <span>吳淡如《房商必修課》</span>
-        </a>
-        <a href="./second_house.html" class="px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 bg-slate-900 text-emerald-300 hover:bg-emerald-400 hover:text-slate-950 border border-emerald-500/30">
-          <span>🏦</span>
-          <span>第二屋實戰決策</span>
-        </a>
-        <a href="./「談判大叔」陳侯勳｜買房投資與談判理論全集.html" class="px-3 py-1.5 rounded-xl font-black transition flex items-center gap-1.5 bg-gradient-to-r from-sky-400 to-sky-500 text-slate-950 shadow-md shadow-sky-500/20 pointer-events-none">
-          <span>🗡️</span>
-          <span>陳侯勳《房產剎價學》</span>
-        </a>
+      <!-- Right Header Actions -->
+      <div class="flex items-center gap-1.5 sm:gap-2">
+        <!-- Mobile Dropdown Selector (支援下拉式選單) -->
+        <div class="md:hidden relative">
+          <select id="mobilePageNavSelect" class="bg-slate-900 text-sky-300 border border-slate-700 text-xs font-bold rounded-xl px-2 py-1.5 pr-6 appearance-none focus:outline-none focus:ring-1 focus:ring-sky-500 cursor-pointer" aria-label="手機切換專區下拉選單">
+            <option value="">切換專區 ▾</option>
+            <option value="./index.html">🏛️ 雙師總首頁</option>
+            <option value="./吳淡如_房商必修課.html">🐎 吳淡如《房商必修課》</option>
+            <option value="./second_house.html">🏦 第二屋實戰決策</option>
+            <option value="./「談判大叔」陳侯勳｜買房投資與談判理論全集.html" selected>🗡️ 陳侯勳《房產剎價學》（目前）</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-1 text-sky-400 text-[9px]">▼</div>
+        </div>
+
+        <!-- Desktop Direct Buttons -->
+        <div class="hidden md:flex items-center gap-2">
+          <span class="text-slate-500 text-xs hidden lg:inline mr-1">切換導師專區：</span>
+          <a href="./吳淡如_房商必修課.html" class="px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 bg-slate-900 text-amber-300 hover:bg-amber-500 hover:text-slate-950 border border-amber-500/30">
+            <span>🐎</span>
+            <span>吳淡如《房商必修課》</span>
+          </a>
+          <a href="./second_house.html" class="px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 bg-slate-900 text-emerald-300 hover:bg-emerald-400 hover:text-slate-950 border border-emerald-500/30">
+            <span>🏦</span>
+            <span>第二屋實戰決策</span>
+          </a>
+          <span class="px-3 py-1.5 rounded-xl font-black flex items-center gap-1.5 bg-gradient-to-r from-sky-400 to-sky-500 text-slate-950 shadow-md shadow-sky-500/20">
+            <span>🗡️</span>
+            <span>陳侯勳《房產剎價學》</span>
+          </span>
+        </div>
       </div>
+    </div>
+
+    <!-- Mobile Horizontal Cross-Page Bar (選單左右移動) -->
+    <div class="md:hidden border-t border-slate-800/80 bg-slate-950/95 px-3 py-1.5 flex items-center gap-2 overflow-x-auto whitespace-nowrap no-scrollbar mobile-scroll-x" aria-label="切換專區滑動選單">
+      <a href="./index.html" class="px-2.5 py-1 rounded-lg bg-slate-900 text-slate-300 border border-slate-700 text-xs font-semibold shrink-0">
+        🏛️ 總首頁
+      </a>
+      <a href="./吳淡如_房商必修課.html" class="px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 text-xs font-bold shrink-0">
+        🐎 吳淡如專區 ↗
+      </a>
+      <span class="px-2.5 py-1 rounded-lg bg-sky-500 text-slate-950 text-xs font-black shrink-0">
+        🗡️ 陳侯勳 (本頁)
+      </span>
+      <a href="./second_house.html" class="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs font-bold shrink-0">
+        🏦 第二屋決策 ↗
+      </a>
     </div>
   </nav>
 
@@ -197,23 +236,38 @@
     </div>
   </header>
 
-  <!-- Sticky Navigation Tabs (Matching Wu Dan-ru) -->
-  <nav class="sticky top-14 z-40 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm" aria-label="主導覽選單">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center gap-1.5 overflow-x-auto py-2.5 no-scrollbar" id="mainTabNav">
-        <button type="button" data-tab="nine-knives" class="tab-btn tab-active whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-1.5">
-          <span>⚡ 1. 買房九把刀（購屋網即時分析與出價建議）</span>
+  <!-- Sticky Navigation Tabs (Matching Wu Dan-ru with Dropdown & Swipe) -->
+  <nav class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm" aria-label="主導覽選單">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
+      <!-- Mobile Dropdown Selector (支援下拉式選單) -->
+      <div class="md:hidden mb-2">
+        <div class="relative">
+          <select id="mobileTabSelect" class="w-full bg-slate-50 text-slate-800 border-2 border-sky-500/40 rounded-xl px-3.5 py-2.5 pr-8 text-xs font-extrabold focus:outline-none focus:ring-2 focus:ring-sky-500 appearance-none shadow-sm cursor-pointer" aria-label="切換章節下拉選單">
+            <option value="nine-knives" selected>⚡ 1. 買房九把刀（購屋網即時分析與出價建議）</option>
+            <option value="overview">🏛️ 2. 總覽與宏觀時機</option>
+            <option value="money-machine">💰 3. 房貸印鈔機與試算器</option>
+            <option value="negotiation">🛡️ 4. 被動談判術與破局話術</option>
+            <option value="videos">📺 5. 頻道影片全資料庫 (27部)</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-sky-600 text-xs">▼</div>
+        </div>
+      </div>
+
+      <!-- Horizontal Scrollable Tabs (選單左右移動) -->
+      <div class="flex items-center gap-1.5 overflow-x-auto py-1 no-scrollbar mobile-scroll-x" id="mainTabNav">
+        <button type="button" data-tab="nine-knives" class="tab-btn tab-active whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-1.5 shrink-0">
+          <span>⚡ 1. 買房九把刀（購屋網即時分析與出價）</span>
         </button>
-        <button type="button" data-tab="overview" class="tab-btn tab-inactive whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition">
+        <button type="button" data-tab="overview" class="tab-btn tab-inactive whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition shrink-0">
           2. 總覽與宏觀時機
         </button>
-        <button type="button" data-tab="money-machine" class="tab-btn tab-inactive whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition">
+        <button type="button" data-tab="money-machine" class="tab-btn tab-inactive whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition shrink-0">
           3. 房貸印鈔機與試算器
         </button>
-        <button type="button" data-tab="negotiation" class="tab-btn tab-inactive whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition">
+        <button type="button" data-tab="negotiation" class="tab-btn tab-inactive whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition shrink-0">
           4. 被動談判術與破局話術
         </button>
-        <button type="button" data-tab="videos" class="tab-btn tab-inactive whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition">
+        <button type="button" data-tab="videos" class="tab-btn tab-inactive whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition shrink-0">
           5. 頻道影片全資料庫 (27部)
         </button>
       </div>
@@ -272,26 +326,38 @@
             </div>
           </div>
 
-          <!-- Quick Test Sample Chips -->
-          <div class="flex flex-wrap items-center gap-2 text-xs pt-1">
-            <span class="text-slate-500 font-semibold">⚡ 點擊一鍵實測真實案例：</span>
-            <button type="button" class="btn-sample-chip px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 font-bold transition shadow-sm" data-sample="sample_taipei_bridge">
-              ⭐ 591實測：三重台北橋首府（開價3,688萬・捷運一樓含車位）
+          <!-- Quick Test Sample Chips & Mobile Dropdown (支援下拉式選單與左右滑動) -->
+          <div class="sm:hidden w-full pt-1">
+            <select id="mobileSampleSelect" class="w-full bg-slate-50 text-slate-800 border border-amber-300 rounded-xl px-3 py-2 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-sm cursor-pointer" aria-label="實測案例下拉選單">
+              <option value="">⚡ 點擊一鍵實測真實案例... ▾</option>
+              <option value="sample_taipei_bridge">⭐ 591實測：三重台北橋首府（3,688萬・捷運一樓含車位）</option>
+              <option value="sample_paris">⭐ 591實測：三重日安巴黎（3,398萬・1F雙庭院）</option>
+              <option value="sample1">🏢 板橋江子翠捷運水岸兩房（2,380萬・優質案）</option>
+              <option value="sample2">🌊 淡海新市鎮輕軌景觀三房（1,680萬・720戶短板案）</option>
+              <option value="sample3">💼 內湖文德站雙併公寓（1,980萬・9刀滿分神案）</option>
+              <option value="sample4">🔬 竹北高鐵特區科技三房（3,150萬・竹科剛需案）</option>
+            </select>
+          </div>
+
+          <div class="flex items-center gap-2 text-xs pt-1 overflow-x-auto whitespace-nowrap no-scrollbar mobile-scroll-x" id="sampleChipsGroup">
+            <span class="text-slate-500 font-semibold shrink-0">⚡ 點擊實測案例 ➔</span>
+            <button type="button" class="btn-sample-chip px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 font-bold transition shadow-sm shrink-0" data-sample="sample_taipei_bridge">
+              ⭐ 591實測：三重台北橋首府（3,688萬）
             </button>
-            <button type="button" class="btn-sample-chip px-3 py-1.5 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-300 font-bold transition shadow-sm" data-sample="sample_paris">
-              ⭐ 591實測：三重日安巴黎（開價3,398萬・1F雙庭院）
+            <button type="button" class="btn-sample-chip px-3 py-1.5 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-300 font-bold transition shadow-sm shrink-0" data-sample="sample_paris">
+              ⭐ 591實測：三重日安巴黎（3,398萬）
             </button>
-            <button type="button" class="btn-sample-chip px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-300 transition" data-sample="sample1">
-              🏢 板橋江子翠捷運水岸兩房（2,380萬・優質案）
+            <button type="button" class="btn-sample-chip px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-300 transition shrink-0" data-sample="sample1">
+              🏢 板橋江子翠（2,380萬）
             </button>
-            <button type="button" class="btn-sample-chip px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-300 transition" data-sample="sample2">
-              🌊 淡海新市鎮輕軌景觀三房（1,680萬・720戶短板案）
+            <button type="button" class="btn-sample-chip px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-300 transition shrink-0" data-sample="sample2">
+              🌊 淡海新市鎮（1,680萬）
             </button>
-            <button type="button" class="btn-sample-chip px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-300 transition" data-sample="sample3">
-              💼 內湖文德站雙併公寓（1,980萬・9刀滿分神案）
+            <button type="button" class="btn-sample-chip px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-300 transition shrink-0" data-sample="sample3">
+              💼 內湖文德雙併（1,980萬）
             </button>
-            <button type="button" class="btn-sample-chip px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-300 transition" data-sample="sample4">
-              🔬 竹北高鐵特區科技三房（3,150萬・竹科剛需案）
+            <button type="button" class="btn-sample-chip px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-300 transition shrink-0" data-sample="sample4">
+              🔬 竹北高鐵科技三房（3,150萬）
             </button>
           </div>
 
@@ -312,20 +378,20 @@
             <h3 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">候選物件情報編輯 ＆ 九把刀量化診斷儀表板</h3>
           </div>
 
-          <div class="flex flex-wrap items-center gap-2 shrink-0">
-            <button type="button" id="btn-add-prop" class="px-3.5 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-black text-xs flex items-center gap-1.5 shadow-md shadow-sky-600/20 transition">
+          <div class="flex items-center gap-2 overflow-x-auto whitespace-nowrap no-scrollbar py-1 mobile-scroll-x shrink-0 w-full lg:w-auto">
+            <button type="button" id="btn-add-prop" class="shrink-0 px-3.5 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-black text-xs flex items-center gap-1.5 shadow-md shadow-sky-600/20 transition">
               <span>➕</span> 新增看屋物件
             </button>
-            <button type="button" id="btn-clone-prop" class="px-3 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-700 text-xs border border-slate-300 transition" title="複製目前物件">
+            <button type="button" id="btn-clone-prop" class="shrink-0 px-3 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-700 text-xs border border-slate-300 transition" title="複製目前物件">
               <span>📑</span> 複製
             </button>
-            <button type="button" id="btn-del-prop" class="px-3 py-2 rounded-xl bg-white hover:bg-rose-50 text-rose-600 text-xs border border-slate-300 hover:border-rose-300 transition" title="刪除目前物件">
+            <button type="button" id="btn-del-prop" class="shrink-0 px-3 py-2 rounded-xl bg-white hover:bg-rose-50 text-rose-600 text-xs border border-slate-300 hover:border-rose-300 transition" title="刪除目前物件">
               <span>🗑️</span> 刪除
             </button>
-            <button type="button" id="btn-sample-prop" class="px-3 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-700 text-xs border border-slate-300 transition" title="重新載入大叔實戰精選範例">
+            <button type="button" id="btn-sample-prop" class="shrink-0 px-3 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-700 text-xs border border-slate-300 transition" title="重新載入大叔實戰精選範例">
               <span>🔄</span> 重置預設範例
             </button>
-            <button type="button" id="btn-copy-line" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs flex items-center gap-1.5 shadow-md shadow-emerald-600/20 transition">
+            <button type="button" id="btn-copy-line" class="shrink-0 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs flex items-center gap-1.5 shadow-md shadow-emerald-600/20 transition">
               <span>💬</span> 複製 LINE 完整評估報告
             </button>
           </div>
@@ -957,11 +1023,21 @@
             <h2 class="text-lg font-bold text-slate-900">🛡️ 破解房仲與代銷話術｜小房間實戰拆招圖鑑</h2>
             <p class="text-xs text-slate-500 mt-0.5">點擊下方情境按鈕篩選，查看房仲話術背後的心理陷阱與大叔標準反制台詞（來源：<a href="http://www.youtube.com/watch?v=eeIeUbcSSpE" target="_blank" rel="noopener noreferrer" class="text-amber-700 underline font-medium">35線上賞屋</a>、<a href="http://www.youtube.com/watch?v=l8v5xpq6fSI" target="_blank" rel="noopener noreferrer" class="text-amber-700 underline font-medium">博音 EP242</a>）。</p>
           </div>
-          <div class="flex flex-wrap gap-1.5" id="tactic-filters">
-            <button type="button" data-filter="all" class="tactic-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-amber-500 text-slate-950 shadow-sm">全部情境</button>
-            <button type="button" data-filter="pre" class="tactic-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200">看房與出價前</button>
-            <button type="button" data-filter="price" class="tactic-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200">議價交鋒期</button>
-            <button type="button" data-filter="room" class="tactic-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200">小房間決戰</button>
+          <!-- Mobile Dropdown Selector (支援下拉式選單) -->
+          <div class="sm:hidden w-full">
+            <select id="mobileTacticFilterSelect" class="w-full bg-slate-50 text-slate-800 border border-amber-300 rounded-xl px-3 py-2 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm cursor-pointer" aria-label="拆招情境下拉選單">
+              <option value="all">🛡️ 全部拆招情境（全收錄）</option>
+              <option value="pre">🔍 看房與出價前（防禦心法）</option>
+              <option value="price">⚔️ 議價交鋒期（進攻台詞）</option>
+              <option value="room">🚪 小房間決戰（收割戰術）</option>
+            </select>
+          </div>
+          <!-- Horizontal Scrollable Bar (選單左右移動) -->
+          <div class="flex items-center gap-1.5 overflow-x-auto whitespace-nowrap no-scrollbar py-1 mobile-scroll-x" id="tactic-filters">
+            <button type="button" data-filter="all" class="tactic-filter-btn shrink-0 px-3 py-1 rounded-lg text-xs font-semibold bg-amber-500 text-slate-950 shadow-sm">全部情境</button>
+            <button type="button" data-filter="pre" class="tactic-filter-btn shrink-0 px-3 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200">看房與出價前</button>
+            <button type="button" data-filter="price" class="tactic-filter-btn shrink-0 px-3 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200">議價交鋒期</button>
+            <button type="button" data-filter="room" class="tactic-filter-btn shrink-0 px-3 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200">小房間決戰</button>
           </div>
         </div>
         <div id="tactics-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1027,7 +1103,11 @@
 
         <div id="video-count-badge" class="text-xs text-slate-500 mb-3">共顯示 27 筆核心影片與專欄資源</div>
 
-        <div class="overflow-x-auto">
+        <div class="sm:hidden text-center text-xs text-amber-700 font-bold py-1.5 px-3 bg-amber-50 border border-amber-200 rounded-xl mb-3 shadow-sm">
+          👈 左右滑動可查看影片完整清單與重點 👉
+        </div>
+
+        <div class="overflow-x-auto min-w-full">
           <table class="w-full text-left border-collapse text-sm">
             <thead>
               <tr class="border-b border-slate-200 text-slate-700 bg-slate-100">
@@ -2815,11 +2895,14 @@ ${weaponsText}
       // Tabs
       const tabBtns = document.querySelectorAll('.tab-btn');
       const tabPanels = document.querySelectorAll('.tab-panel');
+      const mobileTabSelect = document.getElementById('mobileTabSelect');
+
       function switchTab(target) {
         tabBtns.forEach(b => {
           if (b.getAttribute('data-tab') === target) {
             b.classList.remove('tab-inactive');
             b.classList.add('tab-active');
+            b.scrollIntoView?.({ behavior: 'smooth', block: 'nearest', inline: 'center' });
           } else {
             b.classList.remove('tab-active');
             b.classList.add('tab-inactive');
@@ -2832,6 +2915,9 @@ ${weaponsText}
             panel.classList.add('hidden');
           }
         });
+        if (mobileTabSelect && mobileTabSelect.value !== target) {
+          mobileTabSelect.value = target;
+        }
       }
 
       tabBtns.forEach(btn => {
@@ -2839,6 +2925,39 @@ ${weaponsText}
           switchTab(btn.getAttribute('data-tab'));
         });
       });
+
+      if (mobileTabSelect) {
+        mobileTabSelect.addEventListener('change', (e) => {
+          if (e.target.value) {
+            switchTab(e.target.value);
+            document.getElementById('mainTabNav')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      }
+
+      const mobilePageNavSelect = document.getElementById('mobilePageNavSelect');
+      if (mobilePageNavSelect) {
+        mobilePageNavSelect.addEventListener('change', (e) => {
+          if (e.target.value) {
+            window.location.href = e.target.value;
+          }
+        });
+      }
+
+      const mobileSampleSelect = document.getElementById('mobileSampleSelect');
+      if (mobileSampleSelect) {
+        mobileSampleSelect.addEventListener('change', (e) => {
+          const key = e.target.value;
+          if (key && sampleListingData[key]) {
+            const autoInput = document.getElementById('auto-analyzer-input');
+            if (autoInput) {
+              autoInput.value = sampleListingData[key];
+              runAutoAnalysis(sampleListingData[key], false);
+              mobileSampleSelect.value = '';
+            }
+          }
+        });
+      }
 
       document.getElementById('btn-hero-jump-analyzer').addEventListener('click', () => {
         switchTab('nine-knives');
@@ -2993,17 +3112,39 @@ ${weaponsText}
       updateRentCalculator();
 
       // Tactics Filter
-      renderTactics('all');
       const filterBtns = document.querySelectorAll('.tactic-filter-btn');
+      const mobileTacticFilterSelect = document.getElementById('mobileTacticFilterSelect');
+
+      function applyTacticFilter(filter) {
+        filterBtns.forEach(b => {
+          if (b.getAttribute('data-filter') === filter) {
+            b.className = 'tactic-filter-btn shrink-0 px-3 py-1 rounded-lg text-xs font-semibold bg-amber-500 text-slate-950 shadow-sm';
+            b.scrollIntoView?.({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+          } else {
+            b.className = 'tactic-filter-btn shrink-0 px-3 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200';
+          }
+        });
+        if (mobileTacticFilterSelect && mobileTacticFilterSelect.value !== filter) {
+          mobileTacticFilterSelect.value = filter;
+        }
+        renderTactics(filter);
+      }
+
       filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-          filterBtns.forEach(b => {
-            b.className = 'tactic-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200';
-          });
-          btn.className = 'tactic-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-amber-500 text-slate-950 shadow-sm';
-          renderTactics(btn.getAttribute('data-filter'));
+          applyTacticFilter(btn.getAttribute('data-filter'));
         });
       });
+
+      if (mobileTacticFilterSelect) {
+        mobileTacticFilterSelect.addEventListener('change', (e) => {
+          if (e.target.value) {
+            applyTacticFilter(e.target.value);
+          }
+        });
+      }
+
+      renderTactics('all');
 
       // Videos Search & Filter
       renderVideos();

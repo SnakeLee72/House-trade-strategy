@@ -51,6 +51,13 @@
       transform: translateY(1rem);
       opacity: 0;
     }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .mobile-scroll-x {
+      overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-amber-200 selection:text-slate-900">
@@ -63,28 +70,61 @@
 
   <!-- Top Unified Navigation Bar -->
   <nav class="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/95 backdrop-blur-md">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between gap-4">
-      <a href="index.html" class="flex items-center gap-2.5 text-white hover:opacity-90 transition">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-14 flex items-center justify-between gap-2 sm:gap-4">
+      <a href="index.html" class="flex items-center gap-2 text-white hover:opacity-90 transition shrink-0">
         <span class="text-base sm:text-lg">🏛️</span>
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-1.5">
           <span class="font-black text-xs sm:text-sm tracking-tight">HOUSE TRADE STRATEGY</span>
           <span class="hidden md:inline-block px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">雙師智庫</span>
         </div>
       </a>
-      <div class="flex items-center gap-2 sm:gap-3">
-        <a href="index.html" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold transition flex items-center gap-1.5">
-          <span>🏛️</span>
-          <span>返回共同首頁</span>
-        </a>
-        <a href="second_house.html" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-300 hover:text-emerald-200 border border-emerald-500/30 text-xs font-semibold transition flex items-center gap-1.5">
-          <span>🏦</span>
-          <span>第二屋實戰決策</span>
-        </a>
-        <a href="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261019_03" class="px-3 py-1.5 rounded-lg bg-gradient-to-r from-sky-400 to-sky-600 hover:from-sky-300 hover:to-sky-500 text-slate-950 font-bold text-xs transition flex items-center gap-1 shadow-md shadow-sky-500/20">
-          <span>🗡️</span>
-          <span>切換至「陳侯勳」專區 ↗</span>
-        </a>
+
+      <!-- Right Header Actions -->
+      <div class="flex items-center gap-1.5 sm:gap-2">
+        <!-- Mobile Dropdown Selector (支援下拉式選單) -->
+        <div class="md:hidden relative">
+          <select id="mobilePageNavSelect" class="bg-slate-900 text-amber-300 border border-slate-700 text-xs font-bold rounded-xl px-2 py-1.5 pr-6 appearance-none focus:outline-none focus:ring-1 focus:ring-amber-500 cursor-pointer" aria-label="手機切換專區下拉選單">
+            <option value="">切換專區 ▾</option>
+            <option value="index.html">🏛️ 雙師總首頁</option>
+            <option value="吳淡如_房商必修課.html" selected>🐎 吳淡如《房商必修課》（目前）</option>
+            <option value="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261019_03">🗡️ 陳侯勳《房產剎價學》</option>
+            <option value="second_house.html">🏦 第二屋實戰決策</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-1 text-amber-400 text-[9px]">▼</div>
+        </div>
+
+        <!-- Desktop Direct Buttons -->
+        <div class="hidden md:flex items-center gap-2 sm:gap-3">
+          <a href="index.html" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold transition flex items-center gap-1.5">
+            <span>🏛️</span>
+            <span>返回共同首頁</span>
+          </a>
+          <a href="second_house.html" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-300 hover:text-emerald-200 border border-emerald-500/30 text-xs font-semibold transition flex items-center gap-1.5">
+            <span>🏦</span>
+            <span>第二屋實戰決策</span>
+          </a>
+          <a href="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261019_03" class="px-3 py-1.5 rounded-lg bg-gradient-to-r from-sky-400 to-sky-600 hover:from-sky-300 hover:to-sky-500 text-slate-950 font-bold text-xs transition flex items-center gap-1 shadow-md shadow-sky-500/20">
+            <span>🗡️</span>
+            <span>切換至「陳侯勳」專區 ↗</span>
+          </a>
+        </div>
       </div>
+    </div>
+
+    <!-- Mobile Horizontal Cross-Page Bar (選單左右移動) -->
+    <div class="md:hidden border-t border-slate-800/80 bg-slate-950/95 px-3 py-1.5 flex items-center gap-2 overflow-x-auto whitespace-nowrap no-scrollbar mobile-scroll-x" aria-label="切換專區滑動選單">
+      <a href="index.html" class="px-2.5 py-1 rounded-lg bg-slate-900 text-slate-300 border border-slate-700 text-xs font-semibold shrink-0">
+        🏛️ 總首頁
+      </a>
+      <span class="px-2.5 py-1 rounded-lg bg-amber-500 text-slate-950 text-xs font-bold shrink-0">
+        🐎 吳淡如 (本頁)
+      </span>
+      <a href="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261019_03" class="px-2.5 py-1 rounded-lg bg-sky-500/20 text-sky-300 border border-sky-500/40 text-xs font-bold shrink-0">
+        🗡️ 陳侯勳專區 ↗
+      </a>
+      <a href="second_house.html" class="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs font-bold shrink-0">
+        🏦 第二屋決策 ↗
+      </a>
     </div>
   </nav>
 
@@ -139,24 +179,40 @@
 
   <!-- Sticky Navigation Tabs -->
   <nav class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center gap-1.5 overflow-x-auto py-2.5 no-scrollbar" id="mainTabNav">
-        <button type="button" data-tab="tab-core" class="tab-btn active whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:bg-slate-100 transition">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
+      <!-- Mobile Dropdown Selector (支援下拉式選單) -->
+      <div class="md:hidden mb-2">
+        <div class="relative">
+          <select id="mobileTabSelect" class="w-full bg-slate-50 text-slate-800 border-2 border-amber-500/40 rounded-xl px-3.5 py-2.5 pr-8 text-xs font-extrabold focus:outline-none focus:ring-2 focus:ring-amber-500 appearance-none shadow-sm cursor-pointer" aria-label="切換章節下拉選單">
+            <option value="tab-core" selected>📍 1. 底層邏輯＆市場真相</option>
+            <option value="tab-animals">🐎 2. 「馬・雞・豬」動物理論</option>
+            <option value="tab-strategy">🧭 3. 買房四步法＆五力分析</option>
+            <option value="tab-pitfalls">⚖️ 4. 6大踩坑血淚史＆法律防身</option>
+            <option value="tab-calc">🧮 5. 互動試算＆五力評分器</option>
+            <option value="tab-videos">📺 6. 22部YouTube片單＆連結庫</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-amber-600 text-xs">▼</div>
+        </div>
+      </div>
+
+      <!-- Horizontal Scrollable Tabs (選單左右移動) -->
+      <div class="flex items-center gap-1.5 overflow-x-auto py-1 no-scrollbar mobile-scroll-x" id="mainTabNav">
+        <button type="button" data-tab="tab-core" class="tab-btn active whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:bg-slate-100 transition shrink-0">
           1. 底層邏輯＆市場真相
         </button>
-        <button type="button" data-tab="tab-animals" class="tab-btn whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:bg-slate-100 transition">
+        <button type="button" data-tab="tab-animals" class="tab-btn whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:bg-slate-100 transition shrink-0">
           2. 「馬・雞・豬」理論
         </button>
-        <button type="button" data-tab="tab-strategy" class="tab-btn whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:bg-slate-100 transition">
+        <button type="button" data-tab="tab-strategy" class="tab-btn whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:bg-slate-100 transition shrink-0">
           3. 買房四步法＆五力分析
         </button>
-        <button type="button" data-tab="tab-pitfalls" class="tab-btn whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:bg-slate-100 transition">
+        <button type="button" data-tab="tab-pitfalls" class="tab-btn whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:bg-slate-100 transition shrink-0">
           4. 6大踩坑血淚史＆法律防身
         </button>
-        <button type="button" data-tab="tab-calc" class="tab-btn whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:bg-slate-100 transition">
+        <button type="button" data-tab="tab-calc" class="tab-btn whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:bg-slate-100 transition shrink-0">
           5. 互動試算＆五力評分器
         </button>
-        <button type="button" data-tab="tab-videos" class="tab-btn whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:bg-slate-100 transition">
+        <button type="button" data-tab="tab-videos" class="tab-btn whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:bg-slate-100 transition shrink-0">
           6. 22部YouTube片單＆連結庫
         </button>
       </div>
@@ -857,14 +913,24 @@
 
         <!-- Filter & Search Bar -->
         <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between pt-2 border-t border-slate-100">
-          <div class="flex flex-wrap gap-2" id="videoFilterGroup">
-            <button type="button" data-filter="all" class="filter-btn active px-3.5 py-1.5 rounded-xl text-xs font-bold border border-slate-200 transition">
+          <!-- Mobile Video Filter Dropdown (支援下拉式選單) -->
+          <div class="sm:hidden w-full mb-1">
+            <select id="mobileVideoFilterSelect" class="w-full bg-slate-50 text-slate-800 border border-slate-300 rounded-xl px-3 py-2 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-800 shadow-sm" aria-label="影片分類下拉選單">
+              <option value="all" selected>📺 全部影片 (22)</option>
+              <option value="personal">🎬 吳淡如個人官方頻道 (10)</option>
+              <option value="guest">🎙️ 受邀跨頻道深度訪談 (12)</option>
+            </select>
+          </div>
+
+          <!-- Horizontal Scrollable Buttons (選單左右移動) -->
+          <div class="flex items-center gap-2 overflow-x-auto whitespace-nowrap no-scrollbar py-1 mobile-scroll-x" id="videoFilterGroup">
+            <button type="button" data-filter="all" class="filter-btn active px-3.5 py-1.5 rounded-xl text-xs font-bold border border-slate-200 transition shrink-0">
               全部影片 (22)
             </button>
-            <button type="button" data-filter="personal" class="filter-btn px-3.5 py-1.5 rounded-xl text-xs font-bold border border-slate-200 text-slate-700 hover:bg-slate-100 transition">
+            <button type="button" data-filter="personal" class="filter-btn px-3.5 py-1.5 rounded-xl text-xs font-bold border border-slate-200 text-slate-700 hover:bg-slate-100 transition shrink-0">
               吳淡如個人官方頻道 (10)
             </button>
-            <button type="button" data-filter="guest" class="filter-btn px-3.5 py-1.5 rounded-xl text-xs font-bold border border-slate-200 text-slate-700 hover:bg-slate-100 transition">
+            <button type="button" data-filter="guest" class="filter-btn px-3.5 py-1.5 rounded-xl text-xs font-bold border border-slate-200 text-slate-700 hover:bg-slate-100 transition shrink-0">
               受邀跨頻道深度訪談 (12)
             </button>
           </div>
@@ -1155,24 +1221,47 @@
       }
     ];
 
-    // Tab Switching Logic
+    // Tab Switching Logic with Mobile Dropdown Sync
     const tabButtons = document.querySelectorAll('#mainTabNav .tab-btn');
     const tabPanels = document.querySelectorAll('.tab-panel');
+    const mobileTabSelect = document.getElementById('mobileTabSelect');
+    const mobilePageNavSelect = document.getElementById('mobilePageNavSelect');
+
+    if (mobilePageNavSelect) {
+      mobilePageNavSelect.addEventListener('change', (e) => {
+        if (e.target.value) window.location.href = e.target.value;
+      });
+    }
+
+    function switchWuTab(targetId) {
+      tabButtons.forEach((b) => {
+        if (b.getAttribute('data-tab') === targetId) {
+          b.classList.add('active');
+        } else {
+          b.classList.remove('active');
+        }
+      });
+      tabPanels.forEach((panel) => {
+        if (panel.id === targetId) {
+          panel.classList.remove('hidden');
+        } else {
+          panel.classList.add('hidden');
+        }
+      });
+      if (mobileTabSelect) mobileTabSelect.value = targetId;
+    }
 
     tabButtons.forEach((btn) => {
       btn.addEventListener('click', () => {
-        const targetId = btn.getAttribute('data-tab');
-        tabButtons.forEach((b) => b.classList.remove('active'));
-        btn.classList.add('active');
-        tabPanels.forEach((panel) => {
-          if (panel.id === targetId) {
-            panel.classList.remove('hidden');
-          } else {
-            panel.classList.add('hidden');
-          }
-        });
+        switchWuTab(btn.getAttribute('data-tab'));
       });
     });
+
+    if (mobileTabSelect) {
+      mobileTabSelect.addEventListener('change', (e) => {
+        switchWuTab(e.target.value);
+      });
+    }
 
     // Animal Theory Selector Logic
     const animalButtons = document.querySelectorAll('#animalSelector .animal-btn');
@@ -1372,14 +1461,32 @@
       });
     }
 
+    const mobileVideoFilterSelect = document.getElementById('mobileVideoFilterSelect');
+
+    function applyVideoFilter(filterVal) {
+      currentFilter = filterVal;
+      document.querySelectorAll('#videoFilterGroup .filter-btn').forEach((b) => {
+        if (b.getAttribute('data-filter') === currentFilter) {
+          b.classList.add('active');
+        } else {
+          b.classList.remove('active');
+        }
+      });
+      if (mobileVideoFilterSelect) mobileVideoFilterSelect.value = currentFilter;
+      renderVideos();
+    }
+
     document.querySelectorAll('#videoFilterGroup .filter-btn').forEach((btn) => {
       btn.addEventListener('click', () => {
-        document.querySelectorAll('#videoFilterGroup .filter-btn').forEach((b) => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentFilter = btn.getAttribute('data-filter');
-        renderVideos();
+        applyVideoFilter(btn.getAttribute('data-filter'));
       });
     });
+
+    if (mobileVideoFilterSelect) {
+      mobileVideoFilterSelect.addEventListener('change', (e) => {
+        applyVideoFilter(e.target.value);
+      });
+    }
 
     document.getElementById('videoSearchInput').addEventListener('input', (e) => {
       currentSearch = e.target.value;
