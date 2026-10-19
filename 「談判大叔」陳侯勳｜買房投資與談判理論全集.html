@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>「談判大叔」陳侯勳｜買房投資與被動談判理論全集（Argon 旗艦實戰版）</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -36,21 +39,21 @@
       box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
     }
     .tab-active {
-      background: #0284c7;
+      background-color: #0284c7;
       color: #FFFFFF;
       font-weight: 800;
-      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
-      border: 1px solid #38bdf8;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+      border: 1px solid #0284c7;
     }
     .tab-inactive {
-      background: rgba(15, 23, 42, 0.85);
-      color: #cbd5e1;
-      border: 1px solid rgba(148, 163, 184, 0.25);
+      background-color: transparent;
+      color: #475569;
+      font-weight: 700;
+      border: 1px solid transparent;
     }
     .tab-inactive:hover {
-      background: rgba(30, 41, 59, 0.95);
-      color: #f8fafc;
-      border-color: rgba(56, 189, 248, 0.5);
+      background-color: #F1F5F9;
+      color: #0F172A;
     }
     @keyframes ticker {
       0% { transform: translateX(0); }
@@ -125,35 +128,32 @@
   </nav>
 
   <!-- Top Hero Banner -->
-  <header class="relative z-10 border-b border-slate-800/80 bg-gradient-to-b from-slate-900/80 via-slate-950/90 to-[#050811] overflow-hidden">
-    <div class="glow-orb absolute -top-24 left-1/4 w-96 h-96 bg-sky-500/15 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="glow-orb absolute top-16 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" style="animation-delay: -3s;"></div>
-
+  <header class="relative bg-slate-900 text-white overflow-hidden border-b border-sky-500/30">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10 relative">
       <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
         <div>
-          <div class="inline-flex flex-wrap items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/30 text-sky-400 text-xs font-semibold mb-3">
+          <div class="inline-flex flex-wrap items-center gap-2 px-3 py-1 rounded-full bg-sky-500/20 border border-sky-400/40 text-sky-300 text-xs font-semibold mb-3">
             <span>🗡️ 科學量化選屋 × 極限被動談判系統</span>
             <span>•</span>
-            <a href="https://www.youtube.com/@shaprice-art" target="_blank" rel="noopener noreferrer" class="underline hover:text-sky-300">@shaprice-art</a>
+            <a href="https://www.youtube.com/@shaprice-art" target="_blank" rel="noopener noreferrer" class="underline hover:text-sky-200">@shaprice-art</a>
             <span>•</span>
             <span class="text-amber-300">內建 591/樂居/信義 AI 即時實戰診斷引擎</span>
           </div>
-          <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white">
+          <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight text-white">
             「談判大叔」陳侯勳｜<span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-sky-200 to-amber-400">買房投資與談判理論全集</span>
           </h1>
           <p class="mt-3 text-slate-300 text-sm sm:text-base max-w-3xl leading-relaxed">
-            台大經濟系畢業、希波克拉底曦樺資本創辦人、<a href="https://www.books.com.tw/products/E050054407" target="_blank" rel="noopener noreferrer" class="text-sky-400 underline hover:text-sky-300">《頂尖投資人都在學的被動談判術》</a>與<a href="https://search.books.com.tw/search/query/key/%E9%99%B3%E4%BE%AF%E5%8B%B3%28%E8%AB%87%E5%88%A4%E5%A4%A7%E5%8F%94%29/adv_author/1/" target="_blank" rel="noopener noreferrer" class="text-sky-400 underline hover:text-sky-300">《焦慮，請慢用》</a>作者、<a href="https://shaprice.ai/courses/unclenego" target="_blank" rel="noopener noreferrer" class="text-amber-400 underline hover:text-amber-300">《房產剎價學》</a>主講人。整合頻道百支影片、九把刀選屋演算法與小房間破局話術。
+            台大經濟系畢業、希波克拉底曦樺資本創辦人、<a href="https://www.books.com.tw/products/E050054407" target="_blank" rel="noopener noreferrer" class="text-sky-400 underline hover:text-sky-300">《頂尖投資人都在學的被動談判術》</a>與<a href="https://search.books.com.tw/search/query/key/%E9%99%B3%E4%BE%AF%E5%8B%B3%28%E8%AB%87%E5%88%A4%E5%A4%A7%E5%8F%94%E3%80%8D/adv_author/1/" target="_blank" rel="noopener noreferrer" class="text-sky-400 underline hover:text-sky-300">《焦慮，請慢用》</a>作者、<a href="https://shaprice.ai/courses/unclenego" target="_blank" rel="noopener noreferrer" class="text-amber-400 underline hover:text-amber-300">《房產剎價學》</a>主講人。整合頻道百支影片、九把刀選屋演算法與小房間破局話術。
           </p>
         </div>
         <div class="flex flex-wrap gap-2.5 shrink-0">
           <button type="button" id="btn-hero-jump-analyzer" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs sm:text-sm transition flex items-center gap-1.5 shadow-lg shadow-amber-500/25">
             <span>⚡ 立即開啟「九把刀看屋分析器」</span>
           </button>
-          <a href="https://www.youtube.com/@shaprice-art" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-red-600/90 hover:bg-red-500 text-white font-bold text-xs sm:text-sm transition flex items-center gap-1.5 shadow-lg">
+          <a href="https://www.youtube.com/@shaprice-art" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs sm:text-sm transition flex items-center gap-1.5 shadow-lg">
             <span>▶ 官方 YouTube</span>
           </a>
-          <a href="https://podcasts.apple.com/tw/podcast/%E8%AB%87%E5%88%A4%E5%A4%A7%E5%8F%94%E7%9A%84%E8%BA%BA%E5%B9%B3%E5%AD%B8/id1895748667" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-100 border border-slate-700 font-semibold text-xs sm:text-sm transition">
+          <a href="https://podcasts.apple.com/tw/podcast/%E8%AB%87%E5%88%A4%E5%A4%A7%E5%8F%94%E7%9A%84%E8%BA%BA%E5%B9%B3%E5%AD%B8/id1895748667" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 font-semibold text-xs sm:text-sm transition">
             <span>🎧 躺平學 Podcast</span>
           </a>
         </div>
@@ -161,48 +161,52 @@
 
       <!-- Key Metrics Bar -->
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-7">
-        <div class="glass-card glass-card-spotlight rounded-2xl p-4 border-sky-500/25">
+        <div class="bg-slate-800/90 rounded-2xl p-4 border border-slate-700/80 shadow-md">
           <div class="text-xs text-slate-400 font-medium">累計輔導房產談判金額</div>
           <div class="text-2xl font-black text-sky-400 font-mono-num mt-1">126 億+ 台幣</div>
           <div class="text-[11px] text-slate-400 mt-1">涵蓋自住、收租、商辦與都更</div>
         </div>
-        <div class="glass-card glass-card-spotlight rounded-2xl p-4 border-emerald-500/25">
+        <div class="bg-slate-800/90 rounded-2xl p-4 border border-slate-700/80 shadow-md">
           <div class="text-xs text-slate-400 font-medium">大叔實戰看房漏斗比例</div>
           <div class="text-2xl font-black text-emerald-400 font-mono-num mt-1">110 : 30 : 1</div>
           <div class="text-[11px] text-slate-400 mt-1">看 110 間、下 30 張斡旋、買 1 間</div>
         </div>
-        <div class="glass-card glass-card-spotlight rounded-2xl p-4 border-amber-500/25">
+        <div class="bg-slate-800/90 rounded-2xl p-4 border border-slate-700/80 shadow-md">
           <div class="text-xs text-slate-400 font-medium">房貸印鈔機核心公式</div>
           <div class="text-2xl font-black text-amber-400 font-mono-num mt-1">+4,300 元 → 100 萬</div>
           <div class="text-[11px] text-slate-400 mt-1">月增 4,300 租金可提領 100 萬房貸</div>
         </div>
-        <div class="glass-card glass-card-spotlight rounded-2xl p-4 border-rose-500/25">
+        <div class="bg-slate-800/90 rounded-2xl p-4 border border-slate-700/80 shadow-md">
           <div class="text-xs text-slate-400 font-medium">經典殺價戰役（內湖文德站）</div>
           <div class="text-2xl font-black text-rose-400 font-mono-num mt-1">55 萬 → 40.8 萬/坪</div>
           <div class="text-[11px] text-slate-400 mt-1">歷時 7 個月冷處理現省 400 多萬</div>
         </div>
       </div>
-
-      <!-- Navigation Tabs -->
-      <nav class="flex flex-wrap gap-2 mt-7" aria-label="主導覽選單">
-        <button type="button" data-tab="nine-knives" class="tab-btn tab-active px-4 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5">
-          <span>⚡ 1. 買房九把刀（購屋網即時分析與出價建議）</span>
-        </button>
-        <button type="button" data-tab="overview" class="tab-btn tab-inactive px-4 py-2.5 rounded-xl text-xs sm:text-sm transition">
-          2. 總覽與宏觀時機
-        </button>
-        <button type="button" data-tab="money-machine" class="tab-btn tab-inactive px-4 py-2.5 rounded-xl text-xs sm:text-sm transition">
-          3. 房貸印鈔機與試算器
-        </button>
-        <button type="button" data-tab="negotiation" class="tab-btn tab-inactive px-4 py-2.5 rounded-xl text-xs sm:text-sm transition">
-          4. 被動談判術與破局話術
-        </button>
-        <button type="button" data-tab="videos" class="tab-btn tab-inactive px-4 py-2.5 rounded-xl text-xs sm:text-sm transition">
-          5. 頻道影片全資料庫 (27部)
-        </button>
-      </nav>
     </div>
   </header>
+
+  <!-- Sticky Navigation Tabs (Matching Wu Dan-ru) -->
+  <nav class="sticky top-14 z-40 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm" aria-label="主導覽選單">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center gap-1.5 overflow-x-auto py-2.5 no-scrollbar" id="mainTabNav">
+        <button type="button" data-tab="nine-knives" class="tab-btn tab-active whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-1.5">
+          <span>⚡ 1. 買房九把刀（購屋網即時分析與出價建議）</span>
+        </button>
+        <button type="button" data-tab="overview" class="tab-btn tab-inactive whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition">
+          2. 總覽與宏觀時機
+        </button>
+        <button type="button" data-tab="money-machine" class="tab-btn tab-inactive whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition">
+          3. 房貸印鈔機與試算器
+        </button>
+        <button type="button" data-tab="negotiation" class="tab-btn tab-inactive whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition">
+          4. 被動談判術與破局話術
+        </button>
+        <button type="button" data-tab="videos" class="tab-btn tab-inactive whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition">
+          5. 頻道影片全資料庫 (27部)
+        </button>
+      </div>
+    </div>
+  </nav>
 
   <!-- Main Content Container -->
   <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
