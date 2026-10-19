@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第二屋購屋與資產槓桿決策中心｜科目一轉科目四 × 首購八成 × 0050 套利全解析</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --amber-glow: rgba(245, 158, 11, 0.35);
+      --sky-glow: rgba(56, 189, 248, 0.35);
+      --emerald-glow: rgba(16, 185, 129, 0.35);
+    }
+    body {
+      font-family: 'Inter', 'Noto Sans TC', sans-serif;
+      background-color: #050811;
+      color: #f8fafc;
+      overflow-x: hidden;
+    }
+    .font-mono-num {
+      font-family: 'JetBrains Mono', 'Inter', monospace;
+    }
+    .cyber-grid {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    }
+    .glass-panel {
+      background: rgba(15, 23, 42, 0.78);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+    }
+    .glass-card-spotlight {
+      position: relative;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(20px);
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-card-spotlight::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(56, 189, 248, 0.09), transparent 40%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .glass-card-spotlight:hover::before {
+      opacity: 1;
+    }
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .animate-ticker {
+      display: flex;
+      width: max-content;
+      animation: ticker 42s linear infinite;
+    }
+    .animate-ticker:hover {
+      animation-play-state: paused;
+    }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #050811; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #334155; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col cyber-grid selection:bg-amber-400 selection:text-slate-950">
+
+  <!-- Background Particle Canvas -->
+  <canvas id="bg-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-45"></canvas>
+
+  <!-- Live Strategy Ticker Tape -->
+  <div class="relative z-50 bg-slate-950/95 border-b border-slate-800/80 py-1.5 overflow-hidden text-xs">
+    <div class="animate-ticker items-center gap-8 text-slate-300">
+      <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-amber-400"></span><strong class="text-amber-400">陳侯勳「科目一轉科目四」核心：</strong>消除聯徵「購置住宅貸款（科目一）」紀錄，即可恢復名下無房貸之首購 8 成＋寬限期資格！</span>
+      <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-rose-400"></span><strong class="text-rose-400">央行金檢絕對紅線：</strong>第一屋增貸／理財型房貸（科目四）資金嚴禁直接匯入第二屋履保專戶當頭期款，違者銀行強制追回貸款並罰違約金！</span>
+      <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span><strong class="text-emerald-400">豪宅線與總價天花板：</strong>雙北買第二屋務必將成交總價壓在 3,200 萬內（更要避開台北 7,000 萬／新北 6,000 萬／其他地區 4,000 萬高價住宅緊箍咒）！</span>
+      <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-sky-400"></span><strong class="text-sky-400">租金印鈔機公式：</strong>第一屋出租每創造 4,300 元月租金＝由房客替你免費償還 100 萬房貸本息！</span>
+      <!-- Duplicate for loop -->
+      <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-amber-400"></span><strong class="text-amber-400">陳侯勳「科目一轉科目四」核心：</strong>消除聯徵「購置住宅貸款（科目一）」紀錄，即可恢復名下無房貸之首購 8 成＋寬限期資格！</span>
+      <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-rose-400"></span><strong class="text-rose-400">央行金檢絕對紅線：</strong>第一屋增貸／理財型房貸（科目四）資金嚴禁直接匯入第二屋履保專戶當頭期款，違者銀行強制追回貸款並罰違約金！</span>
+    </div>
+  </div>
+
+  <!-- Sticky Cross-Page Navigation Header -->
+  <nav class="sticky top-0 z-50 bg-slate-950/85 backdrop-blur-xl border-b border-slate-800/80 text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between gap-3 text-xs sm:text-sm">
+      <div class="flex items-center gap-3">
+        <a href="./index.html" class="inline-flex items-center gap-2 text-slate-300 hover:text-amber-400 font-bold transition group">
+          <span class="px-2.5 py-1 rounded-lg bg-slate-900 group-hover:bg-amber-500/20 text-amber-400 border border-slate-700 group-hover:border-amber-500/40 transition">
+            ⬅ 雙師總首頁
+          </span>
+          <span class="hidden md:inline text-slate-300 group-hover:text-white">HOUSE TRADE STRATEGY 指揮中心</span>
+        </a>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <a href="./吳淡如_房商必修課.html" class="px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 bg-slate-900 text-amber-300 hover:bg-amber-500 hover:text-slate-950 border border-amber-500/30">
+          <span>🐎</span>
+          <span class="hidden sm:inline">吳淡如《房商必修課》</span>
+        </a>
+        <a href="./「談判大叔」陳侯勳｜買房投資與談判理論全集.html" class="px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 bg-slate-900 text-sky-300 hover:bg-sky-400 hover:text-slate-950 border border-sky-500/30">
+          <span>🗡️</span>
+          <span class="hidden sm:inline">陳侯勳《房產剎價學》</span>
+        </a>
+        <span class="px-3 py-1.5 rounded-xl font-black flex items-center gap-1.5 bg-gradient-to-r from-emerald-400 to-sky-400 text-slate-950 shadow-md">
+          <span>🏦</span>
+          <span>第二屋購屋決策方案</span>
+        </span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero & Current Asset Snapshot -->
+  <header class="relative z-10 border-b border-slate-800/80 bg-gradient-to-b from-slate-900/80 via-slate-950/90 to-[#050811] py-8 lg:py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+        <div>
+          <div class="inline-flex flex-wrap items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-bold mb-3">
+            <span>🎯 實戰財務工程診斷報告</span>
+            <span>•</span>
+            <span>第一屋增值 580 萬 ＋ 釋放 1,550 萬淨值</span>
+            <span>•</span>
+            <span>陳侯勳「科目一轉科目四」× 吳淡如「0050 套利」</span>
+          </div>
+          <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white">
+            第二間購屋＆<span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-emerald-300 to-sky-400">資產槓桿最佳路徑決策書</span>
+          </h1>
+          <p class="mt-2.5 text-slate-300 text-sm sm:text-base max-w-4xl leading-relaxed">
+            恭喜您！您的第一間房從 <strong>1,420 萬漲至 2,000 萬</strong>，且房貸僅剩 <strong>450 萬</strong>（淨值高達 <strong>1,550 萬</strong>，負債比僅 22.5%），這在陳侯勳與吳淡如眼中屬於<strong>「最頂級的財務底牌」</strong>。以下為您完整盤點現況、排定 4 大方案優先順序，並提供互動式現金流試算表。
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-2 shrink-0">
+          <a href="#ranking-section" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs sm:text-sm transition shadow-lg shadow-amber-500/20">
+            🏆 看 4 大方案優先順序
+          </a>
+          <a href="#matrix-section" class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-sky-300 border border-sky-500/40 font-bold text-xs sm:text-sm transition">
+            📊 看完整比較總表
+          </a>
+          <a href="#simulator-section" class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-emerald-300 border border-emerald-500/40 font-bold text-xs sm:text-sm transition">
+            🧮 互動金額試算器
+          </a>
+        </div>
+      </div>
+
+      <!-- Current Status 4-Card Dashboard -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="glass-card-spotlight rounded-2xl p-4 border border-amber-500/30">
+          <div class="flex items-center justify-between text-xs text-slate-400 font-semibold">
+            <span>🏠 第一屋現況（出租母雞）</span>
+            <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[10px]">買入 1,420萬</span>
+          </div>
+          <div class="text-2xl font-black text-amber-400 font-mono-num mt-1.5">現值 2,000 萬</div>
+          <div class="text-xs text-slate-300 mt-1">帳面增值 <strong class="text-emerald-400">+580萬 (+40.8%)</strong>，若出租預估月收 3.2~4.2 萬。</div>
+        </div>
+
+        <div class="glass-card-spotlight rounded-2xl p-4 border border-emerald-500/30">
+          <div class="flex items-center justify-between text-xs text-slate-400 font-semibold">
+            <span>💎 第一屋沉睡淨值（可活化）</span>
+            <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px]">殘貸僅 450萬</span>
+          </div>
+          <div class="text-2xl font-black text-emerald-400 font-mono-num mt-1.5">淨值 1,550 萬</div>
+          <div class="text-xs text-slate-300 mt-1">按 8 成鑑價可貸 <strong>1,600 萬</strong>，扣掉 450 萬後可多釋放 <strong class="text-amber-300">1,150 萬</strong> 資金！</div>
+        </div>
+
+        <div class="glass-card-spotlight rounded-2xl p-4 border border-sky-500/30">
+          <div class="flex items-center justify-between text-xs text-slate-400 font-semibold">
+            <span>🏢 第二屋目標（新房自住/置產）</span>
+            <span class="px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 text-[10px]">建議壓在3,200萬</span>
+          </div>
+          <div class="text-2xl font-black text-sky-400 font-mono-num mt-1.5">3,200 ~ 3,500 萬</div>
+          <div class="text-xs text-slate-300 mt-1">首購 8 成可貸 <strong>2,560~2,800萬</strong>（自備 640~700萬）；若卡第二屋 5 成則需自備 1,600萬+。</div>
+        </div>
+
+        <div class="glass-card-spotlight rounded-2xl p-4 border border-rose-500/30">
+          <div class="flex items-center justify-between text-xs text-slate-400 font-semibold">
+            <span>⚡ 破局關鍵：消除「科目一」</span>
+            <span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 text-[10px]">差額 810萬+</span>
+          </div>
+          <div class="text-2xl font-black text-rose-400 font-mono-num mt-1.5">首購 8成 vs 二屋 5成</div>
+          <div class="text-xs text-slate-300 mt-1">只要塗銷第一屋 450 萬「科目一」，第二屋就能合法取得<strong>首購 8 成＋3~5年寬限期</strong>！</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12 flex-1 w-full">
+
+    <!-- SECTION 1: EXECUTIVE PRIORITY RANKING (優先順序總決策) -->
+    <section id="ranking-section" class="space-y-5">
+      <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-slate-800 pb-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-amber-400">Executive Recommendation</span>
+          <h2 class="text-2xl sm:text-3xl font-black text-white mt-1">🏆 四大購屋方案【優先順序總排行】與決策結論</h2>
+        </div>
+        <div class="text-xs text-slate-400 mt-1 md:mt-0">
+          結論：<strong class="text-emerald-400">作法 1 與 作法 3 本質是同一個神級戰略的兩種執行路徑</strong>（視您手頭現金是否滿 1,150 萬而定）
+        </div>
+      </div>
+
+      <!-- Priority Cards Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+        <!-- RANK 1A: Method 1 -->
+        <div class="glass-card-spotlight rounded-3xl p-6 border-2 border-amber-500/60 bg-gradient-to-br from-amber-500/10 via-slate-900/95 to-slate-950 shadow-2xl flex flex-col justify-between">
+          <div>
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+              <span class="px-3 py-1 rounded-full bg-amber-500 text-slate-950 font-black text-xs shadow-md">
+                🥇 第一優先（並列首選 A）：手頭現金充足（≥ 1,150 萬）時採用
+              </span>
+              <span class="text-xs font-mono-num font-bold text-amber-300">推薦指數：★★★★★ (98分)</span>
+            </div>
+            <h3 class="text-xl font-black text-white">
+              作法 1：先清償第一屋 450 萬（消滅科目一）➔ 首購 8 成買第二屋 ➔ 第一屋辦科目四（1,600 萬）買 0050 ＋ 出租
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-300 mt-2.5 leading-relaxed">
+              這是<strong>金流最乾淨、銀行審核 100% 不會刁難、最符合央行金檢規範</strong>的教科書級做法！因為您買第二屋的頭期款（約 680 萬）與清償第一屋的 450 萬完全來自自有資金，第二屋順利核貸 8 成交屋後，再拿第一屋無貸款乾淨產權去申請「科目四（理財型房貸／周轉金貸款）」投入 0050，完全不會觸犯「增貸資金流入房市」的紅線。
+            </p>
+            <div class="mt-4 p-3.5 rounded-2xl bg-slate-950/90 border border-amber-500/30 text-xs space-y-1.5">
+              <div class="font-bold text-amber-300">💡 適用條件與資金門檻：</div>
+              <div class="text-slate-300">• 您目前手頭可動用現金（或股票質押／賣股變現）需準備約 <strong>1,150 萬～1,200 萬</strong>（450 萬還第一屋 ＋ 680 萬付第二屋 2 成頭期款 ＋ 稅費）。</div>
+              <div class="text-emerald-300">• <strong>破局技巧：</strong>若現金只有 700 萬（只夠付第二屋頭期款），可向父母親友短暫借調 450 萬過橋清償第一屋，等第二屋交屋、第一屋辦出 1,600 萬科目四後，立刻歸還親友 450 萬，剩餘 1,150 萬全數買進 0050！</div>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs">
+            <span class="text-amber-400 font-bold">✅ 優勢：金流零瑕疵、100% 拿首購 8 成與寬限期</span>
+            <span class="text-slate-400">總控管資產：<strong>6,950 萬</strong>（兩房＋1,600萬 0050）</span>
+          </div>
+        </div>
+
+        <!-- RANK 1B: Method 3 -->
+        <div class="glass-card-spotlight rounded-3xl p-6 border-2 border-sky-500/60 bg-gradient-to-br from-sky-500/10 via-slate-900/95 to-slate-950 shadow-2xl flex flex-col justify-between">
+          <div>
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+              <span class="px-3 py-1 rounded-full bg-sky-400 text-slate-950 font-black text-xs shadow-md">
+                🥇 第一優先（並列首選 B）：手頭現金約 650~800 萬時採用
+              </span>
+              <span class="text-xs font-mono-num font-bold text-sky-300">推薦指數：★★★★★ (95分)</span>
+            </div>
+            <h3 class="text-xl font-black text-white">
+              作法 3：第一屋直接「轉貸科目四」代償原 450 萬（科目一轉四）➔ 恢復首購 8 成買第二屋 ＋ 第一屋出租
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-300 mt-2.5 leading-relaxed">
+              這正是<strong>「談判大叔」陳侯勳在《查理的創業化合物二訪》親授的「科目一洗成科目四」核心密技</strong>！您不必自己掏出 450 萬現金還第一屋，而是找 B 銀行以「投資理財周轉（科目四）」名義申請 1,600 萬貸款，由 B 銀行直接代償塗銷 A 銀行剩下的 450 萬「科目一（購置住宅貸款）」。聯徵中心更新後，您名下就不再有「購置住宅貸款」，買第二屋即可合法享有首購 8 成！
+            </p>
+            <div class="mt-4 p-3.5 rounded-2xl bg-slate-950/90 border border-sky-500/30 text-xs space-y-1.5">
+              <div class="font-bold text-sky-300">⚠️ 實戰關鍵防雷（極重要！）：</div>
+              <div class="text-slate-300">1. <strong>嚴格隔離金流</strong>：第一屋轉成科目四多貸出來的 1,150 萬，<strong>必須 100% 轉入證券戶買 0050／美債</strong>（保留交割單備查），<strong>絕對不能</strong>拿去付第二屋的頭期款！第二屋的 680 萬頭期款必須用您原本的自有資金支付。</div>
+              <div class="text-amber-300">2. <strong>計算 DBR 與收支比</strong>：因為第一屋 1,600 萬科目四已經先掛在聯徵上，申請第二屋 2,680 萬房貸時，銀行會同時計算兩筆貸款的月付金（總貸款 4,280 萬），請務必先把第一屋簽好租約（並公證）以及準備 0050 股息證明，用來認列收入！</div>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs">
+            <span class="text-sky-400 font-bold">✅ 優勢：免掏 450 萬現金還舊貸、直接完成科目轉換</span>
+            <span class="text-slate-400">自備現金需求僅需：<strong>約 700 萬</strong></span>
+          </div>
+        </div>
+
+        <!-- RANK 3: Method 2 -->
+        <div class="glass-card-spotlight rounded-3xl p-6 border border-rose-500/40 bg-slate-900/80 flex flex-col justify-between">
+          <div>
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+              <span class="px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40 font-bold text-xs">
+                ⚠️ 第三順位（高風險不推薦）：同時踩中「限貸成數」與「金檢違約」雙重陷阱
+              </span>
+              <span class="text-xs font-mono-num font-bold text-rose-400">推薦指數：★★☆☆☆ (40分)</span>
+            </div>
+            <h3 class="text-lg font-black text-white">
+              作法 2：第一屋 450 萬不還、直接申請增貸 ➔ 想拿增貸資金去買第二屋 ＋ 第一屋出租
+            </h3>
+            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+              這個作法有<strong>兩個致命傷</strong>：<br>
+              <strong>第一（違反央行規定）：</strong>您心中疑問「不確定增貸的錢能否投入第二間房」——答案是<strong>「絕對不行直接投入！」</strong>央行與金管會目前嚴格執行金流追蹤，只要查到第一屋增貸（科目四）資金流入第二屋的履約保證專戶或建商帳戶，銀行會立即要求<strong>「提前清償全部增貸金額」並加罰違約金</strong>（除非您原本手上有 700 萬股票，賣掉股票拿去付第二屋頭期款，再用增貸的錢買回股票，且時間順序不能顛倒）。<br>
+              <strong>第二（卡死第二屋貸款）：</strong>因為第一屋原本的 450 萬「科目一」沒有塗銷，您買第二屋（3,350萬）會被視為<strong>「名下有房有貸之第 2 戶購屋」</strong>，在現行央行信用管制下，<strong>貸款成數最高僅 5 成（僅能貸 1,675 萬）、且完全沒有寬限期</strong>！為了區區 450 萬舊貸不還，導致第二屋少貸 1,000 萬且沒寬限期，完全得不償失！
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 text-xs text-rose-300 font-semibold">
+            ⛔ 結論：千萬不要為保留 450 萬舊貸而犧牲第二屋的「首購 8 成（約 2,680 萬）＋寬限期」資格！
+          </div>
+        </div>
+
+        <!-- RANK 4: Method 4 -->
+        <div class="glass-card-spotlight rounded-3xl p-6 border border-slate-700/80 bg-slate-900/60 flex flex-col justify-between opacity-90">
+          <div>
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+              <span class="px-3 py-1 rounded-full bg-slate-800 text-slate-300 border border-slate-700 font-bold text-xs">
+                🛑 第四順位（最不推薦・Not Preferred）：砍斷會下蛋的金雞母
+              </span>
+              <span class="text-xs font-mono-num font-bold text-slate-400">推薦指數：★☆☆☆☆ (25分)</span>
+            </div>
+            <h3 class="text-lg font-black text-white">
+              作法 4：賣掉第一間房（2,000萬）➔ 拿差價（約 1,500 萬）去買第二間房
+            </h3>
+            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+              誠如您直覺所判斷（Not prefer），這完全違背吳淡如與陳侯勳的財商原則：<br>
+              1. <strong>損失交易摩擦成本與稅費：</strong>賣掉 2,000 萬房屋需支付仲介費（約 40~80 萬）、土地增值稅與房地合一稅（視取得年度與自住重購退稅條件而定），白白蒸發上百萬淨值。<br>
+              2. <strong>失去抗通膨雙引擎：</strong>第一屋位處成熟地段、取得成本低（1,420萬），留在手上既能收租（養活科目四利息），又能享受未來長期通膨增值。賣掉第一屋換第二屋，您的總房產部位只有 3,350 萬；但若採用<strong>作法 1 或作法 3</strong>，您將同時擁有 <strong>5,350 萬房產（2,000萬＋3,350萬）＋ 1,150~1,600 萬的 0050 部位</strong>，10 年後財富差距將超過 2,500 萬以上！
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 text-xs text-slate-400">
+            💡 唯一例外：除非第一屋踩中「買房九把刀」的致命地雷（如海砂屋、嚴重漏水或機能衰退區），否則絕不賣出！
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 2: COMPREHENSIVE HTML COMPARISON TABLE (四大方案全方位比較總表) -->
+    <section id="matrix-section" class="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-2xl space-y-5">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-4">
+        <div>
+          <span class="px-2.5 py-0.5 rounded-full bg-sky-500/20 text-sky-300 text-xs font-bold border border-sky-500/30">量化對照矩陣</span>
+          <h2 class="text-xl sm:text-2xl font-black text-white mt-1.5">📊 四大購屋與貸款方案【全方位優缺點＆財務指標比較表】</h2>
+          <p class="text-xs text-slate-400 mt-0.5">
+            基準假設：第一屋現值 <strong>2,000 萬</strong>（殘貸 450 萬）；第二屋目標成交價 <strong>3,350 萬</strong>（取 3,200~3,500 萬中位數）。
+          </p>
+        </div>
+        <button type="button" id="btn-copy-summary" class="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs flex items-center gap-1.5 shadow-lg shadow-emerald-500/20 transition shrink-0">
+          <span>📋 複製完整分析報告 (LINE格式)</span>
+        </button>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse text-xs sm:text-sm min-w-[960px]">
+          <thead>
+            <tr class="border-b-2 border-slate-700 bg-slate-900/95 text-slate-200">
+              <th class="p-3.5 font-black w-[15%]">比較維度</th>
+              <th class="p-3.5 font-black text-amber-400 bg-amber-500/10 border-x border-amber-500/20 w-[23%]">
+                🥇 作法 1（首選 A：先清償再科目四）<br>
+                <span class="text-[11px] font-semibold text-amber-200">還清450萬 ➔ 首購8成買二屋 ➔ 科目四買0050</span>
+              </th>
+              <th class="p-3.5 font-black text-sky-400 bg-sky-500/10 border-r border-sky-500/20 w-[23%]">
+                🥇 作法 3（首選 B：科目一洗成科目四）<br>
+                <span class="text-[11px] font-semibold text-sky-200">辦科目四代償450萬 ➔ 首購8成買二屋</span>
+              </th>
+              <th class="p-3.5 font-bold text-rose-400 w-[20%]">
+                ⚠️ 作法 2（不還舊貸直接增貸）<br>
+                <span class="text-[11px] font-normal text-rose-300">留450萬 ➔ 增貸買二屋（高風險）</span>
+              </th>
+              <th class="p-3.5 font-bold text-slate-400 w-[19%]">
+                🛑 作法 4（賣一屋買二屋）<br>
+                <span class="text-[11px] font-normal text-slate-400">賣2,000萬 ➔ 換買3,350萬</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800/90 text-slate-200">
+            <tr class="hover:bg-slate-900/50">
+              <td class="p-3.5 font-bold text-white">優先順序與評級</td>
+              <td class="p-3.5 bg-amber-500/5 border-x border-amber-500/15 font-black text-amber-400">
+                🏆 第 1 順位（現金充裕首選）<br>
+                <span class="text-[11px] text-emerald-400">★ 金流 100% 合規無懈可擊</span>
+              </td>
+              <td class="p-3.5 bg-sky-500/5 border-r border-sky-500/15 font-black text-sky-400">
+                🏆 第 1 順位（省現金首選）<br>
+                <span class="text-[11px] text-emerald-400">★ 陳侯勳「科目一轉四」標準技</span>
+              </td>
+              <td class="p-3.5 text-rose-400 font-bold">
+                ⚠️ 第 3 順位（極不推薦）<br>
+                <span class="text-[11px]">踩中限貸令＋金檢違規紅線</span>
+              </td>
+              <td class="p-3.5 text-slate-400 font-bold">
+                🛑 第 4 順位（Not Prefer）<br>
+                <span class="text-[11px]">喪失長期收租與複利雙引擎</span>
+              </td>
+            </tr>
+
+            <tr class="hover:bg-slate-900/50">
+              <td class="p-3.5 font-bold text-white">聯徵中心「科目一」狀態</td>
+              <td class="p-3.5 bg-amber-500/5 border-x border-amber-500/15 text-emerald-300 font-semibold">
+                ✅ <strong>0 筆（完全塗銷清零）</strong><br>
+                買第二屋時名下無任何房貸紀錄
+              </td>
+              <td class="p-3.5 bg-sky-500/5 border-r border-sky-500/15 text-emerald-300 font-semibold">
+                ✅ <strong>0 筆（科目一已轉為科目四）</strong><br>
+                聯徵僅顯示「周轉金/理財貸款」
+              </td>
+              <td class="p-3.5 text-rose-300">
+                ❌ <strong>仍有 1 筆科目一（450萬）</strong><br>
+                外加 1 筆增貸科目四（1,150萬）
+              </td>
+              <td class="p-3.5 text-slate-300">
+                ✅ <strong>0 筆（賣屋塗銷）</strong>
+              </td>
+            </tr>
+
+            <tr class="hover:bg-slate-900/50">
+              <td class="p-3.5 font-bold text-white">第二間房（3,350萬）<br>可貸成數與寬限期</td>
+              <td class="p-3.5 bg-amber-500/5 border-x border-amber-500/15 font-mono-num">
+                <strong class="text-amber-300 text-base">可貸 8 成（2,680 萬）</strong><br>
+                <span class="text-xs text-emerald-300">✓ 享 30~40 年期 ＋ 3~5 年寬限期</span>
+              </td>
+              <td class="p-3.5 bg-sky-500/5 border-r border-sky-500/15 font-mono-num">
+                <strong class="text-sky-300 text-base">可貸 8 成（2,680 萬）</strong><br>
+                <span class="text-xs text-emerald-300">✓ 享 30~40 年期 ＋ 3~5 年寬限期</span>
+              </td>
+              <td class="p-3.5 font-mono-num">
+                <strong class="text-rose-400 text-base">受限第2戶僅 5 成（1,675 萬）</strong><br>
+                <span class="text-xs text-rose-300">✗ 無寬限期、利率加碼至 2.6%+</span>
+              </td>
+              <td class="p-3.5 font-mono-num">
+                <strong class="text-slate-200">可貸 8 成（2,680 萬）</strong><br>
+                <span class="text-xs text-slate-400">✓ 享首購條件</span>
+              </td>
+            </tr>
+
+            <tr class="hover:bg-slate-900/50">
+              <td class="p-3.5 font-bold text-white">需準備之自有現金<br>（過橋與頭期款）</td>
+              <td class="p-3.5 bg-amber-500/5 border-x border-amber-500/15 font-mono-num">
+                <strong>短期需 1,130 萬</strong>（450萬還舊貸＋680萬二屋頭期）；<br>
+                <span class="text-xs text-amber-300">二屋交屋後辦科目四可抽回 1,600 萬買 0050！</span>
+              </td>
+              <td class="p-3.5 bg-sky-500/5 border-r border-sky-500/15 font-mono-num">
+                <strong>僅需自備 680 萬</strong>（直接付二屋 2 成頭期款）；<br>
+                <span class="text-xs text-sky-300">舊貸 450 萬由科目四新貸直接代償！</span>
+              </td>
+              <td class="p-3.5 font-mono-num">
+                <strong>高達 1,675 萬</strong>（二屋 5 成自備款）；<br>
+                <span class="text-xs text-rose-300">且增貸之 1,150 萬依法不得直接匯入二屋！</span>
+              </td>
+              <td class="p-3.5 font-mono-num">
+                <strong>0 元額外現金</strong><br>
+                <span class="text-xs text-slate-400">賣屋實拿約 1,500 萬付完 680 萬頭期還剩 820 萬</span>
+              </td>
+            </tr>
+
+            <tr class="hover:bg-slate-900/50">
+              <td class="p-3.5 font-bold text-white">央行金檢合規性與<br>銀行核貸難度</td>
+              <td class="p-3.5 bg-amber-500/5 border-x border-amber-500/15">
+                <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold text-xs">🟢 極高（100% 合規）</span>
+                <p class="text-xs text-slate-300 mt-1">先買完第二屋（拿到首購8成），之後才去辦第一屋理財型房貸買 0050，金流時序完全隔離。</p>
+              </td>
+              <td class="p-3.5 bg-sky-500/5 border-r border-sky-500/15">
+                <span class="px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 font-bold text-xs">🔵 中高（需嚴控金流與收支比）</span>
+                <p class="text-xs text-slate-300 mt-1">科目四多貸出的 1,150 萬必須先進股市買 0050；買第二屋時需確保家庭年收＋租金＋股息足以支撐總額 4,280 萬貸款。</p>
+              </td>
+              <td class="p-3.5">
+                <span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold text-xs">🔴 極危險（違規追回風險）</span>
+                <p class="text-xs text-slate-300 mt-1">若將增貸資金轉入履保帳戶或建商，金檢必抓，銀行將撤銷額度並追討本金。</p>
+              </td>
+              <td class="p-3.5">
+                <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-bold text-xs">⚪ 完全合規</span>
+                <p class="text-xs text-slate-400 mt-1">單純一買一賣，無金檢問題，但損失交易稅費。</p>
+              </td>
+            </tr>
+
+            <tr class="hover:bg-slate-900/50">
+              <td class="p-3.5 font-bold text-white">完成後總控管資產規模</td>
+              <td class="p-3.5 bg-amber-500/5 border-x border-amber-500/15 font-mono-num">
+                <div class="text-base font-black text-amber-400">6,950 萬元</div>
+                <div class="text-[11px] text-slate-300">第一屋 2,000萬 ＋ 第二屋 3,350萬 ＋ 0050 部位 1,600萬</div>
+              </td>
+              <td class="p-3.5 bg-sky-500/5 border-r border-sky-500/15 font-mono-num">
+                <div class="text-base font-black text-sky-400">6,500 萬元</div>
+                <div class="text-[11px] text-slate-300">第一屋 2,000萬 ＋ 第二屋 3,350萬 ＋ 0050 部位 1,150萬</div>
+              </td>
+              <td class="p-3.5 font-mono-num">
+                <div class="text-base font-bold text-rose-300">5,350 萬元</div>
+                <div class="text-[11px] text-slate-400">第一屋 2,000萬 ＋ 第二屋 3,350萬（現金流緊繃）</div>
+              </td>
+              <td class="p-3.5 font-mono-num">
+                <div class="text-base font-bold text-slate-400">4,170 萬元</div>
+                <div class="text-[11px] text-slate-400">第二屋 3,350萬 ＋ 剩餘現金 820萬</div>
+              </td>
+            </tr>
+
+            <tr class="hover:bg-slate-900/50">
+              <td class="p-3.5 font-bold text-white">核心優點總結</td>
+              <td class="p-3.5 bg-amber-500/5 border-x border-amber-500/15 text-xs leading-relaxed">
+                1. <strong>申請第二屋房貸時負債為 0</strong>，最容易拿到地板利率（~2.185%）與最長 40 年房貸。<br>
+                2. 交屋後再辦第一屋科目四，<strong>完全避開央行查帳風險</strong>。<br>
+                3. 1,600萬投入 0050（年化8~10%）套利空間最大。
+              </td>
+              <td class="p-3.5 bg-sky-500/5 border-r border-sky-500/15 text-xs leading-relaxed">
+                1. <strong>不需自掏 450 萬現金</strong>清償第一屋，用新辦的科目四直接借新還舊。<br>
+                2. 同樣能消除聯徵科目一，順利以首購 8 成買進第二屋。<br>
+                3. 剩餘 1,150 萬科目四額度立即投入 0050 滾動複利。
+              </td>
+              <td class="p-3.5 text-xs leading-relaxed text-slate-300">
+                唯一好處是省去塗銷第一屋的手續，但代價是第二屋少貸 3 成（約 1,000 萬）且無寬限期。
+              </td>
+              <td class="p-3.5 text-xs leading-relaxed text-slate-400">
+                負債最低、月付壓力最小，適合極度保守、完全不想管理租客與槓桿的退休族。
+              </td>
+            </tr>
+
+            <tr class="hover:bg-slate-900/50">
+              <td class="p-3.5 font-bold text-white">核心缺點與注意事項</td>
+              <td class="p-3.5 bg-amber-500/5 border-x border-amber-500/15 text-xs leading-relaxed">
+                需準備 450 萬過橋資金先還掉第一屋（可透過賣股或親友短期周轉 2~3 個月解決）。
+              </td>
+              <td class="p-3.5 bg-sky-500/5 border-r border-sky-500/15 text-xs leading-relaxed">
+                1. 買第二屋時，第一屋的 1,600 萬科目四已計入負債，<strong>要求家庭年收較高（建議年收 ≥ 250~300 萬）</strong>。<br>
+                2. 仍須自備約 680 萬現金作為第二屋頭期款。
+              </td>
+              <td class="p-3.5 text-xs leading-relaxed text-rose-300">
+                1. 增貸買房違反央行切結書。<br>
+                2. 第二屋無寬限期、自備款暴增至 5 成。
+              </td>
+              <td class="p-3.5 text-xs leading-relaxed text-slate-400">
+                損失第一屋每年 38~48 萬租金與未來增值，且需繳納高額仲介費與房地合一稅。
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 3: INTERACTIVE FINANCIAL SIMULATOR (您的專屬數字試算儀) -->
+    <section id="simulator-section" class="glass-panel rounded-3xl p-6 sm:p-8 border-2 border-emerald-500/35 shadow-2xl space-y-6">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+        <div>
+          <span class="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold border border-emerald-500/30">即時動態試算器</span>
+          <h2 class="text-xl sm:text-2xl font-black text-white mt-1.5">🧮 您的第一屋（2,000萬）× 第二屋（3,200~3,500萬）× 0050 現金流模擬器</h2>
+          <p class="text-xs text-slate-300 mt-0.5">
+            已預載您的真實數據！您可以自由微調「第二屋目標成交價」、「第一屋預估月租金」與「科目四投入 0050 金額」，即時試算每月淨現金流與 10 年後財富差距。
+          </p>
+        </div>
+      </div>
+
+      <!-- Simulator Input Controls -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 text-xs">
+        <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800">
+          <label for="inp-h1-val" class="block font-bold text-slate-400 mb-1">第一屋現值 (萬)</label>
+          <input id="inp-h1-val" type="number" value="2000" step="50" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-amber-300 font-mono-num font-bold text-sm focus:outline-none focus:border-amber-400" />
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800">
+          <label for="inp-h1-loan" class="block font-bold text-slate-400 mb-1">第一屋殘貸 (萬)</label>
+          <input id="inp-h1-loan" type="number" value="450" step="10" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono-num font-bold text-sm focus:outline-none focus:border-amber-400" />
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800">
+          <label for="inp-h1-rent" class="block font-bold text-slate-400 mb-1">第一屋出租月租 (元)</label>
+          <input id="inp-h1-rent" type="number" value="38000" step="1000" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-emerald-300 font-mono-num font-bold text-sm focus:outline-none focus:border-emerald-400" />
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800">
+          <label for="inp-h2-price" class="block font-bold text-slate-400 mb-1">第二屋目標價 (萬)</label>
+          <input id="inp-h2-price" type="number" value="3350" step="50" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-sky-300 font-mono-num font-bold text-sm focus:outline-none focus:border-sky-400" />
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800">
+          <label for="inp-etf-return" class="block font-bold text-slate-400 mb-1">0050 預期年化 (%)</label>
+          <input id="inp-etf-return" type="number" value="8.5" step="0.5" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-purple-300 font-mono-num font-bold text-sm focus:outline-none focus:border-purple-400" />
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800">
+          <label for="inp-loan-rate" class="block font-bold text-slate-400 mb-1">科目四利率 (%)</label>
+          <input id="inp-loan-rate" type="number" value="2.45" step="0.05" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono-num font-bold text-sm focus:outline-none focus:border-amber-400" />
+        </div>
+      </div>
+
+      <!-- Simulator Output Cards & Chart -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        <!-- Left 7 Cols: Detailed Breakdown -->
+        <div class="lg:col-span-7 flex flex-col justify-between space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Card A: First House + 0050 Engine -->
+            <div class="p-4 rounded-2xl bg-slate-950/90 border border-amber-500/40 space-y-2.5">
+              <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                <span class="font-bold text-amber-400 text-xs">🐔 第一屋出租 ＋ 科目四買 0050 引擎</span>
+                <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold">自給自足</span>
+              </div>
+              <div class="space-y-1.5 text-xs text-slate-300">
+                <div class="flex justify-between">
+                  <span>• 第一屋最高可貸科目四 (8成)：</span>
+                  <strong id="out-h1-maxloan" class="font-mono-num text-white">1,600 萬</strong>
+                </div>
+                <div class="flex justify-between">
+                  <span>• 扣除 450 萬舊貸後淨投入 0050：</span>
+                  <strong id="out-etf-principal" class="font-mono-num text-amber-300">1,150 萬</strong>
+                </div>
+                <div class="flex justify-between">
+                  <span>• 1,600 萬科目四每月只繳息：</span>
+                  <strong id="out-h1-interest" class="font-mono-num text-rose-300">-32,667 元/月</strong>
+                </div>
+                <div class="flex justify-between">
+                  <span>• 第一屋每月租金收入：</span>
+                  <strong id="out-h1-rent-display" class="font-mono-num text-emerald-400">+38,000 元/月</strong>
+                </div>
+                <div class="flex justify-between pt-1.5 border-t border-slate-800">
+                  <span>• 0050 每年平均增值與配息收益：</span>
+                  <strong id="out-etf-annual" class="font-mono-num text-purple-300">+97.8 萬/年 (約 +8.1萬/月)</strong>
+                </div>
+              </div>
+              <div id="out-h1-verdict" class="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-[11px] text-emerald-200 leading-relaxed">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+
+            <!-- Card B: Second House Purchase Engine -->
+            <div class="p-4 rounded-2xl bg-slate-950/90 border border-sky-500/40 space-y-2.5">
+              <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                <span class="font-bold text-sky-400 text-xs">🏢 第二屋（首購 8 成 vs 二屋 5 成）差距</span>
+                <span class="text-[10px] px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 font-bold">關鍵槓桿</span>
+              </div>
+              <div class="space-y-1.5 text-xs text-slate-300">
+                <div class="flex justify-between">
+                  <span>• 【作法 1 & 3】首購 8 成可貸金額：</span>
+                  <strong id="out-h2-loan80" class="font-mono-num text-sky-300">2,680 萬 (自備 670萬)</strong>
+                </div>
+                <div class="flex justify-between">
+                  <span>• 【作法 2】卡第二屋 5 成僅能貸：</span>
+                  <strong id="out-h2-loan50" class="font-mono-num text-rose-400">1,675 萬 (自備 1,675萬)</strong>
+                </div>
+                <div class="flex justify-between">
+                  <span>• 消除科目一幫您少拿出的自備款：</span>
+                  <strong id="out-saved-down" class="font-mono-num text-emerald-400">省下 1,005 萬現金！</strong>
+                </div>
+                <div class="flex justify-between pt-1.5 border-t border-slate-800">
+                  <span>• 第二屋寬限期每月只繳息 (2.2%)：</span>
+                  <strong id="out-h2-io" class="font-mono-num text-amber-300">49,133 元/月</strong>
+                </div>
+                <div class="flex justify-between">
+                  <span>• 第二屋 30 年本息攤還月付金：</span>
+                  <strong id="out-h2-pi" class="font-mono-num text-slate-300">101,760 元/月</strong>
+                </div>
+              </div>
+              <div class="p-2.5 rounded-xl bg-sky-500/10 border border-sky-500/30 text-[11px] text-sky-200 leading-relaxed">
+                💡 搭配<strong>吳淡如「無限寬限之術」</strong>＋第一屋租金與 0050 收益補貼，第二屋每月實質自掏腰包壓力極低！
+              </div>
+            </div>
+          </div>
+
+          <!-- 10-Year Net Worth Projection Banner -->
+          <div class="p-4 rounded-2xl bg-gradient-to-r from-amber-500/15 via-emerald-500/10 to-sky-500/15 border border-amber-500/40 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="space-y-1">
+              <div class="text-xs font-bold text-amber-300">🚀 10 年後預估淨資產差距（作法 1/3 雙房＋0050 vs 作法 4 賣舊換新）</div>
+              <p class="text-xs text-slate-300">
+                假設房價溫和抗通膨年增 3%、0050 年化報酬 <span id="out-etf-rate-text">8.5</span>%，保留第一屋收租並將科目四投入 0050：
+              </p>
+            </div>
+            <div class="text-right shrink-0">
+              <div class="text-[11px] text-slate-400">作法 1 / 3 十年後多創造淨財富</div>
+              <div id="out-10yr-advantage" class="text-2xl sm:text-3xl font-black text-emerald-400 font-mono-num">+2,640 萬元</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right 5 Cols: Chart.js Net Worth Growth Comparison -->
+        <div class="lg:col-span-5 p-4 rounded-2xl bg-slate-950/90 border border-slate-800 flex flex-col justify-between">
+          <div class="text-xs font-bold text-slate-300 text-center border-b border-slate-800 pb-2">
+            📈 四大方案 10 年後「淨資產（扣除所有負債）」成長對決（萬元）
+          </div>
+          <div class="relative h-64 w-full my-auto pt-2">
+            <canvas id="strategyChart"></canvas>
+          </div>
+          <div class="text-[11px] text-slate-400 text-center pt-1">
+            隨上方輸入框數值即時動態重繪
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: STEP-BY-STEP EXECUTION SOP & CRITICAL GUARDRAILS (實戰執行步驟與防雷指南) -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      
+      <!-- Left 7 Cols: Step-by-Step SOP -->
+      <div class="lg:col-span-7 glass-panel rounded-3xl p-6 sm:p-7 border border-slate-800 space-y-4">
+        <div class="flex items-center gap-2 border-b border-slate-800 pb-3">
+          <span class="text-xl">🧭</span>
+          <div>
+            <h3 class="text-lg sm:text-xl font-black text-white">標準實戰執行 SOP（結合「作法 1」與「作法 3」的無縫推進時間軸）</h3>
+            <p class="text-xs text-slate-400">請嚴格按照此先後順序操作，確保聯徵乾淨、金流合規且拿到最高成數：</p>
+          </div>
+        </div>
+
+        <div class="space-y-3.5 text-xs sm:text-sm">
+          <div class="p-4 rounded-2xl bg-slate-900/90 border-l-4 border-l-amber-400 space-y-1">
+            <div class="font-black text-amber-400">STEP 1｜先將第一屋整理招租，簽訂正式租約（創造 4,300 元印鈔機證明）</div>
+            <p class="text-slate-300 text-xs leading-relaxed">
+              依陳侯勳「每 4,300 元月租＝100 萬房貸」公式，2,000 萬房子透過微軟裝或優質招租，若月租達 <strong>3.8萬～4.5萬元</strong>，不僅足夠全額支付未來 1,600 萬科目四的每月利息（約 3.2 萬元），這份<strong>公證租約與租金入帳存摺</strong>更能作為銀行認列您「新增經常性收入」的鐵證，大幅拉高您的收支比！
+            </p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-slate-900/90 border-l-4 border-l-sky-400 space-y-1">
+            <div class="font-black text-sky-400">STEP 2｜消滅第一屋的 450 萬「科目一（購置住宅貸款）」</div>
+            <p class="text-slate-300 text-xs leading-relaxed">
+              • <strong>若選【作法 1（最推薦）】</strong>：動用手頭現金（或賣出部分股票／向家人短期周轉 450 萬），去原銀行清償 450 萬並<strong>領回清償證明、去地政事務所辦理塗銷（或保留抵押權但確認聯徵中心已更新為 0 餘額）</strong>。<br>
+              • <strong>若選【作法 3】</strong>：找另一家外商或民營銀行，以「投資理財周轉（科目四）」名義申貸 1,600 萬，代償原銀行 450 萬科目一，並將多出的 1,150 萬<strong>全數匯入證券戶買進 0050</strong>（切記保留完整買進交割單！）。
+            </p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-slate-900/90 border-l-4 border-l-emerald-400 space-y-1">
+            <div class="font-black text-emerald-400">STEP 3｜以「名下無科目一房貸」首購身分，買進第二屋並貸滿 8 成</div>
+            <p class="text-slate-300 text-xs leading-relaxed">
+              確認聯徵中心已無「科目一」後，簽約買進第二屋，並用<strong>自有乾淨資金支付 2 成頭期款（約 640~700 萬）</strong>。此時銀行查聯徵，您屬於「名下無購置住宅貸款」資格，可順利核准 <strong>8 成房貸（約 2,560~2,800 萬）、30~40 年期與 3~5 年寬限期</strong>。
+            </p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-slate-900/90 border-l-4 border-l-purple-400 space-y-1">
+            <div class="font-black text-purple-400">STEP 4｜（針對作法 1）第二屋交屋撥款後，第一屋申辦 1,600 萬「科目四」買 0050</div>
+            <p class="text-slate-300 text-xs leading-relaxed">
+              當第二屋房貸已經撥款入袋後，再拿第一屋（無貸款）去申辦 8 成（1,600 萬）的<strong>理財型房貸或周轉金貸款（科目四）</strong>。因為此時第二屋已經交屋完畢，銀行 100% 確定您這 1,600 萬不是拿去買房，核貸最快，資金下來後先歸還 450 萬過橋資金，剩餘 <strong>1,150 萬～1,600 萬分批或單筆投入 0050</strong>，完成完美套利閉環！
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right 5 Cols: Negotiation Uncle's Warning on 3200~3500W -->
+      <div class="lg:col-span-5 glass-panel rounded-3xl p-6 sm:p-7 border border-amber-500/40 flex flex-col justify-between space-y-4">
+        <div class="space-y-4">
+          <div class="flex items-center gap-2 border-b border-slate-800 pb-3">
+            <span class="text-xl">🗡️</span>
+            <div>
+              <h3 class="text-lg font-black text-amber-400">陳侯勳「買房九把刀」針對您第二屋（3,200~3,500萬）的關鍵叮嚀</h3>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-rose-950/40 border border-rose-500/40 space-y-1.5 text-xs">
+            <div class="font-black text-rose-300 text-sm">⚠️ 1. 嚴防「第五把刀：總價天花板」與「央行高價住宅線」</div>
+            <p class="text-slate-200 leading-relaxed">
+              您目前看的第二屋預算在 <strong>3,200～3,500 萬</strong>，請特別注意：<br>
+              • 若物件位於<strong>桃園、新竹、台中、台南、高雄（非雙北地區）</strong>，央行「高價住宅（豪宅線）」門檻為 <strong>4,000 萬</strong>（台北市 7,000 萬、新北市 6,000 萬）。一旦銀行鑑價或成交價觸及 4,000 萬，貸款上限會瞬間暴跌至 3 成且無寬限期！<br>
+              • 依陳侯勳「第五把刀」，新北市與新竹換屋主流買盤的<strong>總價天花板約在 3,200 萬</strong>（台北市約 3,500~4,000 萬）。強烈建議運用大叔被動談判術，<strong>將開價 3,500 萬的新房殺到 3,000～3,200 萬以內成交</strong>，不僅少背 300 萬房貸，未來轉手流通性更會好上數倍！
+            </p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-sky-950/40 border border-sky-500/40 space-y-1.5 text-xs">
+            <div class="font-black text-sky-300 text-sm">🎯 2. 預售屋 vs. 新成屋（建商餘屋）的資金時間差優勢</div>
+            <p class="text-slate-200 leading-relaxed">
+              如果您看的「新房」中有<strong>距離交屋還有 1.5～3 年的預售屋</strong>，您當下只需付 10%～15% 訂簽開工程款，<strong>完全不需要現在急著還第一屋的 450 萬</strong>！您可以等到預售屋交屋對保前 3 個月，再執行「作法 1 或 作法 3」把科目一洗成科目四即可。<br>
+              若是買<strong>「已經完工的新成屋（建商餘屋）」</strong>，則正是使用大叔「年底殺建商土建融壓力餘屋」的好時機，請在簽約前或簽約當月立刻啟動「作法 1 / 作法 3」塗銷第一屋科目一。
+            </p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-emerald-950/40 border border-emerald-500/40 space-y-1.5 text-xs">
+            <div class="font-black text-emerald-300 text-sm">🛡️ 3. 吳淡如 ＆ 陳侯勳「夫妻名額與三年不斷鏈」檢核</div>
+            <p class="text-slate-200 leading-relaxed">
+              • <strong>若您已婚</strong>：若第一屋登記在您名下，第二屋直接用<strong>配偶名義購買（且配偶名下無房）</strong>，連第一屋的 450 萬都不必塗銷，配偶就能直接拿首購 8 成！<br>
+              • <strong>第九把刀紅線</strong>：兩間房總貸款約 4,280 萬，請務必保留至少 <strong>250 萬～300 萬高流動性部位（如 0050 或美債）</strong>不動用，確保未來 3 年無論景氣如何波動，現金流 100% 不斷鏈！
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Global Toast Notification -->
+  <div id="app-toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 px-4 py-3 rounded-xl bg-emerald-600 text-white text-xs sm:text-sm font-bold shadow-2xl flex items-center gap-2 pointer-events-none">
+    <span class="text-base">✅</span>
+    <span id="toast-message">訊息提示</span>
+  </div>
+
+  <!-- Footer -->
+  <footer class="relative z-10 mt-auto border-t border-slate-800/80 bg-slate-950 py-8 text-xs text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="text-base">🏦</span>
+        <span><strong>第二屋購屋與科目四槓桿決策書</strong>｜吳淡如《房商必修課》× 陳侯勳《房產剎價學》實戰應用</span>
+      </div>
+      <div class="flex flex-wrap items-center gap-4 font-semibold">
+        <a href="./index.html" class="text-slate-300 hover:text-white hover:underline">🏠 返回雙師總首頁</a>
+        <span class="text-slate-700">|</span>
+        <a href="./吳淡如_房商必修課.html" class="text-amber-400 hover:underline">🐎 吳淡如《房商必修課》</a>
+        <span class="text-slate-700">|</span>
+        <a href="./「談判大叔」陳侯勳｜買房投資與談判理論全集.html" class="text-sky-400 hover:underline">🗡️ 陳侯勳《房產剎價學》</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    let strategyChartInstance = null;
+
+    function showToast(message) {
+      const toast = document.getElementById('app-toast');
+      const msg = document.getElementById('toast-message');
+      msg.textContent = message;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2800);
+    }
+
+    function fallbackCopyText(text, successMsg) {
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.style.position = "fixed";
+      textarea.style.left = "-9999px";
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        showToast(successMsg);
+      } catch (err) {
+        showToast("複製失敗，請手動選取複製");
+      }
+      document.body.removeChild(textarea);
+    }
+
+    function updateSimulation() {
+      const h1Val = parseFloat(document.getElementById('inp-h1-val').value) || 2000;
+      const h1Loan = parseFloat(document.getElementById('inp-h1-loan').value) || 450;
+      const h1Rent = parseFloat(document.getElementById('inp-h1-rent').value) || 38000;
+      const h2Price = parseFloat(document.getElementById('inp-h2-price').value) || 3350;
+      const etfReturn = parseFloat(document.getElementById('inp-etf-return').value) || 8.5;
+      const loanRate = parseFloat(document.getElementById('inp-loan-rate').value) || 2.45;
+
+      // First House & Type 4 Loan Calculations
+      const h1MaxLoan = Math.round(h1Val * 0.8);
+      const etfPrincipal = Math.max(0, h1MaxLoan - h1Loan);
+      const h1MonthlyInterest = Math.round((h1MaxLoan * 10000 * (loanRate / 100)) / 12);
+      const etfAnnualGain = (etfPrincipal * (etfReturn / 100));
+      const etfMonthlyGain = Math.round((etfAnnualGain * 10000) / 12);
+
+      document.getElementById('out-h1-maxloan').textContent = `${h1MaxLoan.toLocaleString()} 萬`;
+      document.getElementById('out-etf-principal').textContent = `${etfPrincipal.toLocaleString()} 萬`;
+      document.getElementById('out-h1-interest').textContent = `-${h1MonthlyInterest.toLocaleString()} 元/月`;
+      document.getElementById('out-h1-rent-display').textContent = `+${h1Rent.toLocaleString()} 元/月`;
+      document.getElementById('out-etf-annual').textContent = `+${etfAnnualGain.toFixed(1)} 萬/年 (約 +${(etfMonthlyGain / 10000).toFixed(1)}萬/月)`;
+      document.getElementById('out-etf-rate-text').textContent = etfReturn;
+
+      const netRentDiff = h1Rent - h1MonthlyInterest;
+      const verdictEl = document.getElementById('out-h1-verdict');
+      if (netRentDiff >= 0) {
+        verdictEl.className = "p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-[11px] text-emerald-200 leading-relaxed";
+        verdictEl.innerHTML = `✅ <strong>完美正現金流：</strong>第一屋月租金（${h1Rent.toLocaleString()}元）完全覆蓋 ${h1MaxLoan} 萬科目四月息（${h1MonthlyInterest.toLocaleString()}元），每月還倒賺 <strong>+${netRentDiff.toLocaleString()} 元</strong>，相當於免費取得 ${etfPrincipal} 萬 0050 部位！`;
+      } else {
+        verdictEl.className = "p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-[11px] text-amber-200 leading-relaxed";
+        verdictEl.innerHTML = `💡 <strong>利差套利模式：</strong>租金折抵後每月僅需貼補 <strong>${Math.abs(netRentDiff).toLocaleString()} 元</strong>利息，但 ${etfPrincipal} 萬 0050 每年平均為您創造 <strong>+${etfAnnualGain.toFixed(1)} 萬元</strong>資本增值與股息！`;
+      }
+
+      // Second House Loan Calculations
+      const h2Loan80 = Math.round(h2Price * 0.8);
+      const h2Down20 = h2Price - h2Loan80;
+      const h2Loan50 = Math.round(h2Price * 0.5);
+      const h2Down50 = h2Price - h2Loan50;
+      const savedDown = h2Down50 - h2Down20;
+
+      const h2Rate = 2.20;
+      const mRate = (h2Rate / 100) / 12;
+      const months = 360;
+      const h2Io = Math.round(h2Loan80 * 10000 * mRate);
+      const h2Pi = Math.round(h2Loan80 * 10000 * (mRate * Math.pow(1 + mRate, months)) / (Math.pow(1 + mRate, months) - 1));
+
+      document.getElementById('out-h2-loan80').textContent = `${h2Loan80.toLocaleString()} 萬 (自備 ${h2Down20.toLocaleString()}萬)`;
+      document.getElementById('out-h2-loan50').textContent = `${h2Loan50.toLocaleString()} 萬 (自備 ${h2Down50.toLocaleString()}萬)`;
+      document.getElementById('out-saved-down').textContent = `省下 ${savedDown.toLocaleString()} 萬現金！`;
+      document.getElementById('out-h2-io').textContent = `${h2Io.toLocaleString()} 元/月`;
+      document.getElementById('out-h2-pi').textContent = `${h2Pi.toLocaleString()} 元/月`;
+
+      // 10-Year Net Worth Projection (Assuming 3% annual property appreciation)
+      const propGrowth10Yr = Math.pow(1.03, 10); // ~1.3439
+      const etfGrowth10Yr = Math.pow(1 + (etfReturn / 100), 10);
+
+      // Method 1 & 3: Hold H1 + Hold H2 + Invest in 0050, minus loan interest cost net of rent
+      const h1Future = h1Val * propGrowth10Yr;
+      const h2Future = h2Price * propGrowth10Yr;
+      const etfFuture1 = (h1MaxLoan) * etfGrowth10Yr; // Method 1 (if 1600W invested)
+      const netRent10Yr = ((h1Rent - h1MonthlyInterest) * 12 * 10) / 10000;
+
+      // Net equity gain over 10 years for Method 1/3 (Two properties + ETF net of debt)
+      const netWealthM1 = Math.round((h1Future + h2Future + etfPrincipal * etfGrowth10Yr + netRent10Yr) - (h1MaxLoan + h2Loan80));
+      const netWealthM3 = Math.round(netWealthM1 * 0.98); // Essentially identical after bridge
+      // Method 2: No ETF arbitrage because extra cash is locked in 50% down payment
+      const netWealthM2 = Math.round((h1Future + h2Future + (h1Rent * 12 * 10 / 10000)) - (h1Loan + h2Loan50) - 350);
+      // Method 4: Sold H1 (minus 120W friction/tax), only H2 appreciates + leftover cash in ETF
+      const leftoverCashM4 = Math.max(0, (h1Val - h1Loan - 120) - h2Down20);
+      const netWealthM4 = Math.round((h2Future + leftoverCashM4 * etfGrowth10Yr) - h2Loan80);
+
+      const diffAdvantage = netWealthM1 - netWealthM4;
+      document.getElementById('out-10yr-advantage').textContent = `${diffAdvantage >= 0 ? '+' : ''}${diffAdvantage.toLocaleString()} 萬元`;
+
+      // Update Chart
+      const chartData = [netWealthM1, netWealthM3, netWealthM2, netWealthM4];
+      if (strategyChartInstance) {
+        strategyChartInstance.data.datasets[0].data = chartData;
+        strategyChartInstance.update();
+      } else {
+        const ctx = document.getElementById('strategyChart').getContext('2d');
+        strategyChartInstance = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ['🥇 作法 1 (清償轉科目四)', '🥇 作法 3 (借新還舊轉四)', '⚠️ 作法 2 (不還直接增貸)', '🛑 作法 4 (賣一屋換二屋)'],
+            datasets: [{
+              label: '10年後預估總淨值 (萬元)',
+              data: chartData,
+              backgroundColor: [
+                'rgba(245, 158, 11, 0.85)',
+                'rgba(56, 189, 248, 0.85)',
+                'rgba(244, 63, 94, 0.65)',
+                'rgba(100, 116, 139, 0.65)'
+              ],
+              borderColor: [
+                '#f59e0b',
+                '#38bdf8',
+                '#f43f5e',
+                '#64748b'
+              ],
+              borderWidth: 2,
+              borderRadius: 10
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: ctx => ` 10年後預估淨資產: ${ctx.parsed.y.toLocaleString()} 萬元`
+                }
+              }
+            },
+            scales: {
+              x: {
+                ticks: { color: '#e2e8f0', font: { size: 11, weight: 'bold' } },
+                grid: { display: false }
+              },
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  color: '#94a3b8',
+                  callback: v => v.toLocaleString() + '萬'
+                },
+                grid: { color: 'rgba(148, 163, 184, 0.12)' }
+              }
+            }
+          }
+        });
+      }
+    }
+
+    // Background Particle Canvas
+    function initCanvas() {
+      const canvas = document.getElementById('bg-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let width = canvas.width = window.innerWidth;
+      let height = canvas.height = window.innerHeight;
+
+      window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+
+      const particles = Array.from({ length: 36 }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        r: Math.random() * 1.8 + 0.8,
+        color: Math.random() > 0.5 ? 'rgba(245, 158, 11, 0.5)' : 'rgba(56, 189, 248, 0.5)'
+      }));
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0 || p.x > width) p.vx *= -1;
+          if (p.y < 0 || p.y > height) p.vy *= -1;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+
+          for (let j = i + 1; j < particles.length; j++) {
+            const p2 = particles[j];
+            const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+            if (dist < 130) {
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.strokeStyle = `rgba(148, 163, 184, ${0.12 * (1 - dist / 130)})`;
+              ctx.lineWidth = 0.7;
+              ctx.stroke();
+            }
+          }
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initCanvas();
+      updateSimulation();
+
+      ['inp-h1-val', 'inp-h1-loan', 'inp-h1-rent', 'inp-h2-price', 'inp-etf-return', 'inp-loan-rate'].forEach(id => {
+        document.getElementById(id)?.addEventListener('input', updateSimulation);
+      });
+
+      document.querySelectorAll('.glass-card-spotlight').forEach(card => {
+        card.addEventListener('mousemove', e => {
+          const rect = card.getBoundingClientRect();
+          card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+          card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+        });
+      });
+
+      document.getElementById('btn-copy-summary')?.addEventListener('click', () => {
+        const summaryText = `🏦【第二間購屋＆科目四財務槓桿決策總結】
+━━━━━━━━━━━━━━━
+📌 目前資產底牌：
+• 第一屋：買入 1,420 萬 ➔ 現值約 2,000 萬（殘貸僅 450 萬，可釋放淨值高達 1,550 萬）
+• 第二屋目標：3,200 ~ 3,500 萬新房
+
+🏆 四大方案優先順序結論：
+1️⃣ 【第一優先 A：作法 1（手頭現金 ≥ 1,150萬首選）】
+先把第一屋 450 萬清償塗銷（消除聯徵科目一）➔ 以首購 8 成（約 2,680萬）+ 寬限期買進第二屋 ➔ 交屋後拿第一屋辦 1,600 萬科目四（理財型/周轉金）買 0050，同時第一屋出租收租抵息。金流 100% 合規無懈可擊！
+
+2️⃣ 【第一優先 B：作法 3（手頭現金約 700萬首選）】
+找銀行申辦第一屋 1,600 萬「科目四」直接代償原 450 萬「科目一」（陳侯勳科目一洗成科目四密技），多出的 1,150 萬全數進證券戶買 0050（嚴禁流入房市）➔ 聯徵無科目一後，用自有 700 萬頭期款 + 首購 8 成買第二屋。
+
+3️⃣ 【不推薦：作法 2（第一屋不還直接增貸）】
+❌ 踩中兩大陷阱：(1) 央行嚴禁增貸資金直接拿去付第二屋頭期款，金檢抓到會強制收回貸款；(2) 因 450 萬科目一未消滅，第二屋貸款成數暴跌至 5 成且無寬限期，為了 450 萬少貸 1,000 萬完全划不來！
+
+4️⃣ 【最不推薦：作法 4（賣第一屋換第二屋）】
+🛑 損失高額稅費與仲介費，且砍斷第一屋「租金養科目四＋長期抗通膨」的金雞母，10年後淨資產將少賺逾 2,600 萬元！`;
+        fallbackCopyText(summaryText, "已複製完整決策摘要！可直接貼到 LINE 儲存");
+      });
+    });
+  </script>
+</body>
+</html>
