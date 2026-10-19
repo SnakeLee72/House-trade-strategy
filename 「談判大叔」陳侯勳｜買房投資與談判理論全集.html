@@ -17,61 +17,40 @@
     }
     body {
       font-family: 'Inter', 'Noto Sans TC', sans-serif;
-      background-color: #050811;
-      color: #f8fafc;
+      background-color: #FAF8F5;
+      color: #1E293B;
       overflow-x: hidden;
     }
     .font-mono-num {
       font-family: 'JetBrains Mono', 'Inter', monospace;
     }
-    .cyber-grid {
-      background-size: 40px 40px;
-      background-image: 
-        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    }
     .glass-card {
-      position: relative;
-      background: rgba(15, 23, 42, 0.76);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(148, 163, 184, 0.15);
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
       transition: border-color 0.25s ease, box-shadow 0.25s ease;
     }
     .glass-card-spotlight {
-      position: relative;
-      background: rgba(15, 23, 42, 0.82);
-      backdrop-filter: blur(20px);
-      overflow: hidden;
-    }
-    .glass-card-spotlight::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(650px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(56, 189, 248, 0.08), transparent 40%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      pointer-events: none;
-    }
-    .glass-card-spotlight:hover::before {
-      opacity: 1;
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
     }
     .tab-active {
-      background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
-      color: #050811;
+      background: #0284c7;
+      color: #FFFFFF;
       font-weight: 800;
-      box-shadow: 0 6px 20px rgba(56, 189, 248, 0.35);
-      border: 1px solid rgba(125, 211, 252, 0.6);
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+      border: 1px solid #38bdf8;
     }
     .tab-inactive {
       background: rgba(15, 23, 42, 0.85);
       color: #cbd5e1;
-      border: 1px solid rgba(148, 163, 184, 0.2);
+      border: 1px solid rgba(148, 163, 184, 0.25);
     }
     .tab-inactive:hover {
       background: rgba(30, 41, 59, 0.95);
       color: #f8fafc;
-      border-color: rgba(56, 189, 248, 0.4);
+      border-color: rgba(56, 189, 248, 0.5);
     }
     @keyframes ticker {
       0% { transform: translateX(0); }
@@ -93,15 +72,12 @@
       animation: pulse-slow 7s ease-in-out infinite;
     }
     ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: #050811; }
-    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #334155; }
+    ::-webkit-scrollbar-track { background: #FAF8F5; }
+    ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
   </style>
 </head>
-<body class="min-h-screen flex flex-col cyber-grid antialiased selection:bg-sky-400 selection:text-slate-950">
-
-  <!-- Background Particle Canvas -->
-  <canvas id="bg-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-45"></canvas>
+<body class="min-h-screen flex flex-col antialiased selection:bg-amber-200 selection:text-slate-900">
 
   <!-- Live Strategy Ticker Tape -->
   <div class="relative z-50 bg-slate-950/95 border-b border-slate-800/80 py-1.5 overflow-hidden text-xs">
@@ -235,74 +211,45 @@
     <section id="tab-nine-knives" class="tab-panel space-y-6">
 
       <!-- SMART URL & TEXT AUTO-ANALYZER CARD -->
-      <div class="glass-card glass-card-spotlight rounded-3xl p-6 sm:p-7 border-2 border-sky-500/50 bg-gradient-to-br from-sky-500/10 via-slate-900/95 to-amber-950/30 shadow-2xl space-y-4">
-        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-slate-800/90 pb-4">
+      <div class="glass-card rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-sm space-y-4">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-slate-200 pb-4">
           <div class="flex items-start sm:items-center gap-3">
-            <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-sky-400 to-amber-500 p-[1px] shrink-0 shadow-lg shadow-sky-500/20">
-              <div class="w-full h-full bg-slate-950 rounded-[15px] flex items-center justify-center text-xl">⚡</div>
+            <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-sky-500 to-amber-500 p-[1px] shrink-0 shadow-md">
+              <div class="w-full h-full bg-white rounded-[15px] flex items-center justify-center text-xl">⚡</div>
             </div>
             <div>
               <div class="flex flex-wrap items-center gap-2">
-                <h2 class="text-base sm:text-xl font-black text-white">
+                <h2 class="text-base sm:text-xl font-black text-slate-900">
                   購屋網站（591 / 樂居 / 信義 / 永慶）即時智慧解析與九把刀診斷引擎
                 </h2>
-                <span class="px-2.5 py-0.5 rounded-full bg-sky-500/20 text-sky-300 text-[11px] font-bold border border-sky-500/40">雙核解析：本地演算法 + Gemini AI</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-sky-50 text-sky-700 text-[11px] font-bold border border-sky-200">雙核解析：Cloudflare 邊緣爬蟲 + 本地分析</span>
               </div>
-              <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-                直接貼上<strong>房產網址</strong>，或在 591/房仲網頁按 <kbd class="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-amber-300 font-mono text-[10px]">Ctrl+A</kbd> 全選複製文字貼入！系統將自動拆算車位、剔除極端值、檢驗 9 把刀，並產出<strong>「大叔實戰買房與殺價行動建議書」</strong>。
+              <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+                直接貼上<strong>房產網址</strong>（由 Cloudflare 邊緣伺服器自動解析），或在 591/房仲網頁按 <kbd class="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-300 text-slate-800 font-mono text-[10px]">Ctrl+A</kbd> 全選複製文字貼入！系統將自動拆算車位、剔除極端值、檢驗 9 把刀，並產出<strong>「大叔實戰買房與殺價行動建議書」</strong>。
               </p>
             </div>
           </div>
           <div class="flex items-center gap-2 shrink-0">
-            <button type="button" id="btn-config-edge-api" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-sky-400 hover:text-sky-300 border border-slate-700 text-xs transition flex items-center gap-1.5" title="設定 Cloudflare Pages / Worker 伺服器端點">
+            <button type="button" id="btn-config-edge-api" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-sky-700 border border-slate-300 text-xs font-semibold transition flex items-center gap-1.5" title="設定 Cloudflare Pages / Worker 伺服器端點">
               <span>☁️</span> <span>Cloudflare 邊緣端點</span>
             </button>
-            <button type="button" id="btn-clear-analyzer" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-700 text-xs transition">
+            <button type="button" id="btn-clear-analyzer" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 border border-slate-300 text-xs font-semibold transition">
               清空輸入框
             </button>
           </div>
         </div>
 
         <div class="space-y-3.5">
-          <!-- Bookmarklet 1-Click Extraction Tool (100% Bypasses Anti-Scraping & CORS) -->
-          <div class="p-4 rounded-2xl bg-gradient-to-r from-sky-950/70 via-slate-900 to-amber-950/50 border border-sky-500/35 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs">
-            <div class="flex items-start gap-3">
-              <span class="text-2xl shrink-0">🛡️</span>
-              <div>
-                <div class="flex flex-wrap items-center gap-2">
-                  <strong class="text-white text-xs sm:text-sm">解決 591 防爬蟲終極神器：【591 九把刀一鍵診斷】書籤列按鈕</strong>
-                  <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold text-[10px] border border-emerald-500/30">100% 破解防爬蟲</span>
-                  <span class="px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 font-bold text-[10px] border border-sky-500/30">0.1秒帶入真實數據</span>
-                </div>
-                <p class="text-slate-300 text-[11px] sm:text-xs mt-1 leading-relaxed">
-                  <strong>電腦版使用法</strong>：請按住滑鼠左鍵，將右側按鈕直接<strong>拖曳到瀏覽器上方的「書籤列」</strong>！在 591 任何售屋頁面點一下該書籤，免複製直接自動帶入該物件真實總價、坪數與社區名稱！<br class="hidden sm:inline">
-                  <strong>手機/免安裝法</strong>：直接在 591 網頁按 <kbd class="px-1 py-0.2 bg-slate-800 text-amber-300 border border-slate-700 font-mono text-[10px]">Ctrl+A</kbd> 全選複製文字，貼入下方框內即可！
-                </p>
-              </div>
-            </div>
-            <div class="flex flex-wrap items-center gap-2 shrink-0 w-full md:w-auto">
-              <a href="javascript:(function(){try{var t=document.title||'';var d=document.querySelector('meta[name=%22description%22]')?.content||'';var c=document.querySelector('[community-name]')?.getAttribute('community-name')||'';var pe=document.querySelector('.info-price-num')||document.querySelector('.info-price');var p=pe?pe.innerText.replace(/[^\d.]/g,''):'';var ae=document.getElementById('hid_area');var a=ae?ae.value:'';var b=(document.body?.innerText||'').substring(0,3000);var payload=t+'\n'+d+'\n社區：'+c+'\n開價：'+p+'萬\n面積：'+a+'坪\n網址：'+window.location.href+'\n'+b;var target='https://snakelee72.github.io/House-trade-strategy/%E3%80%8C%E8%AB%87%E5%88%A4%E5%A4%A7%E5%8F%94%E3%80%8D%E9%99%B3%E4%BE%AF%E5%8B%B3%EF%BD%9C%E8%B2%B7%E6%88%BF%E6%8A%95%E8%B3%87%E8%88%87%E8%AB%87%E5%88%A4%E7%90%86%E8%AB%96%E5%85%A8%E9%9B%86.html#import='+encodeURIComponent(payload);window.open(target,'_blank');}catch(e){alert('擷取失敗：'+e.message);}})();"
-                 class="cursor-grab select-none px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs shadow-lg shadow-amber-500/25 transition flex items-center gap-1.5 border border-amber-300"
-                 title="按住滑鼠左鍵，將此按鈕拖曳到瀏覽器上方的書籤列">
-                <span>📌</span>
-                <span>拖我到書籤列：🗡️ 591九把刀一鍵診斷</span>
-              </a>
-              <button type="button" id="btn-copy-bookmarklet-code" class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 text-xs font-semibold transition" title="複製書籤小工具 JavaScript 程式碼">
-                📋 複製代碼
-              </button>
-            </div>
-          </div>
-
           <div class="flex flex-col lg:flex-row gap-3">
             <div class="relative flex-1">
-              <textarea id="auto-analyzer-input" rows="3" placeholder="🔗 方式 A（100%精準推薦）：直接在 591 / 樂居 / 信義 房屋頁面按 Ctrl+A 全選複製文字貼入（秒速精準抓出開價、坪數、車位、社區名稱、戶數與捷運）！&#10;🌐 方式 B：使用上方【591 九把刀一鍵診斷】書籤列按鈕，在 591 點一下全自動匯入！&#10;💡 若只貼純網址且遇到 591 防爬蟲阻擋，系統將開啟快速填寫精靈協助您 2 秒完成評估！" class="w-full px-4 py-3 rounded-2xl bg-slate-950/95 border border-slate-700/90 text-white text-xs sm:text-sm focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400/50 placeholder:text-slate-500 resize-y leading-relaxed"></textarea>
+              <textarea id="auto-analyzer-input" rows="3" placeholder="🔗 直接貼上 591 / 樂居 / 信義 房屋網址，系統將由 Cloudflare 邊緣伺服器自動抓取真實數據並評估九把刀！&#10;📋 或在 591 / 房仲網頁按 Ctrl+A 全選複製文字貼入，0.1秒精準抓出開價、坪數、車位、社區名稱、戶數與捷運！" class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-300 text-slate-900 text-xs sm:text-sm focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-1 focus:ring-sky-500/50 placeholder:text-slate-400 resize-y leading-relaxed"></textarea>
             </div>
             <div class="flex sm:flex-row lg:flex-col gap-2 shrink-0 justify-center">
-              <button type="button" id="btn-run-auto-analysis" class="flex-1 lg:w-48 px-5 py-3 rounded-2xl bg-gradient-to-r from-sky-400 to-sky-500 hover:from-sky-300 hover:to-sky-400 text-slate-950 font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xl shadow-sky-500/25 transition">
+              <button type="button" id="btn-run-auto-analysis" class="flex-1 lg:w-48 px-5 py-3 rounded-2xl bg-sky-600 hover:bg-sky-500 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md shadow-sky-600/20 transition">
                 <span class="text-base">🚀</span>
                 <span>立即智慧分析評分</span>
               </button>
-              <button type="button" id="btn-run-ai-deep" class="flex-1 lg:w-48 px-4 py-2.5 rounded-2xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/40 font-bold text-xs flex items-center justify-center gap-1.5 transition" title="使用 Gemini 模型深度解析複雜房仲文案並生成買房建議">
+              <button type="button" id="btn-run-ai-deep" class="flex-1 lg:w-48 px-4 py-2.5 rounded-2xl bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 font-bold text-xs flex items-center justify-center gap-1.5 transition" title="使用 Gemini 模型深度解析複雜房仲文案並生成買房建議">
                 <span>✨</span>
                 <span>AI 深度文案拆解</span>
               </button>
@@ -311,23 +258,23 @@
 
           <!-- Quick Test Sample Chips -->
           <div class="flex flex-wrap items-center gap-2 text-xs pt-1">
-            <span class="text-slate-400 font-semibold">⚡ 點擊一鍵實測真實案例：</span>
-            <button type="button" class="btn-sample-chip px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 font-bold transition" data-sample="sample_taipei_bridge">
+            <span class="text-slate-500 font-semibold">⚡ 點擊一鍵實測真實案例：</span>
+            <button type="button" class="btn-sample-chip px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 font-bold transition shadow-sm" data-sample="sample_taipei_bridge">
               ⭐ 591實測：三重台北橋首府（開價3,688萬・捷運一樓含車位）
             </button>
-            <button type="button" class="btn-sample-chip px-3 py-1.5 rounded-xl bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-500/40 font-bold transition" data-sample="sample_paris">
+            <button type="button" class="btn-sample-chip px-3 py-1.5 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-300 font-bold transition shadow-sm" data-sample="sample_paris">
               ⭐ 591實測：三重日安巴黎（開價3,398萬・1F雙庭院）
             </button>
-            <button type="button" class="btn-sample-chip px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-sky-300 border border-slate-700 hover:border-sky-500/40 transition" data-sample="sample1">
+            <button type="button" class="btn-sample-chip px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-300 transition" data-sample="sample1">
               🏢 板橋江子翠捷運水岸兩房（2,380萬・優質案）
             </button>
-            <button type="button" class="btn-sample-chip px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-rose-300 border border-slate-700 hover:border-rose-500/40 transition" data-sample="sample2">
+            <button type="button" class="btn-sample-chip px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-300 transition" data-sample="sample2">
               🌊 淡海新市鎮輕軌景觀三房（1,680萬・720戶短板案）
             </button>
-            <button type="button" class="btn-sample-chip px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-emerald-300 border border-slate-700 hover:border-emerald-500/40 transition" data-sample="sample3">
+            <button type="button" class="btn-sample-chip px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-300 transition" data-sample="sample3">
               💼 內湖文德站雙併公寓（1,980萬・9刀滿分神案）
             </button>
-            <button type="button" class="btn-sample-chip px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-purple-300 border border-slate-700 hover:border-purple-500/40 transition" data-sample="sample4">
+            <button type="button" class="btn-sample-chip px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-300 transition" data-sample="sample4">
               🔬 竹北高鐵特區科技三房（3,150萬・竹科剛需案）
             </button>
           </div>
@@ -338,31 +285,31 @@
       </div>
 
       <!-- Main Evaluation Workspace -->
-      <div class="glass-card rounded-3xl p-6 sm:p-7 border border-slate-800/90">
-        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+      <div class="glass-card rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-sm">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-200 pb-5">
           <div>
             <div class="flex items-center gap-2">
-              <span class="px-2.5 py-0.5 rounded-full bg-sky-500/20 text-sky-300 text-xs font-bold border border-sky-500/30">實戰看屋決策工作台</span>
-              <span class="text-slate-500 text-xs">•</span>
-              <span class="text-slate-400 text-xs">支援多物件比較與即時修改重算</span>
+              <span class="px-2.5 py-0.5 rounded-full bg-sky-50 text-sky-700 text-xs font-bold border border-sky-200">實戰看屋決策工作台</span>
+              <span class="text-slate-400 text-xs">•</span>
+              <span class="text-slate-500 text-xs">支援多物件比較與即時修改重算</span>
             </div>
-            <h3 class="text-xl sm:text-2xl font-black text-white mt-1">候選物件情報編輯 ＆ 九把刀量化診斷儀表板</h3>
+            <h3 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">候選物件情報編輯 ＆ 九把刀量化診斷儀表板</h3>
           </div>
 
           <div class="flex flex-wrap items-center gap-2 shrink-0">
-            <button type="button" id="btn-add-prop" class="px-3.5 py-2 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-black text-xs flex items-center gap-1.5 shadow-lg shadow-sky-500/20 transition">
+            <button type="button" id="btn-add-prop" class="px-3.5 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-black text-xs flex items-center gap-1.5 shadow-md shadow-sky-600/20 transition">
               <span>➕</span> 新增看屋物件
             </button>
-            <button type="button" id="btn-clone-prop" class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 text-xs border border-slate-700 transition" title="複製目前物件">
+            <button type="button" id="btn-clone-prop" class="px-3 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-700 text-xs border border-slate-300 transition" title="複製目前物件">
               <span>📑</span> 複製
             </button>
-            <button type="button" id="btn-del-prop" class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-rose-950 text-rose-300 text-xs border border-slate-700 hover:border-rose-700 transition" title="刪除目前物件">
+            <button type="button" id="btn-del-prop" class="px-3 py-2 rounded-xl bg-white hover:bg-rose-50 text-rose-600 text-xs border border-slate-300 hover:border-rose-300 transition" title="刪除目前物件">
               <span>🗑️</span> 刪除
             </button>
-            <button type="button" id="btn-sample-prop" class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs border border-slate-700 transition" title="重新載入大叔實戰精選範例">
+            <button type="button" id="btn-sample-prop" class="px-3 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-700 text-xs border border-slate-300 transition" title="重新載入大叔實戰精選範例">
               <span>🔄</span> 重置預設範例
             </button>
-            <button type="button" id="btn-copy-line" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs flex items-center gap-1.5 shadow-lg shadow-emerald-500/20 transition">
+            <button type="button" id="btn-copy-line" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs flex items-center gap-1.5 shadow-md shadow-emerald-600/20 transition">
               <span>💬</span> 複製 LINE 完整評估報告
             </button>
           </div>
@@ -373,25 +320,25 @@
           <div class="flex items-center gap-2 overflow-x-auto py-1.5" id="prop-tabs-container">
             <!-- Property pills populated via JS -->
           </div>
-          <div class="text-xs text-slate-400 shrink-0">
-            候選清單共 <span id="prop-count-badge" class="font-bold text-sky-400 font-mono-num">0</span> 間物件
+          <div class="text-xs text-slate-500 shrink-0">
+            候選清單共 <span id="prop-count-badge" class="font-bold text-sky-600 font-mono-num">0</span> 間物件
           </div>
         </div>
 
         <!-- Active Property Metadata Editor -->
-        <div class="mt-4 p-5 rounded-2xl bg-slate-950/90 border border-slate-800/90 shadow-inner">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/90 pb-3">
+        <div class="mt-4 p-5 rounded-2xl bg-slate-50 border border-slate-200 shadow-sm">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-3">
             <div class="flex flex-wrap items-center gap-2">
               <span class="text-base">📝</span>
-              <div class="font-bold text-sm text-slate-200">
+              <div class="font-bold text-sm text-slate-800">
                 <span>正在檢視與編輯：</span>
-                <span id="prop-editing-title" class="text-amber-400 font-black">--</span>
+                <span id="prop-editing-title" class="text-amber-700 font-black">--</span>
               </div>
-              <span class="text-[11px] text-slate-400">（修改下方任一欄位，將自動重新執行九把刀判定與出價建議）</span>
+              <span class="text-[11px] text-slate-500">（修改下方任一欄位，將自動重新執行九把刀判定與出價建議）</span>
             </div>
 
             <div class="flex items-center gap-2">
-              <button type="button" id="btn-recalc-knives" class="px-3 py-1.5 rounded-xl bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-500/40 font-bold text-xs flex items-center gap-1 transition" title="根據目前填寫的地址、開價、捷運與戶數重新自動判定九把刀">
+              <button type="button" id="btn-recalc-knives" class="px-3 py-1.5 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-300 font-bold text-xs flex items-center gap-1 transition" title="根據目前填寫的地址、開價、捷運與戶數重新自動判定九把刀">
                 <span>⚡</span> 依數值自動重判九把刀
               </button>
               <button type="button" id="btn-save-prop-explicit" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1 shadow transition">
@@ -402,60 +349,60 @@
 
           <div id="prop-form-content" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 mt-4 text-xs">
             <div>
-              <label for="prop-input-community" class="block font-semibold text-slate-300 mb-1">1. 社區名稱（建案名）</label>
-              <input id="prop-input-community" type="text" placeholder="例：日安巴黎" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-amber-300 font-bold focus:outline-none focus:border-sky-400" />
+              <label for="prop-input-community" class="block font-semibold text-slate-700 mb-1">1. 社區名稱（建案名）</label>
+              <input id="prop-input-community" type="text" placeholder="例：日安巴黎" class="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-amber-800 font-bold focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/30" />
             </div>
             <div>
-              <label for="prop-input-name" class="block font-semibold text-slate-300 mb-1">2. 物件標題 / 房型特色</label>
-              <input id="prop-input-name" type="text" placeholder="例：公園首排・前後雙庭院三房" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white focus:outline-none focus:border-sky-400" />
+              <label for="prop-input-name" class="block font-semibold text-slate-700 mb-1">2. 物件標題 / 房型特色</label>
+              <input id="prop-input-name" type="text" placeholder="例：公園首排・前後雙庭院三房" class="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-slate-900 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/30" />
             </div>
             <div>
-              <label for="prop-input-district" class="block font-semibold text-slate-300 mb-1">3. 所在區域 / 門牌路段</label>
-              <input id="prop-input-district" type="text" placeholder="例：新北市三重區永安北路二段171號" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white focus:outline-none focus:border-sky-400" />
+              <label for="prop-input-district" class="block font-semibold text-slate-700 mb-1">3. 所在區域 / 門牌路段</label>
+              <input id="prop-input-district" type="text" placeholder="例：新北市三重區永安北路二段171號" class="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-slate-900 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/30" />
             </div>
             <div>
-              <label for="prop-input-mrt" class="block font-semibold text-slate-300 mb-1">4. 鄰近捷運站 / 步行時間</label>
-              <input id="prop-input-mrt" type="text" placeholder="例：捷運徐匯中學站（步行10分鐘）" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white focus:outline-none focus:border-sky-400" />
+              <label for="prop-input-mrt" class="block font-semibold text-slate-700 mb-1">4. 鄰近捷運站 / 步行時間</label>
+              <input id="prop-input-mrt" type="text" placeholder="例：捷運徐匯中學站（步行10分鐘）" class="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-slate-900 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/30" />
             </div>
             <div>
-              <label for="prop-input-asking" class="block font-semibold text-slate-300 mb-1">5. 屋主開價（萬元）</label>
-              <input id="prop-input-asking" type="number" placeholder="例：3398" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-rose-300 font-mono-num font-bold focus:outline-none focus:border-sky-400" />
+              <label for="prop-input-asking" class="block font-semibold text-slate-700 mb-1">5. 屋主開價（萬元）</label>
+              <input id="prop-input-asking" type="number" placeholder="例：3398" class="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-rose-600 font-mono-num font-bold focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/30" />
             </div>
             <div>
-              <label for="prop-input-reg" class="block font-semibold text-slate-300 mb-1">6. 實價登錄天花板（萬元）</label>
-              <input id="prop-input-reg" type="number" placeholder="例：2850" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-emerald-300 font-mono-num font-bold focus:outline-none focus:border-sky-400" />
+              <label for="prop-input-reg" class="block font-semibold text-slate-700 mb-1">6. 實價登錄天花板（萬元）</label>
+              <input id="prop-input-reg" type="number" placeholder="例：2850" class="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-emerald-700 font-mono-num font-bold focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/30" />
             </div>
             <div>
-              <label for="prop-input-size" class="block font-semibold text-slate-300 mb-1">7. 權狀建坪 / 車位說明</label>
-              <input id="prop-input-size" type="text" placeholder="例：50.99坪（含車位8.1坪）" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white focus:outline-none focus:border-sky-400" />
+              <label for="prop-input-size" class="block font-semibold text-slate-700 mb-1">7. 權狀建坪 / 車位說明</label>
+              <input id="prop-input-size" type="text" placeholder="例：50.99坪（含車位8.1坪）" class="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-slate-900 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/30" />
             </div>
             <div>
-              <label for="prop-input-households" class="block font-semibold text-slate-300 mb-1">8. 社區總戶數（戶）</label>
-              <input id="prop-input-households" type="number" placeholder="例：40" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white font-mono-num focus:outline-none focus:border-sky-400" />
+              <label for="prop-input-households" class="block font-semibold text-slate-700 mb-1">8. 社區總戶數（戶）</label>
+              <input id="prop-input-households" type="number" placeholder="例：40" class="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-slate-900 font-mono-num focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/30" />
             </div>
             <div class="sm:col-span-2 lg:col-span-4">
-              <label for="prop-input-notes" class="block font-semibold text-slate-300 mb-1">9. 屋況手記 / 樓層屋齡與特殊條件（輸入「機械車位、小基地、隔套、酒店式」將自動觸發地雷偵測）</label>
-              <input id="prop-input-notes" type="text" placeholder="例：1F前後雙庭院、屋齡16年、單價74.53萬/坪比同社區實登均價高出19.2%" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white focus:outline-none focus:border-sky-400" />
+              <label for="prop-input-notes" class="block font-semibold text-slate-700 mb-1">9. 屋況手記 / 樓層屋齡與特殊條件（輸入「機械車位、小基地、隔套、酒店式」將自動觸發地雷偵測）</label>
+              <input id="prop-input-notes" type="text" placeholder="例：1F前後雙庭院、屋齡16年、單價74.53萬/坪比同社區實登均價高出19.2%" class="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-slate-900 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/30" />
             </div>
 
             <!-- Location & Transit Google Maps Action Bar -->
-            <div class="sm:col-span-2 lg:col-span-4 pt-3 flex flex-wrap items-center justify-between gap-2.5 border-t border-slate-800/80">
+            <div class="sm:col-span-2 lg:col-span-4 pt-3 flex flex-wrap items-center justify-between gap-2.5 border-t border-slate-200">
               <div class="flex flex-wrap items-center gap-2">
-                <span class="text-slate-400 font-semibold text-[11px]">🗺️ 外部實境與實登查核：</span>
-                <a id="link-google-maps" href="https://www.google.com/maps/search/?api=1&query=新北市三重區永安北路二段171號+日安巴黎" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-xl bg-sky-950/90 hover:bg-sky-900 text-sky-300 border border-sky-800 text-[11px] font-semibold flex items-center gap-1.5 transition">
+                <span class="text-slate-500 font-semibold text-[11px]">🗺️ 外部實境與實登查核：</span>
+                <a id="link-google-maps" href="https://www.google.com/maps/search/?api=1&query=新北市三重區永安北路二段171號+日安巴黎" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-300 text-[11px] font-semibold flex items-center gap-1.5 transition">
                   <span>📍 Google Maps 社區街景定位</span>
                   <span>↗</span>
                 </a>
-                <a id="link-google-transit" href="https://www.google.com/maps/dir/?api=1&origin=捷運徐匯中學站&destination=新北市三重區永安北路二段171號+日安巴黎&travelmode=walking" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-xl bg-emerald-950/90 hover:bg-emerald-900 text-emerald-300 border border-emerald-800 text-[11px] font-semibold flex items-center gap-1.5 transition">
+                <a id="link-google-transit" href="https://www.google.com/maps/dir/?api=1&origin=捷運徐匯中學站&destination=新北市三重區永安北路二段171號+日安巴黎&travelmode=walking" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-300 text-[11px] font-semibold flex items-center gap-1.5 transition">
                   <span id="transit-link-label">🚶 捷運徐匯中學站 步行路徑實測</span>
                   <span>↗</span>
                 </a>
-                <a id="link-leju-search" href="https://www.leju.com.tw/page_search_result?area=新北市三重區" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-xl bg-amber-950/80 hover:bg-amber-900 text-amber-300 border border-amber-800 text-[11px] font-semibold flex items-center gap-1.5 transition">
+                <a id="link-leju-search" href="https://www.leju.com.tw/page_search_result?area=新北市三重區" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 text-[11px] font-semibold flex items-center gap-1.5 transition">
                   <span>📊 樂居實價登錄查詢</span>
                   <span>↗</span>
                 </a>
               </div>
-              <div class="text-[11px] text-slate-400">
+              <div class="text-[11px] text-slate-500">
                 💡 點擊地圖連結可實測第三把刀「步行至捷運是否 ≤ 10 分鐘」
               </div>
             </div>
@@ -465,24 +412,24 @@
         <!-- Score, Four-Stage Pricing & Visual Radar Dashboard -->
         <div class="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-5">
           <!-- Left: Score & Tier Card (4 cols) -->
-          <div class="lg:col-span-4 p-5 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 border border-slate-800 flex flex-col justify-between space-y-4">
+          <div class="lg:col-span-4 p-5 rounded-2xl bg-gradient-to-br from-amber-50/50 via-white to-sky-50/50 border border-slate-200 shadow-sm flex flex-col justify-between space-y-4">
             <div>
               <div class="flex items-center justify-between">
-                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">九把刀綜合安全指數</span>
-                <span id="prop-badge-tier" class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">九把刀綜合安全指數</span>
+                <span id="prop-badge-tier" class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300">
                   評估中
                 </span>
               </div>
 
               <div class="flex items-baseline gap-3 mt-3">
-                <div id="prop-score-num" class="text-5xl font-black text-amber-400 font-mono-num">--</div>
-                <div class="text-xs text-slate-400">
+                <div id="prop-score-num" class="text-5xl font-black text-amber-600 font-mono-num">--</div>
+                <div class="text-xs text-slate-500">
                   <div>滿分 100 分</div>
-                  <div id="prop-knives-count" class="text-sky-300 font-bold mt-0.5">通過 -- / 9 把刀</div>
+                  <div id="prop-knives-count" class="text-sky-700 font-bold mt-0.5">通過 -- / 9 把刀</div>
                 </div>
               </div>
 
-              <div id="prop-verdict-desc" class="text-xs sm:text-sm text-slate-200 mt-3 leading-relaxed">
+              <div id="prop-verdict-desc" class="text-xs sm:text-sm text-slate-700 mt-3 leading-relaxed">
                 正在分析該物件九把刀指標...
               </div>
             </div>
@@ -494,50 +441,50 @@
           </div>
 
           <!-- Center: Four-Stage Pricing Formula (5 cols) -->
-          <div class="lg:col-span-5 p-5 rounded-2xl bg-slate-950/90 border border-slate-800 flex flex-col justify-between">
+          <div class="lg:col-span-5 p-5 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between">
             <div>
-              <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+              <div class="flex items-center justify-between border-b border-slate-200 pb-2.5">
                 <div class="flex items-center gap-2">
-                  <span class="text-sm sm:text-base font-black text-white">🎯 大叔四階定錨出價階梯</span>
+                  <span class="text-sm sm:text-base font-black text-slate-900">🎯 大叔四階定錨出價階梯</span>
                 </div>
-                <span class="text-xs text-slate-400">實登天花板：<strong id="price-ceiling-val" class="text-emerald-400 font-mono-num">-- 萬</strong></span>
+                <span class="text-xs text-slate-500">實登天花板：<strong id="price-ceiling-val" class="text-emerald-700 font-mono-num">-- 萬</strong></span>
               </div>
 
               <div class="grid grid-cols-2 gap-2.5 mt-3.5 text-center">
-                <div class="p-3 rounded-xl bg-slate-900/90 border border-emerald-500/30">
-                  <div class="text-[11px] text-emerald-400 font-bold">🥊 1. 第一口敲門價 (60%)</div>
-                  <div id="val-fake-1" class="text-lg font-black text-white font-mono-num mt-1">-- 萬</div>
-                  <div class="text-[10px] text-slate-400 mt-0.5">破除屋主高價錨定／雙斡旋測試</div>
+                <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-200">
+                  <div class="text-[11px] text-emerald-800 font-bold">🥊 1. 第一口敲門價 (60%)</div>
+                  <div id="val-fake-1" class="text-lg font-black text-emerald-700 font-mono-num mt-1">-- 萬</div>
+                  <div class="text-[10px] text-slate-500 mt-0.5">破除屋主高價錨定／雙斡旋測試</div>
                 </div>
-                <div class="p-3 rounded-xl bg-slate-900/90 border border-sky-500/30">
-                  <div class="text-[11px] text-sky-400 font-bold">🛡️ 2. 第二階試探價 (68%)</div>
-                  <div id="val-fake-2" class="text-lg font-black text-white font-mono-num mt-1">-- 萬</div>
-                  <div class="text-[10px] text-slate-400 mt-0.5">下斡旋／要價 2 次後釋放</div>
+                <div class="p-3 rounded-xl bg-sky-50 border border-sky-200">
+                  <div class="text-[11px] text-sky-800 font-bold">🛡️ 2. 第二階試探價 (68%)</div>
+                  <div id="val-fake-2" class="text-lg font-black text-sky-700 font-mono-num mt-1">-- 萬</div>
+                  <div class="text-[10px] text-slate-500 mt-0.5">下斡旋／要價 2 次後釋放</div>
                 </div>
-                <div class="p-3 rounded-xl bg-slate-900/90 border border-purple-500/30">
-                  <div class="text-[11px] text-purple-400 font-bold">🔒 3. 第三階防守價 (75%)</div>
-                  <div id="val-fake-3" class="text-lg font-black text-white font-mono-num mt-1">-- 萬</div>
-                  <div class="text-[10px] text-slate-400 mt-0.5">小房間拉鋸戰嚴守防線</div>
+                <div class="p-3 rounded-xl bg-purple-50 border border-purple-200">
+                  <div class="text-[11px] text-purple-800 font-bold">🔒 3. 第三階防守價 (75%)</div>
+                  <div id="val-fake-3" class="text-lg font-black text-purple-700 font-mono-num mt-1">-- 萬</div>
+                  <div class="text-[10px] text-slate-500 mt-0.5">小房間拉鋸戰嚴守防線</div>
                 </div>
-                <div class="p-3 rounded-xl bg-amber-500/15 border-2 border-amber-500/50">
-                  <div class="text-[11px] text-amber-300 font-extrabold">🎯 4. 心中真實底價 (80%)</div>
-                  <div id="val-true-bottom" class="text-lg font-black text-amber-400 font-mono-num mt-1">-- 萬</div>
-                  <div class="text-[10px] text-amber-200/80 mt-0.5">引導屋主親口說出，高於此不買</div>
+                <div class="p-3 rounded-xl bg-amber-50 border-2 border-amber-400">
+                  <div class="text-[11px] text-amber-900 font-extrabold">🎯 4. 心中真實底價 (80%)</div>
+                  <div id="val-true-bottom" class="text-lg font-black text-amber-800 font-mono-num mt-1">-- 萬</div>
+                  <div class="text-[10px] text-amber-800/80 mt-0.5">引導屋主親口說出，高於此不買</div>
                 </div>
               </div>
             </div>
 
-            <div class="mt-3 pt-3 border-t border-slate-800/80 flex flex-col justify-between text-xs text-slate-300 gap-1">
+            <div class="mt-3 pt-3 border-t border-slate-200 flex flex-col justify-between text-xs text-slate-600 gap-1">
               <div class="flex justify-between items-center">
-                <span>💡 屋主開價 <strong id="price-asking-val" class="text-rose-400 font-mono-num">-- 萬</strong> 扣除 4% 仲介費底線：</span>
-                <strong id="price-net-seller" class="text-rose-300 font-mono-num">-- 萬</strong>
+                <span>💡 屋主開價 <strong id="price-asking-val" class="text-rose-600 font-mono-num">-- 萬</strong> 扣除 4% 仲介費底線：</span>
+                <strong id="price-net-seller" class="text-rose-700 font-mono-num">-- 萬</strong>
               </div>
             </div>
           </div>
 
           <!-- Right: Live Radar Chart (3 cols) -->
-          <div class="lg:col-span-3 p-4 rounded-2xl bg-slate-950/90 border border-slate-800 flex flex-col justify-between">
-            <div class="text-xs font-bold text-sky-400 text-center border-b border-slate-800 pb-2">
+          <div class="lg:col-span-3 p-4 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div class="text-xs font-bold text-sky-700 text-center border-b border-slate-200 pb-2">
               📊 物件護城河五維雷達圖
             </div>
             <div class="relative h-48 w-full my-auto">
@@ -550,16 +497,16 @@
         </div>
 
         <!-- NEW: REAL-TIME ACTIONABLE STRATEGY PLAYBOOK (大叔實戰買房與殺價行動建議書) -->
-        <div class="mt-6 p-6 rounded-2xl bg-gradient-to-br from-amber-500/10 via-slate-900 to-sky-950/30 border-2 border-amber-500/40 shadow-xl space-y-4">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+        <div class="mt-6 p-6 rounded-2xl bg-gradient-to-br from-amber-50/60 via-white to-sky-50/60 border border-amber-300 shadow-sm space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-3">
             <div class="flex items-center gap-2.5">
               <span class="text-2xl">🧭</span>
               <div>
-                <h4 class="font-black text-white text-base sm:text-lg flex items-center gap-2">
+                <h4 class="font-black text-slate-900 text-base sm:text-lg flex items-center gap-2">
                   <span>陳侯勳「買房實戰與被動談判」專屬行動建議書</span>
-                  <span class="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-bold border border-amber-500/40">依物件數據動態生成</span>
+                  <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold border border-amber-300">依物件數據動態生成</span>
                 </h4>
-                <p class="text-xs text-slate-300 mt-0.5">
+                <p class="text-xs text-slate-600 mt-0.5">
                   整合該物件之商圈定位、開價溢價率、未過把刀與貸款結構，給出具體可執行的買房與議價步驟：
                 </p>
               </div>
@@ -572,16 +519,16 @@
         </div>
 
         <!-- REAL TRANSACTION PRICE ANALYSIS & OUTLIER FILTERING REPORT -->
-        <div class="mt-6 p-5 rounded-2xl bg-slate-950/90 border border-slate-800 shadow-xl space-y-4">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
+        <div class="mt-6 p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-3">
             <div class="flex items-center gap-2.5">
               <span class="text-xl">📊</span>
               <div>
-                <h4 class="font-bold text-white text-base flex items-center gap-2">
+                <h4 class="font-bold text-slate-900 text-base flex items-center gap-2">
                   <span>社區實價登錄真實行情精算與車位拆算報告</span>
-                  <span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold border border-emerald-500/30">拆算車位・剔除極端值</span>
+                  <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 text-[10px] font-bold border border-emerald-300">拆算車位・剔除極端值</span>
                 </h4>
-                <p class="text-xs text-slate-400 mt-0.5">
+                <p class="text-xs text-slate-500 mt-0.5">
                   剔除親友特殊交易與一樓店面極端值，嚴格拆算車位價格與坪數後還原「房屋真實淨單價」。
                 </p>
               </div>
@@ -590,54 +537,54 @@
 
           <!-- Breakdown Grid -->
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 text-xs">
-            <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 space-y-1.5">
-              <div class="text-slate-400 font-medium">1. 社區真實成交均價（近1~2年）</div>
-              <div id="reg-card-avg-unit" class="text-lg font-black text-amber-400 font-mono-num">62.5 萬 / 坪</div>
-              <div id="reg-card-unit-range" class="text-[11px] text-slate-400">同社區成交區間：54.5 ~ 65.8 萬/坪</div>
-              <div class="text-[11px] text-emerald-400/90 pt-1 border-t border-slate-800/80">
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+              <div class="text-slate-500 font-medium">1. 社區真實成交均價（近1~2年）</div>
+              <div id="reg-card-avg-unit" class="text-lg font-black text-amber-700 font-mono-num">62.5 萬 / 坪</div>
+              <div id="reg-card-unit-range" class="text-[11px] text-slate-500">同社區成交區間：54.5 ~ 65.8 萬/坪</div>
+              <div class="text-[11px] text-emerald-700 pt-1 border-t border-slate-200">
                 ✓ 剔除特殊關係低價戶與極端高價紀錄
               </div>
             </div>
 
-            <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 space-y-1.5">
-              <div class="text-slate-400 font-medium">2. 車位與建物淨坪數拆算</div>
-              <div id="reg-card-parking-detail" class="text-lg font-black text-sky-400 font-mono-num">車位 190 萬（約 8.1 坪）</div>
-              <div id="reg-card-net-size" class="text-[11px] text-slate-400">權狀 50.99 坪 ➔ 房屋淨面積 42.89 坪</div>
-              <div class="text-[11px] text-sky-300/90 pt-1 border-t border-slate-800/80">
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+              <div class="text-slate-500 font-medium">2. 車位與建物淨坪數拆算</div>
+              <div id="reg-card-parking-detail" class="text-lg font-black text-sky-700 font-mono-num">車位 190 萬（約 8.1 坪）</div>
+              <div id="reg-card-net-size" class="text-[11px] text-slate-500">權狀 50.99 坪 ➔ 房屋淨面積 42.89 坪</div>
+              <div class="text-[11px] text-sky-700 pt-1 border-t border-slate-200">
                 ✓ 嚴格拆算車位，避免總坪數灌水壓低假單價
               </div>
             </div>
 
-            <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 space-y-1.5">
-              <div class="text-slate-400 font-medium">3. 屋主開價 vs 實登行情天花板</div>
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+              <div class="text-slate-500 font-medium">3. 屋主開價 vs 實登行情天花板</div>
               <div class="flex items-baseline gap-2">
-                <span id="reg-card-asking-display" class="text-lg font-black text-rose-400 font-mono-num">3,398 萬</span>
+                <span id="reg-card-asking-display" class="text-lg font-black text-rose-600 font-mono-num">3,398 萬</span>
                 <span class="text-slate-400">vs</span>
-                <span id="reg-card-ceiling-display" class="text-lg font-black text-emerald-400 font-mono-num">2,850 萬</span>
+                <span id="reg-card-ceiling-display" class="text-lg font-black text-emerald-700 font-mono-num">2,850 萬</span>
               </div>
-              <div id="reg-card-premium-pct" class="text-[11px] font-semibold text-rose-300">
+              <div id="reg-card-premium-pct" class="text-[11px] font-semibold text-rose-600">
                 ⚠️ 開價溢價 +19.2%（高出行情 548 萬元！）
               </div>
-              <div class="text-[11px] text-amber-300/90 pt-1 border-t border-slate-800/80">
+              <div class="text-[11px] text-amber-800 pt-1 border-t border-slate-200">
                 💡 實登天花板打 8 折為心中真實底價
               </div>
             </div>
           </div>
 
           <!-- Real Calculation Formula Display -->
-          <div id="reg-card-formula-box" class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs text-slate-300 leading-relaxed">
+          <div id="reg-card-formula-box" class="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-xs text-slate-700 leading-relaxed">
             <!-- Populated via JS -->
           </div>
         </div>
 
         <!-- Section Header for Knives -->
-        <div class="mt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+        <div class="mt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-3">
           <div class="flex items-center gap-2">
-            <h3 class="font-bold text-white text-base">🗡️ 該物件「買房九把刀」逐項護城河檢核</h3>
-            <span class="text-xs text-slate-400">（點擊任一卡片可手動切換 通過/未通過，即時更新評分與砍價話術）</span>
+            <h3 class="font-bold text-slate-900 text-base">🗡️ 該物件「買房九把刀」逐項護城河檢核</h3>
+            <span class="text-xs text-slate-500">（點擊任一卡片可手動切換 通過/未通過，即時更新評分與砍價話術）</span>
           </div>
-          <div class="text-xs text-slate-400">
-            綠色勾選 <span class="text-emerald-400 font-bold">✓</span> = 通過護城河 ｜ 紅色叉叉 <span class="text-rose-400 font-bold">✗</span> = 存在短板與砍價破口
+          <div class="text-xs text-slate-500">
+            綠色勾選 <span class="text-emerald-600 font-bold">✓</span> = 通過護城河 ｜ 紅色叉叉 <span class="text-rose-600 font-bold">✗</span> = 存在短板與砍價破口
           </div>
         </div>
 
@@ -647,16 +594,16 @@
         </div>
 
         <!-- Dynamic Bargaining Weapons (Generated from Failed Knives) -->
-        <div class="mt-8 p-5 rounded-2xl bg-slate-950/90 border border-slate-800">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+        <div class="mt-8 p-5 rounded-2xl bg-white border border-slate-200 shadow-sm">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-3">
             <div class="flex items-center gap-2">
               <span class="text-lg">⚔️</span>
-              <h3 class="font-bold text-white text-base">此物件專屬「現場挑缺點砍價武器庫」</h3>
-              <span id="weapons-count-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30">
+              <h3 class="font-bold text-slate-900 text-base">此物件專屬「現場挑缺點砍價武器庫」</h3>
+              <span id="weapons-count-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-50 text-rose-700 border border-rose-300">
                 0 個砍價破口
               </span>
             </div>
-            <span class="text-xs text-slate-400">對房仲與屋主施壓的精準台詞（可一鍵複製單句話術）</span>
+            <span class="text-xs text-slate-500">對房仲與屋主施壓的精準台詞（可一鍵複製單句話術）</span>
           </div>
 
           <div id="bargaining-weapons-list" class="space-y-3 mt-4 text-xs">
@@ -665,17 +612,17 @@
         </div>
 
         <!-- Comparison Table of All Properties -->
-        <div class="mt-8 p-5 rounded-2xl bg-slate-950/90 border border-slate-800">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+        <div class="mt-8 p-5 rounded-2xl bg-white border border-slate-200 shadow-sm">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-3">
             <div>
-              <h3 class="font-bold text-white text-base">📊 我的看屋候選清單（橫向比對總表）</h3>
-              <p class="text-xs text-slate-400 mt-0.5">落實「看 100 間、下 30 張斡旋、買 1 間」，點擊各列可快速切換比對</p>
+              <h3 class="font-bold text-slate-900 text-base">📊 我的看屋候選清單（橫向比對總表）</h3>
+              <p class="text-xs text-slate-500 mt-0.5">落實「看 100 間、下 30 張斡旋、買 1 間」，點擊各列可快速切換比對</p>
             </div>
           </div>
 
           <div class="overflow-x-auto mt-4">
-            <table class="w-full text-left text-xs text-slate-300 min-w-[750px]">
-              <thead class="bg-slate-900 text-slate-400 uppercase border-b border-slate-800">
+            <table class="w-full text-left text-xs text-slate-700 min-w-[750px]">
+              <thead class="bg-slate-100 text-slate-700 uppercase border-b border-slate-200">
                 <tr>
                   <th class="p-3">物件名稱 / 社區商圈</th>
                   <th class="p-3">開價 / 實登天花板</th>
@@ -687,7 +634,7 @@
                   <th class="p-3 text-right">操作</th>
                 </tr>
               </thead>
-              <tbody id="comparison-table-body" class="divide-y divide-slate-800/80">
+              <tbody id="comparison-table-body" class="divide-y divide-slate-200">
                 <!-- Injected via JS -->
               </tbody>
             </table>
@@ -701,88 +648,88 @@
     <section id="tab-overview" class="tab-panel hidden space-y-8">
       <!-- Golden Quotes -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="glass-card glass-card-spotlight rounded-2xl p-6 border-l-4 border-l-amber-500">
-          <div class="text-xs font-semibold uppercase tracking-wider text-amber-400 mb-2">價值 500 萬的進場鐵律（All-in 時機）</div>
-          <blockquote class="text-lg sm:text-xl font-bold text-white leading-snug">
+        <div class="glass-card rounded-2xl p-6 border-l-4 border-l-amber-500 shadow-sm">
+          <div class="text-xs font-semibold uppercase tracking-wider text-amber-700 mb-2">價值 500 萬的進場鐵律（All-in 時機）</div>
+          <blockquote class="text-lg sm:text-xl font-bold text-slate-900 leading-snug">
             「災難來時，銀行必端牛肉，房價必漲。」
           </blockquote>
-          <p class="mt-3 text-sm text-slate-300 leading-relaxed">
-            2008 年金融海嘯（深圳可貸 95 成、台灣花旗推 20 年寬限期）與 2020 年 COVID-19（富邦推 120% 房貸方案），各國央行與聯準會為拯救經濟必然瘋狂印鈔、放寬貸款。只要手頭現金流能撐過 3 年不斷鏈，災難期就是最佳 All-in 時機（來源：<a href="http://www.youtube.com/watch?v=abnQ_uDY6z4" target="_blank" rel="noopener noreferrer" class="text-amber-400 underline">哈佛人物面對面</a>）。
+          <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+            2008 年金融海嘯（深圳可貸 95 成、台灣花旗推 20 年寬限期）與 2020 年 COVID-19（富邦推 120% 房貸方案），各國央行與聯準會為拯救經濟必然瘋狂印鈔、放寬貸款。只要手頭現金流能撐過 3 年不斷鏈，災難期就是最佳 All-in 時機（來源：<a href="http://www.youtube.com/watch?v=abnQ_uDY6z4" target="_blank" rel="noopener noreferrer" class="text-amber-700 underline font-semibold">哈佛人物面對面</a>）。
           </p>
         </div>
-        <div class="glass-card glass-card-spotlight rounded-2xl p-6 border-l-4 border-l-sky-500">
-          <div class="text-xs font-semibold uppercase tracking-wider text-sky-400 mb-2">價值 500 萬的逆向判讀（Half-in 撿便宜時機）</div>
-          <blockquote class="text-lg sm:text-xl font-bold text-white leading-snug">
+        <div class="glass-card rounded-2xl p-6 border-l-4 border-l-sky-500 shadow-sm">
+          <div class="text-xs font-semibold uppercase tracking-wider text-sky-700 mb-2">價值 500 萬的逆向判讀（Half-in 撿便宜時機）</div>
+          <blockquote class="text-lg sm:text-xl font-bold text-slate-900 leading-snug">
             「經濟好時，銀行必縮銀根，房市無量、房價必跌。」
           </blockquote>
-          <p class="mt-3 text-sm text-slate-300 leading-relaxed">
-            影響房價高達 80%～90% 的關鍵在於央行水龍頭。當台灣因 AI 與半導體產業帶動經濟成長率飆高時，央行無後顧之憂必強力打房縮銀根（如七波信用管制）。此時建商與屋主極度悲觀，正是買方大膽看房、砍出破盤價的黃金窗口（來源：<a href="http://www.youtube.com/watch?v=CnB6gXX0BXo" target="_blank" rel="noopener noreferrer" class="text-sky-400 underline">阿爾發機器人聯名直播</a>）。
+          <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+            影響房價高達 80%～90% 的關鍵在於央行水龍頭。當台灣因 AI 與半導體產業帶動經濟成長率飆高時，央行無後顧之憂必強力打房縮銀根（如七波信用管制）。此時建商與屋主極度悲觀，正是買方大膽看房、砍出破盤價的黃金窗口（來源：<a href="http://www.youtube.com/watch?v=CnB6gXX0BXo" target="_blank" rel="noopener noreferrer" class="text-sky-700 underline font-semibold">阿爾發機器人聯名直播</a>）。
           </p>
         </div>
       </div>
 
       <!-- Market Info Lag & Annual Buying Calendar -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div class="glass-card rounded-2xl p-6">
-          <h2 class="text-lg font-bold text-white flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+        <div class="glass-card rounded-2xl p-6 shadow-sm">
+          <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
             市場資訊傳導「四圈理論」：看新聞買房慢半年
           </h2>
-          <p class="text-xs text-slate-400 mt-1 mb-4">
-            實價登錄與媒體報導存在嚴重時間差，老手只看自家與周邊 3～5 個社區的現場指標（來源：<a href="http://www.youtube.com/watch?v=JgqL-Js8avM" target="_blank" rel="noopener noreferrer" class="text-amber-400 underline">新青安3.0時事焦點</a>）。
+          <p class="text-xs text-slate-500 mt-1 mb-4">
+            實價登錄與媒體報導存在嚴重時間差，老手只看自家與周邊 3～5 個社區的現場指標（來源：<a href="http://www.youtube.com/watch?v=JgqL-Js8avM" target="_blank" rel="noopener noreferrer" class="text-amber-700 underline font-semibold">新青安3.0時事焦點</a>）。
           </p>
           <div class="space-y-3">
-            <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 flex items-start gap-3">
-              <span class="px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 font-bold text-xs shrink-0">第 1 圈（T+0 月）</span>
-              <div class="text-sm text-slate-200">
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-start gap-3">
+              <span class="px-2.5 py-1 rounded-lg bg-amber-100 text-amber-800 font-bold text-xs shrink-0">第 1 圈（T+0 月）</span>
+              <div class="text-sm text-slate-700">
                 <strong>實戰老手進場：</strong>趁市場極度悲觀、代銷週末關門沒人時，進場大砍建商餘屋與急售屋主。
               </div>
             </div>
-            <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 flex items-start gap-3">
-              <span class="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 font-bold text-xs shrink-0">第 4 圈（T+4 月）</span>
-              <div class="text-sm text-slate-200">
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-start gap-3">
+              <span class="px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-800 font-bold text-xs shrink-0">第 4 圈（T+4 月）</span>
+              <div class="text-sm text-slate-700">
                 <strong>當地居民與一般買方察覺：</strong>發現社區待售物件收斡變快、價格墊高，開始湧入追價。
               </div>
             </div>
-            <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 flex items-start gap-3">
-              <span class="px-2.5 py-1 rounded-lg bg-sky-500/20 text-sky-300 font-bold text-xs shrink-0">媒體圈（T+6~10 月）</span>
-              <div class="text-sm text-slate-200">
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-start gap-3">
+              <span class="px-2.5 py-1 rounded-lg bg-sky-100 text-sky-800 font-bold text-xs shrink-0">媒體圈（T+6~10 月）</span>
+              <div class="text-sm text-slate-700">
                 <strong>新聞媒體大幅報導：</strong>實價登錄揭露後媒體開始鼓吹房市火熱，此時早已落後老手半年以上。
               </div>
             </div>
-            <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 flex items-start gap-3">
-              <span class="px-2.5 py-1 rounded-lg bg-rose-500/20 text-rose-300 font-bold text-xs shrink-0">政策圈（T+12 月）</span>
-              <div class="text-sm text-slate-200">
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-start gap-3">
+              <span class="px-2.5 py-1 rounded-lg bg-rose-100 text-rose-800 font-bold text-xs shrink-0">政策圈（T+12 月）</span>
+              <div class="text-sm text-slate-700">
                 <strong>政府與央行出手管制：</strong>媒體熱議約 2 個月後政府祭出打房政策，追高散戶往往套在最高點。
               </div>
             </div>
           </div>
         </div>
 
-        <div class="glass-card rounded-2xl p-6">
-          <h2 class="text-lg font-bold text-white flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+        <div class="glass-card rounded-2xl p-6 shadow-sm">
+          <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
             年度買房黃金節奏：「年底殺價、年初申貸」
           </h2>
-          <p class="text-xs text-slate-400 mt-1 mb-4">
-            每年規律出現一次的銀行水位與屋主資金週期（來源：<a href="http://www.youtube.com/watch?v=v_QmmwlVALk" target="_blank" rel="noopener noreferrer" class="text-amber-400 underline">9/18第二屋解凍與年底買房時機</a>）。
+          <p class="text-xs text-slate-500 mt-1 mb-4">
+            每年規律出現一次的銀行水位與屋主資金週期（來源：<a href="http://www.youtube.com/watch?v=v_QmmwlVALk" target="_blank" rel="noopener noreferrer" class="text-amber-700 underline font-semibold">9/18第二屋解凍與年底買房時機</a>）。
           </p>
           <div class="space-y-4">
-            <div class="p-4 rounded-xl bg-gradient-to-r from-amber-500/15 to-transparent border border-amber-500/30">
-              <div class="font-bold text-amber-300 text-sm">步驟一：每年 5 月～10 月｜大量看房、建立百戶體感</div>
-              <p class="text-xs sm:text-sm text-slate-300 mt-1">
+            <div class="p-4 rounded-xl bg-amber-50/70 border border-amber-200">
+              <div class="font-bold text-amber-900 text-sm">步驟一：每年 5 月～10 月｜大量看房、建立百戶體感</div>
+              <p class="text-xs sm:text-sm text-slate-700 mt-1">
                 鎖定熟悉的 3～5 個蛋黃區社區，每月看 20 間房，累積滿 100 間看房經驗（「百戶長系統」），培養御用房仲情報網。
               </p>
             </div>
-            <div class="p-4 rounded-xl bg-gradient-to-r from-emerald-500/15 to-transparent border border-emerald-500/30">
-              <div class="font-bold text-emerald-300 text-sm">步驟二：每年 11 月～隔年 1 月｜全力出價殺價、1 月簽約</div>
-              <p class="text-xs sm:text-sm text-slate-300 mt-1">
+            <div class="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200">
+              <div class="font-bold text-emerald-900 text-sm">步驟二：每年 11 月～隔年 1 月｜全力出價殺價、1 月簽約</div>
+              <p class="text-xs sm:text-sm text-slate-700 mt-1">
                 年底銀行放款額度用罄，市場競爭買方最少；加上中小企業主屋主急需現金發年終獎金，心態最軟、讓價空間最大。
               </p>
             </div>
-            <div class="p-4 rounded-xl bg-gradient-to-r from-sky-500/15 to-transparent border border-sky-500/30">
-              <div class="font-bold text-sky-300 text-sm">步驟三：隔年 3 月～4 月（農曆年後）｜申請房貸交屋</div>
-              <p class="text-xs sm:text-sm text-slate-300 mt-1">
+            <div class="p-4 rounded-xl bg-sky-50/70 border border-sky-200">
+              <div class="font-bold text-sky-900 text-sm">步驟三：隔年 3 月～4 月（農曆年後）｜申請房貸交屋</div>
+              <p class="text-xs sm:text-sm text-slate-700 mt-1">
                 1 月簽約後交屋期約 2～3 個月，剛好銜接年後 3～4 月各大銀行新一年度房貸水位重新開跑，最容易核貸且條件最優。
               </p>
             </div>
@@ -791,40 +738,40 @@
       </div>
 
       <!-- Four Property Types Difficulty Matrix -->
-      <div class="glass-card rounded-2xl p-6">
-        <h2 class="text-lg font-bold text-white mb-2">四大不動產投資難度與避雷排行（由易到難：住家 ＜ 商辦 ＜ 店面 ＜ 土地）</h2>
-        <p class="text-xs text-slate-400 mb-4">整理自<a href="http://www.youtube.com/watch?v=2tI9UUm6_A4" target="_blank" rel="noopener noreferrer" class="text-amber-400 underline">【談判大叔的躺平學】EP17：住家、商辦、店面、土地難度大公開</a>與 <a href="http://www.youtube.com/watch?v=E3KfONXUBvs" target="_blank" rel="noopener noreferrer" class="text-amber-400 underline">EP13：預售屋、中古屋、法拍屋比較</a></p>
+      <div class="glass-card rounded-2xl p-6 shadow-sm">
+        <h2 class="text-lg font-bold text-slate-900 mb-2">四大不動產投資難度與避雷排行（由易到難：住家 ＜ 商辦 ＜ 店面 ＜ 土地）</h2>
+        <p class="text-xs text-slate-500 mb-4">整理自<a href="http://www.youtube.com/watch?v=2tI9UUm6_A4" target="_blank" rel="noopener noreferrer" class="text-amber-700 underline font-semibold">【談判大叔的躺平學】EP17：住家、商辦、店面、土地難度大公開</a>與 <a href="http://www.youtube.com/watch?v=E3KfONXUBvs" target="_blank" rel="noopener noreferrer" class="text-amber-700 underline font-semibold">EP13：預售屋、中古屋、法拍屋比較</a></p>
         <div class="overflow-x-auto">
           <table class="w-full text-left border-collapse text-sm">
             <thead>
-              <tr class="border-b border-slate-700 text-slate-300 bg-slate-900/90">
+              <tr class="border-b border-slate-200 text-slate-700 bg-slate-100">
                 <th class="p-3 font-semibold">類別</th>
                 <th class="p-3 font-semibold">難度與容錯率</th>
                 <th class="p-3 font-semibold">核心特性與隱藏陷阱</th>
                 <th class="p-3 font-semibold">談判大叔實戰建議</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-slate-800 text-slate-200">
+            <tbody class="divide-y divide-slate-200 text-slate-800">
               <tr>
-                <td class="p-3 font-bold text-emerald-400">1. 住家（住宅）</td>
+                <td class="p-3 font-bold text-emerald-700">1. 住家（住宅）</td>
                 <td class="p-3">★☆☆☆☆（容錯率最高）</td>
                 <td class="p-3">具備剛性居住需求、抗跌性最強、首購可貸 8 成。受薪階級租客收入穩定，不易斷租。</td>
                 <td class="p-3">新手前 20 間必從住宅開始！雙北買蛋黃區 20~40 坪三面採光老屋改造共生公寓；桃園以南買建商餘屋或預售屋。</td>
               </tr>
               <tr>
-                <td class="p-3 font-bold text-sky-400">2. 商辦（寫字樓）</td>
+                <td class="p-3 font-bold text-sky-700">2. 商辦（寫字樓）</td>
                 <td class="p-3">★★★☆☆（中度進階）</td>
                 <td class="p-3">無剛需，景氣差時企業優先砍辦公室租金；受遠距工作影響，50～200 人「中型商辦」淪為重災區。</td>
                 <td class="p-3">避開中型商辦！只選兩極端：<strong>50 坪以下（10 人內）微型商辦</strong>，或 <strong>500 坪以上整層／整棟甲級商辦</strong>（供跨國企業或 AI 伺服器機房承租）。</td>
               </tr>
               <tr>
-                <td class="p-3 font-bold text-amber-400">3. 店面（商鋪）</td>
+                <td class="p-3 font-bold text-amber-700">3. 店面（商鋪）</td>
                 <td class="p-3">★★★★☆（容錯率極低）</td>
                 <td class="p-3">同條街巷頭巷尾、陰面陽面（如銀行聚集側下午 3 點後無逛街人流）價差與租金可差 2～3 倍；貸款成數僅約 5 成。</td>
                 <td class="p-3">切勿「先買再招租」！出手前須先拜訪 <strong>5 家連鎖品牌開發部</strong>確認展店規格（面寬、電力、排煙排污），至少 <strong>3 家簽署承租 MOU</strong> 後才買。</td>
               </tr>
               <tr>
-                <td class="p-3 font-bold text-rose-400">4. 土地／法拍屋</td>
+                <td class="p-3 font-bold text-rose-700">4. 土地／法拍屋</td>
                 <td class="p-3">★★★★★（專家級高風險）</td>
                 <td class="p-3">「買住宅幫自己賺錢，買土地是幫孫子賺錢」，空置期極長；法拍屋無法入內勘察漏水結構，且好案必遭競標墊高。</td>
                 <td class="p-3">一般投資人別碰當年法拍屋；可改找金控旗下「資產管理公司（AMC）」持有滿 5 年整理釋出的物件，產權乾淨且配合銀行保證貸 8 成。</td>
@@ -840,76 +787,76 @@
       <!-- Interactive Calculators -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <!-- Calculator 1: Price Anchoring & 3 Fake Bottom Prices -->
-        <div class="glass-card rounded-2xl p-6 border-t-4 border-t-amber-500">
-          <h2 class="text-lg font-bold text-white">🧮 實戰工具一：買房出價定錨與「假底價」試算器</h2>
-          <p class="text-xs text-slate-400 mt-1 mb-4">
-            依據大叔「把實價登錄當天花板、打 8 折為真實底價、再往下設 3 個假底價」公式自動推算（來源：<a href="http://www.youtube.com/watch?v=eeIeUbcSSpE" target="_blank" rel="noopener noreferrer" class="text-amber-400 underline">35線上賞屋</a>、<a href="http://www.youtube.com/watch?v=CnB6gXX0BXo" target="_blank" rel="noopener noreferrer" class="text-amber-400 underline">阿爾發機器人直播</a>）。
+        <div class="glass-card rounded-2xl p-6 border-t-4 border-t-amber-500 shadow-sm">
+          <h2 class="text-lg font-bold text-slate-900">🧮 實戰工具一：買房出價定錨與「假底價」試算器</h2>
+          <p class="text-xs text-slate-500 mt-1 mb-4">
+            依據大叔「把實價登錄當天花板、打 8 折為真實底價、再往下設 3 個假底價」公式自動推算（來源：<a href="http://www.youtube.com/watch?v=eeIeUbcSSpE" target="_blank" rel="noopener noreferrer" class="text-amber-700 underline font-semibold">35線上賞屋</a>、<a href="http://www.youtube.com/watch?v=CnB6gXX0BXo" target="_blank" rel="noopener noreferrer" class="text-amber-700 underline font-semibold">阿爾發機器人直播</a>）。
           </p>
           <div class="space-y-4">
             <div>
-              <label for="input-asking-price" class="block text-xs font-medium text-slate-300 mb-1">屋主開價（萬元）</label>
-              <input id="input-asking-price" type="number" value="2500" min="100" step="50" class="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white font-mono-num text-sm focus:outline-none focus:border-amber-400" />
+              <label for="input-asking-price" class="block text-xs font-semibold text-slate-700 mb-1">屋主開價（萬元）</label>
+              <input id="input-asking-price" type="number" value="2500" min="100" step="50" class="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 font-mono-num text-sm focus:outline-none focus:bg-white focus:border-amber-500" />
             </div>
             <div>
-              <label for="input-reg-price" class="block text-xs font-medium text-slate-300 mb-1">社區近期實價登錄去頭去尾均價（萬元，視為天花板價）</label>
-              <input id="input-reg-price" type="number" value="2200" min="100" step="50" class="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white font-mono-num text-sm focus:outline-none focus:border-amber-400" />
+              <label for="input-reg-price" class="block text-xs font-semibold text-slate-700 mb-1">社區近期實價登錄去頭去尾均價（萬元，視為天花板價）</label>
+              <input id="input-reg-price" type="number" value="2200" min="100" step="50" class="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 font-mono-num text-sm focus:outline-none focus:bg-white focus:border-amber-500" />
             </div>
-            <div class="p-4 rounded-xl bg-slate-950/90 border border-slate-800 space-y-2.5 text-sm">
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2.5 text-sm">
               <div class="flex justify-between items-center">
-                <span class="text-slate-400">🎯 你的心中「真實底價」（實登 × 80%）：</span>
-                <span id="calc-true-bottom" class="text-lg font-black text-amber-400 font-mono-num">1,760 萬</span>
+                <span class="text-slate-600">🎯 你的心中「真實底價」（實登 × 80%）：</span>
+                <span id="calc-true-bottom" class="text-lg font-black text-amber-700 font-mono-num">1,760 萬</span>
               </div>
-              <div class="flex justify-between items-center border-t border-slate-800 pt-2">
-                <span class="text-slate-400">🥊 第一口敲門價／假底價 1（實登 × 60%）：</span>
-                <span id="calc-fake-1" class="font-bold text-emerald-400 font-mono-num">1,320 萬</span>
-              </div>
-              <div class="flex justify-between items-center">
-                <span class="text-slate-400">🛡️ 第二階段假底價 2（實登 × 68%）：</span>
-                <span id="calc-fake-2" class="font-bold text-sky-400 font-mono-num">1,496 萬</span>
+              <div class="flex justify-between items-center border-t border-slate-200 pt-2">
+                <span class="text-slate-600">🥊 第一口敲門價／假底價 1（實登 × 60%）：</span>
+                <span id="calc-fake-1" class="font-bold text-emerald-700 font-mono-num">1,320 萬</span>
               </div>
               <div class="flex justify-between items-center">
-                <span class="text-slate-400">🔒 第三階段假底價 3（實登 × 75%）：</span>
-                <span id="calc-fake-3" class="font-bold text-purple-400 font-mono-num">1,650 萬</span>
+                <span class="text-slate-600">🛡️ 第二階段假底價 2（實登 × 68%）：</span>
+                <span id="calc-fake-2" class="font-bold text-sky-700 font-mono-num">1,496 萬</span>
               </div>
-              <div class="flex justify-between items-center border-t border-slate-800 pt-2 text-xs text-slate-400">
+              <div class="flex justify-between items-center">
+                <span class="text-slate-600">🔒 第三階段假底價 3（實登 × 75%）：</span>
+                <span id="calc-fake-3" class="font-bold text-purple-700 font-mono-num">1,650 萬</span>
+              </div>
+              <div class="flex justify-between items-center border-t border-slate-200 pt-2 text-xs text-slate-500">
                 <span>💡 若房仲稱「屋主底價不二價 X 萬」，推算屋主實拿底價（÷1.04 扣除 4% 仲介費）：</span>
-                <span id="calc-net-seller" class="font-bold text-rose-300 font-mono-num">2,404 萬</span>
+                <span id="calc-net-seller" class="font-bold text-rose-600 font-mono-num">2,404 萬</span>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Calculator 2: Free Money & Mortgage Cash-Out -->
-        <div class="glass-card rounded-2xl p-6 border-t-4 border-t-emerald-500">
-          <h2 class="text-lg font-bold text-white">💸 實戰工具二：「你賺的不是租金，是房貸」印鈔機試算</h2>
-          <p class="text-xs text-slate-400 mt-1 mb-4">
-            以 30 年期、利率 3% 計算，每創造 4,300 元月租金，即可由房客替你償還 100 萬房貸本利和（來源：<a href="http://www.youtube.com/watch?v=mbHBqsl48n8" target="_blank" rel="noopener noreferrer" class="text-emerald-400 underline">查理的創業化合物二訪</a>、<a href="http://www.youtube.com/watch?v=3jSGvaG4KzE" target="_blank" rel="noopener noreferrer" class="text-emerald-400 underline">躺平學 EP06</a>）。
+        <div class="glass-card rounded-2xl p-6 border-t-4 border-t-emerald-500 shadow-sm">
+          <h2 class="text-lg font-bold text-slate-900">💸 實戰工具二：「你賺的不是租金，是房貸」印鈔機試算</h2>
+          <p class="text-xs text-slate-500 mt-1 mb-4">
+            以 30 年期、利率 3% 計算，每創造 4,300 元月租金，即可由房客替你償還 100 萬房貸本利和（來源：<a href="http://www.youtube.com/watch?v=mbHBqsl48n8" target="_blank" rel="noopener noreferrer" class="text-emerald-700 underline font-semibold">查理的創業化合物二訪</a>、<a href="http://www.youtube.com/watch?v=3jSGvaG4KzE" target="_blank" rel="noopener noreferrer" class="text-emerald-700 underline font-semibold">躺平學 EP06</a>）。
           </p>
           <div class="space-y-4">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label for="input-old-rent" class="block text-xs font-medium text-slate-300 mb-1">改造前原始月租金（元）</label>
-                <input id="input-old-rent" type="number" value="33000" min="0" step="1000" class="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white font-mono-num text-sm focus:outline-none focus:border-emerald-400" />
+                <label for="input-old-rent" class="block text-xs font-semibold text-slate-700 mb-1">改造前原始月租金（元）</label>
+                <input id="input-old-rent" type="number" value="33000" min="0" step="1000" class="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 font-mono-num text-sm focus:outline-none focus:bg-white focus:border-emerald-500" />
               </div>
               <div>
-                <label for="input-new-rent" class="block text-xs font-medium text-slate-300 mb-1">軟裝/共生公寓改造後月租金（元）</label>
-                <input id="input-new-rent" type="number" value="78000" min="0" step="1000" class="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white font-mono-num text-sm focus:outline-none focus:border-emerald-400" />
+                <label for="input-new-rent" class="block text-xs font-semibold text-slate-700 mb-1">軟裝/共生公寓改造後月租金（元）</label>
+                <input id="input-new-rent" type="number" value="78000" min="0" step="1000" class="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 font-mono-num text-sm focus:outline-none focus:bg-white focus:border-emerald-500" />
               </div>
             </div>
-            <div class="p-4 rounded-xl bg-slate-950/90 border border-slate-800 space-y-2.5 text-sm">
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2.5 text-sm">
               <div class="flex justify-between items-center">
-                <span class="text-slate-400">📈 每月淨增加租金現金流：</span>
-                <span id="calc-rent-diff" class="font-bold text-white font-mono-num">+45,000 元 / 月</span>
+                <span class="text-slate-600">📈 每月淨增加租金現金流：</span>
+                <span id="calc-rent-diff" class="font-bold text-slate-900 font-mono-num">+45,000 元 / 月</span>
               </div>
-              <div class="flex justify-between items-center border-t border-slate-800 pt-2">
-                <span class="text-slate-400">🏦 總租金可支撐之免費房貸總額（總租金 ÷ 4,300 × 100 萬）：</span>
-                <span id="calc-total-freemoney" class="text-lg font-black text-emerald-400 font-mono-num">1,814 萬</span>
+              <div class="flex justify-between items-center border-t border-slate-200 pt-2">
+                <span class="text-slate-600">🏦 總租金可支撐之免費房貸總額（總租金 ÷ 4,300 × 100 萬）：</span>
+                <span id="calc-total-freemoney" class="text-lg font-black text-emerald-700 font-mono-num">1,814 萬</span>
               </div>
               <div class="flex justify-between items-center">
-                <span class="text-slate-400">✨ 光靠「改造新增租金」多創造的 Free Money 額度：</span>
-                <span id="calc-added-freemoney" class="text-lg font-black text-amber-400 font-mono-num">+1,047 萬</span>
+                <span class="text-slate-600">✨ 光靠「改造新增租金」多創造的 Free Money 額度：</span>
+                <span id="calc-added-freemoney" class="text-lg font-black text-amber-700 font-mono-num">+1,047 萬</span>
               </div>
-              <p class="text-xs text-slate-400 pt-1">
+              <p class="text-xs text-slate-500 pt-1">
                 註：當房屋入手價低於市價 8 折或增值後，透過轉增貸將初始 2 成頭期款全數抽回，分母（自有本金）歸零，後續報酬率即達成「無限大 ROI」。
               </p>
             </div>
@@ -919,30 +866,30 @@
 
       <!-- Deep Dive Cards on Financial Engineering -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="glass-card rounded-2xl p-5">
-          <div class="text-amber-400 font-bold text-base mb-2">1. 為什麼嚴禁炒房賺價差？</div>
-          <p class="text-sm text-slate-300 leading-relaxed">
-            假設 3,000 萬房子漲到 4,000 萬，賣掉看似賺 1,000 萬；但若想買回同區 4,000 萬房子，2 成頭期款需 800 萬，加上稅費幾乎無法落袋。炒房客最終軌跡必是<strong>「越買越小（三房變套房）、越買越遠（蛋黃退到蛋殼）」</strong>，只要遇上一波央行打房就會資金斷鏈破產（<a href="http://www.youtube.com/watch?v=JpFVKnqiMHg" target="_blank" rel="noopener noreferrer" class="text-amber-400 underline">躺平學 EP11</a>）。
+        <div class="glass-card rounded-2xl p-5 shadow-sm">
+          <div class="text-amber-700 font-bold text-base mb-2">1. 為什麼嚴禁炒房賺價差？</div>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            假設 3,000 萬房子漲到 4,000 萬，賣掉看似賺 1,000 萬；但若想買回同區 4,000 萬房子，2 成頭期款需 800 萬，加上稅費幾乎無法落袋。炒房客最終軌跡必是<strong>「越買越小（三房變套房）、越買越遠（蛋黃退到蛋殼）」</strong>，只要遇上一波央行打房就會資金斷鏈破產（<a href="http://www.youtube.com/watch?v=JpFVKnqiMHg" target="_blank" rel="noopener noreferrer" class="text-amber-700 underline font-semibold">躺平學 EP11</a>）。
           </p>
         </div>
-        <div class="glass-card rounded-2xl p-5 flex flex-col justify-between">
+        <div class="glass-card rounded-2xl p-5 shadow-sm flex flex-col justify-between">
           <div>
-            <div class="text-emerald-400 font-bold text-base mb-2">2. 科目一轉科目四（理財型房貸）</div>
-            <p class="text-sm text-slate-300 leading-relaxed">
-              買房當下辦的購置型房貸屬「科目一」，受央行成數限制（第 2 戶、第 3 戶成數遞減）。透過先還清或增貸洗成「科目四（理財型房貸）」，不僅每間皆可談到最高 8 成，還可申請只繳息不還本，每 3～5 年信用良好持續展延至 20 年，將資金停泊於 0050、台積電或美債創造多重部位（<a href="http://www.youtube.com/watch?v=mbHBqsl48n8" target="_blank" rel="noopener noreferrer" class="text-emerald-400 underline">查理的創業化合物二訪</a>）。
+            <div class="text-emerald-700 font-bold text-base mb-2">2. 科目一轉科目四（理財型房貸）</div>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              買房當下辦的購置型房貸屬「科目一」，受央行成數限制（第 2 戶、第 3 戶成數遞減）。透過先還清或增貸洗成「科目四（理財型房貸）」，不僅每間皆可談到最高 8 成，還可申請只繳息不還本，每 3～5 年信用良好持續展延至 20 年，將資金停泊於 0050、台積電或美債創造多重部位（<a href="http://www.youtube.com/watch?v=mbHBqsl48n8" target="_blank" rel="noopener noreferrer" class="text-emerald-700 underline font-semibold">查理的創業化合物二訪</a>）。
             </p>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-700/60">
-            <a href="./second_house.html" class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-300 hover:text-emerald-200 bg-emerald-950/60 hover:bg-emerald-900/80 px-3 py-1.5 rounded-lg border border-emerald-500/40 transition w-full justify-between">
+          <div class="mt-4 pt-3 border-t border-slate-200">
+            <a href="./second_house.html" class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-800 hover:text-emerald-900 bg-emerald-50 hover:bg-emerald-100 px-3 py-1.5 rounded-lg border border-emerald-300 transition w-full justify-between">
               <span>🏦 查看第二屋實戰決策（科目一轉四 × 首購8成）</span>
               <span>➔</span>
             </a>
           </div>
         </div>
-        <div class="glass-card rounded-2xl p-5">
-          <div class="text-sky-400 font-bold text-base mb-2">3. 零存款買房與「首購變現」</div>
-          <p class="text-sm text-slate-300 leading-relaxed">
-            （1）<strong>首購資格合資變現</strong>：年薪約 86 萬（月薪約 6.1 萬×14 個月）可貸 1,000 萬（或用年薪 × 11.7 倍速算），出首購名額與金主合資；（2）<strong>建商免頭期方案</strong>：趁建商餘屋壓力大時談判由建商代墊或分期頭期款；（3）<strong>維護聯徵 700 分以上</strong>：絕不用信用卡循環利息或分期、不遲繳一天（銀行半夜 12 點 AI 自動連線扣分）（<a href="http://www.youtube.com/watch?v=LLts5CGxFuE" target="_blank" rel="noopener noreferrer" class="text-sky-400 underline">躺平學 EP12</a>）。
+        <div class="glass-card rounded-2xl p-5 shadow-sm">
+          <div class="text-sky-700 font-bold text-base mb-2">3. 零存款買房與「首購變現」</div>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            （1）<strong>首購資格合資變現</strong>：年薪約 86 萬（月薪約 6.1 萬×14 個月）可貸 1,000 萬（或用年薪 × 11.7 倍速算），出首購名額與金主合資；（2）<strong>建商免頭期方案</strong>：趁建商餘屋壓力大時談判由建商代墊或分期頭期款；（3）<strong>維護聯徵 700 分以上</strong>：絕不用信用卡循環利息或分期、不遲繳一天（銀行半夜 12 點 AI 自動連線扣分）（<a href="http://www.youtube.com/watch?v=LLts5CGxFuE" target="_blank" rel="noopener noreferrer" class="text-sky-700 underline font-semibold">躺平學 EP12</a>）。
           </p>
         </div>
       </div>
@@ -951,36 +898,36 @@
     <!-- TAB 4: PASSIVE NEGOTIATION & SMALL ROOM TACTICS -->
     <section id="tab-negotiation" class="tab-panel hidden space-y-8">
       <!-- Core Principles of Passive Negotiation -->
-      <div class="glass-card rounded-2xl p-6">
-        <h2 class="text-xl font-bold text-white mb-4">被動談判術五大核心心法（《頂尖投資人都在學的被動談判術》×《焦慮，請慢用》）</h2>
+      <div class="glass-card rounded-2xl p-6 shadow-sm">
+        <h2 class="text-xl font-bold text-slate-900 mb-4">被動談判術五大核心心法（《頂尖投資人都在學的被動談判術》×《焦慮，請慢用》）</h2>
         <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
-          <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
-            <div class="text-amber-400 font-bold text-sm">① 扮演「被說服者」</div>
-            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+            <div class="text-amber-700 font-bold text-sm">① 扮演「被說服者」</div>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
               越用力說服對手，對方防禦心越高。裝弱扮演「被說服者」，讓對方覺得自己掌控全局，安全感高時反而願意釋出更多籌碼。
             </p>
           </div>
-          <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
-            <div class="text-amber-400 font-bold text-sm">② 閉嘴留白（「剎」）</div>
-            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+            <div class="text-amber-700 font-bold text-sm">② 閉嘴留白（「剎」）</div>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
               談判最關鍵技術是「不說話」。當你沉默留白，對方會開始猜測並腦補他最害怕的劇本，讓他的焦慮替你說服他自己。
             </p>
           </div>
-          <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
-            <div class="text-amber-400 font-bold text-sm">③ 怕失去就別上桌</div>
-            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+            <div class="text-amber-700 font-bold text-sm">③ 怕失去就別上桌</div>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
               不買最大！若不能失去這間房，肢體語言必流露渴望。透過「看滿 100 間房」消除真愛迷思，並絕對迴避多人競價現場。
             </p>
           </div>
-          <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
-            <div class="text-amber-400 font-bold text-sm">④ 要價進攻 2 : 1</div>
-            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+            <div class="text-amber-700 font-bold text-sm">④ 要價進攻 2 : 1</div>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
               「親口說出的數字你終將失去」。逼對方報價（要價）是進攻，自己出價（放價）是防守；嚴格遵守要價 2 次才放價 1 次。
             </p>
           </div>
-          <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
-            <div class="text-amber-400 font-bold text-sm">⑤ 最後一口價由對方說</div>
-            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+            <div class="text-amber-700 font-bold text-sm">⑤ 最後一口價由對方說</div>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
               引導對手親口說出目標價後，先斬釘截鐵拒絕（讓他開口說服你並說服自己），最後猶豫滿 1 小時才勉為其難答應，讓他覺得他贏了。
             </p>
           </div>
@@ -988,17 +935,17 @@
       </div>
 
       <!-- Interactive Agent Tactics Decoder -->
-      <div class="glass-card rounded-2xl p-6">
+      <div class="glass-card rounded-2xl p-6 shadow-sm">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
           <div>
-            <h2 class="text-lg font-bold text-white">🛡️ 破解房仲與代銷話術｜小房間實戰拆招圖鑑</h2>
-            <p class="text-xs text-slate-400 mt-0.5">點擊下方情境按鈕篩選，查看房仲話術背後的心理陷阱與大叔標準反制台詞（來源：<a href="http://www.youtube.com/watch?v=eeIeUbcSSpE" target="_blank" rel="noopener noreferrer" class="text-amber-400 underline">35線上賞屋</a>、<a href="http://www.youtube.com/watch?v=l8v5xpq6fSI" target="_blank" rel="noopener noreferrer" class="text-amber-400 underline">博音 EP242</a>）。</p>
+            <h2 class="text-lg font-bold text-slate-900">🛡️ 破解房仲與代銷話術｜小房間實戰拆招圖鑑</h2>
+            <p class="text-xs text-slate-500 mt-0.5">點擊下方情境按鈕篩選，查看房仲話術背後的心理陷阱與大叔標準反制台詞（來源：<a href="http://www.youtube.com/watch?v=eeIeUbcSSpE" target="_blank" rel="noopener noreferrer" class="text-amber-700 underline font-medium">35線上賞屋</a>、<a href="http://www.youtube.com/watch?v=l8v5xpq6fSI" target="_blank" rel="noopener noreferrer" class="text-amber-700 underline font-medium">博音 EP242</a>）。</p>
           </div>
           <div class="flex flex-wrap gap-1.5" id="tactic-filters">
-            <button type="button" data-filter="all" class="tactic-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-amber-500 text-slate-900">全部情境</button>
-            <button type="button" data-filter="pre" class="tactic-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">看房與出價前</button>
-            <button type="button" data-filter="price" class="tactic-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">議價交鋒期</button>
-            <button type="button" data-filter="room" class="tactic-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">小房間決戰</button>
+            <button type="button" data-filter="all" class="tactic-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-amber-500 text-slate-950 shadow-sm">全部情境</button>
+            <button type="button" data-filter="pre" class="tactic-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200">看房與出價前</button>
+            <button type="button" data-filter="price" class="tactic-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200">議價交鋒期</button>
+            <button type="button" data-filter="room" class="tactic-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200">小房間決戰</button>
           </div>
         </div>
         <div id="tactics-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1007,33 +954,33 @@
       </div>
 
       <!-- Case Study: Neihu Wende Station 55W -> 40.8W -->
-      <div class="glass-card rounded-2xl p-6 border border-amber-500/30">
-        <h2 class="text-lg font-bold text-amber-400">🔥 經典戰役復盤：內湖文德捷運站旁，開價 55 萬/坪 → 40.8 萬/坪成交（現省逾 400 萬）</h2>
-        <p class="text-xs text-slate-300 mt-1 mb-4">
-          總價僅 1,270 萬卻省下 400 多萬，且屋主簽約當晚還開心地全家去幫爸爸慶生（來源：<a href="http://www.youtube.com/watch?v=eeIeUbcSSpE" target="_blank" rel="noopener noreferrer" class="text-amber-400 underline">35線上賞屋</a>、<a href="http://www.youtube.com/watch?v=abnQ_uDY6z4" target="_blank" rel="noopener noreferrer" class="text-amber-400 underline">哈佛人物面對面</a>）。
+      <div class="glass-card rounded-2xl p-6 border border-amber-200 bg-amber-50/20 shadow-sm">
+        <h2 class="text-lg font-bold text-amber-800">🔥 經典戰役復盤：內湖文德捷運站旁，開價 55 萬/坪 → 40.8 萬/坪成交（現省逾 400 萬）</h2>
+        <p class="text-xs text-slate-600 mt-1 mb-4">
+          總價僅 1,270 萬卻省下 400 多萬，且屋主簽約當晚還開心地全家去幫爸爸慶生（來源：<a href="http://www.youtube.com/watch?v=eeIeUbcSSpE" target="_blank" rel="noopener noreferrer" class="text-amber-700 underline font-medium">35線上賞屋</a>、<a href="http://www.youtube.com/watch?v=abnQ_uDY6z4" target="_blank" rel="noopener noreferrer" class="text-amber-700 underline font-medium">哈佛人物面對面</a>）。
         </p>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
-          <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
-            <div class="text-xs font-bold text-rose-400">1. 高峰期果斷撤退（5~9月）</div>
-            <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
+          <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
+            <div class="text-xs font-bold text-rose-600">1. 高峰期果斷撤退（5~9月）</div>
+            <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">
               2020 年牛市該屋每週 19 組帶看、週末 9 組排隊談。有買方出到 53 萬，屋主竟拍桌跳價喊 58 萬才賣。大叔見多人競價立刻撤退，絕不拱火。
             </p>
           </div>
-          <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
-            <div class="text-xs font-bold text-amber-400">2. 留白空窗三個月（11~1月）</div>
-            <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
+          <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
+            <div class="text-xs font-bold text-amber-700">2. 留白空窗三個月（11~1月）</div>
+            <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">
               因屋主屢次跳價，大品牌房仲不再帶看。到了 11 月年底銀行放款滿水位，加上央行釋出打房風聲，御用房仲回報該屋已連續 3 個月無人帶看，屋主還在別處買房急需現金。
             </p>
           </div>
-          <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
-            <div class="text-xs font-bold text-sky-400">3. 焦慮發酵與被動要價</div>
-            <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
+          <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
+            <div class="text-xs font-bold text-sky-700">3. 焦慮發酵與被動要價</div>
+            <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">
               面對三個月空無一人的恐懼，一手屋主（早年以十幾萬購入）深怕錯過高點跌回 3 字頭。大叔進場獨佔談判桌，步步引導屋主自己往下報價。
             </p>
           </div>
-          <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
-            <div class="text-xs font-bold text-emerald-400">4. 屋主親口說出 40.8 萬</div>
-            <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
+          <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
+            <div class="text-xs font-bold text-emerald-700">4. 屋主親口說出 40.8 萬</div>
+            <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">
               最終誘導屋主親口說出 40.8 萬/坪，大叔先拒絕再經過長考後「被說服」答應。屋主認為是自己說服買方接受 40.8 萬，帶著贏家滿足感歡喜成交。
             </p>
           </div>
@@ -1043,15 +990,15 @@
 
     <!-- TAB 5: VIDEO DATABASE -->
     <section id="tab-videos" class="tab-panel hidden space-y-6">
-      <div class="glass-card rounded-2xl p-6">
+      <div class="glass-card rounded-2xl p-6 shadow-sm">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
           <div>
-            <h2 class="text-xl font-bold text-white">🎬 「談判大叔-陳侯勳」YouTube 頻道與專訪影片資料庫</h2>
-            <p class="text-xs text-slate-400 mt-1">支援關鍵字即時搜尋與系列篩選，點擊標題可直接前往 YouTube 或官方文章觀看。</p>
+            <h2 class="text-xl font-bold text-slate-900">🎬 「談判大叔-陳侯勳」YouTube 頻道與專訪影片資料庫</h2>
+            <p class="text-xs text-slate-500 mt-1">支援關鍵字即時搜尋與系列篩選，點擊標題可直接前往 YouTube 或官方文章觀看。</p>
           </div>
           <div class="flex flex-col sm:flex-row gap-2">
-            <input id="video-search-input" type="text" placeholder="搜尋關鍵字（如：九把刀、新青安、小房間...）" class="px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white focus:outline-none focus:border-sky-400 w-full sm:w-64" />
-            <select id="video-category-select" class="px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white focus:outline-none focus:border-sky-400">
+            <input id="video-search-input" type="text" placeholder="搜尋關鍵字（如：九把刀、新青安、小房間...）" class="px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300 text-sm text-slate-900 focus:outline-none focus:border-sky-500 focus:bg-white w-full sm:w-64" />
+            <select id="video-category-select" class="px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300 text-sm text-slate-900 focus:outline-none focus:border-sky-500 focus:bg-white">
               <option value="all">所有系列分類</option>
               <option value="躺平學-房產">躺平學（房產實戰篇）</option>
               <option value="躺平學-思維">躺平學（思維與人脈篇）</option>
@@ -1062,18 +1009,18 @@
           </div>
         </div>
 
-        <div id="video-count-badge" class="text-xs text-slate-400 mb-3">共顯示 27 筆核心影片與專欄資源</div>
+        <div id="video-count-badge" class="text-xs text-slate-500 mb-3">共顯示 27 筆核心影片與專欄資源</div>
 
         <div class="overflow-x-auto">
           <table class="w-full text-left border-collapse text-sm">
             <thead>
-              <tr class="border-b border-slate-700 text-slate-300 bg-slate-900/90">
+              <tr class="border-b border-slate-200 text-slate-700 bg-slate-100">
                 <th class="p-3 font-semibold w-32">分類</th>
                 <th class="p-3 font-semibold">影片／專欄標題（點擊開啟連結）</th>
                 <th class="p-3 font-semibold">核心買房與談判理論重點</th>
               </tr>
             </thead>
-            <tbody id="video-table-body" class="divide-y divide-slate-800 text-slate-200">
+            <tbody id="video-table-body" class="divide-y divide-slate-200 text-slate-800">
               <!-- Populated by JS -->
             </tbody>
           </table>
@@ -1084,127 +1031,43 @@
   </main>
 
   <!-- Custom Confirmation Modal (Replacing forbidden browser confirm()) -->
-  <div id="custom-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
-    <div class="glass-card rounded-2xl max-w-md w-full p-6 border border-slate-700 shadow-2xl space-y-4">
+  <div id="custom-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 border border-slate-200 shadow-2xl space-y-4">
       <div class="flex items-center gap-2.5">
         <span class="text-xl">⚠️</span>
-        <h3 id="modal-title" class="text-base font-bold text-white">操作確認</h3>
+        <h3 id="modal-title" class="text-base font-bold text-slate-900">操作確認</h3>
       </div>
-      <p id="modal-message" class="text-xs sm:text-sm text-slate-300 leading-relaxed">確定要執行此動作嗎？</p>
+      <p id="modal-message" class="text-xs sm:text-sm text-slate-600 leading-relaxed">確定要執行此動作嗎？</p>
       <div class="flex justify-end gap-2 pt-2">
-        <button type="button" id="modal-cancel-btn" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition">
+        <button type="button" id="modal-cancel-btn" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold border border-slate-200 transition">
           取消
         </button>
-        <button type="button" id="modal-confirm-btn" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold transition">
+        <button type="button" id="modal-confirm-btn" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold transition shadow-sm">
           確定執行
         </button>
       </div>
     </div>
   </div>
 
-  <!-- Anti-Scraping Wizard Modal -->
-  <div id="anti-crawl-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/85 backdrop-blur-md p-4">
-    <div class="glass-card rounded-3xl max-w-xl w-full p-6 sm:p-7 border border-amber-500/40 shadow-2xl space-y-5">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-        <div class="flex items-center gap-2.5">
-          <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-lg border border-amber-500/30">
-            🛡️
-          </div>
-          <div>
-            <h3 class="text-base sm:text-lg font-black text-white">591 售屋網啟用了防爬蟲保護</h3>
-            <p class="text-[11px] text-slate-400">瀏覽器跨來源安全機制 (CORS) 與 WAF 阻擋了第三方網站直接抓取該網址</p>
-          </div>
-        </div>
-        <button type="button" id="btn-close-anticrawl" class="text-slate-400 hover:text-white text-lg p-1">✕</button>
-      </div>
-
-      <div class="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-xs text-amber-200 leading-relaxed space-y-1">
-        <p><strong>⚠️ 為什麼純貼網址無法自動抓取？</strong></p>
-        <p>591 設有嚴格的機房防火牆與防爬蟲機制，純靜態網頁（GitHub Pages）無法直接跨網域抓取其房屋私有資料。若要 100% 精準分析該戶真實數據，請選擇以下<strong>秒速解決方式</strong>：</p>
-      </div>
-
-      <!-- Rapid Workaround Options -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-        <div class="p-4 rounded-2xl bg-slate-900 border border-sky-500/30 space-y-2 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center gap-1.5 font-bold text-sky-300">
-              <span>⭐ 方式 A（一鍵神器・1 秒完成）</span>
-            </div>
-            <p class="text-slate-300 mt-1 leading-relaxed text-[11px]">
-              使用<strong>「591 九把刀一鍵診斷」書籤</strong>：在 591 物件頁面點一下書籤，免複製直接自動帶入真實總價、坪數與社區名稱！
-            </p>
-          </div>
-          <button type="button" id="btn-modal-open-bookmarklet-guide" class="w-full mt-2 py-2 px-3 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-black text-xs transition">
-            📖 查看書籤使用教學
-          </button>
-        </div>
-
-        <div class="p-4 rounded-2xl bg-slate-900 border border-amber-500/30 space-y-2 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center gap-1.5 font-bold text-amber-300">
-              <span>📋 方式 B（免安裝・5 秒完成）</span>
-            </div>
-            <p class="text-slate-300 mt-1 leading-relaxed text-[11px]">
-              切換到 591 分頁，在頁面空白處按 <kbd class="px-1 py-0.5 rounded bg-slate-800 text-amber-300 font-mono">Ctrl+A</kbd>（全選）➔ <kbd class="px-1 py-0.5 rounded bg-slate-800 text-amber-300 font-mono">Ctrl+C</kbd>（複製），回到本頁貼上即可秒速解析！
-            </p>
-          </div>
-          <button type="button" id="btn-modal-focus-input" class="w-full mt-2 py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs transition">
-            📋 回到輸入框貼上
-          </button>
-        </div>
-      </div>
-
-      <!-- Quick Manual Override Form in Modal -->
-      <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-3">
-        <div class="flex items-center justify-between text-xs font-bold text-slate-300">
-          <span>⚡ 方式 C：或在此直接填寫 2 個數字，立即完成診斷：</span>
-          <span class="text-[11px] text-slate-500">免複製最省事</span>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-          <div>
-            <label class="block font-semibold text-slate-400 mb-1">社區名稱（建案名）</label>
-            <input id="quick-input-community" type="text" placeholder="例：台北橋首府 或 日安巴黎" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-amber-300 font-bold focus:outline-none focus:border-sky-400" />
-          </div>
-          <div>
-            <label class="block font-semibold text-slate-400 mb-1">屋主開價（萬元）</label>
-            <input id="quick-input-asking" type="number" placeholder="例：3688" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-rose-300 font-bold font-mono-num focus:outline-none focus:border-sky-400" />
-          </div>
-          <div>
-            <label class="block font-semibold text-slate-400 mb-1">所在區域 / 門牌（選填）</label>
-            <input id="quick-input-district" type="text" placeholder="例：新北市三重區" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 focus:outline-none focus:border-sky-400" />
-          </div>
-          <div>
-            <label class="block font-semibold text-slate-400 mb-1">權狀建坪（選填）</label>
-            <input id="quick-input-size" type="text" placeholder="例：50.43坪（含車位約8坪）" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 focus:outline-none focus:border-sky-400" />
-          </div>
-        </div>
-        <button type="button" id="btn-quick-submit" class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-slate-950 font-black text-xs sm:text-sm shadow-lg shadow-emerald-500/20 transition flex items-center justify-center gap-1.5">
-          <span>🚀</span>
-          <span>立即生成該物件真實九把刀出價建議書</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
   <!-- Global Toast Notification -->
-  <div id="app-toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 px-4 py-3 rounded-xl bg-emerald-600 text-white text-xs sm:text-sm font-bold shadow-2xl flex items-center gap-2 pointer-events-none">
+  <div id="app-toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 px-4 py-3 rounded-xl bg-slate-900 text-white text-xs sm:text-sm font-bold shadow-2xl flex items-center gap-2 pointer-events-none">
     <span class="text-base">✅</span>
     <span id="toast-message">訊息提示</span>
   </div>
 
   <!-- Footer -->
-  <footer class="relative z-10 mt-auto border-t border-slate-800/80 bg-slate-950 py-8 text-xs text-slate-400">
+  <footer class="relative z-10 mt-auto border-t border-slate-200 bg-white py-8 text-xs text-slate-500">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div class="flex items-center gap-2">
         <span class="text-base">🏛️</span>
         <span><strong>House-trade-strategy</strong>｜「談判大叔」陳侯勳買房九把刀與被動談判全集</span>
       </div>
       <div class="flex flex-wrap items-center gap-4 font-semibold">
-        <a href="./index.html" class="text-slate-300 hover:text-white hover:underline">🏠 返回雙師總首頁</a>
-        <span class="text-slate-700">|</span>
-        <a href="./吳淡如_房商必修課.html" class="text-amber-400 hover:underline">🐎 吳淡如《房商必修課》</a>
-        <span class="text-slate-700">|</span>
-        <a href="./second_house.html" class="text-emerald-400 hover:underline font-bold">🏦 第二屋實戰決策方案</a>
+        <a href="./index.html" class="text-slate-600 hover:text-slate-900 hover:underline">🏠 返回雙師總首頁</a>
+        <span class="text-slate-300">|</span>
+        <a href="./吳淡如_房商必修課.html" class="text-amber-700 hover:underline">🐎 吳淡如《房商必修課》</a>
+        <span class="text-slate-300">|</span>
+        <a href="./second_house.html" class="text-emerald-700 hover:underline font-bold">🏦 第二屋實戰決策方案</a>
       </div>
     </div>
   </footer>
@@ -1225,21 +1088,6 @@
       modal.classList.add('hidden');
       modal.classList.remove('flex');
       pendingModalAction = null;
-    }
-
-    function openAntiCrawlModal(url = "") {
-      const modal = document.getElementById('anti-crawl-modal');
-      if (!modal) return;
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-      const askingInput = document.getElementById('quick-input-asking');
-      if (askingInput) askingInput.focus();
-    }
-    function closeAntiCrawlModal() {
-      const modal = document.getElementById('anti-crawl-modal');
-      if (!modal) return;
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
     }
 
     // 1. Data for Nine Knives
@@ -1559,24 +1407,24 @@
       score = Math.max(10, Math.min(100, Math.round(score)));
 
       let tier = "C 級 高風險";
-      let tierClass = "bg-rose-500/20 text-rose-300 border-rose-500/40";
+      let tierClass = "bg-rose-50 text-rose-700 border-rose-200";
       let verdict = "";
 
       if (count === 9 && hasKnife9 && hasKnife6) {
         tier = "🌟 SSS 級 神案";
-        tierClass = "bg-amber-500/25 text-amber-300 border-amber-500/50 shadow-md shadow-amber-500/10";
+        tierClass = "bg-amber-100 text-amber-900 border-amber-300 shadow-sm";
         verdict = "🏆 完美通過九把刀護城河！具備「只漲難跌」抗跌體質。強烈建議鎖定該案，立即啟動大叔「實登8折心中底價，以60%~68%敲門」被動談判議價！";
       } else if (count >= 7 && hasKnife9) {
         tier = "💎 A 級 優質標的";
-        tierClass = "bg-emerald-500/20 text-emerald-300 border-emerald-500/40";
+        tierClass = "bg-emerald-50 text-emerald-800 border-emerald-300";
         verdict = "🎯 通過 7~8 把刀，地段與社區基本盤扎實！請針對少數未通過之把刀（如開價創高或突破總價天花板），作為小房間砍價 15%~20% 的核心籌碼。";
       } else if (count >= 5 && hasKnife9) {
         tier = "⚖️ B 級 中規中矩";
-        tierClass = "bg-sky-500/20 text-sky-300 border-sky-500/40";
+        tierClass = "bg-sky-50 text-sky-800 border-sky-300";
         verdict = "⚠️ 通過 5~6 把刀，存在明顯先天短板（如通勤過久、戶數過多賣壓大）。必須靠大幅殺價（殺到實登 75 折以下）才有安全邊際，否則建議看下一間。";
       } else {
         tier = "🛑 C 級 高風險地雷";
-        tierClass = "bg-rose-500/20 text-rose-300 border-rose-500/40";
+        tierClass = "bg-rose-50 text-rose-700 border-rose-200";
         verdict = "🛑 通過刀數不足 5 把或踩中財務/產品紅線！依談判大叔標準，此類物件抗跌防禦力極弱，未來極易陷入流通停滯，建議果斷放棄，繼續執行百戶長計畫！";
       }
 
@@ -1660,29 +1508,29 @@
       const financeAdvice = `若以目標底價 <strong>${targetPrice.toLocaleString()}萬</strong> 入手，首購 8 成貸款約 <strong>${loan80.toLocaleString()}萬</strong>（自備頭期款 <strong>${down20.toLocaleString()}萬</strong>）。依大叔「+4,300元=100萬」公式，若作共生公寓或收租配置，只要月租金達 <strong>${neededRent.toLocaleString()} 元/月</strong>，即可讓房客 100% 幫你養這筆房貸！`;
 
       grid.innerHTML = `
-        <div class="p-4 rounded-xl bg-slate-950/90 border border-amber-500/30 space-y-1.5">
-          <div class="font-bold text-amber-400 flex items-center gap-1.5">
+        <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm space-y-1.5">
+          <div class="font-bold text-amber-800 flex items-center gap-1.5">
             <span>🎯 步驟一：定錨與出價策略</span>
           </div>
-          <p class="text-slate-300 leading-relaxed">${priceAdvice}</p>
+          <p class="text-slate-600 leading-relaxed">${priceAdvice}</p>
         </div>
-        <div class="p-4 rounded-xl bg-slate-950/90 border border-rose-500/30 space-y-1.5">
-          <div class="font-bold text-rose-400 flex items-center gap-1.5">
+        <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm space-y-1.5">
+          <div class="font-bold text-rose-700 flex items-center gap-1.5">
             <span>⚔️ 步驟二：短板施壓與嫌貨點</span>
           </div>
-          <p class="text-slate-300 leading-relaxed">${flawAdvice}</p>
+          <p class="text-slate-600 leading-relaxed">${flawAdvice}</p>
         </div>
-        <div class="p-4 rounded-xl bg-slate-950/90 border border-sky-500/30 space-y-1.5">
-          <div class="font-bold text-sky-400 flex items-center gap-1.5">
+        <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm space-y-1.5">
+          <div class="font-bold text-sky-800 flex items-center gap-1.5">
             <span>🤫 步驟三：小房間被動破局</span>
           </div>
-          <p class="text-slate-300 leading-relaxed">${roomAdvice}</p>
+          <p class="text-slate-600 leading-relaxed">${roomAdvice}</p>
         </div>
-        <div class="p-4 rounded-xl bg-slate-950/90 border border-emerald-500/30 space-y-1.5">
-          <div class="font-bold text-emerald-400 flex items-center gap-1.5">
+        <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm space-y-1.5">
+          <div class="font-bold text-emerald-800 flex items-center gap-1.5">
             <span>💸 步驟四：房貸與現金流配置</span>
           </div>
-          <p class="text-slate-300 leading-relaxed">${financeAdvice}</p>
+          <p class="text-slate-600 leading-relaxed">${financeAdvice}</p>
         </div>
       `;
     }
@@ -1713,9 +1561,9 @@
             datasets: [{
               label: prop.community || '當前物件',
               data: dataValues,
-              backgroundColor: 'rgba(56, 189, 248, 0.22)',
-              borderColor: '#38bdf8',
-              pointBackgroundColor: '#f59e0b',
+              backgroundColor: 'rgba(2, 132, 199, 0.18)',
+              borderColor: '#0284c7',
+              pointBackgroundColor: '#d97706',
               borderWidth: 2
             }]
           },
@@ -1727,9 +1575,9 @@
               r: {
                 min: 0,
                 max: 100,
-                angleLines: { color: 'rgba(148, 163, 184, 0.15)' },
-                grid: { color: 'rgba(148, 163, 184, 0.15)' },
-                pointLabels: { color: '#cbd5e1', font: { size: 10, weight: 'bold' } },
+                angleLines: { color: 'rgba(148, 163, 184, 0.25)' },
+                grid: { color: 'rgba(148, 163, 184, 0.25)' },
+                pointLabels: { color: '#334155', font: { size: 10, weight: 'bold' } },
                 ticks: { display: false }
               }
             }
@@ -1802,13 +1650,13 @@
         const tabBtn = document.createElement('div');
         tabBtn.className = `px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition flex items-center gap-2 border cursor-pointer select-none ${
           isActive
-            ? 'bg-gradient-to-r from-sky-400 to-sky-500 text-slate-950 border-sky-300 font-black shadow-lg shadow-sky-500/20'
-            : 'bg-slate-900 text-slate-300 border-slate-700 hover:bg-slate-800'
+            ? 'bg-sky-600 text-white border-sky-600 font-bold shadow-sm'
+            : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
         }`;
         tabBtn.innerHTML = `
           <span>${p.community ? `【${p.community}】` : ''}${(p.name || '未命名').substring(0, 14)}</span>
-          <span class="text-[10px] px-1.5 py-0.5 rounded font-mono-num ${isActive ? 'bg-slate-950 text-sky-300' : 'bg-slate-800 text-slate-400'}">${pEval.count}/9刀</span>
-          <button type="button" class="btn-tab-close ml-0.5 px-1 rounded text-[11px] font-bold ${isActive ? 'hover:bg-sky-600 text-slate-950' : 'text-slate-400 hover:text-rose-400'}" title="刪除此物件" data-id="${p.id}">✕</button>
+          <span class="text-[10px] px-1.5 py-0.5 rounded font-mono-num ${isActive ? 'bg-sky-800 text-white' : 'bg-slate-100 text-slate-600'}">${pEval.count}/9刀</span>
+          <button type="button" class="btn-tab-close ml-0.5 px-1 rounded text-[11px] font-bold ${isActive ? 'hover:bg-sky-700 text-white' : 'text-slate-400 hover:text-rose-600'}" title="刪除此物件" data-id="${p.id}">✕</button>
         `;
         tabBtn.addEventListener('click', (e) => {
           if (e.target.classList.contains('btn-tab-close')) {
@@ -1867,10 +1715,10 @@
       // 3. Score & Tier Dashboard
       const scoreNum = document.getElementById('prop-score-num');
       scoreNum.textContent = evalResult.score;
-      if (evalResult.score >= 85) scoreNum.className = "text-5xl font-black text-amber-400 font-mono-num";
-      else if (evalResult.score >= 70) scoreNum.className = "text-5xl font-black text-emerald-400 font-mono-num";
-      else if (evalResult.score >= 55) scoreNum.className = "text-5xl font-black text-sky-400 font-mono-num";
-      else scoreNum.className = "text-5xl font-black text-rose-400 font-mono-num";
+      if (evalResult.score >= 85) scoreNum.className = "text-5xl font-black text-amber-700 font-mono-num";
+      else if (evalResult.score >= 70) scoreNum.className = "text-5xl font-black text-emerald-700 font-mono-num";
+      else if (evalResult.score >= 55) scoreNum.className = "text-5xl font-black text-sky-700 font-mono-num";
+      else scoreNum.className = "text-5xl font-black text-rose-600 font-mono-num";
 
       document.getElementById('prop-knives-count').textContent = `通過 ${evalResult.count} / 9 把刀`;
 
@@ -1883,7 +1731,7 @@
       const redAlertBox = document.getElementById('prop-redline-alert');
       if (evalResult.redAlerts.length > 0) {
         redAlertBox.classList.remove('hidden');
-        redAlertBox.className = "p-3.5 rounded-xl text-xs font-medium border bg-rose-950/60 border-rose-800 text-rose-200 space-y-1.5";
+        redAlertBox.className = "p-3.5 rounded-xl text-xs font-medium border bg-rose-50 border-rose-200 text-rose-800 space-y-1.5";
         redAlertBox.innerHTML = evalResult.redAlerts.map(a => `<div>${a}</div>`).join('');
       } else {
         redAlertBox.classList.add('hidden');
@@ -1929,19 +1777,19 @@
 
       const regCardPremium = document.getElementById('reg-card-premium-pct');
       if (prem > 0) {
-        regCardPremium.className = "text-[11px] font-semibold text-rose-300";
+        regCardPremium.className = "text-[11px] font-semibold text-rose-600";
         regCardPremium.textContent = `⚠️ 開價溢價 +${prem}%（高出實登天花板 ${diffVal.toLocaleString()} 萬元！）`;
       } else {
-        regCardPremium.className = "text-[11px] font-semibold text-emerald-300";
+        regCardPremium.className = "text-[11px] font-semibold text-emerald-700";
         regCardPremium.textContent = `✓ 開價低於或貼近實價登錄天花板（${prem}%）`;
       }
 
       const trueBot = ceilingVal > 0 ? Math.round(ceilingVal * 0.8) : '--';
       const fake1 = ceilingVal > 0 ? Math.round(ceilingVal * 0.6) : '--';
       document.getElementById('reg-card-formula-box').innerHTML = `
-        <strong>📐 車位拆算與實登天花板精算公式：</strong><br />
-        <code class="text-amber-300 font-mono-num text-[11px]">【房屋淨面積 ${netSize} 坪 × 社區實登淨均價 ${avgUnit} 萬/坪】 + 車位估值 ${parkingVal} 萬 = 實登天花板 ${ceilingVal.toLocaleString()} 萬元</code><br />
-        <span class="text-slate-300 text-[11px]">※ 屋主開價拆算車位後單價高達 <strong>${askingUnit} 萬/坪</strong>（溢價 ${prem}%）。依陳侯勳定錨心法，請以實登天花板 <strong>${ceilingVal.toLocaleString()} 萬</strong> 打 8 折（<strong>${trueBot.toLocaleString()} 萬</strong>）作為心中真實底價，並從第一口敲門價 <strong>${fake1.toLocaleString()} 萬（60%）</strong> 開始進攻！</span>
+        <strong class="text-slate-900">📐 車位拆算與實登天花板精算公式：</strong><br />
+        <code class="text-amber-800 font-mono-num text-[11px] bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200 inline-block my-1">【房屋淨面積 ${netSize} 坪 × 社區實登淨均價 ${avgUnit} 萬/坪】 + 車位估值 ${parkingVal} 萬 = 實登天花板 ${ceilingVal.toLocaleString()} 萬元</code><br />
+        <span class="text-slate-600 text-[11px]">※ 屋主開價拆算車位後單價高達 <strong>${askingUnit} 萬/坪</strong>（溢價 ${prem}%）。依陳侯勳定錨心法，請以實登天花板 <strong>${ceilingVal.toLocaleString()} 萬</strong> 打 8 折（<strong>${trueBot.toLocaleString()} 萬</strong>）作為心中真實底價，並從第一口敲門價 <strong>${fake1.toLocaleString()} 萬（60%）</strong> 開始進攻！</span>
       `;
 
       // 5. Render Nine Knives
@@ -1952,26 +1800,26 @@
         const card = document.createElement('div');
         card.className = `p-4 rounded-2xl border transition cursor-pointer select-none relative ${
           isPassed
-            ? 'bg-sky-500/10 border-sky-500/50 shadow-md ring-1 ring-sky-500/20'
-            : 'bg-slate-900/90 border-rose-500/40 hover:border-rose-400/60'
+            ? 'bg-sky-50/70 border-sky-300 shadow-sm ring-1 ring-sky-200'
+            : 'bg-white border-slate-200 hover:border-slate-300 shadow-sm'
         }`;
         card.innerHTML = `
           <div class="flex items-start justify-between gap-2">
-            <span class="text-[11px] font-semibold px-2 py-0.5 rounded ${isPassed ? 'bg-sky-500/20 text-sky-300' : 'bg-rose-500/20 text-rose-300'}">${item.group}</span>
+            <span class="text-[11px] font-semibold px-2 py-0.5 rounded ${isPassed ? 'bg-sky-100 text-sky-800' : 'bg-slate-100 text-slate-600'}">${item.group}</span>
             <span class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-              isPassed ? 'bg-emerald-500 text-slate-950 shadow' : 'bg-rose-500 text-white shadow'
+              isPassed ? 'bg-emerald-600 text-white shadow-sm' : 'bg-rose-500 text-white shadow-sm'
             }">${isPassed ? '✓' : '✗'}</span>
           </div>
-          <h3 class="font-bold text-white text-base mt-2.5 flex items-center gap-1.5">
+          <h3 class="font-bold text-slate-900 text-base mt-2.5 flex items-center gap-1.5">
             <span>${item.title}</span>
           </h3>
-          <div class="text-xs font-semibold text-amber-400 mt-1">「${item.rule}」</div>
-          <p class="text-xs text-slate-300 mt-2 leading-relaxed">${item.detail}</p>
-          <div class="mt-3 pt-2.5 border-t border-slate-800/80 text-[11px] text-sky-300/90 leading-normal">
+          <div class="text-xs font-semibold text-amber-700 mt-1">「${item.rule}」</div>
+          <p class="text-xs text-slate-600 mt-2 leading-relaxed">${item.detail}</p>
+          <div class="mt-3 pt-2.5 border-t border-slate-100 text-[11px] text-sky-800 leading-normal">
             🔍 <strong>現場檢核：</strong>${item.checkTip}
           </div>
           <div class="mt-2 text-right">
-            <span class="text-[10px] px-2 py-0.5 rounded font-bold ${isPassed ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' : 'bg-rose-950 text-rose-300 border border-rose-800'}">
+            <span class="text-[10px] px-2 py-0.5 rounded font-bold ${isPassed ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-rose-50 text-rose-800 border border-rose-200'}">
               ${isPassed ? '✓ 此物件符合（點擊切換）' : '✗ 未通過・列入砍價破口（點擊切換）'}
             </span>
           </div>
@@ -1998,7 +1846,7 @@
 
       if (failedKnives.length === 0) {
         weaponsList.innerHTML = `
-          <div class="p-4 rounded-xl bg-emerald-950/40 border border-emerald-800/60 text-emerald-200 flex items-center justify-between gap-4">
+          <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 flex items-center justify-between gap-4 shadow-sm">
             <div>🎉 恭喜！此物件 9 把刀護城河全數過關，無明顯結構缺陷。請改用「室內管線老舊需準備 250 萬翻修、央行限貸成數緊縮」作為壓價理由，堅持以實價登錄 8 折（<strong>${p.trueBottom}萬</strong>）作為心中底價！</div>
           </div>
         `;
@@ -2006,15 +1854,15 @@
         failedKnives.forEach(k => {
           const cleanScript = k.weapon.replace('現場砍價話術：', '');
           const itemDiv = document.createElement('div');
-          itemDiv.className = 'p-3.5 rounded-xl bg-slate-900/95 border border-rose-900/50 space-y-1.5';
+          itemDiv.className = 'p-3.5 rounded-xl bg-white border border-slate-200 space-y-1.5 shadow-sm';
           itemDiv.innerHTML = `
             <div class="flex items-center justify-between gap-2">
-              <span class="font-bold text-rose-300">⚔️ 【${k.title}】未通過 ➔ 現場壓價破口</span>
-              <button type="button" class="btn-copy-script px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 text-[11px] font-semibold transition" data-script="${cleanScript}">
+              <span class="font-bold text-rose-700">⚔️ 【${k.title}】未通過 ➔ 現場壓價破口</span>
+              <button type="button" class="btn-copy-script px-2.5 py-1 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-300 text-[11px] font-semibold transition" data-script="${cleanScript}">
                 📋 複製此句話術
               </button>
             </div>
-            <p class="text-amber-200/95 pl-3 border-l-2 border-amber-500/60 italic leading-relaxed">
+            <p class="text-slate-800 pl-3 border-l-2 border-amber-500 italic leading-relaxed text-xs">
               ${cleanScript}
             </p>
           `;
@@ -2036,48 +1884,48 @@
         const pEval = evaluateProperty(pItem);
         const isCurrent = pItem.id === activePropertyId;
         const tr = document.createElement('tr');
-        tr.className = `hover:bg-slate-800/40 transition ${isCurrent ? 'bg-sky-500/10' : ''}`;
+        tr.className = `hover:bg-slate-50 transition ${isCurrent ? 'bg-sky-50/60' : ''}`;
 
         const shortRisk = (pItem.knives && pItem.knives.length < 9)
           ? `未過 ${9 - pItem.knives.length} 刀（${pItem.knives.includes(9) ? '' : '⚠️無三年現金流 '}${pItem.knives.includes(6) ? '' : '⚠️地雷產品 '}${pItem.knives.includes(5) ? '' : '⚠️破總價頂'}）`
           : '🌟 9刀全過無短板';
 
         tr.innerHTML = `
-          <td class="p-3 align-middle font-semibold text-white">
+          <td class="p-3 align-middle font-semibold text-slate-900">
             <div class="flex items-center gap-1.5">
-              ${isCurrent ? '<span class="text-sky-400">▶</span>' : ''}
+              ${isCurrent ? '<span class="text-sky-600">▶</span>' : ''}
               <span>${pItem.community ? `【${pItem.community}】` : ''}${pItem.name || '未命名物件'}</span>
             </div>
-            <div class="text-[11px] text-slate-400 font-normal">${pItem.district || '--'}｜${pItem.mrt || '--'}</div>
+            <div class="text-[11px] text-slate-500 font-normal">${pItem.district || '--'}｜${pItem.mrt || '--'}</div>
           </td>
           <td class="p-3 align-middle font-mono-num">
-            <div class="text-rose-300 font-bold">${pItem.askingPrice ? pItem.askingPrice.toLocaleString() + ' 萬' : '--'}</div>
-            <div class="text-[11px] text-emerald-400">實登：${pItem.regPrice ? pItem.regPrice.toLocaleString() + ' 萬' : '--'}</div>
+            <div class="text-rose-600 font-bold">${pItem.askingPrice ? pItem.askingPrice.toLocaleString() + ' 萬' : '--'}</div>
+            <div class="text-[11px] text-emerald-700">實登：${pItem.regPrice ? pItem.regPrice.toLocaleString() + ' 萬' : '--'}</div>
           </td>
           <td class="p-3 align-middle font-mono-num">
-            <div class="text-sky-300 font-bold">敲門：${pEval.pricing.fake1} 萬</div>
-            <div class="text-[11px] text-amber-300 font-bold">底價：${pEval.pricing.trueBottom} 萬</div>
+            <div class="text-sky-700 font-bold">敲門：${pEval.pricing.fake1} 萬</div>
+            <div class="text-[11px] text-amber-800 font-bold">底價：${pEval.pricing.trueBottom} 萬</div>
           </td>
-          <td class="p-3 align-middle font-bold text-sky-400 font-mono-num">${pEval.count} / 9 刀</td>
-          <td class="p-3 align-middle font-black text-white text-sm font-mono-num">${pEval.score} 分</td>
+          <td class="p-3 align-middle font-bold text-sky-700 font-mono-num">${pEval.count} / 9 刀</td>
+          <td class="p-3 align-middle font-black text-slate-900 text-sm font-mono-num">${pEval.score} 分</td>
           <td class="p-3 align-middle">
             <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${pEval.tierClass}">
               ${pEval.tier}
             </span>
           </td>
-          <td class="p-3 align-middle text-slate-300 text-[11px]">${shortRisk}</td>
+          <td class="p-3 align-middle text-slate-600 text-[11px]">${shortRisk}</td>
           <td class="p-3 align-middle text-right">
             <div class="flex items-center justify-end gap-1.5">
-              <button type="button" class="btn-table-edit px-2.5 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 text-[11px] font-semibold transition" data-id="${pItem.id}">
+              <button type="button" class="btn-table-edit px-2.5 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 text-[11px] font-semibold transition" data-id="${pItem.id}">
                 ✏️ 編輯
               </button>
-              <button type="button" class="btn-table-del px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-rose-900/60 text-rose-300 border border-slate-700 hover:border-rose-700 text-[11px] font-semibold transition" data-id="${pItem.id}">
+              <button type="button" class="btn-table-del px-2.5 py-1 rounded-lg bg-slate-50 hover:bg-rose-50 text-slate-600 hover:text-rose-600 border border-slate-200 hover:border-rose-300 text-[11px] font-semibold transition" data-id="${pItem.id}">
                 🗑️
               </button>
               ${
                 isCurrent
-                  ? '<span class="px-2.5 py-1 rounded-lg bg-sky-400 text-slate-950 font-black text-[11px]">檢視中</span>'
-                  : `<button type="button" class="btn-switch-prop px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] border border-slate-700 transition" data-id="${pItem.id}">切換</button>`
+                  ? '<span class="px-2.5 py-1 rounded-lg bg-sky-600 text-white font-bold text-[11px]">檢視中</span>'
+                  : `<button type="button" class="btn-switch-prop px-2.5 py-1 rounded-lg bg-white hover:bg-slate-50 text-slate-700 text-[11px] border border-slate-300 transition" data-id="${pItem.id}">切換</button>`
               }
             </div>
           </td>
@@ -2477,7 +2325,7 @@ ${weaponsText}
 
       const statusEl = document.getElementById('auto-analysis-status');
       statusEl.classList.remove('hidden');
-      statusEl.className = 'p-4 rounded-2xl text-xs bg-sky-500/15 text-sky-200 border border-sky-500/40 flex items-center gap-2.5';
+      statusEl.className = 'p-4 rounded-2xl text-xs bg-sky-50 text-sky-900 border border-sky-200 flex items-center gap-2.5 shadow-sm';
       statusEl.innerHTML = `<span class="animate-spin text-base">⏳</span> <span>正在連接 Cloudflare 邊緣解析伺服器、萃取 591 實價登錄與計算陳侯勳九把刀護城河...</span>`;
 
       const urlMatch = input.match(/https?:\/\/[^\s]+/i);
@@ -2558,28 +2406,18 @@ ${weaponsText}
 
         if (!prop) {
           if (isOnlyUrl) {
-            // 純網址且邊緣端點與本地均無法讀取
-            statusEl.className = 'p-4 rounded-2xl text-xs bg-amber-500/15 text-amber-200 border border-amber-500/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3';
+            statusEl.className = 'p-4 rounded-2xl text-xs bg-amber-50 text-amber-900 border border-amber-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm';
             statusEl.innerHTML = `
               <div class="space-y-1">
-                <div class="flex items-center gap-2 font-bold text-sm text-amber-300">
-                  <span>🛡️</span>
-                  <span>591 售屋網已開啟反爬蟲保護（無法直接跨域讀取純網址）</span>
+                <div class="flex items-center gap-2 font-bold text-sm text-amber-800">
+                  <span>⚠️</span>
+                  <span>無法自動讀取該 591 網址內容</span>
                 </div>
-                <div class="text-slate-300 text-xs leading-relaxed">
-                  因 GitHub Pages 屬純靜態站點，受瀏覽器 CORS 安全限制。您可部署至 Cloudflare Pages 自動啟用伺服器端點，或使用<strong>「591 九把刀一鍵診斷」書籤</strong> 1 秒匯入！
+                <div class="text-slate-600 text-xs leading-relaxed">
+                  請確認 Cloudflare 邊緣解析端點狀態，或直接在 591 網頁全選複製（Ctrl+A ➔ Ctrl+C）後貼入上方輸入框進行秒速解析！
                 </div>
-              </div>
-              <div class="flex items-center gap-2 shrink-0">
-                <button type="button" id="btn-open-anticrawl-from-status" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs shadow transition">
-                  🛡️ 開啟防爬蟲突破精靈
-                </button>
               </div>
             `;
-            document.getElementById('btn-open-anticrawl-from-status')?.addEventListener('click', () => {
-              openAntiCrawlModal(input);
-            });
-            openAntiCrawlModal(input);
             return;
           }
 
@@ -2594,24 +2432,24 @@ ${weaponsText}
 
       const evalResult = evaluateProperty(prop);
 
-      statusEl.className = 'p-4 rounded-2xl text-xs bg-emerald-500/15 text-emerald-200 border border-emerald-500/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3';
+      statusEl.className = 'p-4 rounded-2xl text-xs bg-emerald-50 text-emerald-950 border border-emerald-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm';
       statusEl.innerHTML = `
         <div class="space-y-1.5">
-          <div class="flex items-center gap-2 font-bold text-sm text-white">
+          <div class="flex items-center gap-2 font-bold text-sm text-slate-900">
             <span>🎉</span>
-            <span>已成功解析【${prop.community || '精選社區'}】${prop.name}！綜合得分：<span class="text-amber-400 font-mono-num font-black">${evalResult.score} 分</span>（通過 ${evalResult.count}/9 把刀｜${evalResult.tier}）</span>
+            <span>已成功解析【${prop.community || '精選社區'}】${prop.name}！綜合得分：<span class="text-amber-700 font-mono-num font-black">${evalResult.score} 分</span>（通過 ${evalResult.count}/9 把刀｜${evalResult.tier}）</span>
           </div>
-          <div class="text-slate-300 flex flex-wrap items-center gap-x-4 gap-y-1">
-            <span>💰 開價：<strong class="text-rose-300">${prop.askingPrice.toLocaleString()} 萬</strong></span>
-            <span>🎯 實登天花板：<strong class="text-emerald-300">${prop.regPrice.toLocaleString()} 萬</strong></span>
-            <span>🚪 60% 敲門價：<strong class="text-sky-300">${evalResult.pricing.fake1.toLocaleString()} 萬</strong></span>
-            <span>❤️ 80% 心中底價：<strong class="text-amber-300">${evalResult.pricing.trueBottom.toLocaleString()} 萬</strong></span>
-            <span>🚇 交通：<span class="text-slate-200">${prop.mrt}</span></span>
+          <div class="text-slate-600 flex flex-wrap items-center gap-x-4 gap-y-1">
+            <span>💰 開價：<strong class="text-rose-600">${prop.askingPrice.toLocaleString()} 萬</strong></span>
+            <span>🎯 實登天花板：<strong class="text-emerald-700">${prop.regPrice.toLocaleString()} 萬</strong></span>
+            <span>🚪 60% 敲門價：<strong class="text-sky-700">${evalResult.pricing.fake1.toLocaleString()} 萬</strong></span>
+            <span>❤️ 80% 心中底價：<strong class="text-amber-800">${evalResult.pricing.trueBottom.toLocaleString()} 萬</strong></span>
+            <span>🚇 交通：<span class="text-slate-700">${prop.mrt}</span></span>
           </div>
         </div>
         <div class="flex flex-wrap items-center gap-2 shrink-0">
           ${prop.googleMapsUrl ? `
-            <a href="${prop.googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-xl bg-sky-950 hover:bg-sky-900 text-sky-300 border border-sky-700 text-xs font-bold transition flex items-center gap-1">
+            <a href="${prop.googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 text-sky-700 border border-sky-300 text-xs font-bold transition flex items-center gap-1 shadow-sm">
               <span>📍 Google Maps 定位</span> ↗
             </a>
           ` : ''}
@@ -2690,16 +2528,16 @@ ${weaponsText}
       const filtered = filter === 'all' ? tacticsData : tacticsData.filter(t => t.category === filter);
       filtered.forEach(item => {
         const div = document.createElement('div');
-        div.className = 'p-5 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col justify-between space-y-3';
+        div.className = 'p-5 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between space-y-3';
         div.innerHTML = `
           <div>
-            <span class="inline-block px-2.5 py-0.5 rounded-md bg-amber-500/20 text-amber-300 text-xs font-semibold mb-2">${item.badge}</span>
-            <h3 class="font-bold text-white text-base">${item.title}</h3>
-            <p class="text-xs text-rose-300/90 mt-2 bg-rose-950/40 border border-rose-800/40 p-2.5 rounded-lg">
+            <span class="inline-block px-2.5 py-0.5 rounded-md bg-amber-50 text-amber-800 border border-amber-200 text-xs font-semibold mb-2">${item.badge}</span>
+            <h3 class="font-bold text-slate-900 text-base">${item.title}</h3>
+            <p class="text-xs text-rose-800 mt-2 bg-rose-50 border border-rose-200 p-2.5 rounded-lg leading-relaxed">
               <strong>⚠️ 背後陷阱：</strong>${item.trap}
             </p>
           </div>
-          <div class="text-xs text-emerald-200 bg-emerald-950/40 border border-emerald-700/40 p-3 rounded-lg leading-relaxed">
+          <div class="text-xs text-emerald-900 bg-emerald-50 border border-emerald-200 p-3 rounded-lg leading-relaxed">
             <strong>✅ 大叔破局 SOP：</strong>${item.solution}
           </div>
         `;
@@ -2890,17 +2728,17 @@ ${weaponsText}
 
       filtered.forEach(v => {
         const tr = document.createElement('tr');
-        tr.className = 'hover:bg-slate-800/40 transition';
+        tr.className = 'hover:bg-slate-50 transition';
         tr.innerHTML = `
           <td class="p-3 align-top">
-            <span class="inline-block px-2.5 py-1 rounded-md bg-slate-800 border border-slate-700 text-amber-300 text-xs font-medium">${v.cat}</span>
+            <span class="inline-block px-2.5 py-1 rounded-md bg-slate-100 border border-slate-200 text-amber-800 text-xs font-medium">${v.cat}</span>
           </td>
           <td class="p-3 align-top font-semibold">
-            <a href="${v.url}" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:text-sky-300 underline leading-snug block">
+            <a href="${v.url}" target="_blank" rel="noopener noreferrer" class="text-sky-700 hover:text-sky-800 underline leading-snug block">
               ${v.title} ↗
             </a>
           </td>
-          <td class="p-3 align-top text-xs sm:text-sm text-slate-300 leading-relaxed">
+          <td class="p-3 align-top text-xs sm:text-sm text-slate-600 leading-relaxed">
             ${v.summary}
           </td>
         `;
@@ -2939,63 +2777,8 @@ ${weaponsText}
       document.getElementById('calc-added-freemoney').textContent = `${addedFreeMoney >= 0 ? '+' : ''}${addedFreeMoney.toLocaleString()} 萬`;
     }
 
-    // Background Particle Canvas
-    function initCanvas() {
-      const canvas = document.getElementById('bg-canvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      let width = canvas.width = window.innerWidth;
-      let height = canvas.height = window.innerHeight;
-
-      window.addEventListener('resize', () => {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-      });
-
-      const particles = Array.from({ length: 38 }, () => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.35,
-        vy: (Math.random() - 0.5) * 0.35,
-        r: Math.random() * 1.8 + 0.8,
-        color: Math.random() > 0.4 ? 'rgba(56, 189, 248, 0.55)' : 'rgba(245, 158, 11, 0.55)'
-      }));
-
-      function draw() {
-        ctx.clearRect(0, 0, width, height);
-        for (let i = 0; i < particles.length; i++) {
-          const p = particles[i];
-          p.x += p.vx;
-          p.y += p.vy;
-          if (p.x < 0 || p.x > width) p.vx *= -1;
-          if (p.y < 0 || p.y > height) p.vy *= -1;
-
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = p.color;
-          ctx.fill();
-
-          for (let j = i + 1; j < particles.length; j++) {
-            const p2 = particles[j];
-            const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-            if (dist < 130) {
-              ctx.beginPath();
-              ctx.moveTo(p.x, p.y);
-              ctx.lineTo(p2.x, p2.y);
-              ctx.strokeStyle = `rgba(148, 163, 184, ${0.12 * (1 - dist / 130)})`;
-              ctx.lineWidth = 0.7;
-              ctx.stroke();
-            }
-          }
-        }
-        requestAnimationFrame(draw);
-      }
-      draw();
-    }
-
     // 5. Initialize Event Listeners
     window.addEventListener('DOMContentLoaded', () => {
-      initCanvas();
 
       // Mouse spotlight effect
       document.querySelectorAll('.glass-card-spotlight').forEach(card => {
@@ -3199,9 +2982,9 @@ ${weaponsText}
       filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
           filterBtns.forEach(b => {
-            b.className = 'tactic-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700';
+            b.className = 'tactic-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200';
           });
-          btn.className = 'tactic-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-amber-500 text-slate-900';
+          btn.className = 'tactic-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-amber-500 text-slate-950 shadow-sm';
           renderTactics(btn.getAttribute('data-filter'));
         });
       });
@@ -3210,39 +2993,6 @@ ${weaponsText}
       renderVideos();
       document.getElementById('video-search-input').addEventListener('input', renderVideos);
       document.getElementById('video-category-select').addEventListener('change', renderVideos);
-
-      // Anti-Scraping Wizard Modal Event Listeners
-      document.getElementById('btn-close-anticrawl')?.addEventListener('click', closeAntiCrawlModal);
-      
-      document.getElementById('btn-modal-open-bookmarklet-guide')?.addEventListener('click', () => {
-        closeAntiCrawlModal();
-        document.getElementById('auto-analyzer-input')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        showToast("💡 請將上方的【591九把刀一鍵診斷】按鈕拖曳至瀏覽器書籤列即可！");
-      });
-
-      document.getElementById('btn-modal-focus-input')?.addEventListener('click', () => {
-        closeAntiCrawlModal();
-        const inputEl = document.getElementById('auto-analyzer-input');
-        if (inputEl) {
-          inputEl.value = '';
-          inputEl.focus();
-          inputEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-        showToast("📋 請在 591 網頁按 Ctrl+A 全選複製後貼入！");
-      });
-
-      document.getElementById('btn-quick-submit')?.addEventListener('click', () => {
-        const comm = document.getElementById('quick-input-community')?.value.trim() || '台北橋首府';
-        const asking = parseFloat(document.getElementById('quick-input-asking')?.value) || 3688;
-        const district = document.getElementById('quick-input-district')?.value.trim() || '新北市三重區';
-        const sizeStr = document.getElementById('quick-input-size')?.value.trim() || '50.43坪（含車位約8坪）';
-        
-        const synthetic = `【591售屋】${comm}｜${district}，總價${asking}萬，面積${sizeStr}，近捷運站。`;
-        closeAntiCrawlModal();
-        const autoInputEl = document.getElementById('auto-analyzer-input');
-        if (autoInputEl) autoInputEl.value = synthetic;
-        runAutoAnalysis(synthetic, false);
-      });
 
       // Cloudflare Edge Endpoint Configuration Button
       document.getElementById('btn-config-edge-api')?.addEventListener('click', () => {
@@ -3262,21 +3012,7 @@ ${weaponsText}
         }
       });
 
-      // Dynamic Bookmarklet Target URL sync
-      const currentFullUrl = window.location.href.split('#')[0];
-      const bookmarkletCode = `javascript:(function(){try{var t=document.title||'';var d=document.querySelector('meta[name="description"]')?.content||'';var c=document.querySelector('[community-name]')?.getAttribute('community-name')||'';var pe=document.querySelector('.info-price-num')||document.querySelector('.info-price');var p=pe?pe.innerText.replace(/[^\\d.]/g,''):'';var ae=document.getElementById('hid_area');var a=ae?ae.value:'';var b=(document.body?.innerText||'').substring(0,3000);var payload=t+'\\n'+d+'\\n社區：'+c+'\\n開價：'+p+'萬\\n面積：'+a+'坪\\n網址：'+window.location.href+'\\n'+b;var target='${currentFullUrl}#import='+encodeURIComponent(payload);window.open(target,'_blank');}catch(e){alert('擷取失敗：'+e.message);}})();`;
-      
-      const bookmarkletLink = document.querySelector('a[href^="javascript:"]');
-      if (bookmarkletLink) {
-        bookmarkletLink.href = bookmarkletCode;
-      }
-
-      // Bookmarklet Code Copy Button
-      document.getElementById('btn-copy-bookmarklet-code')?.addEventListener('click', () => {
-        fallbackCopyText(bookmarkletCode, "已成功複製書籤程式碼！可在瀏覽器新增書籤並貼於網址欄");
-      });
-
-      // Handle Bookmarklet Import via URL Hash (#import=...)
+      // Handle External Import via URL Hash (#import=...)
       function checkUrlHashImport() {
         const hash = window.location.hash;
         if (hash && hash.startsWith('#import=')) {
@@ -3287,7 +3023,7 @@ ${weaponsText}
             if (inputEl) inputEl.value = raw;
             switchTab('nine-knives');
             runAutoAnalysis(raw, false);
-            showToast("🎉 已透過【九把刀書籤小工具】成功匯入 591 即時物件資料！");
+            showToast("🎉 已成功匯入 591 即時物件資料！");
           } catch(e) {
             console.error("Import hash error", e);
           }
