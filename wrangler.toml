@@ -1,6 +1,10 @@
 name = "house-trade-strategy"
+main = "worker.js"
 compatibility_date = "2024-09-23"
-pages_build_output_dir = "."
+
+[assets]
+directory = "."
+binding = "ASSETS"
 
 [observability]
 enabled = true
