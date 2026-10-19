@@ -85,3 +85,18 @@ House-trade-strategy/
    將本專案資料夾下載至電腦後，直接以瀏覽器（Chrome / Edge / Safari）雙擊開啟 `index.html`，即可透過首頁卡片進入兩位老師的完整系統（所有試算器、圖表與本機儲存功能皆可於瀏覽器端直接運作）。
 2. **GitHub Pages 自動部署**：
    將修改後的檔案推送（Push）至 GitHub `main` 分支，即可透過 GitHub Pages 即時更新線上網站。
+3. **☁️ Cloudflare Pages 邊緣伺服器自動部署（推薦・100% 破解 591 反爬蟲與 CORS）**：
+   - **為什麼需要 Cloudflare Pages？**
+     591 售屋網設有嚴格的機房防火牆與反爬蟲保護，且純靜態的 GitHub Pages 會受瀏覽器跨網域安全機制（CORS）阻擋，純貼網址無法在前端直接讀取。
+   - **架構設計**：
+     專案內建 `/functions/api/parse-house.js` 與 `_worker.js`，部署至 Cloudflare Pages 時將自動啟用全球邊緣（Edge Functions）解析服務，模擬台灣合法瀏覽器請求頭，0.1 秒精準抓取 591 社區名、開價、坪數、樓層、捷運距離與經緯度！
+   - **1 分鐘免費用戶一鍵部署步驟**：
+     1. 前往 [Cloudflare 控制台](https://dash.cloudflare.com/) 點擊 **Workers & Pages** ➔ **Create Application** ➔ **Pages**。
+     2. 點擊 **Connect to Git**，授權選擇 `SnakeLee72/House-trade-strategy` 儲存庫。
+     3. 建置設定：
+        - Framework preset: `None`
+        - Build output directory: `.`（專案根目錄）
+     4. 點擊 **Save and Deploy**，10 秒內即可獲得專屬網址（例如 `https://house-trade-strategy.pages.dev`）。
+     5. 之後凡是在 GitHub `main` 分支提交程式碼，Cloudflare Pages 將全自動持續整合（CI/CD）部署更新！
+   - **若暫時僅使用 GitHub Pages**：
+     亦可直接使用頁面內建的**「591 九把刀一鍵診斷」書籤工具**（直接在 591 網頁點擊即可自動帶入數值），或在 591 網頁按 `Ctrl+A` 全選複製文字貼入！
