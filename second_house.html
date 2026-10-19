@@ -553,6 +553,123 @@
         </div>
       </div>
 
+      <!-- NEW: Rent-to-Loan 4,300 Formula & Wealth Management Mortgage Amount Chooser -->
+      <div class="p-5 rounded-2xl bg-gradient-to-r from-amber-500/10 via-slate-900/95 to-emerald-500/10 border-2 border-amber-500/40 shadow-xl space-y-4">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-800 pb-3">
+          <div class="flex items-center gap-2.5">
+            <span class="text-2xl">💸</span>
+            <div>
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="font-black text-white text-sm sm:text-base">陳侯勳「每 4,300 元租金 ＝ 100 萬房貸」印鈔機額度決策器</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">自償力核心診斷</span>
+              </div>
+              <p class="text-xs text-slate-300 mt-0.5">
+                根據您的第一屋月租金，精算「零負擔本息自償額度」與「只繳息利差覆蓋額度」，幫您科學決定：<strong>第一屋理財型房貸到底該貸多少？</strong>
+              </p>
+            </div>
+          </div>
+          <div class="text-xs text-left md:text-right shrink-0">
+            <span class="text-slate-400">第一屋鑑價 8 成上限：</span>
+            <strong id="disp-h1-cap" class="text-amber-400 font-mono-num font-bold text-sm sm:text-base">1,600 萬</strong>
+          </div>
+        </div>
+
+        <!-- 3 Quick Strategy Preset Buttons -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <!-- Preset 1: 4300 Principle Self-Repaying -->
+          <button type="button" id="btn-preset-safe" class="group p-3.5 rounded-2xl bg-slate-950/85 hover:bg-amber-950/30 border border-amber-500/40 text-left transition flex flex-col justify-between">
+            <div class="flex items-center justify-between w-full">
+              <span class="text-xs font-black text-amber-400 flex items-center gap-1.5">
+                <span>🛡️ 檔位 A：4,300元本息自償線</span>
+              </span>
+              <span class="px-2 py-0.5 rounded text-[10px] bg-amber-500/20 text-amber-300 font-bold font-mono-num" id="tag-safe-loan">約 880 萬</span>
+            </div>
+            <div class="mt-2 text-[11px] text-slate-300 leading-relaxed">
+              以 30 年本息攤還標準防守。房客租金 100% 買單房貸本息，<strong class="text-amber-300">零自掏腰包風險</strong>，扣除舊貸淨買 0050！
+            </div>
+            <div class="mt-2 pt-2 border-t border-slate-800 text-[10px] text-amber-400/90 font-semibold group-hover:text-amber-300 flex items-center justify-between w-full">
+              <span>點擊一鍵套用此額度</span>
+              <span>➔</span>
+            </div>
+          </button>
+
+          <!-- Preset 2: Interest-Only Covered -->
+          <button type="button" id="btn-preset-balance" class="group p-3.5 rounded-2xl bg-slate-950/85 hover:bg-emerald-950/30 border border-emerald-500/40 text-left transition flex flex-col justify-between">
+            <div class="flex items-center justify-between w-full">
+              <span class="text-xs font-black text-emerald-400 flex items-center gap-1.5">
+                <span>⚖️ 檔位 B：租金 100% 抵付只繳息</span>
+              </span>
+              <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-500/20 text-emerald-300 font-bold font-mono-num" id="tag-balance-loan">約 1,469 萬</span>
+            </div>
+            <div class="mt-2 text-[11px] text-slate-300 leading-relaxed">
+              以當前利率（2.45%）計算，月租剛好完全吸收理財型房貸月利息，<strong class="text-emerald-300">每月現金流打平（倒賺或正負0）</strong>！
+            </div>
+            <div class="mt-2 pt-2 border-t border-slate-800 text-[10px] text-emerald-400/90 font-semibold group-hover:text-emerald-300 flex items-center justify-between w-full">
+              <span>點擊一鍵套用此額度</span>
+              <span>➔</span>
+            </div>
+          </button>
+
+          <!-- Preset 3: Max 80% LTV -->
+          <button type="button" id="btn-preset-max" class="group p-3.5 rounded-2xl bg-slate-950/85 hover:bg-sky-950/30 border border-sky-500/40 text-left transition flex flex-col justify-between">
+            <div class="flex items-center justify-between w-full">
+              <span class="text-xs font-black text-sky-400 flex items-center gap-1.5">
+                <span>🚀 檔位 C：鑑價 8 成極限槓桿</span>
+              </span>
+              <span class="px-2 py-0.5 rounded text-[10px] bg-sky-500/20 text-sky-300 font-bold font-mono-num" id="tag-max-loan">1,600 萬</span>
+            </div>
+            <div class="mt-2 text-[11px] text-slate-300 leading-relaxed">
+              貸好貸滿！扣除舊貸淨拿 1,150 萬買 0050，若租金稍有差額每月小補數千元，但換取<strong class="text-sky-300">最大資產池與複利報酬</strong>！
+            </div>
+            <div class="mt-2 pt-2 border-t border-slate-800 text-[10px] text-sky-400/90 font-semibold group-hover:text-sky-300 flex items-center justify-between w-full">
+              <span>點擊一鍵套用此額度</span>
+              <span>➔</span>
+            </div>
+          </button>
+        </div>
+
+        <!-- Custom Slider & Number Input Controller -->
+        <div class="p-4 rounded-2xl bg-slate-950/90 border border-slate-800 space-y-3">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <span class="text-xs font-bold text-white flex items-center gap-2">
+                <span>🎛️ 您決定「第一屋理財型房貸（科目四）」申貸總額：</span>
+                <span id="disp-chosen-loan" class="text-lg font-black text-amber-400 font-mono-num">1,600 萬元</span>
+              </span>
+              <div class="text-[11px] text-slate-400 mt-0.5">
+                拖動滑桿或直接輸入金額，下方即時顯示租金覆蓋狀況、0050 部位與現金流
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <label for="inp-t4-loan" class="text-xs text-slate-400 shrink-0">自訂申貸 (萬)：</label>
+              <input id="inp-t4-loan" type="number" value="1600" step="10" min="450" max="1600" class="w-28 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-amber-300 font-mono-num font-bold text-sm focus:outline-none focus:border-amber-400" />
+            </div>
+          </div>
+
+          <!-- Range Slider -->
+          <div class="space-y-1.5">
+            <input id="range-t4-loan" type="range" value="1600" step="10" min="450" max="1600" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-400" />
+            <div class="flex justify-between text-[10px] text-slate-400 font-mono-num">
+              <span>最低 450 萬 (僅代償舊貸)</span>
+              <span id="slider-safe-mark" class="text-amber-400">🛡️ 本息自償: 880萬</span>
+              <span id="slider-balance-mark" class="text-emerald-400">⚖️ 租金打平: 1,469萬</span>
+              <span class="text-sky-400">8成上限: 1,600萬</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Formula Explanation Mini Bar -->
+        <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-[11px] text-slate-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <span class="text-amber-400 font-bold">💡 4,300 元印鈔機公式：</span>
+            <span>自償房貸額度 ＝ (第一屋月租金 ÷ 4,300) × 100 萬元</span>
+          </div>
+          <div class="text-slate-400">
+            若採「只繳息（2.45%）」模式，租金可全額吸收之貸款額度更高達 <strong id="disp-io-cover-tip" class="text-emerald-400 font-mono-num">1,469 萬</strong>！
+          </div>
+        </div>
+      </div>
+
       <!-- Simulator Output Cards & Chart -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
         <!-- Left 7 Cols: Detailed Breakdown -->
@@ -562,27 +679,39 @@
             <div class="p-4 rounded-2xl bg-slate-950/90 border border-amber-500/40 space-y-2.5">
               <div class="flex items-center justify-between border-b border-slate-800 pb-2">
                 <span class="font-bold text-amber-400 text-xs">🐔 第一屋出租 ＋ 科目四買 0050 引擎</span>
-                <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold">自給自足</span>
+                <span id="out-h1-badge" class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold">自給自足</span>
               </div>
               <div class="space-y-1.5 text-xs text-slate-300">
                 <div class="flex justify-between">
-                  <span>• 第一屋最高可貸科目四 (8成)：</span>
-                  <strong id="out-h1-maxloan" class="font-mono-num text-white">1,600 萬</strong>
+                  <span>• 第一屋最高鑑價 8 成上限：</span>
+                  <strong id="out-h1-maxloan" class="font-mono-num text-slate-400">1,600 萬</strong>
+                </div>
+                <div class="flex justify-between">
+                  <span>• 依4,300法則租金可cover本息：</span>
+                  <strong id="out-rent-safe-cap" class="font-mono-num text-amber-300">884 萬</strong>
+                </div>
+                <div class="flex justify-between bg-amber-500/10 px-2 py-1 rounded-lg border border-amber-500/20">
+                  <span class="text-white font-semibold">• 您設定之科目四申貸金額：</span>
+                  <strong id="out-chosen-loan-display" class="font-mono-num text-amber-400 font-bold">1,600 萬</strong>
                 </div>
                 <div class="flex justify-between">
                   <span>• 扣除 450 萬舊貸後淨投入 0050：</span>
-                  <strong id="out-etf-principal" class="font-mono-num text-amber-300">1,150 萬</strong>
+                  <strong id="out-etf-principal" class="font-mono-num text-sky-300">1,150 萬</strong>
                 </div>
                 <div class="flex justify-between">
-                  <span>• 1,600 萬科目四每月只繳息：</span>
+                  <span>• 科目四每月只繳息 (<span id="out-rate-display">2.45%</span>)：</span>
                   <strong id="out-h1-interest" class="font-mono-num text-rose-300">-32,667 元/月</strong>
                 </div>
                 <div class="flex justify-between">
-                  <span>• 第一屋每月租金收入：</span>
+                  <span>• 第一屋每月預估租金收入：</span>
                   <strong id="out-h1-rent-display" class="font-mono-num text-emerald-400">+38,000 元/月</strong>
                 </div>
+                <div class="flex justify-between font-bold" id="out-net-cashflow-row">
+                  <span>• 租金扣除利息後每月淨損益：</span>
+                  <strong id="out-net-cashflow" class="font-mono-num text-emerald-300">+5,333 元/月</strong>
+                </div>
                 <div class="flex justify-between pt-1.5 border-t border-slate-800">
-                  <span>• 0050 每年平均增值與配息收益：</span>
+                  <span>• 0050 每年平均收益 (<span id="out-etf-rate-pct">8.5%</span>)：</span>
                   <strong id="out-etf-annual" class="font-mono-num text-purple-300">+97.8 萬/年 (約 +8.1萬/月)</strong>
                 </div>
               </div>
@@ -799,33 +928,117 @@
     function updateSimulation() {
       const h1Val = parseFloat(document.getElementById('inp-h1-val').value) || 2000;
       const h1Loan = parseFloat(document.getElementById('inp-h1-loan').value) || 450;
-      const h1Rent = parseFloat(document.getElementById('inp-h1-rent').value) || 38000;
+      const h1Rent = parseFloat(document.getElementById('inp-h1-rent').value) || 30000;
       const h2Price = parseFloat(document.getElementById('inp-h2-price').value) || 3350;
-      const etfReturn = parseFloat(document.getElementById('inp-etf-return').value) || 8.5;
+      const etfReturn = parseFloat(document.getElementById('inp-etf-return').value) || 5;
       const loanRate = parseFloat(document.getElementById('inp-loan-rate').value) || 2.45;
 
-      // First House & Type 4 Loan Calculations
+      // 4300 Formula & Type 4 Loan Calculations
       const h1MaxLoan = Math.round(h1Val * 0.8);
-      const etfPrincipal = Math.max(0, h1MaxLoan - h1Loan);
-      const h1MonthlyInterest = Math.round((h1MaxLoan * 10000 * (loanRate / 100)) / 12);
-      const etfAnnualGain = (etfPrincipal * (etfReturn / 100));
+      const safeCoverLoan = Math.round((h1Rent / 4300) * 100);
+      const monthlyRate = (loanRate / 100) / 12;
+      const interestOnlyMaxCover = monthlyRate > 0 ? Math.round((h1Rent / monthlyRate) / 10000) : h1MaxLoan;
+
+      // Update ranges & presets UI
+      const sliderEl = document.getElementById('range-t4-loan');
+      const numInputEl = document.getElementById('inp-t4-loan');
+      if (sliderEl) {
+        sliderEl.min = h1Loan;
+        sliderEl.max = h1MaxLoan;
+      }
+      if (numInputEl) {
+        numInputEl.min = h1Loan;
+        numInputEl.max = h1MaxLoan;
+      }
+
+      const dispCapEl = document.getElementById('disp-h1-cap');
+      if (dispCapEl) dispCapEl.textContent = `${h1MaxLoan.toLocaleString()} 萬`;
+
+      const tagSafeEl = document.getElementById('tag-safe-loan');
+      if (tagSafeEl) tagSafeEl.textContent = `約 ${safeCoverLoan.toLocaleString()} 萬`;
+
+      const tagBalEl = document.getElementById('tag-balance-loan');
+      if (tagBalEl) tagBalEl.textContent = `約 ${interestOnlyMaxCover.toLocaleString()} 萬`;
+
+      const tagMaxEl = document.getElementById('tag-max-loan');
+      if (tagMaxEl) tagMaxEl.textContent = `${h1MaxLoan.toLocaleString()} 萬`;
+
+      const sliderSafeMark = document.getElementById('slider-safe-mark');
+      if (sliderSafeMark) sliderSafeMark.textContent = `🛡️ 本息自償: ${safeCoverLoan.toLocaleString()}萬`;
+
+      const sliderBalMark = document.getElementById('slider-balance-mark');
+      if (sliderBalMark) sliderBalMark.textContent = `⚖️ 租金打平: ${interestOnlyMaxCover.toLocaleString()}萬`;
+
+      const dispIoCoverTip = document.getElementById('disp-io-cover-tip');
+      if (dispIoCoverTip) dispIoCoverTip.textContent = `${interestOnlyMaxCover.toLocaleString()} 萬`;
+
+      let chosenLoan = parseFloat(numInputEl ? numInputEl.value : h1MaxLoan);
+      if (isNaN(chosenLoan) || chosenLoan > h1MaxLoan) chosenLoan = h1MaxLoan;
+      if (chosenLoan < h1Loan) chosenLoan = h1Loan;
+
+      if (numInputEl && parseFloat(numInputEl.value) !== chosenLoan) {
+        numInputEl.value = chosenLoan;
+      }
+      if (sliderEl && parseFloat(sliderEl.value) !== chosenLoan) {
+        sliderEl.value = chosenLoan;
+      }
+
+      const dispChosenEl = document.getElementById('disp-chosen-loan');
+      if (dispChosenEl) dispChosenEl.textContent = `${chosenLoan.toLocaleString()} 萬元`;
+
+      const outChosenLoanEl = document.getElementById('out-chosen-loan-display');
+      if (outChosenLoanEl) outChosenLoanEl.textContent = `${chosenLoan.toLocaleString()} 萬`;
+
+      const outRentSafeCap = document.getElementById('out-rent-safe-cap');
+      if (outRentSafeCap) outRentSafeCap.textContent = `${safeCoverLoan.toLocaleString()} 萬 (房客全包)`;
+
+      const etfPrincipal = Math.max(0, chosenLoan - h1Loan);
+      const h1MonthlyInterest = Math.round(chosenLoan * 10000 * monthlyRate);
+      const etfAnnualGain = etfPrincipal * (etfReturn / 100);
       const etfMonthlyGain = Math.round((etfAnnualGain * 10000) / 12);
 
       document.getElementById('out-h1-maxloan').textContent = `${h1MaxLoan.toLocaleString()} 萬`;
       document.getElementById('out-etf-principal').textContent = `${etfPrincipal.toLocaleString()} 萬`;
       document.getElementById('out-h1-interest').textContent = `-${h1MonthlyInterest.toLocaleString()} 元/月`;
+      const outRateDisplay = document.getElementById('out-rate-display');
+      if (outRateDisplay) outRateDisplay.textContent = `${loanRate}%`;
       document.getElementById('out-h1-rent-display').textContent = `+${h1Rent.toLocaleString()} 元/月`;
       document.getElementById('out-etf-annual').textContent = `+${etfAnnualGain.toFixed(1)} 萬/年 (約 +${(etfMonthlyGain / 10000).toFixed(1)}萬/月)`;
+      const outEtfRatePct = document.getElementById('out-etf-rate-pct');
+      if (outEtfRatePct) outEtfRatePct.textContent = `${etfReturn}%`;
       document.getElementById('out-etf-rate-text').textContent = etfReturn;
 
       const netRentDiff = h1Rent - h1MonthlyInterest;
+      const netCashflowEl = document.getElementById('out-net-cashflow');
+      if (netCashflowEl) {
+        netCashflowEl.textContent = `${netRentDiff >= 0 ? '+' : ''}${netRentDiff.toLocaleString()} 元/月`;
+        netCashflowEl.className = netRentDiff >= 0 ? "font-mono-num text-emerald-400 font-bold" : "font-mono-num text-rose-400 font-bold";
+      }
+
+      const badgeEl = document.getElementById('out-h1-badge');
       const verdictEl = document.getElementById('out-h1-verdict');
-      if (netRentDiff >= 0) {
+
+      if (chosenLoan <= safeCoverLoan) {
+        if (badgeEl) {
+          badgeEl.className = "text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30";
+          badgeEl.textContent = "🛡️ 本息超自償";
+        }
         verdictEl.className = "p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-[11px] text-emerald-200 leading-relaxed";
-        verdictEl.innerHTML = `✅ <strong>完美正現金流：</strong>第一屋月租金（${h1Rent.toLocaleString()}元）完全覆蓋 ${h1MaxLoan} 萬科目四月息（${h1MonthlyInterest.toLocaleString()}元），每月還倒賺 <strong>+${netRentDiff.toLocaleString()} 元</strong>，相當於免費取得 ${etfPrincipal} 萬 0050 部位！`;
+        verdictEl.innerHTML = `🛡️ <strong>【神級本息自償線】：</strong>您選擇申貸 <strong>${chosenLoan} 萬</strong>（小於或等於月租金依 4,300 法則可 cover 的 30 年本息額度 <strong>${safeCoverLoan} 萬</strong>）！每月租金（${h1Rent.toLocaleString()}元）不只完全吸收利息（${h1MonthlyInterest.toLocaleString()}元），每月還倒賺 <strong>+${netRentDiff.toLocaleString()} 元</strong>！未來就算進入本息攤還也 100% 由房客買單，0 自掏腰包風險！扣除舊貸後淨投入 0050 的 <strong>${etfPrincipal} 萬</strong> 完全屬於零壓力無痛套利！`;
+      } else if (chosenLoan <= interestOnlyMaxCover) {
+        if (badgeEl) {
+          badgeEl.className = "text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30";
+          badgeEl.textContent = "⚖️ 租金正現金流";
+        }
+        verdictEl.className = "p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-[11px] text-emerald-200 leading-relaxed";
+        verdictEl.innerHTML = `🎉 <strong>【黃金甜蜜點・租金全包】：</strong>您選擇申貸 <strong>${chosenLoan} 萬</strong>，每月只繳息（${h1MonthlyInterest.toLocaleString()}元）完全被第一屋月租金（${h1Rent.toLocaleString()}元）吸收，每月依然享有 <strong>+${netRentDiff.toLocaleString()} 元</strong>淨租金正現金流！同時淨投入 0050 的 <strong>${etfPrincipal} 萬</strong> 每年平均為您創造 <strong>+${etfAnnualGain.toFixed(1)} 萬元</strong> 資本利得與股息！`;
       } else {
+        if (badgeEl) {
+          badgeEl.className = "text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold border border-amber-500/30";
+          badgeEl.textContent = "🚀 利差套利進攻";
+        }
         verdictEl.className = "p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-[11px] text-amber-200 leading-relaxed";
-        verdictEl.innerHTML = `💡 <strong>利差套利模式：</strong>租金折抵後每月僅需貼補 <strong>${Math.abs(netRentDiff).toLocaleString()} 元</strong>利息，但 ${etfPrincipal} 萬 0050 每年平均為您創造 <strong>+${etfAnnualGain.toFixed(1)} 萬元</strong>資本增值與股息！`;
+        verdictEl.innerHTML = `💡 <strong>【利差套利進攻模式】：</strong>您選擇申貸 <strong>${chosenLoan} 萬</strong>（超過月租金只繳息打平線）。租金折抵後，每月僅需自掏腰包貼補 <strong>${Math.abs(netRentDiff).toLocaleString()} 元</strong> 利息，但換取高達 <strong>${etfPrincipal} 萬</strong> 的 0050 資本池，每年平均創造 <strong>+${etfAnnualGain.toFixed(1)} 萬元</strong>（約每月 +${(etfMonthlyGain / 10000).toFixed(1)} 萬）的收益，以小博大淨利差極為豐厚！`;
       }
 
       // Second House Loan Calculations
@@ -854,11 +1067,10 @@
       // Method 1 & 3: Hold H1 + Hold H2 + Invest in 0050, minus loan interest cost net of rent
       const h1Future = h1Val * propGrowth10Yr;
       const h2Future = h2Price * propGrowth10Yr;
-      const etfFuture1 = (h1MaxLoan) * etfGrowth10Yr; // Method 1 (if 1600W invested)
       const netRent10Yr = ((h1Rent - h1MonthlyInterest) * 12 * 10) / 10000;
 
       // Net equity gain over 10 years for Method 1/3 (Two properties + ETF net of debt)
-      const netWealthM1 = Math.round((h1Future + h2Future + etfPrincipal * etfGrowth10Yr + netRent10Yr) - (h1MaxLoan + h2Loan80));
+      const netWealthM1 = Math.round((h1Future + h2Future + etfPrincipal * etfGrowth10Yr + netRent10Yr) - (chosenLoan + h2Loan80));
       const netWealthM3 = Math.round(netWealthM1 * 0.98); // Essentially identical after bridge
       // Method 2: No ETF arbitrage because extra cash is locked in 50% down payment
       const netWealthM2 = Math.round((h1Future + h2Future + (h1Rent * 12 * 10 / 10000)) - (h1Loan + h2Loan50) - 350);
@@ -991,6 +1203,53 @@
         document.getElementById(id)?.addEventListener('input', updateSimulation);
       });
 
+      const numInputEl = document.getElementById('inp-t4-loan');
+      const rangeInputEl = document.getElementById('range-t4-loan');
+
+      rangeInputEl?.addEventListener('input', (e) => {
+        if (numInputEl) numInputEl.value = e.target.value;
+        updateSimulation();
+      });
+
+      numInputEl?.addEventListener('input', (e) => {
+        if (rangeInputEl) rangeInputEl.value = e.target.value;
+        updateSimulation();
+      });
+
+      document.getElementById('btn-preset-safe')?.addEventListener('click', () => {
+        const rent = parseFloat(document.getElementById('inp-h1-rent').value) || 30000;
+        const safe = Math.round((rent / 4300) * 100);
+        const h1Loan = parseFloat(document.getElementById('inp-h1-loan').value) || 450;
+        const val = Math.max(h1Loan, safe);
+        if (numInputEl) numInputEl.value = val;
+        if (rangeInputEl) rangeInputEl.value = val;
+        updateSimulation();
+        showToast(`已套用【檔位 A：4,300元本息自償線】申貸額度：${val} 萬元`);
+      });
+
+      document.getElementById('btn-preset-balance')?.addEventListener('click', () => {
+        const rent = parseFloat(document.getElementById('inp-h1-rent').value) || 30000;
+        const rate = parseFloat(document.getElementById('inp-loan-rate').value) || 2.45;
+        const mRate = (rate / 100) / 12;
+        const bal = mRate > 0 ? Math.round((rent / mRate) / 10000) : 1600;
+        const h1Val = parseFloat(document.getElementById('inp-h1-val').value) || 2000;
+        const maxLoan = Math.round(h1Val * 0.8);
+        const val = Math.min(maxLoan, bal);
+        if (numInputEl) numInputEl.value = val;
+        if (rangeInputEl) rangeInputEl.value = val;
+        updateSimulation();
+        showToast(`已套用【檔位 B：租金100%抵付只繳息】申貸額度：${val} 萬元`);
+      });
+
+      document.getElementById('btn-preset-max')?.addEventListener('click', () => {
+        const h1Val = parseFloat(document.getElementById('inp-h1-val').value) || 2000;
+        const maxLoan = Math.round(h1Val * 0.8);
+        if (numInputEl) numInputEl.value = maxLoan;
+        if (rangeInputEl) rangeInputEl.value = maxLoan;
+        updateSimulation();
+        showToast(`已套用【檔位 C：鑑價 8 成極限槓桿】申貸額度：${maxLoan} 萬元`);
+      });
+
       document.querySelectorAll('.glass-card-spotlight').forEach(card => {
         card.addEventListener('mousemove', e => {
           const rect = card.getBoundingClientRect();
@@ -1000,24 +1259,47 @@
       });
 
       document.getElementById('btn-copy-summary')?.addEventListener('click', () => {
+        const h1Val = parseFloat(document.getElementById('inp-h1-val').value) || 2000;
+        const h1Loan = parseFloat(document.getElementById('inp-h1-loan').value) || 450;
+        const h1Rent = parseFloat(document.getElementById('inp-h1-rent').value) || 30000;
+        const h2Price = parseFloat(document.getElementById('inp-h2-price').value) || 3350;
+        const rate = parseFloat(document.getElementById('inp-loan-rate').value) || 2.45;
+        const chosenLoan = parseFloat(document.getElementById('inp-t4-loan').value) || 1600;
+        const safeCoverLoan = Math.round((h1Rent / 4300) * 100);
+        const mRate = (rate / 100) / 12;
+        const interestOnlyMaxCover = mRate > 0 ? Math.round((h1Rent / mRate) / 10000) : 1600;
+        const h1MonthlyInterest = Math.round(chosenLoan * 10000 * mRate);
+        const netRentDiff = h1Rent - h1MonthlyInterest;
+        const etfPrincipal = Math.max(0, chosenLoan - h1Loan);
+        const etfReturn = parseFloat(document.getElementById('inp-etf-return').value) || 7.0;
+        const etfAnnualGain = (etfPrincipal * etfReturn) / 100;
+        const diffAdvantage = document.getElementById('out-10yr-advantage')?.textContent || '';
+
         const summaryText = `🏦【第二間購屋＆科目四財務槓桿決策總結】
 ━━━━━━━━━━━━━━━
 📌 目前資產底牌：
-• 第一屋：買入 1,420 萬 ➔ 現值約 2,000 萬（殘貸僅 450 萬，可釋放淨值高達 1,550 萬）
-• 第二屋目標：3,200 ~ 3,500 萬新房
+• 第一屋鑑價：${h1Val.toLocaleString()} 萬 ｜ 原貸款：${h1Loan.toLocaleString()} 萬 ｜ 預估月租金：${h1Rent.toLocaleString()} 元
+• 第二屋目標：${h2Price.toLocaleString()} 萬（首購 8 成可貸 ${Math.round(h2Price * 0.8).toLocaleString()} 萬，自備僅需 ${Math.round(h2Price * 0.2).toLocaleString()} 萬）
+
+💡【陳侯勳・每4,300元租金印鈔機＆科目四申貸決策】：
+• 您選擇申貸額度：${chosenLoan.toLocaleString()} 萬（利率 ${rate}%，每月只繳息 ${h1MonthlyInterest.toLocaleString()} 元）
+• 4,300法則本息自償上限：${safeCoverLoan.toLocaleString()} 萬（月租完全吸收30年本息攤還）
+• 租金只繳息打平上限：${interestOnlyMaxCover.toLocaleString()} 萬（月租完全吸收只繳息）
+• 租金扣除利息淨損益：${netRentDiff >= 0 ? '+' : ''}${netRentDiff.toLocaleString()} 元/月
+• 淨投入 0050 資本池：${etfPrincipal.toLocaleString()} 萬元（每年平均創造約 +${etfAnnualGain.toFixed(1)} 萬元股息與資本增值）
 
 🏆 四大方案優先順序結論：
-1️⃣ 【第一優先 A：作法 1（手頭現金 ≥ 1,150萬首選）】
-先把第一屋 450 萬清償塗銷（消除聯徵科目一）➔ 以首購 8 成（約 2,680萬）+ 寬限期買進第二屋 ➔ 交屋後拿第一屋辦 1,600 萬科目四（理財型/周轉金）買 0050，同時第一屋出租收租抵息。金流 100% 合規無懈可擊！
+1️⃣ 【第一優先 A：作法 1（手頭現金充裕首選）】
+先把第一屋 ${h1Loan} 萬清償塗銷（消除聯徵科目一）➔ 以首購 8 成 + 寬限期買進第二屋 ➔ 交屋後拿第一屋辦 ${chosenLoan} 萬科目四（理財型）買 0050，第一屋出租收租抵息。金流 100% 合規無懈可擊！
 
 2️⃣ 【第一優先 B：作法 3（手頭現金約 700萬首選）】
-找銀行申辦第一屋 1,600 萬「科目四」直接代償原 450 萬「科目一」（陳侯勳科目一洗成科目四密技），多出的 1,150 萬全數進證券戶買 0050（嚴禁流入房市）➔ 聯徵無科目一後，用自有 700 萬頭期款 + 首購 8 成買第二屋。
+找銀行申辦第一屋 ${chosenLoan} 萬「科目四」直接代償原 ${h1Loan} 萬「科目一」（科目一轉科目四洗標籤密技），多出的 ${etfPrincipal} 萬全數進證券戶買 0050（嚴禁流入房市）➔ 聯徵無科目一後，用首購 8 成買第二屋。
 
 3️⃣ 【不推薦：作法 2（第一屋不還直接增貸）】
-❌ 踩中兩大陷阱：(1) 央行嚴禁增貸資金直接拿去付第二屋頭期款，金檢抓到會強制收回貸款；(2) 因 450 萬科目一未消滅，第二屋貸款成數暴跌至 5 成且無寬限期，為了 450 萬少貸 1,000 萬完全划不來！
+❌ 踩中兩大陷阱：(1) 增貸資金嚴禁直接付第二屋頭期款；(2) 聯徵科目一未消滅，第二屋貸款成數暴跌至 5 成無寬限期，為了 ${h1Loan} 萬少貸約 1,000 萬完全划不來！
 
 4️⃣ 【最不推薦：作法 4（賣第一屋換第二屋）】
-🛑 損失高額稅費與仲介費，且砍斷第一屋「租金養科目四＋長期抗通膨」的金雞母，10年後淨資產將少賺逾 2,600 萬元！`;
+🛑 損失高額稅費與仲介費，且砍斷第一屋「租金養科目四＋長期抗通膨」的金雞母，10年後淨資產比作法一/三少賺 ${diffAdvantage}！`;
         fallbackCopyText(summaryText, "已複製完整決策摘要！可直接貼到 LINE 儲存");
       });
     });
