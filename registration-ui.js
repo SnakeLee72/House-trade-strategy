@@ -3,24 +3,30 @@ const RC = RegistrationCore;
 const rh = value => String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const rf = (value,suffix='') => RC.format(value,suffix);
 const rt = (id,value) => { const el=document.getElementById(id);if(el)el.textContent=value; };
+function persistUserProperties() {
+  if (typeof saveUserProperties === 'function') {
+    persistUserProperties();
+  } else if (typeof localStorage !== 'undefined' && typeof STORAGE_KEY !== 'undefined') {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(userProperties));
+    } catch {}
+  }
+}
 function initUserProperties() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
     userProperties = Array.isArray(saved) ? saved.filter(p => p && typeof p === 'object').map(item => {
       const p = RC.migrateProperty(item);
-      p.isSaved = item.isSaved !== false;
+      p.isSaved = Boolean(item.isSaved);
       return p;
     }) : [];
   } catch {
     userProperties = [];
   }
-  if (!userProperties.length) {
-    const defaultProp = RC.emptyProperty('我的看屋物件');
-    defaultProp.isSaved = false;
-    userProperties = [defaultProp];
-  }
-  activePropertyId = userProperties[0].id;
-  saveUserProperties();
+  // 濾除過去可能殘留的空預設假物件，確保乾淨無預設資料
+  userProperties = userProperties.filter(p => p && (p.community || p.askingPrice || p.district || p.sourceUrl || p.totalAreaPing || (p.name && p.name !== '我的看屋物件' && p.name !== '新物件' && p.name !== '候選物件')));
+  activePropertyId = userProperties.length ? userProperties[0].id : null;
+  persistUserProperties();
 }
 function evaluateProperty(prop) {
   const pricing=RC.derivePricing(prop), k=RC.evaluateKnives(prop,pricing);
@@ -64,7 +70,7 @@ async function runAutoAnalysis(input) {
     const p=isUrl?buildPropertyFromApiData(await fetchHouseDataFromEdge(input),input):parseListingText(input);
     p.isSaved=false;
     if(seq!==registrationAnalysisSequence)return;
-    userProperties.unshift(p);activePropertyId=p.id;saveUserProperties();renderEvaluationView();
+    userProperties.unshift(p);activePropertyId=p.id;persistUserProperties();renderEvaluationView();
     const s=RC.summarize(p.registration,p.analysisOptions);
     status.className=`p-4 rounded-2xl text-sm border ${s.complete?'bg-emerald-50 text-emerald-900 border-emerald-200':'bg-amber-50 text-amber-900 border-amber-200'}`;
     status.textContent=`已讀取 ${p.community || p.name}。成交來源共 ${s.reportedCount ?? '未知'} 筆，實際取得 ${s.rawCount} 筆（${s.complete?'完整':'未完整或尚未取得'}）；目前條件採用 ${s.usedCount} 筆。${s.sufficient?'請再確認本戶車位分價與比較條件。':'樣本不足5筆或來源不完整，停止自動估價與四階出價。'}`;
@@ -74,17 +80,20 @@ async function runAutoAnalysis(input) {
 }
 function deletePropertyById(id){
   const target=userProperties.find(p=>p.id===id);
-  if(target?.isSaved){
-    if(typeof showToast==='function')showToast('⚠️ 已儲存的物件已鎖定，只能檢視不能編輯跟刪除！若需修改請點擊「複製」。');
-    return;
-  }
-  openConfirmModal('刪除草稿','確定刪除這筆未儲存的候選草稿？',()=>{
+  if(!target)return;
+  const name=target.community || target.name || '此物件';
+  const executeDelete=()=>{
     userProperties=userProperties.filter(p=>p.id!==id);
-    if(!userProperties.length){const fresh=RC.emptyProperty('我的看屋物件');fresh.isSaved=false;userProperties=[fresh];}
-    if(activePropertyId===id)activePropertyId=userProperties[0].id;
-    saveUserProperties();renderEvaluationView();
-    if(typeof showToast==='function')showToast('已刪除該草稿物件');
-  });
+    activePropertyId=userProperties.length ? userProperties[0].id : null;
+    persistUserProperties();
+    renderEvaluationView();
+    if(typeof showToast==='function')showToast(`已刪除「${name}」`);
+  };
+  if(typeof openConfirmModal==='function'){
+    openConfirmModal('刪除物件',`確定要刪除「${name}」？此動作無法復原。`,executeDelete);
+  } else {
+    executeDelete();
+  }
 }
 function editPropertyById(id){activePropertyId=id;document.querySelector('[data-tab="nine-knives"]')?.click();renderEvaluationView();const form=document.getElementById('prop-form-content');form?.scrollIntoView({behavior:'smooth',block:'center'});document.getElementById('prop-input-community')?.focus({preventScroll:true});}
 const conditionFields=[
@@ -115,14 +124,15 @@ function renderConditionFields(p){
     form.appendChild(section);
     for(const [key,,type,knife] of conditionFields){
       document.getElementById(`condition-${key}`).addEventListener('change',event=>{
-        const active=getActiveProperty();if(!active||active.isSaved)return;
+        let active=getActiveProperty();
+        if(!active){active=RC.emptyProperty('新物件 1');userProperties.push(active);activePropertyId=active.id;}
         const value=event.target.value;
         active[key]=type==='boolean'?(value===''?null:value==='true'):RC.number(value);
         if(type==='number' && active[key]<0)active[key]=null;
         if(key==='walkMinutes'){active.walkEvidence=active.walkMinutes==null?'unavailable':'confirmed';active.mrtDetails=null;active.mrt=active.walkMinutes==null?'步行時間待確認':`人工確認步行 ${active.walkMinutes} 分鐘`;}
         if(knife===6)active.productRiskVerified=null;if(knife===8)active.matureArea=null;if(knife===9)active.cashFlowVerified=null;
         if(active.knifeOverrides)delete active.knifeOverrides[knife];
-        saveUserProperties();renderEvaluationView();
+        persistUserProperties();renderEvaluationView();
       });
     }
     document.getElementById('refresh-property-source').addEventListener('click',refreshPropertySource);
@@ -130,22 +140,22 @@ function renderConditionFields(p){
   for(const [key,,type] of conditionFields){
     const input=document.getElementById(`condition-${key}`);
     if(input){
-      input.disabled=Boolean(p.isSaved);
-      if(p.isSaved){input.classList.add('bg-slate-100','cursor-not-allowed','text-slate-600');input.classList.remove('bg-white');}
-      else{input.classList.remove('bg-slate-100','cursor-not-allowed','text-slate-600');input.classList.add('bg-white');}
+      input.disabled=false;
+      input.classList.remove('bg-slate-100','cursor-not-allowed','text-slate-600');
+      input.classList.add('bg-white');
       if(document.activeElement!==input)input.value=p[key]==null?'':type==='boolean'?String(p[key]):p[key];
     }
   }
   rt('property-source-status',`戶數：${rf(p.households,'戶')}。${p.communityInfo?.message || '請確認來源或手動填入'}。捷運：${p.mrt || '尚未取得'}。${p.mrtDetails?.message || ''}`);
   const refBtn=document.getElementById('refresh-property-source');
   if(refBtn){
-    refBtn.disabled=Boolean(p.isSaved)||!p.sourceUrl;
-    if(p.isSaved)refBtn.classList.add('opacity-40','cursor-not-allowed');
-    else refBtn.classList.remove('opacity-40','cursor-not-allowed');
+    refBtn.disabled=!p.sourceUrl;
+    if(p.sourceUrl)refBtn.classList.remove('opacity-40','cursor-not-allowed');
+    else refBtn.classList.add('opacity-40','cursor-not-allowed');
   }
 }
 async function refreshPropertySource(){
-  const p=getActiveProperty();if(!p?.sourceUrl||p.isSaved)return;
+  const p=getActiveProperty();if(!p?.sourceUrl)return;
   const id=p.id,url=p.sourceUrl,identity=JSON.stringify([p.community,p.district]);
   const button=document.getElementById('refresh-property-source');if(button)button.disabled=true;
   rt('property-source-status','正在更新來源，完成後保留此物件與筆記…');
@@ -155,7 +165,7 @@ async function refreshPropertySource(){
     if(!current || current.sourceUrl!==url || JSON.stringify([current.community,current.district])!==identity)return;
     for(const key of ['askingPrice','totalAreaPing','size','parkingAreaPing','parkingPriceWan','hasParking','community','district','geo','mrt','mrtDetails','walkMinutes','walkEvidence','households','communityInfo','registration'])current[key]=data[key] ?? null;
     current.knifeOverrides={};current.dataWarning='已重新取得來源；人工財務與現場條件保留，請核對是否仍有效。';
-    saveUserProperties();renderEvaluationView();showToast('此物件資料已更新');
+    persistUserProperties();renderEvaluationView();showToast('此物件資料已更新');
   }catch(error){rt('property-source-status',`更新失敗：${error.message}。原紀錄保留。`);}
   finally{if(button)button.disabled=false;}
 }
@@ -169,63 +179,134 @@ function reRenderEvidence(p,price) {
     <p>期間：${rh(s.period)}。剔除：${Object.entries(s.excluded).map(([key,n])=>`${reasons[key]} ${n}`).join('／')}。</p><p>採用中車位估算 ${s.usedEstimatedCount} 筆。${s.sufficient?'樣本達5筆，仍需確認可比性。':'未滿5筆或資料不完整，不建立自動比較總價。'} 不做機械式去頭去尾。</p>
     <p>房屋淨單價中位數：<b>${rf(s.medianUnit,' 萬/坪')}</b>；面積加權均價：<b>${rf(s.weightedUnit,' 萬/坪')}</b>。來源價格與面積有四捨五入，重算可能有尾差。</p>
     <details><summary class="cursor-pointer font-semibold text-sky-800">檢視成交明細與採用原因（${s.inspectedRows.length}筆）</summary><div class="overflow-x-auto mt-3"><table class="w-full text-left text-xs min-w-[750px]"><thead><tr><th>年月／地址</th><th>樓層／格局</th><th>房屋價／扣車位坪數</th><th>車位價／坪數</th><th>淨單價重算</th><th>採用狀態</th><th>來源備註</th></tr></thead><tbody>${s.inspectedRows.map(row=>`<tr class="border-t border-slate-200"><td class="p-2">${rh(row.date)}<br>${rh(row.address)}</td><td>${rf(row.floor,'樓')}<br>${rh(row.layout)}</td><td>${rf(row.housePriceWan,'萬')}<br>${rf(row.houseAreaPing,'坪')}</td><td>${rf(row.parkingPriceWan,'萬')}${row.parkingEstimated?'（估算）':''}<br>${rf(row.parkingAreaPing,'坪')}</td><td>${rf(row.calculatedUnit,'萬/坪')}</td><td>${rh(row.exclusion?reasons[row.exclusion]:'採用')}</td><td>${rh(row.notes || '無')}</td></tr>`).join('')}</tbody></table></div></details></div>`;
-  const update=()=>{p.analysisOptions={months:Number(document.getElementById('reg-period').value),includeEstimatedParking:document.getElementById('reg-include-estimated').checked,excludeFirstFloor:document.getElementById('reg-exclude-floor').checked};saveUserProperties();renderEvaluationView();};
+  const update=()=>{p.analysisOptions={months:Number(document.getElementById('reg-period').value),includeEstimatedParking:document.getElementById('reg-include-estimated').checked,excludeFirstFloor:document.getElementById('reg-exclude-floor').checked};persistUserProperties();renderEvaluationView();};
   ['reg-period','reg-include-estimated','reg-exclude-floor'].forEach(id=>document.getElementById(id).addEventListener('change',update));
 }
 function safeRegistrationUrl(url){try{const u=new URL(url);return u.protocol==='https:'&&u.hostname==='market.591.com.tw'?u.href:'#';}catch{return '#';}}
 function renderEvaluationView() {
-  const p=getActiveProperty();if(!p)return;const isSaved=p.isSaved===true;const e=evaluateProperty(p), price=e.pricing, s=price.stats;p.knives=e.passed;p.regPrice=price.reference;
-  const sync=(id,value)=>{const el=document.getElementById(id);if(el&&document.activeElement!==el)el.value=value ?? '';};
+  const p=getActiveProperty();
   const tabRoot=document.getElementById('prop-tabs-container');
+  rt('prop-count-badge',userProperties.length);
+
+  if(!p){
+    if(tabRoot)tabRoot.innerHTML='<span class="text-xs text-slate-400 py-1">目前尚無物件，請於上方貼上 591 網址或點擊「➕ 新增看屋物件」</span>';
+    rt('prop-editing-title','尚未建立物件');
+    const viewLabel=document.getElementById('prop-view-status-label');if(viewLabel)viewLabel.textContent='目前狀態：';
+    const savedBadge=document.getElementById('prop-saved-badge');
+    if(savedBadge){savedBadge.className='px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-500 border border-slate-300';savedBadge.textContent='⚪ 尚無物件';}
+    const statusHint=document.getElementById('prop-status-hint');
+    if(statusHint)statusHint.textContent='（請貼上 591 購屋物件網址進行自動分析，或點擊上方「新增看屋物件」開始記錄）';
+    const saveBtn=document.getElementById('btn-save-prop-explicit');
+    if(saveBtn){saveBtn.disabled=true;saveBtn.innerHTML='<span>💾</span> 儲存修改';saveBtn.className='px-3 py-1.5 rounded-xl bg-slate-200 text-slate-400 font-bold text-xs flex items-center gap-1 cursor-not-allowed border border-slate-300';}
+    const delBtn=document.getElementById('btn-del-prop');
+    if(delBtn){delBtn.disabled=true;delBtn.classList.add('opacity-40','cursor-not-allowed');}
+    const recalcBtn=document.getElementById('btn-recalc-knives');
+    if(recalcBtn){recalcBtn.disabled=true;recalcBtn.classList.add('opacity-40','cursor-not-allowed');}
+
+    const propInputIds=['prop-input-community','prop-input-name','prop-input-district','prop-input-mrt','prop-input-asking','prop-input-reg','prop-input-size','prop-input-households','prop-input-has-parking','prop-input-parking-size','prop-input-parking-price','prop-input-notes'];
+    for(const id of propInputIds){
+      const el=document.getElementById(id);
+      if(el){el.value='';el.disabled=false;el.classList.remove('bg-slate-100','cursor-not-allowed','text-slate-600');el.classList.add('bg-white');}
+    }
+    for(const [key] of conditionFields){
+      const input=document.getElementById(`condition-${key}`);
+      if(input){input.value='';input.disabled=false;input.classList.remove('bg-slate-100','cursor-not-allowed','text-slate-600');input.classList.add('bg-white');}
+    }
+    rt('property-source-status','尚無物件資料。請輸入 591 網址或點擊「新增看屋物件」手動填入。');
+
+    const mapsLink=document.getElementById('link-google-maps');if(mapsLink)mapsLink.href='https://www.google.com/maps';
+    const transitLink=document.getElementById('link-google-transit');if(transitLink)transitLink.href='https://www.google.com/maps';
+    rt('transit-link-label','🚶 輸入地址與捷運後實測步行路徑');
+    const lejuLink=document.getElementById('link-leju-search');if(lejuLink){lejuLink.href='#';lejuLink.textContent='實登尚未取得';}
+
+    rt('prop-score-num','--');rt('prop-knives-count','請先新增物件');rt('prop-verdict-desc','尚未輸入物件資訊，請貼上 591 網址或點擊「新增看屋物件」開始評估。');
+    const badge=document.getElementById('prop-badge-tier');if(badge){badge.textContent='待輸入';badge.className='px-3 py-1 rounded-full text-xs border bg-slate-100 text-slate-500 border-slate-300';}
+    const alert=document.getElementById('prop-redline-alert');if(alert)alert.classList.add('hidden');
+
+    for(const id of ['price-ceiling-val','price-asking-val','val-fake-1','val-fake-2','val-fake-3','val-true-bottom','price-net-seller','reg-card-asking-display','reg-card-ceiling-display'])rt(id,'-- 萬');
+    rt('reg-card-avg-unit','-- 萬/坪');rt('reg-card-unit-range','尚未取得成交樣本');rt('reg-card-parking-detail','待確認');rt('reg-card-net-size','待確認');rt('reg-card-premium-pct','尚未建立比較基準');
+    rt('reg-card-formula-box','請貼上 591 購屋物件網址或新增物件填入資訊以進行試算。');
+
+    const panel=document.getElementById('registration-evidence');
+    if(panel)panel.innerHTML='<p class="text-slate-500 text-xs">尚未讀取成交資料。請貼上購屋物件網址開始分析。</p>';
+
+    const container=document.getElementById('knives-container');
+    if(container && typeof nineKnivesData!=='undefined'){
+      container.innerHTML='';
+      for(const item of nineKnivesData){
+        const card=document.createElement('button');card.type='button';
+        card.className='text-left p-4 rounded-2xl border transition bg-amber-50/40 border-amber-200 cursor-pointer';
+        card.innerHTML=`<div class="text-xs font-bold text-amber-800">? 待確認</div><h3 class="font-bold mt-2">${rh(item.title)}</h3><p class="text-xs text-slate-600 mt-2">${rh(item.rule)}</p><p class="text-xs mt-3">${rh(item.checkTip)}</p><p class="text-xs text-slate-400 mt-2">請先輸入物件資訊</p>`;
+        card.addEventListener('click',()=>{
+          if(!userProperties.length){const fresh=RC.emptyProperty('新物件 1');userProperties.push(fresh);activePropertyId=fresh.id;persistUserProperties();}
+          const cur=getActiveProperty();cur.knifeOverrides||={};cur.knifeOverrides[item.id]='pass';persistUserProperties();renderEvaluationView();
+        });
+        container.appendChild(card);
+      }
+    }
+    rt('weapons-count-badge','尚無物件短板');
+    const weaponsList=document.getElementById('bargaining-weapons-list');
+    if(weaponsList)weaponsList.innerHTML='<p class="text-slate-500 text-xs">目前尚無物件資料；輸入物件後將自動分析短板。</p>';
+    const playbookGrid=document.getElementById('actionable-playbook-grid');
+    if(playbookGrid)playbookGrid.innerHTML='<div class="p-4 bg-white border rounded-xl"><h4 class="font-bold text-sky-800">開始分析</h4><p class="mt-2 text-slate-600">請貼上 591 售屋網址或點擊上方「➕ 新增看屋物件」開始記錄。</p></div>';
+
+    const table=document.getElementById('comparison-table-body');
+    if(table)table.innerHTML='<tr><td colspan="8" class="p-6 text-center text-slate-400">目前尚無看屋物件。請點擊上方「➕ 新增看屋物件」或貼上 591 網址匯入。</td></tr>';
+
+    if(typeof radarChartInstance!=='undefined' && radarChartInstance){radarChartInstance.data.datasets[0].data=[null,null,null,null,null];radarChartInstance.update();}
+    updatePriceCalculator();
+    return;
+  }
+
+  const e=evaluateProperty(p), price=e.pricing, s=price.stats;p.knives=e.passed;p.regPrice=price.reference;
+  const sync=(id,value)=>{const el=document.getElementById(id);if(el&&document.activeElement!==el)el.value=value ?? '';};
   if(tabRoot){
     tabRoot.innerHTML='';
     for(const item of userProperties){
       const b=document.createElement('button');b.type='button';
       b.className=`px-3 py-2 rounded-xl text-xs border shrink-0 flex items-center gap-1.5 ${item.id===p.id?'bg-sky-600 text-white font-bold':'bg-white text-slate-700'}`;
-      b.innerHTML=`<span>${item.isSaved ? '🔒' : '📝'}</span><span>${rh(item.community || item.name)}</span>`;
+      b.innerHTML=`<span>${item.isSaved ? '✅' : '📝'}</span><span>${rh(item.community || item.name)}</span>`;
       b.addEventListener('click',()=>{activePropertyId=item.id;renderEvaluationView();});
       tabRoot.appendChild(b);
     }
   }
-  rt('prop-count-badge',userProperties.length);rt('prop-editing-title',p.community || p.name);
-  const viewLabel=document.getElementById('prop-view-status-label');if(viewLabel)viewLabel.textContent=isSaved?'正在檢視：':'正在編輯：';
+  rt('prop-editing-title',p.community || p.name);
+  const viewLabel=document.getElementById('prop-view-status-label');if(viewLabel)viewLabel.textContent='正在編輯：';
   const savedBadge=document.getElementById('prop-saved-badge');
   if(savedBadge){
-    savedBadge.className=`px-2.5 py-0.5 rounded-full text-xs font-semibold border ${isSaved?'bg-slate-100 text-slate-700 border-slate-300':'bg-amber-50 text-amber-800 border-amber-300'}`;
-    savedBadge.textContent=isSaved?'🔒 已儲存（唯讀模式）':'📝 草稿中（尚未儲存）';
+    savedBadge.className=`px-2.5 py-0.5 rounded-full text-xs font-semibold border ${p.isSaved?'bg-emerald-50 text-emerald-800 border-emerald-300':'bg-amber-50 text-amber-800 border-amber-300'}`;
+    savedBadge.textContent=p.isSaved?'✅ 已儲存（隨時可修改）':'📝 編輯中（未儲存）';
   }
   const statusHint=document.getElementById('prop-status-hint');
   if(statusHint){
-    statusHint.textContent=isSaved?'（已儲存物件已鎖定，只能檢視不可編輯與刪除。若需修改請點擊「複製」。）':'（編輯中草稿，修改後即時重算。確認後請點擊「儲存物件」以鎖定存檔。）';
+    statusHint.textContent='（修改任一欄位即時重算；點擊「儲存修改」存檔，或點擊「🗑️ 刪除」移除此物件）';
   }
   const saveBtn=document.getElementById('btn-save-prop-explicit');
   if(saveBtn){
-    saveBtn.disabled=isSaved;
-    saveBtn.innerHTML=isSaved?'<span>🔒</span> 已儲存（唯讀模式）':'<span>💾</span> 儲存物件';
-    saveBtn.className=isSaved?'px-3 py-1.5 rounded-xl bg-slate-200 text-slate-500 font-bold text-xs flex items-center gap-1 cursor-not-allowed border border-slate-300':'px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1 shadow transition cursor-pointer';
+    saveBtn.disabled=false;
+    saveBtn.innerHTML=p.isSaved?'<span>✅</span> 已儲存修改':'<span>💾</span> 儲存修改';
+    saveBtn.className='px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1 shadow transition cursor-pointer';
   }
   const delBtn=document.getElementById('btn-del-prop');
   if(delBtn){
-    delBtn.disabled=isSaved;
-    delBtn.title=isSaved?'已儲存物件已鎖定，不可刪除':'刪除目前草稿物件';
-    if(isSaved)delBtn.classList.add('opacity-40','cursor-not-allowed');
-    else delBtn.classList.remove('opacity-40','cursor-not-allowed');
+    delBtn.disabled=false;
+    delBtn.title='刪除目前物件';
+    delBtn.classList.remove('opacity-40','cursor-not-allowed');
   }
   const recalcBtn=document.getElementById('btn-recalc-knives');
   if(recalcBtn){
-    recalcBtn.disabled=isSaved;
-    recalcBtn.title=isSaved?'已儲存物件已鎖定，不可修改；若需調整請先「複製」':'根據目前填寫的地址、開價、捷運與戶數重新自動判定九把刀';
-    if(isSaved)recalcBtn.classList.add('opacity-40','cursor-not-allowed');
-    else recalcBtn.classList.remove('opacity-40','cursor-not-allowed');
+    recalcBtn.disabled=false;
+    recalcBtn.title='根據目前填寫的地址、開價、捷運與戶數重新自動判定九把刀';
+    recalcBtn.classList.remove('opacity-40','cursor-not-allowed');
   }
 
   const propInputIds=['prop-input-community','prop-input-name','prop-input-district','prop-input-mrt','prop-input-asking','prop-input-reg','prop-input-size','prop-input-households','prop-input-has-parking','prop-input-parking-size','prop-input-parking-price','prop-input-notes'];
   for(const id of propInputIds){
     const el=document.getElementById(id);
     if(el){
-      el.disabled=isSaved;
-      if(isSaved){el.classList.add('bg-slate-100','cursor-not-allowed','text-slate-600');el.classList.remove('bg-white');}
-      else{el.classList.remove('bg-slate-100','cursor-not-allowed','text-slate-600');el.classList.add('bg-white');}
+      el.disabled=false;
+      el.classList.remove('bg-slate-100','cursor-not-allowed','text-slate-600');
+      el.classList.add('bg-white');
     }
   }
 
@@ -243,8 +324,8 @@ function renderEvaluationView() {
   reRenderEvidence(p,price);
   renderConditionFields(p);
   const query=encodeURIComponent([p.district,p.community].filter(Boolean).join(' '));
-  const mapsLink=document.getElementById('link-google-maps');if(mapsLink)mapsLink.href=`https://www.google.com/maps/search/?api=1&query=${query}`;
-  const transitLink=document.getElementById('link-google-transit');if(transitLink)transitLink.href=p.mrtDetails?.stationGeo&&p.geo?`https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(p.geo.lat+','+p.geo.lng)}&destination=${encodeURIComponent(p.mrtDetails.stationGeo.lat+','+p.mrtDetails.stationGeo.lng)}&travelmode=walking`:`https://www.google.com/maps/search/?api=1&query=${query}`;
+  const mapsLink=document.getElementById('link-google-maps');if(mapsLink)mapsLink.href=query?`https://www.google.com/maps/search/?api=1&query=${query}`:'https://www.google.com/maps';
+  const transitLink=document.getElementById('link-google-transit');if(transitLink)transitLink.href=p.mrtDetails?.stationGeo&&p.geo?`https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(p.geo.lat+','+p.geo.lng)}&destination=${encodeURIComponent(p.mrtDetails.stationGeo.lat+','+p.mrtDetails.stationGeo.lng)}&travelmode=walking`:query?`https://www.google.com/maps/search/?api=1&query=${query}`:'https://www.google.com/maps';
   rt('transit-link-label',p.mrtDetails?.station?`${p.mrtDetails.station}・預估步行 ${p.mrtDetails.walkMinutes} 分鐘 ↗`:'開啟地圖，人工確認步行路線');
   const lejuLink=document.getElementById('link-leju-search');if(lejuLink){lejuLink.href=safeRegistrationUrl(s.sourceUrl);lejuLink.textContent=s.sourceUrl?'原始社區實價登錄 ↗':'實登尚未取得';}
   const container=document.getElementById('knives-container');
@@ -252,16 +333,12 @@ function renderEvaluationView() {
     container.innerHTML='';
     for(const item of nineKnivesData){
       const state=e.states[item.id];const card=document.createElement('button');card.type='button';
-      card.className=`text-left p-4 rounded-2xl border transition ${state==='pass'?'bg-emerald-50 border-emerald-300':state==='fail'?'bg-rose-50 border-rose-300':'bg-amber-50/40 border-amber-200'} ${isSaved?'cursor-default':'hover:shadow-md cursor-pointer'}`;
-      card.innerHTML=`<div class="text-xs font-bold ${state==='pass'?'text-emerald-800':state==='fail'?'text-rose-800':'text-amber-800'}">${state==='pass'?'✓ 已確認通過':state==='fail'?'✗ 已確認不通過':'? 待確認'}${p.knifeOverrides?.[item.id]?'（手動標記）':''}</div><h3 class="font-bold mt-2">${rh(item.title)}</h3><p class="text-xs text-slate-600 mt-2">${rh(item.rule)}</p><p class="text-xs mt-3">${rh(item.checkTip)}</p><p class="text-xs text-slate-500 mt-2">${isSaved?'🔒 已儲存鎖定（如需調整請先複製為新案）':'點選依序標記：通過 → 不通過 → 待確認'}</p>`;
+      card.className=`text-left p-4 rounded-2xl border transition ${state==='pass'?'bg-emerald-50 border-emerald-300':state==='fail'?'bg-rose-50 border-rose-300':'bg-amber-50/40 border-amber-200'} hover:shadow-md cursor-pointer`;
+      card.innerHTML=`<div class="text-xs font-bold ${state==='pass'?'text-emerald-800':state==='fail'?'text-rose-800':'text-amber-800'}">${state==='pass'?'✓ 已確認通過':state==='fail'?'✗ 已確認不通過':'? 待確認'}${p.knifeOverrides?.[item.id]?'（手動標記）':''}</div><h3 class="font-bold mt-2">${rh(item.title)}</h3><p class="text-xs text-slate-600 mt-2">${rh(item.rule)}</p><p class="text-xs mt-3">${rh(item.checkTip)}</p><p class="text-xs text-slate-500 mt-2">點選切換：通過 → 不通過 → 待確認</p>`;
       card.addEventListener('click',()=>{
-        if(p.isSaved){
-          if(typeof showToast==='function')showToast('🔒 此物件已儲存鎖定（唯讀模式），無法修改！如需調整請先點擊上方「複製」。');
-          return;
-        }
         p.knifeOverrides ||= {};
         p.knifeOverrides[item.id]=state==='unknown'?'pass':state==='pass'?'fail':'unknown';
-        saveUserProperties();renderEvaluationView();
+        persistUserProperties();renderEvaluationView();
       });
       container.appendChild(card);
     }
@@ -275,8 +352,9 @@ function renderEvaluationView() {
     table.innerHTML='';
     for(const item of userProperties){
       const ev=evaluateProperty(item),pr=ev.pricing;const row=document.createElement('tr');row.className='border-t border-slate-200';
-      row.innerHTML=`<td class="p-3 font-semibold text-slate-900">${rh(item.community||item.name)} ${item.isSaved ? '<span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 font-semibold border border-slate-300">🔒 唯讀</span>' : '<span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 font-semibold border border-amber-300">📝 草稿</span>'}<br><span class="text-xs text-slate-500 font-normal">${rh(item.district)}</span></td><td>${rf(pr.asking,'萬')}<br><span class="text-xs text-slate-500">基準：${rf(pr.reference,'萬')}（${pr.source==='manual'?'手動':pr.source==='unavailable'?'未建立':'成交試算'}）</span></td><td>60%：${rf(pr.fake1,'萬')}<br>80%：${rf(pr.trueBottom,'萬')}</td><td>${ev.count}/9</td><td>${ev.score}</td><td>${rh(ev.tier)}</td><td>${ev.failed.length}項未過／${ev.unknown.length}項待確認</td><td><button type="button" class="text-sky-700 underline font-semibold cursor-pointer">檢視</button></td>`;
-      row.querySelector('button')?.addEventListener('click',()=>editPropertyById(item.id));
+      row.innerHTML=`<td class="p-3 font-semibold text-slate-900">${rh(item.community||item.name)} ${item.isSaved ? '<span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-800 font-semibold border border-emerald-300">✅ 已儲存</span>' : '<span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 font-semibold border border-amber-300">📝 編輯中</span>'}<br><span class="text-xs text-slate-500 font-normal">${rh(item.district)}</span></td><td>${rf(pr.asking,'萬')}<br><span class="text-xs text-slate-500">基準：${rf(pr.reference,'萬')}（${pr.source==='manual'?'手動':pr.source==='unavailable'?'未建立':'成交試算'}）</span></td><td>60%：${rf(pr.fake1,'萬')}<br>80%：${rf(pr.trueBottom,'萬')}</td><td>${ev.count}/9</td><td>${ev.score}</td><td>${rh(ev.tier)}</td><td>${ev.failed.length}項未過／${ev.unknown.length}項待確認</td><td><div class="flex items-center gap-2"><button type="button" class="btn-edit-row text-sky-700 hover:text-sky-900 underline font-semibold cursor-pointer">編輯</button><button type="button" class="btn-del-row text-rose-600 hover:text-rose-800 underline font-semibold cursor-pointer ml-2">刪除</button></div></td>`;
+      row.querySelector('.btn-edit-row')?.addEventListener('click',()=>editPropertyById(item.id));
+      row.querySelector('.btn-del-row')?.addEventListener('click',()=>deletePropertyById(item.id));
       table.appendChild(row);
     }
   }
@@ -289,7 +367,7 @@ function renderActionablePlaybook(p,e) {
 function updateRadarChart(p,e) {
   if(typeof Chart==='undefined')return;const canvas=document.getElementById('propRadarChart');if(!canvas)return;
   const data=[[1,8],[2,3],[6,7],[4,5],[9]].map(ids=>{const known=ids.filter(id=>e.states[id]!=='unknown');return known.length?known.filter(id=>e.states[id]==='pass').length/known.length*100:null;});
-  if(radarChartInstance){radarChartInstance.data.datasets[0].data=data;radarChartInstance.update();return;}
+  if(typeof radarChartInstance!=='undefined' && radarChartInstance){radarChartInstance.data.datasets[0].data=data;radarChartInstance.update();return;}
   radarChartInstance=new Chart(canvas.getContext('2d'),{type:'radar',data:{labels:['商圈','交通','產品','價格','現金流'],datasets:[{label:'已確認項目通過比例（未知留白）',data,borderColor:'#0284c7',backgroundColor:'#0284c720'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{r:{min:0,max:100,ticks:{display:false}}}}});
 }
 function copyLineSummary(){const p=getActiveProperty();if(p)fallbackCopyText(RC.report(p),'已複製來源、筆數與計算依據');}

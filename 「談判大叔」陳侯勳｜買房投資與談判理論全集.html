@@ -19,8 +19,8 @@
   <link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
   <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192x192.png">
   <link rel="icon" type="image/png" sizes="512x512" href="./icons/icon-512x512.png">
-  <link rel="stylesheet" href="./chen-reading.css?v=20261020_06">
-  <script src="./registration-core.js?v=20261020_06"></script>
+  <link rel="stylesheet" href="./chen-reading.css?v=20261020_07">
+  <script src="./registration-core.js?v=20261020_07"></script>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -441,12 +441,12 @@
             <div class="sm:col-span-2 lg:col-span-4 pt-3 flex flex-wrap items-center justify-between gap-2.5 border-t border-slate-200">
               <div class="flex flex-wrap items-center gap-2">
                 <span class="text-slate-500 font-semibold text-[11px]">🗺️ 外部實境與實登查核：</span>
-                <a id="link-google-maps" href="https://www.google.com/maps/search/?api=1&query=新北市三重區永安北路二段171號+日安巴黎" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-300 text-[11px] font-semibold flex items-center gap-1.5 transition">
+                <a id="link-google-maps" href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-300 text-[11px] font-semibold flex items-center gap-1.5 transition">
                   <span>📍 Google Maps 社區街景定位</span>
                   <span>↗</span>
                 </a>
-                <a id="link-google-transit" href="https://www.google.com/maps/dir/?api=1&origin=捷運徐匯中學站&destination=新北市三重區永安北路二段171號+日安巴黎&travelmode=walking" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-300 text-[11px] font-semibold flex items-center gap-1.5 transition">
-                  <span id="transit-link-label">🚶 捷運徐匯中學站 步行路徑實測</span>
+                <a id="link-google-transit" href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-300 text-[11px] font-semibold flex items-center gap-1.5 transition">
+                  <span id="transit-link-label">🚶 捷運步行路徑實測（請先輸入物件）</span>
                   <span>↗</span>
                 </a>
                 <a id="link-leju-search" href="https://www.leju.com.tw/page_search_result?area=新北市三重區" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 text-[11px] font-semibold flex items-center gap-1.5 transition">
@@ -1699,10 +1699,6 @@
       document.getElementById('btn-recalc-knives').addEventListener('click', () => {
         const cur = getActiveProperty();
         if (!cur) return;
-        if (cur.isSaved) {
-          showToast("🔒 已儲存的物件已鎖定，只能檢視不能編輯！若需重新判定請先點選「複製」。");
-          return;
-        }
         cur.knifeOverrides = {};
         cur.knives = autoEvaluateKnives(cur);
         saveUserProperties();
@@ -1716,7 +1712,7 @@
         cur.isSaved = true;
         saveUserProperties();
         renderEvaluationView();
-        showToast("💾 已成功儲存物件並鎖定為唯讀檢視模式！");
+        showToast("💾 已成功儲存物件修改！");
       });
 
       document.getElementById('btn-copy-line').addEventListener('click', copyLineSummary);
@@ -1751,18 +1747,20 @@
         const input = document.getElementById(elementId);
         if (!input) return;
         input.addEventListener('input', (e) => {
-          const active = getActiveProperty();
-          if (active) {
-            if (active.isSaved) return;
-            active[propKey] = ['askingPrice','households','manualReferenceWan','parkingAreaPing','parkingPriceWan'].includes(propKey) ? RegistrationCore.number(e.target.value) : e.target.value;
-            if(propKey==='size')active.totalAreaPing=RegistrationCore.positive(e.target.value.match(/([\d.]+)/)?.[1]);
-            if(['community','district'].includes(propKey)){active.registration=null;active.manualReferenceWan=null;active.knifeOverrides={};active.dataWarning='物件身分欄位已修改，請重新讀取網址以核對社區。';}
-            if (autoRecalcKnives) {
-              active.knives = autoEvaluateKnives(active);
-            }
-            saveUserProperties();
-            renderEvaluationView();
+          let active = getActiveProperty();
+          if (!active) {
+            active = RegistrationCore.emptyProperty('新物件 1');
+            userProperties.push(active);
+            activePropertyId = active.id;
           }
+          active[propKey] = ['askingPrice','households','manualReferenceWan','parkingAreaPing','parkingPriceWan'].includes(propKey) ? RegistrationCore.number(e.target.value) : e.target.value;
+          if(propKey==='size')active.totalAreaPing=RegistrationCore.positive(e.target.value.match(/([\d.]+)/)?.[1]);
+          if(['community','district'].includes(propKey)){active.registration=null;active.manualReferenceWan=null;active.knifeOverrides={};active.dataWarning='物件身分欄位已修改，請重新讀取網址以核對社區。';}
+          if (autoRecalcKnives) {
+            active.knives = autoEvaluateKnives(active);
+          }
+          saveUserProperties();
+          renderEvaluationView();
         });
       };
 
@@ -1778,8 +1776,12 @@
       bindPropInput('prop-input-parking-size','parkingAreaPing',true);
       bindPropInput('prop-input-parking-price','parkingPriceWan',true);
       document.getElementById('prop-input-has-parking').addEventListener('change',event=>{
-        const p=getActiveProperty();
-        if(!p||p.isSaved)return;
+        let p=getActiveProperty();
+        if(!p){
+          p=RegistrationCore.emptyProperty('新物件 1');
+          userProperties.push(p);
+          activePropertyId=p.id;
+        }
         p.hasParking=event.target.value===''?null:event.target.value==='true';
         if(p.hasParking===false){p.parkingAreaPing=0;p.parkingPriceWan=0;}else{p.parkingAreaPing=null;p.parkingPriceWan=null;}
         saveUserProperties();
@@ -1858,7 +1860,7 @@
       // Register Service Worker for PWA support with auto-update & controllerchange reload
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js?v=20261020_06').then((registration) => {
+          navigator.serviceWorker.register('./sw.js?v=20261020_07').then((registration) => {
             console.log('[PWA] ServiceWorker registered from Chen Hou-xun page:', registration.scope);
             registration.update();
           }).catch((err) => {
@@ -1894,10 +1896,10 @@
         console.warn('Cache clearing error:', err);
       }
       const url = new URL(window.location.href);
-      url.searchParams.set('v', '20261020_06_' + Date.now());
+      url.searchParams.set('v', '20261020_07_' + Date.now());
       window.location.href = url.toString();
     };
   </script>
-  <script src="./registration-ui.js?v=20261020_06"></script>
+  <script src="./registration-ui.js?v=20261020_07"></script>
 </body>
 </html>

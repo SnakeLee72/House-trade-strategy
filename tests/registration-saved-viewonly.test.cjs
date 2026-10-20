@@ -105,7 +105,7 @@ function setupTestEnvironment() {
   return { ctx, nodes, getToast: () => toastMessage };
 }
 
-test('Saved property is view-only: all inputs disabled and delete button disabled', () => {
+test('Saved property remains fully editable and deletable: all inputs and delete button enabled', () => {
   const { ctx, nodes } = setupTestEnvironment();
   const savedProp = {
     modelVersion: 2,
@@ -130,63 +130,43 @@ test('Saved property is view-only: all inputs disabled and delete button disable
   ctx.activePropertyId = savedProp.id;
   ctx.renderEvaluationView();
 
-  // 1. Verify view-only badge & labels
-  assert.equal(nodes['prop-view-status-label'].textContent, '正在檢視：');
-  assert.match(nodes['prop-saved-badge'].textContent, /已儲存（唯讀模式）/);
-  assert.match(nodes['btn-save-prop-explicit'].innerHTML, /已儲存（唯讀模式）/);
-  assert.equal(nodes['btn-save-prop-explicit'].disabled, true);
-
-  // 2. Verify Delete button is disabled
-  assert.equal(nodes['btn-del-prop'].disabled, true);
-  assert.equal(nodes['btn-recalc-knives'].disabled, true);
-
-  // 3. Verify all form inputs are disabled
-  assert.equal(nodes['prop-input-community'].disabled, true);
-  assert.equal(nodes['prop-input-asking'].disabled, true);
-  assert.equal(nodes['prop-input-households'].disabled, true);
-  assert.equal(nodes['prop-input-mrt'].disabled, true);
-  assert.equal(nodes['prop-input-size'].disabled, true);
-  assert.equal(nodes['prop-input-has-parking'].disabled, true);
-
-  // 4. Verify deletePropertyById blocks deletion of saved property
-  ctx.deletePropertyById(savedProp.id);
-  assert.equal(ctx.userProperties.length, 1);
-  assert.equal(ctx.userProperties[0].id, savedProp.id);
-});
-
-test('Unsaved draft allows editing and deletion, then locks when saved', () => {
-  const { ctx, nodes } = setupTestEnvironment();
-  const draftProp = {
-    modelVersion: 2,
-    id: 'prop_draft_1',
-    community: '新都匯草稿',
-    name: '高樓兩房',
-    district: '新北市三重區',
-    askingPrice: 1980,
-    totalAreaPing: 28.5,
-    isSaved: false
-  };
-
-  ctx.userProperties = [draftProp];
-  ctx.activePropertyId = draftProp.id;
-  ctx.renderEvaluationView();
-
-  // 1. In draft mode, inputs are enabled
+  // 1. Verify editable status label & enabled actions
   assert.equal(nodes['prop-view-status-label'].textContent, '正在編輯：');
-  assert.match(nodes['prop-saved-badge'].textContent, /草稿中（尚未儲存）/);
+  assert.match(nodes['prop-saved-badge'].textContent, /已儲存（隨時可修改）/);
+  assert.match(nodes['btn-save-prop-explicit'].innerHTML, /已儲存修改/);
   assert.equal(nodes['btn-save-prop-explicit'].disabled, false);
+
+  // 2. Verify Delete and Recalc buttons are enabled
   assert.equal(nodes['btn-del-prop'].disabled, false);
+  assert.equal(nodes['btn-recalc-knives'].disabled, false);
+
+  // 3. Verify all form inputs are enabled for editing
   assert.equal(nodes['prop-input-community'].disabled, false);
   assert.equal(nodes['prop-input-asking'].disabled, false);
+  assert.equal(nodes['prop-input-households'].disabled, false);
+  assert.equal(nodes['prop-input-mrt'].disabled, false);
+  assert.equal(nodes['prop-input-size'].disabled, false);
+  assert.equal(nodes['prop-input-has-parking'].disabled, false);
 
-  // 2. Clicking save commits to view-only mode
-  draftProp.isSaved = true;
+  // 4. Verify deletePropertyById successfully deletes the property
+  ctx.deletePropertyById(savedProp.id);
+  assert.equal(ctx.userProperties.length, 0);
+  assert.equal(ctx.activePropertyId, null);
+});
+
+test('Empty state without default property renders cleanly and leaves form blank', () => {
+  const { ctx, nodes } = setupTestEnvironment();
+  ctx.userProperties = [];
+  ctx.activePropertyId = null;
   ctx.renderEvaluationView();
 
-  assert.equal(nodes['prop-view-status-label'].textContent, '正在檢視：');
-  assert.match(nodes['prop-saved-badge'].textContent, /已儲存（唯讀模式）/);
+  assert.equal(nodes['prop-view-status-label'].textContent, '目前狀態：');
+  assert.match(nodes['prop-saved-badge'].textContent, /尚無物件/);
+  assert.equal(nodes['prop-editing-title'].textContent, '尚未建立物件');
+  assert.equal(nodes['prop-input-community'].value, '');
+  assert.equal(nodes['prop-input-asking'].value, '');
   assert.equal(nodes['btn-del-prop'].disabled, true);
-  assert.equal(nodes['prop-input-asking'].disabled, true);
+  assert.equal(nodes['btn-save-prop-explicit'].disabled, true);
 });
 
 test('Nine Knives smart auto-evaluations correctly determine pass/fail states', () => {

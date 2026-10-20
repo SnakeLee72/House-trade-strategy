@@ -44,3 +44,16 @@ main section { scroll-margin-top: 8rem; }
   #matrix-section td[data-label]::before { content: attr(data-label); display: block; margin-bottom: .35rem; color: #fbbf24; font-size: .75rem; font-weight: 700; }
   #matrix-section td[data-label]:last-child::before { color: #38bdf8; }
 }
+
+/* Desktop screen layout optimization (prevents compression and improves proportions on desktop) */
+@media (min-width: 1024px) {
+  body > header { min-height: 4.25rem; }
+  .glass-card-interactive { transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease; }
+  .glass-card-interactive:hover { transform: translateY(-2px); box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.45); }
+  #simulator-section input, #simulator-section select { min-height: 42px; font-size: 0.9375rem; }
+  #pillars-section .glass-panel { min-height: 100%; }
+  #charts-section .chart-frame { min-height: 380px; }
+  #charts-section .chart-frame canvas { max-height: 420px; }
+  #matrix-section td { vertical-align: top; }
+  #matrix-section table { table-layout: auto; }
+}

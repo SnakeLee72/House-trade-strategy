@@ -19,8 +19,8 @@
   <link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
   <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192x192.png">
   <link rel="icon" type="image/png" sizes="512x512" href="./icons/icon-512x512.png">
-  <link rel="stylesheet" href="./home-mobile.css?v=20261020_06">
-  <script src="./pwa-install.js?v=20261020_06"></script>
+  <link rel="stylesheet" href="./home-mobile.css?v=20261020_07">
+  <script src="./pwa-install.js?v=20261020_07"></script>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -142,7 +142,7 @@
 
   <!-- Sticky Navigation Header -->
   <header class="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/85 backdrop-blur-xl">
-    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2 sm:gap-4">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 min-h-16 h-auto py-2 flex items-center justify-between gap-2 sm:gap-4 flex-wrap lg:flex-nowrap">
       <a href="index.html" class="flex items-center gap-2.5 sm:gap-3 hover:opacity-90 transition shrink-0">
         <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-400 via-amber-500 to-sky-500 p-[1px] shadow-lg shadow-amber-500/20 shrink-0">
           <div class="w-full h-full bg-slate-950 rounded-[11px] flex items-center justify-center text-base sm:text-lg">🏛️</div>
@@ -153,12 +153,12 @@
             <span class="hidden sm:inline font-black text-white sm:text-base tracking-tight">HOUSE TRADE STRATEGY</span>
             <span class="hidden md:inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">雙師戰略指揮中心</span>
           </div>
-          <div class="text-[11px] text-slate-400 hidden sm:block">吳淡如《房商必修課》 × 「談判大叔」陳侯勳《房產剎價學》</div>
+          <div class="text-[11px] text-slate-400 hidden lg:block">吳淡如《房商必修課》 × 「談判大叔」陳侯勳《房產剎價學》</div>
         </div>
       </a>
 
       <!-- Quick Jump Links (Desktop) -->
-      <nav class="hidden xl:flex items-center gap-5 text-xs font-semibold text-slate-300">
+      <nav class="hidden 2xl:flex items-center gap-5 text-xs font-semibold text-slate-300">
         <a href="#portal-section" class="hover:text-amber-400 transition">雙師入口</a>
         <a href="#second-house-case" class="hover:text-emerald-400 transition">🏦 第二屋實戰決策</a>
         <a href="#simulator-section" class="hover:text-emerald-400 transition">⚡ 聯合戰略試算儀</a>
@@ -168,14 +168,14 @@
       </nav>
 
       <!-- Direct Portal Buttons & Mobile Dropdown Controls -->
-      <div class="flex items-center gap-1.5 sm:gap-2">
-        <button id="pwaInstallBtn" type="button" class="px-2.5 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-sky-600 hover:from-purple-500 hover:to-sky-500 text-white font-black text-xs sm:text-sm transition flex items-center gap-1 shadow-lg shadow-purple-500/25 border border-purple-400/40 cursor-pointer shrink-0" title="將房商智庫安裝至桌面或手機主畫面">
+      <div class="flex items-center gap-1.5 xl:gap-2">
+        <button id="pwaInstallBtn" type="button" class="px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-sky-600 hover:from-purple-500 hover:to-sky-500 text-white font-black text-xs sm:text-sm transition flex items-center gap-1 shadow-lg shadow-purple-500/25 border border-purple-400/40 cursor-pointer shrink-0" title="將房商智庫安裝至桌面或手機主畫面">
           <span>📲</span>
           <span class="hidden sm:inline">下載設成</span><span>App</span>
         </button>
-        <button type="button" onclick="forceClearCacheAndReload()" class="px-2.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-sky-300 hover:text-white border border-slate-700 hover:border-sky-500/40 text-xs font-bold transition flex items-center gap-1 shadow-sm shrink-0" title="清除快取並載入最新版">
+        <button type="button" onclick="forceClearCacheAndReload()" class="px-2 sm:px-2.5 py-1.5 sm:py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-sky-300 hover:text-white border border-slate-700 hover:border-sky-500/40 text-xs font-bold transition flex items-center gap-1 shadow-sm shrink-0" title="清除快取並載入最新版">
           <span>🔄</span>
-          <span class="hidden lg:inline">更新快取</span>
+          <span class="hidden xl:inline">更新快取</span>
         </button>
 
         <!-- Mobile Quick Jump Dropdown Menu (支援下拉式選單) -->
@@ -183,7 +183,7 @@
           <select id="mobileHeaderJump" class="bg-slate-900 text-amber-300 border border-slate-700 hover:border-amber-500/50 text-xs font-bold rounded-xl px-2.5 py-2 pr-7 appearance-none focus:outline-none focus:ring-1 focus:ring-amber-500 cursor-pointer max-w-[130px] sm:max-w-none truncate" aria-label="手機快速導覽下拉選單">
             <option value="">☰ 快速選單 ▾</option>
             <option value="吳淡如_房商必修課.html">🐎 吳淡如《房商必修課》</option>
-            <option value="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_06">🗡️ 陳侯勳《房產剎價學》</option>
+            <option value="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_07">🗡️ 陳侯勳《房產剎價學》</option>
             <option value="second_house.html">🏦 第二屋實戰決策</option>
             <option value="#portal-section">🏛️ 雙師入口介紹</option>
             <option value="#second-house-case">💡 第一屋增值580萬案例</option>
@@ -196,16 +196,16 @@
         </div>
 
         <!-- Desktop Direct Portal Buttons -->
-        <div class="hidden md:flex items-center gap-2">
-          <a href="吳淡如_房商必修課.html" class="px-3 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs sm:text-sm transition flex items-center gap-1.5 shadow-lg shadow-amber-500/20">
+        <div class="hidden md:flex items-center gap-1.5 xl:gap-2">
+          <a href="吳淡如_房商必修課.html" class="px-2.5 xl:px-3.5 py-1.5 xl:py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold xl:font-black text-xs xl:text-sm transition flex items-center gap-1 xl:gap-1.5 shadow-md shadow-amber-500/20 shrink-0">
             <span>🐎 吳淡如專區</span>
             <span>↗</span>
           </a>
-          <a href="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_06" class="px-3 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-sky-400 to-sky-600 hover:from-sky-300 hover:to-sky-500 text-slate-950 font-black text-xs sm:text-sm transition flex items-center gap-1.5 shadow-lg shadow-sky-500/20">
+          <a href="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_07" class="px-2.5 xl:px-3.5 py-1.5 xl:py-2 rounded-xl bg-gradient-to-r from-sky-400 to-sky-600 hover:from-sky-300 hover:to-sky-500 text-slate-950 font-bold xl:font-black text-xs xl:text-sm transition flex items-center gap-1 xl:gap-1.5 shadow-md shadow-sky-500/20 shrink-0">
             <span>🗡️ 陳侯勳專區</span>
             <span>↗</span>
           </a>
-          <a href="second_house.html" class="px-3 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-300 hover:to-teal-400 text-slate-950 font-black text-xs sm:text-sm transition flex items-center gap-1.5 shadow-lg shadow-emerald-500/20">
+          <a href="second_house.html" class="px-2.5 xl:px-3.5 py-1.5 xl:py-2 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-300 hover:to-teal-400 text-slate-950 font-bold xl:font-black text-xs xl:text-sm transition flex items-center gap-1 xl:gap-1.5 shadow-md shadow-emerald-500/20 shrink-0">
             <span>🏦 第二屋實戰</span>
             <span>↗</span>
           </a>
@@ -219,7 +219,7 @@
       <a href="吳淡如_房商必修課.html" class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 text-xs font-bold shrink-0 flex items-center gap-1">
         <span>🐎 吳淡如專區 ↗</span>
       </a>
-      <a href="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_06" class="px-3 py-1.5 rounded-lg bg-sky-500/20 text-sky-300 border border-sky-500/40 text-xs font-bold shrink-0 flex items-center gap-1">
+      <a href="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_07" class="px-3 py-1.5 rounded-lg bg-sky-500/20 text-sky-300 border border-sky-500/40 text-xs font-bold shrink-0 flex items-center gap-1">
         <span>🗡️ 陳侯勳專區 ↗</span>
       </a>
       <a href="second_house.html" class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs font-bold shrink-0 flex items-center gap-1">
@@ -272,30 +272,30 @@
         </p>
 
         <!-- Key Stats Counter Bar -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 max-w-3xl mx-auto">
-          <div class="glass-panel rounded-2xl p-3.5 border border-amber-500/20">
-            <div class="text-[11px] text-slate-400 font-medium">吳淡如海內外實戰</div>
-            <div class="text-xl sm:text-2xl font-black text-amber-400 font-mono-num mt-0.5">35年 / 100+間</div>
-            <div class="text-[10px] text-slate-400">收錄 22 部深度訪談精華</div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 pt-3 max-w-5xl xl:max-w-6xl mx-auto">
+          <div class="glass-panel rounded-2xl p-4 sm:p-5 border border-amber-500/20 flex flex-col justify-between">
+            <div class="text-[11px] sm:text-xs text-slate-400 font-medium">吳淡如海內外實戰</div>
+            <div class="text-xl sm:text-2xl lg:text-3xl font-black text-amber-400 font-mono-num mt-1">35年 / 100+間</div>
+            <div class="text-[10px] sm:text-[11px] text-slate-400 mt-1">收錄 22 部深度訪談精華</div>
           </div>
-          <div class="glass-panel rounded-2xl p-3.5 border border-sky-500/20">
-            <div class="text-[11px] text-slate-400 font-medium">陳侯勳輔導談判總額</div>
-            <div class="text-xl sm:text-2xl font-black text-sky-400 font-mono-num mt-0.5">126億+ 台幣</div>
-            <div class="text-[10px] text-slate-400">110 : 30 : 1 看屋漏斗鐵律</div>
+          <div class="glass-panel rounded-2xl p-4 sm:p-5 border border-sky-500/20 flex flex-col justify-between">
+            <div class="text-[11px] sm:text-xs text-slate-400 font-medium">陳侯勳輔導談判總額</div>
+            <div class="text-xl sm:text-2xl lg:text-3xl font-black text-sky-400 font-mono-num mt-1">126億+ 台幣</div>
+            <div class="text-[10px] sm:text-[11px] text-slate-400 mt-1">110 : 30 : 1 看屋漏斗鐵律</div>
           </div>
-          <div class="glass-panel rounded-2xl p-3.5 border border-emerald-500/20">
-            <div class="text-[11px] text-slate-400 font-medium">房貸收支安全紅線</div>
-            <div class="text-xl sm:text-2xl font-black text-emerald-400 font-mono-num mt-0.5">≤ 35% ~ 40%</div>
-            <div class="text-[10px] text-slate-400">且確保 3 年現金流不斷鏈</div>
+          <div class="glass-panel rounded-2xl p-4 sm:p-5 border border-emerald-500/20 flex flex-col justify-between">
+            <div class="text-[11px] sm:text-xs text-slate-400 font-medium">房貸收支安全紅線</div>
+            <div class="text-xl sm:text-2xl lg:text-3xl font-black text-emerald-400 font-mono-num mt-1">≤ 35% ~ 40%</div>
+            <div class="text-[10px] sm:text-[11px] text-slate-400 mt-1">且確保 3 年現金流不斷鏈</div>
           </div>
-          <div class="glass-panel rounded-2xl p-3.5 border border-purple-500/20">
-            <div class="text-[11px] text-slate-400 font-medium">心中真實底價錨點</div>
-            <div class="text-xl sm:text-2xl font-black text-purple-400 font-mono-num mt-0.5">實登 × 80%</div>
-            <div class="text-[10px] text-slate-400">60% 敲門 / 雙斡旋破錨定</div>
+          <div class="glass-panel rounded-2xl p-4 sm:p-5 border border-purple-500/20 flex flex-col justify-between">
+            <div class="text-[11px] sm:text-xs text-slate-400 font-medium">心中真實底價錨點</div>
+            <div class="text-xl sm:text-2xl lg:text-3xl font-black text-purple-400 font-mono-num mt-1">實登 × 80%</div>
+            <div class="text-[10px] sm:text-[11px] text-slate-400 mt-1">60% 敲門 / 雙斡旋破錨定</div>
           </div>
         </div>
       <!-- PWA APP INSTALL HERO BANNER (像靈蛇週報) -->
-      <div id="pwaHeroBanner" class="mt-8 max-w-4xl mx-auto rounded-3xl p-5 sm:p-6 bg-gradient-to-r from-purple-950/60 via-slate-900/90 to-indigo-950/60 border-2 border-purple-500/40 shadow-2xl backdrop-blur-xl flex flex-col md:flex-row items-center justify-between gap-5">
+      <div id="pwaHeroBanner" class="mt-8 max-w-5xl xl:max-w-6xl mx-auto rounded-3xl p-5 sm:p-6 bg-gradient-to-r from-purple-950/60 via-slate-900/90 to-indigo-950/60 border-2 border-purple-500/40 shadow-2xl backdrop-blur-xl flex flex-col md:flex-row items-center justify-between gap-5">
         <div class="flex items-center gap-4 text-left w-full md:w-auto">
           <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl overflow-hidden shadow-lg shadow-purple-500/20 border-2 border-purple-400/50 shrink-0 bg-slate-950 p-1">
             <img src="./icons/icon-192x192.png" alt="房商智庫 App 圖示" class="w-full h-full object-cover rounded-xl">
@@ -342,40 +342,40 @@
             </p>
 
             <!-- Feature Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5">
-              <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800/90 hover:border-amber-500/40 transition">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mt-5">
+              <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800/90 hover:border-amber-500/40 transition flex flex-col justify-start">
                 <div class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
                   <span>🐎🐔🐷</span>
                   <span>獨創「馬・雞・豬」理論</span>
                 </div>
-                <p class="text-[11px] text-slate-300 mt-1 leading-relaxed">
+                <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
                   <strong>馬</strong>（自住坐騎，不完美主義先上車）、<strong>雞</strong>（72法則生蛋收租店面）、<strong>豬</strong>（跟隨GDP高成長賺翻倍價差）。
                 </p>
               </div>
-              <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800/90 hover:border-amber-500/40 transition">
+              <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800/90 hover:border-amber-500/40 transition flex flex-col justify-start">
                 <div class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
                   <span>🧭</span>
                   <span>買房四步法 ＆ 五力分析</span>
                 </div>
-                <p class="text-[11px] text-slate-300 mt-1 leading-relaxed">
+                <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
                   找資金、選地點、開槓桿、挑時機；並以<strong>需求力、政策力、稅法力、融資力、脫手力</strong>動態雷達圖客觀評分。
                 </p>
               </div>
-              <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800/90 hover:border-amber-500/40 transition">
+              <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800/90 hover:border-amber-500/40 transition flex flex-col justify-start">
                 <div class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
                   <span>♾️</span>
                   <span>25年無限寬限之術</span>
                 </div>
-                <p class="text-[11px] text-slate-300 mt-1 leading-relaxed">
+                <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
                   木柵自住房 25 年從不還本金實錄！善用 40 年房貸抗通膨，每 5 年轉貸增貸並將省下本金定投市值型 ETF。
                 </p>
               </div>
-              <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800/90 hover:border-amber-500/40 transition">
+              <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800/90 hover:border-amber-500/40 transition flex flex-col justify-start">
                 <div class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
                   <span>⚖️</span>
                   <span>6大踩坑史 ＆ 法律三防線</span>
                 </div>
-                <p class="text-[11px] text-slate-300 mt-1 leading-relaxed">
+                <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
                   公墓凶宅、淡水工業宅、宜蘭民宿與北海道老屋血淚教訓；傳授<strong>預告登記、附條件贈與、第一順位抵押權</strong>。
                 </p>
               </div>
@@ -413,40 +413,40 @@
             </p>
 
             <!-- Feature Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5">
-              <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800/90 hover:border-sky-500/40 transition">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mt-5">
+              <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800/90 hover:border-sky-500/40 transition flex flex-col justify-start">
                 <div class="text-xs font-bold text-sky-400 flex items-center gap-1.5">
                   <span>⚡</span>
                   <span>九把刀物件資料與條件檢核</span>
                 </div>
-                <p class="text-[11px] text-slate-300 mt-1 leading-relaxed">
+                <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
                   貼上售屋物件網址，<strong>核對開價、坪數與可取得的社區成交</strong>。捷運時間、戶數及現金流缺乏證據時保留待確認。
                 </p>
               </div>
-              <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800/90 hover:border-sky-500/40 transition">
+              <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800/90 hover:border-sky-500/40 transition flex flex-col justify-start">
                 <div class="text-xs font-bold text-sky-400 flex items-center gap-1.5">
                   <span>📊</span>
                   <span>實登車位拆算 ＆ 四階出價</span>
                 </div>
-                <p class="text-[11px] text-slate-300 mt-1 leading-relaxed">
+                <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
                   揭露來源筆數、期間、特殊交易與估算車位；資料完整且樣本足夠才試算 <strong>60% 敲門、68% 試探、75% 防守、80% 底價</strong>。
                 </p>
               </div>
-              <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800/90 hover:border-sky-500/40 transition">
+              <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800/90 hover:border-sky-500/40 transition flex flex-col justify-start">
                 <div class="text-xs font-bold text-sky-400 flex items-center gap-1.5">
                   <span>🤫</span>
                   <span>被動談判 ＆ 小房間拆招</span>
                 </div>
-                <p class="text-[11px] text-slate-300 mt-1 leading-relaxed">
+                <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
                   扮演被說服者、閉嘴留白（「剎」）、要價進攻 2:1、見面談前 2 小時預告退場反客為主，復盤內湖 55 萬殺到 40.8 萬戰役。
                 </p>
               </div>
-              <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800/90 hover:border-sky-500/40 transition">
+              <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800/90 hover:border-sky-500/40 transition flex flex-col justify-start">
                 <div class="text-xs font-bold text-sky-400 flex items-center gap-1.5">
                   <span>💸</span>
                   <span>房貸印鈔機（+4300元=100萬）</span>
                 </div>
-                <p class="text-[11px] text-slate-300 mt-1 leading-relaxed">
+                <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
                   前兩間必買出租房養自己！透過共生公寓軟裝改造拉高月租，並將科目一（購屋貸）洗成科目四（理財型房貸）達成無限 ROI。
                 </p>
               </div>
@@ -457,7 +457,7 @@
             <div class="text-xs text-slate-400">
               🎯 <strong class="text-sky-300">內建工具：</strong>591物件與成交查核、來源筆數與計算依據、LINE摘要匯出
             </div>
-            <a href="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_06" class="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-sky-400 to-sky-600 hover:from-sky-300 hover:to-sky-500 text-slate-950 font-black text-sm flex items-center justify-center gap-2 shadow-xl shadow-sky-500/25 transition shrink-0">
+            <a href="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_07" class="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-sky-400 to-sky-600 hover:from-sky-300 hover:to-sky-500 text-slate-950 font-black text-sm flex items-center justify-center gap-2 shadow-xl shadow-sky-500/25 transition shrink-0">
               <span>進入陳侯勳《買房九把刀》</span>
               <span class="text-base">➔</span>
             </a>
@@ -468,8 +468,8 @@
 
       <!-- FEATURED FLAGSHIP PRACTICAL CASE: SECOND HOUSE STRATEGY -->
       <div id="second-house-case" class="mt-8">
-        <div class="glass-card-interactive rounded-3xl p-6 sm:p-8 border-2 border-emerald-500/40 bg-gradient-to-r from-emerald-950/40 via-slate-900/95 to-sky-950/40 shadow-2xl flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-          <div class="space-y-3 max-w-4xl">
+        <div class="glass-card-interactive rounded-3xl p-6 sm:p-8 lg:p-9 xl:p-10 border-2 border-emerald-500/40 bg-gradient-to-r from-emerald-950/40 via-slate-900/95 to-sky-950/40 shadow-2xl flex flex-col xl:flex-row xl:items-center justify-between gap-6 lg:gap-8">
+          <div class="space-y-3.5 max-w-4xl xl:max-w-5xl">
             <div class="flex flex-wrap items-center gap-2">
               <span class="px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-xs font-black tracking-wide">
                 🎯 實戰專案特區・雙師心法落地
@@ -494,12 +494,12 @@
               <span class="flex items-center gap-1.5"><span class="text-emerald-400 font-bold">✓</span> 動態現金流與 10 年資產複利圖表</span>
             </div>
           </div>
-          <div class="shrink-0 flex flex-col sm:flex-row lg:flex-col gap-3">
-            <a href="second_house.html" class="px-6 py-4 rounded-2xl bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-300 hover:to-teal-400 text-slate-950 font-black text-sm sm:text-base flex items-center justify-center gap-2 shadow-xl shadow-emerald-500/25 transition">
+          <div class="shrink-0 flex flex-col sm:flex-row xl:flex-col gap-3.5 w-full xl:w-auto">
+            <a href="second_house.html" class="px-6 py-4 rounded-2xl bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-300 hover:to-teal-400 text-slate-950 font-black text-sm sm:text-base flex items-center justify-center gap-2 shadow-xl shadow-emerald-500/25 transition whitespace-nowrap">
               <span>進入第二屋決策中心</span>
               <span>➔</span>
             </a>
-            <a href="second_house.html#simulator-section" class="px-6 py-3 rounded-2xl bg-slate-900 hover:bg-slate-800 text-emerald-300 border border-emerald-500/40 font-bold text-xs sm:text-sm text-center transition">
+            <a href="second_house.html#simulator-section" class="px-6 py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-emerald-300 border border-emerald-500/40 font-bold text-xs sm:text-sm text-center transition whitespace-nowrap">
               🧮 啟用專屬現金流試算儀
             </a>
           </div>
@@ -529,28 +529,28 @@
       </div>
 
       <!-- Inputs Row -->
-      <div class="grid grid-cols-1 min-[360px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mt-6">
-        <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800">
+      <div class="grid grid-cols-1 min-[360px]:grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3.5 sm:gap-4 mt-6">
+        <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800 flex flex-col justify-between">
           <label for="sim-asking" class="block text-[11px] font-bold text-slate-400 mb-1">1. 屋主開價 (萬元)</label>
           <input id="sim-asking" type="number" value="2580" step="20" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono-num font-bold text-sm focus:outline-none focus:border-amber-400" />
         </div>
-        <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800">
+        <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800 flex flex-col justify-between">
           <label for="sim-reg" class="block text-[11px] font-bold text-slate-400 mb-1">2. 手動比較基準 (萬元)</label>
           <input id="sim-reg" type="number" value="2200" step="20" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-amber-300 font-mono-num font-bold text-sm focus:outline-none focus:border-amber-400" />
         </div>
-        <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800">
+        <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800 flex flex-col justify-between">
           <label for="sim-income" class="block text-[11px] font-bold text-slate-400 mb-1">3. 家庭月收入 (萬元)</label>
           <input id="sim-income" type="number" value="12" step="0.5" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono-num font-bold text-sm focus:outline-none focus:border-amber-400" />
         </div>
-        <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800">
+        <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800 flex flex-col justify-between">
           <label for="sim-down" class="block text-[11px] font-bold text-slate-400 mb-1">4. 自備頭期款 (萬元)</label>
           <input id="sim-down" type="number" value="500" step="20" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono-num font-bold text-sm focus:outline-none focus:border-amber-400" />
         </div>
-        <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800">
+        <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800 flex flex-col justify-between">
           <label for="sim-rent" class="block text-[11px] font-bold text-slate-400 mb-1">5. 預估月租金 (元)</label>
           <input id="sim-rent" type="number" value="48000" step="1000" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-emerald-300 font-mono-num font-bold text-sm focus:outline-none focus:border-emerald-400" />
         </div>
-        <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800">
+        <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800 flex flex-col justify-between">
           <label for="sim-years" class="block text-[11px] font-bold text-slate-400 mb-1">6. 貸款年限 (2.25%)</label>
           <select id="sim-years" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-2 text-white font-bold text-sm focus:outline-none focus:border-amber-400">
             <option value="40" selected>40 年期 (抗通膨首選)</option>
@@ -564,7 +564,7 @@
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
         
         <!-- Output Left: Chen Hou-Hsun Pricing & Free Money -->
-        <div class="sim-output p-5 rounded-2xl bg-slate-950/90 border border-sky-500/30 space-y-4">
+        <div class="sim-output p-5 sm:p-6 rounded-2xl bg-slate-950/90 border border-sky-500/30 space-y-4 flex flex-col justify-between">
           <div class="sim-heading flex items-center justify-between border-b border-slate-800 pb-2.5">
             <span class="font-bold text-sky-400 text-sm flex items-center gap-1.5">
               <span>🗡️</span>
@@ -575,20 +575,20 @@
             </span>
           </div>
 
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
-            <div class="p-2.5 rounded-xl bg-slate-900 border border-emerald-500/30">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 text-center">
+            <div class="p-2.5 sm:p-3 rounded-xl bg-slate-900 border border-emerald-500/30">
               <div class="text-[10px] text-emerald-400 font-semibold">🥊 60% 敲門價</div>
               <div id="sim-p60" class="text-sm sm:text-base font-black text-white font-mono-num mt-1">1,320萬</div>
             </div>
-            <div class="p-2.5 rounded-xl bg-slate-900 border border-sky-500/30">
+            <div class="p-2.5 sm:p-3 rounded-xl bg-slate-900 border border-sky-500/30">
               <div class="text-[10px] text-sky-400 font-semibold">🛡️ 68% 試探價</div>
               <div id="sim-p68" class="text-sm sm:text-base font-black text-white font-mono-num mt-1">1,496萬</div>
             </div>
-            <div class="p-2.5 rounded-xl bg-slate-900 border border-purple-500/30">
+            <div class="p-2.5 sm:p-3 rounded-xl bg-slate-900 border border-purple-500/30">
               <div class="text-[10px] text-purple-400 font-semibold">🔒 75% 防守價</div>
               <div id="sim-p75" class="text-sm sm:text-base font-black text-white font-mono-num mt-1">1,650萬</div>
             </div>
-            <div class="p-2.5 rounded-xl bg-amber-500/15 border border-amber-500/50">
+            <div class="p-2.5 sm:p-3 rounded-xl bg-amber-500/15 border border-amber-500/50">
               <div class="text-[10px] text-amber-300 font-bold">🎯 80% 策略試算</div>
               <div id="sim-p80" class="text-sm sm:text-base font-black text-amber-400 font-mono-num mt-1">1,760萬</div>
             </div>
@@ -607,7 +607,7 @@
         </div>
 
         <!-- Output Right: Wu Dan-Ru Financial Safety & Leverage -->
-        <div class="sim-output p-5 rounded-2xl bg-slate-950/90 border border-amber-500/30 space-y-4">
+        <div class="sim-output p-5 sm:p-6 rounded-2xl bg-slate-950/90 border border-amber-500/30 space-y-4 flex flex-col justify-between">
           <div class="sim-heading flex items-center justify-between border-b border-slate-800 pb-2.5">
             <span class="font-bold text-amber-400 text-sm flex items-center gap-1.5">
               <span>🐎</span>
@@ -618,19 +618,19 @@
             </span>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-center">
-            <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 text-center">
+            <div class="p-2.5 sm:p-3 rounded-xl bg-slate-900 border border-slate-800">
               <div class="text-[10px] text-slate-400">預估貸款總額</div>
               <div id="sim-loan-amt" class="text-sm sm:text-base font-black text-white font-mono-num mt-1">1,700 萬</div>
               <div id="sim-down-pct" class="text-[10px] text-slate-400 mt-0.5">自備佔基準 22.7%</div>
             </div>
-            <div class="p-2.5 rounded-xl bg-slate-900 border border-amber-500/30">
-              <div class="text-[10px] text-amber-300 font-semibold">寬限期只繳息 / 佔收入</div>
+            <div class="p-2.5 sm:p-3 rounded-xl bg-slate-900 border border-amber-500/30">
+              <div class="text-[10px] text-amber-300 font-semibold">寬限期月付 (只繳息)</div>
               <div id="sim-io-pay" class="text-sm sm:text-base font-black text-amber-400 font-mono-num mt-1">3.19 萬/月</div>
               <div id="sim-io-ratio" class="text-[10px] text-amber-200/80 mt-0.5">佔月入 26.6%</div>
             </div>
-            <div class="p-2.5 rounded-xl bg-slate-900 border border-sky-500/30">
-              <div class="text-[10px] text-sky-300 font-semibold">本息平均攤還 / 佔收入</div>
+            <div class="p-2.5 sm:p-3 rounded-xl bg-slate-900 border border-sky-500/30">
+              <div class="text-[10px] text-sky-300 font-semibold">本息平均攤還</div>
               <div id="sim-pi-pay" class="text-sm sm:text-base font-black text-sky-400 font-mono-num mt-1">5.37 萬/月</div>
               <div id="sim-pi-ratio" class="text-[10px] text-sky-200/80 mt-0.5">佔月入 44.8%</div>
             </div>
@@ -654,19 +654,19 @@
         <p class="text-xs sm:text-sm text-slate-400 mt-1 md:mt-0">整合兩位老師高度共識的買房不敗SOP</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 xl:gap-6">
         <!-- Pillar 1 -->
-        <div class="glass-panel rounded-2xl p-5 border-t-4 border-t-amber-500 flex flex-col justify-between hover:border-amber-400/50 transition">
+        <div class="glass-panel rounded-2xl p-5 sm:p-6 lg:p-6 border-t-4 border-t-amber-500 flex flex-col justify-between hover:border-amber-400/50 transition">
           <div>
             <div class="flex items-center justify-between text-xs text-amber-400 font-bold mb-2">
               <span>STAGE 01｜宏觀週期與時機</span>
               <span class="font-mono-num">TIMING</span>
             </div>
             <h3 class="text-lg font-extrabold text-white">逆向判讀央行水龍頭</h3>
-            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+            <p class="text-xs sm:text-[13px] text-slate-300 mt-2 leading-relaxed">
               房價 80% 取決於貨幣供給與銀行銀根。新聞媒體熱議時往往已落後市場半年（第四圈理論）。
             </p>
-            <ul class="mt-3 space-y-2 text-xs text-slate-300">
+            <ul class="mt-3 space-y-2 text-xs sm:text-[13px] text-slate-300">
               <li class="flex items-start gap-1.5"><span class="text-amber-400 font-bold">▸</span><span><strong>災難降息期（All-in）</strong>：金融海嘯或疫情時銀行端牛肉（高成數/長寬限期），有現金流必買。</span></li>
               <li class="flex items-start gap-1.5"><span class="text-amber-400 font-bold">▸</span><span><strong>打房縮銀根（Half-in）</strong>：限貸令量縮悲觀時，中古屋議價空間擴大至 15%，適合大膽砍價。</span></li>
               <li class="flex items-start gap-1.5"><span class="text-amber-400 font-bold">▸</span><span><strong>年度黃金曆</strong>：5~10 月看滿百戶，11~1 月年底屋主缺錢時殺價簽約，3~4 月爭取新水位房貸。</span></li>
@@ -678,17 +678,17 @@
         </div>
 
         <!-- Pillar 2 -->
-        <div class="glass-panel rounded-2xl p-5 border-t-4 border-t-emerald-500 flex flex-col justify-between hover:border-emerald-400/50 transition">
+        <div class="glass-panel rounded-2xl p-5 sm:p-6 lg:p-6 border-t-4 border-t-emerald-500 flex flex-col justify-between hover:border-emerald-400/50 transition">
           <div>
             <div class="flex items-center justify-between text-xs text-emerald-400 font-bold mb-2">
               <span>STAGE 02｜地段與產品護城河</span>
               <span class="font-mono-num">SELECTION</span>
             </div>
             <h3 class="text-lg font-extrabold text-white">五力分析 × 買房九把刀</h3>
-            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+            <p class="text-xs sm:text-[13px] text-slate-300 mt-2 leading-relaxed">
               買房首重流動性與接盤力，「房價跟著人跑，人跟著高學歷高所得工作機會跑」。
             </p>
-            <ul class="mt-3 space-y-2 text-xs text-slate-300">
+            <ul class="mt-3 space-y-2 text-xs sm:text-[13px] text-slate-300">
               <li class="flex items-start gap-1.5"><span class="text-emerald-400 font-bold">▸</span><span><strong>通勤剎車線</strong>：鎖定上市櫃/科技園區捷運通勤 30 分鐘內（自住車程≤1hr）、步行捷運 10 分鐘內。</span></li>
               <li class="flex items-start gap-1.5"><span class="text-emerald-400 font-bold">▸</span><span><strong>量體與總價控制</strong>：避開區域總價天花板（雙北 3,200~4,000 萬），社區戶數不宜過大（台北&lt;220戶、新北&lt;400戶）。</span></li>
               <li class="flex items-start gap-1.5"><span class="text-emerald-400 font-bold">▸</span><span><strong>避開致命地雷</strong>：不碰工業宅、公墓凶宅、度假別墅、酒店式公寓、小基地危老與現成隔套。</span></li>
@@ -700,17 +700,17 @@
         </div>
 
         <!-- Pillar 3 -->
-        <div class="glass-panel rounded-2xl p-5 border-t-4 border-t-sky-500 flex flex-col justify-between hover:border-sky-400/50 transition">
+        <div class="glass-panel rounded-2xl p-5 sm:p-6 lg:p-6 border-t-4 border-t-sky-500 flex flex-col justify-between hover:border-sky-400/50 transition">
           <div>
             <div class="flex items-center justify-between text-xs text-sky-400 font-bold mb-2">
               <span>STAGE 03｜實價定錨與談判</span>
               <span class="font-mono-num">NEGOTIATION</span>
             </div>
             <h3 class="text-lg font-extrabold text-white">實登打8折 × 雙斡旋破錨定</h3>
-            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+            <p class="text-xs sm:text-[13px] text-slate-300 mt-2 leading-relaxed">
               90% 買方一開口就買貴！必須拆算車位、剔除親友極端值，把實價登錄均價當「天花板」。
             </p>
-            <ul class="mt-3 space-y-2 text-xs text-slate-300">
+            <ul class="mt-3 space-y-2 text-xs sm:text-[13px] text-slate-300">
               <li class="flex items-start gap-1.5"><span class="text-sky-400 font-bold">▸</span><span><strong>四階底價定錨</strong>：實登×80% 為心中真實底價；依序以 60%（敲門）、68%（試探）、75%（防守）出價。</span></li>
               <li class="flex items-start gap-1.5"><span class="text-sky-400 font-bold">▸</span><span><strong>雙斡旋技術</strong>：先派人下超低價斡旋並當天秒撤製造屋主「失去痛感」，一週後主帳號再進場收網。</span></li>
               <li class="flex items-start gap-1.5"><span class="text-sky-400 font-bold">▸</span><span><strong>小房間心理戰</strong>：見面談前 2 小時預告不去談反客為主；要價 2 次才放價 1 次，最後一口價讓屋主自己說。</span></li>
@@ -722,17 +722,17 @@
         </div>
 
         <!-- Pillar 4 -->
-        <div class="glass-panel rounded-2xl p-5 border-t-4 border-t-purple-500 flex flex-col justify-between hover:border-purple-400/50 transition">
+        <div class="glass-panel rounded-2xl p-5 sm:p-6 lg:p-6 border-t-4 border-t-purple-500 flex flex-col justify-between hover:border-purple-400/50 transition">
           <div>
             <div class="flex items-center justify-between text-xs text-purple-400 font-bold mb-2">
               <span>STAGE 04｜房貸槓桿與風控</span>
               <span class="font-mono-num">FINANCIALS</span>
             </div>
             <h3 class="text-lg font-extrabold text-white">無限寬限 × 房貸印鈔機</h3>
-            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+            <p class="text-xs sm:text-[13px] text-slate-300 mt-2 leading-relaxed">
               房子年化漲幅雖輸 0050，但贏在「5 倍低利房貸槓桿」與「強制鎖住獲利」。
             </p>
-            <ul class="mt-3 space-y-2 text-xs text-slate-300">
+            <ul class="mt-3 space-y-2 text-xs sm:text-[13px] text-slate-300">
               <li class="flex items-start gap-1.5"><span class="text-purple-400 font-bold">▸</span><span><strong>三年不斷鏈與 35% 紅線</strong>：每月房貸不超過收入 35%~40%，且確保極端狀況下 3 年現金流不斷鏈。</span></li>
               <li class="flex items-start gap-1.5"><span class="text-purple-400 font-bold">▸</span><span><strong>房貸四順序</strong>：成數 ＞ 年限（優先選40年）＞ 寬限期 ＞ 利率；夫妻切勿共同持有浪費首購名額。</span></li>
               <li class="flex items-start gap-1.5"><span class="text-purple-400 font-bold">▸</span><span><strong>科目一轉科目四</strong>：透過轉增貸將購屋貸洗成理財型房貸抽回本金，結合 0050 / ETF 滾動複利。</span></li>
@@ -747,34 +747,38 @@
 
     <!-- SECTION C: Visual Analytics Charts (雙師戰力雷達圖 ＆ 2011-2024 報酬實證圖) -->
     <section id="charts-section" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-      <div class="lg:col-span-6 glass-panel rounded-3xl p-6 border border-slate-800">
-        <div class="chart-heading flex items-center justify-between mb-4">
-          <div>
-            <span class="text-xs font-bold text-amber-400 uppercase">Synergy Radar</span>
-            <h3 class="text-lg font-bold text-white">雙流派戰力互補雷達圖（吳淡如 × 陳侯勳）</h3>
+      <div class="lg:col-span-6 glass-panel rounded-3xl p-6 sm:p-7 border border-slate-800 flex flex-col justify-between">
+        <div>
+          <div class="chart-heading flex items-center justify-between mb-4">
+            <div>
+              <span class="text-xs font-bold text-amber-400 uppercase">Synergy Radar</span>
+              <h3 class="text-lg font-bold text-white">雙流派戰力互補雷達圖（吳淡如 × 陳侯勳）</h3>
+            </div>
+            <span class="text-[11px] text-slate-400">6 大維度全覆蓋</span>
           </div>
-          <span class="text-[11px] text-slate-400">6 大維度全覆蓋</span>
+          <div class="chart-frame relative h-80 sm:h-96 lg:h-[400px] w-full flex items-center justify-center">
+            <canvas id="synergyRadarChart"></canvas>
+          </div>
         </div>
-        <div class="chart-frame relative h-72 w-full">
-          <canvas id="synergyRadarChart"></canvas>
-        </div>
-        <p class="text-xs text-slate-400 mt-3 leading-relaxed">
+        <p class="text-xs text-slate-400 mt-4 leading-relaxed">
           吳淡如強於<strong>「宏觀財商配置、海內外趨勢與法律防身」</strong>；陳侯勳強於<strong>「微觀物件九把刀量化篩選、小房間極限殺價與租金改造工程」</strong>，兩者結合即為滿分無死角系統。
         </p>
       </div>
 
-      <div class="lg:col-span-6 glass-panel rounded-3xl p-6 border border-slate-800">
-        <div class="chart-heading flex items-center justify-between mb-4">
-          <div>
-            <span class="text-xs font-bold text-sky-400 uppercase">Leverage & Return Proof</span>
-            <h3 class="text-lg font-bold text-white">台灣各區房價漲幅 vs. 五倍房貸槓桿威力（2011–2024）</h3>
+      <div class="lg:col-span-6 glass-panel rounded-3xl p-6 sm:p-7 border border-slate-800 flex flex-col justify-between">
+        <div>
+          <div class="chart-heading flex items-center justify-between mb-4">
+            <div>
+              <span class="text-xs font-bold text-sky-400 uppercase">Leverage & Return Proof</span>
+              <h3 class="text-lg font-bold text-white">台灣各區房價漲幅 vs. 五倍房貸槓桿威力（2011–2024）</h3>
+            </div>
+            <span class="text-[11px] text-slate-400">資料基準：信義房價指數與 0050</span>
           </div>
-          <span class="text-[11px] text-slate-400">資料基準：信義房價指數與 0050</span>
+          <div class="chart-frame relative h-80 sm:h-96 lg:h-[400px] w-full flex items-center justify-center">
+            <canvas id="leverageBarChart"></canvas>
+          </div>
         </div>
-        <div class="chart-frame relative h-72 w-full">
-          <canvas id="leverageBarChart"></canvas>
-        </div>
-        <p class="text-xs text-slate-400 mt-3 leading-relaxed">
+        <p class="text-xs text-slate-400 mt-4 leading-relaxed">
           單看資產本身，13 年間全台房價漲 82% 輸給 0050（+320%）；但因買房具備<strong>「8 成低利房貸（5 倍本金槓桿）＋強制閉鎖抱得住」</strong>，自備款實質淨值報酬率高達 300%～400% 以上！
         </p>
       </div>
@@ -800,10 +804,10 @@
 
         <!-- Horizontal Scrollable Scenario Buttons (選單左右移動) -->
         <div class="flex items-center gap-2 overflow-x-auto whitespace-nowrap no-scrollbar py-1 w-full lg:w-auto mobile-scroll-x" id="scenario-btns">
-          <button type="button" data-scene="s1" class="scene-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 transition">1. 猶豫買房或存股？</button>
-          <button type="button" data-scene="s2" class="scene-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">2. 看到 591 物件想算底價？</button>
-          <button type="button" data-scene="s3" class="scene-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">3. 準備下斡旋進小房間？</button>
-          <button type="button" data-scene="s4" class="scene-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">4. 想用寬限期與收租滾資產？</button>
+          <button type="button" data-scene="s1" class="scene-btn shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-amber-500 text-slate-950 transition">1. 猶豫買房或存股？</button>
+          <button type="button" data-scene="s2" class="scene-btn shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">2. 看到 591 物件想算底價？</button>
+          <button type="button" data-scene="s3" class="scene-btn shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">3. 準備下斡旋進小房間？</button>
+          <button type="button" data-scene="s4" class="scene-btn shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">4. 想用寬限期與收租滾資產？</button>
         </div>
       </div>
 
@@ -814,7 +818,7 @@
 
     <!-- SECTION E: Master Comparison Table -->
     <section id="matrix-section" class="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-800">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-5">
         <div>
           <h2 class="text-xl sm:text-2xl font-bold text-white">📊 兩大房產實戰體系深度對照矩陣</h2>
           <p class="text-xs sm:text-sm text-slate-400 mt-1">一表看懂兩位專家在「第一間房定位、地段鐵律、實價登錄解讀、殺價戰術、房貸操作」上的互補策略：</p>
@@ -822,50 +826,50 @@
       </div>
 
       <div class="comparison-table-wrap overflow-x-auto">
-        <table class="w-full text-left border-collapse text-xs sm:text-sm min-w-[620px]">
+        <table class="w-full text-left border-collapse text-xs sm:text-sm min-w-[720px] lg:min-w-full">
           <thead>
             <tr class="border-b border-slate-700 bg-slate-900/90 text-slate-300">
-              <th class="p-3.5 font-bold w-1/5">決策維度</th>
-              <th class="p-3.5 font-bold text-amber-400 w-2/5">🐎 吳淡如《房商必修課》專頁</th>
-              <th class="p-3.5 font-bold text-sky-400 w-2/5">🗡️ 陳侯勳《買房九把刀＆被動談判》專頁</th>
+              <th class="p-4 sm:p-5 font-bold w-1/5 xl:w-[18%]">決策維度</th>
+              <th class="p-4 sm:p-5 font-bold text-amber-400 w-2/5 xl:w-[41%]">🐎 吳淡如《房商必修課》專頁</th>
+              <th class="p-4 sm:p-5 font-bold text-sky-400 w-2/5 xl:w-[41%]">🗡️ 陳侯勳《買房九把刀＆被動談判》專頁</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-800/80 text-slate-200">
             <tr class="hover:bg-slate-800/30">
-              <td class="p-3.5 font-bold text-white">第一間房定位</td>
-              <td data-label="吳淡如｜房商必修課" class="p-3.5"><strong>先求有再求好（騎驢找馬）</strong>：第一間必買自住「馬」解決高齡租屋歧視並作為增貸底牌；第二間養現金流「雞」；絕不買度假屋。</td>
-              <td data-label="陳侯勳｜九把刀與談判" class="p-3.5"><strong>前兩間必買「出租房」養自己</strong>：利用共生公寓或高投報老屋創造現金流，第三間才用租金收益買自住房。</td>
+              <td class="p-4 sm:p-5 font-bold text-white">第一間房定位</td>
+              <td data-label="吳淡如｜房商必修課" class="p-4 sm:p-5 leading-relaxed"><strong>先求有再求好（騎驢找馬）</strong>：第一間必買自住「馬」解決高齡租屋歧視並作為增貸底牌；第二間養現金流「雞」；絕不買度假屋。</td>
+              <td data-label="陳侯勳｜九把刀與談判" class="p-4 sm:p-5 leading-relaxed"><strong>前兩間必買「出租房」養自己</strong>：利用共生公寓或高投報老屋創造現金流，第三間才用租金收益買自住房。</td>
             </tr>
             <tr class="hover:bg-slate-800/30">
-              <td class="p-3.5 font-bold text-white">選屋評估模型</td>
-              <td data-label="吳淡如｜房商必修課" class="p-3.5"><strong>買房五力分析</strong>（需求力、政策力、稅法力、融資力、脫手力）＋ 通勤≤1小時捷運宅 ＋ 指名上市模範生建商。</td>
-              <td data-label="陳侯勳｜九把刀與談判" class="p-3.5"><strong>買賣房九把刀</strong>（5km強勢辦公區、捷運通勤30分內、步行10分內、避開總價天花板、控制社區總戶數、3年不斷鏈）。</td>
+              <td class="p-4 sm:p-5 font-bold text-white">選屋評估模型</td>
+              <td data-label="吳淡如｜房商必修課" class="p-4 sm:p-5 leading-relaxed"><strong>買房五力分析</strong>（需求力、政策力、稅法力、融資力、脫手力）＋ 通勤≤1小時捷運宅 ＋ 指名上市模範生建商。</td>
+              <td data-label="陳侯勳｜九把刀與談判" class="p-4 sm:p-5 leading-relaxed"><strong>買賣房九把刀</strong>（5km強勢辦公區、捷運通勤30分內、步行10分內、避開總價天花板、控制社區總戶數、3年不斷鏈）。</td>
             </tr>
             <tr class="hover:bg-slate-800/30">
-              <td class="p-3.5 font-bold text-white">實價登錄與出價</td>
-              <td data-label="吳淡如｜房商必修課" class="p-3.5">預售屋採「寧為雞首（第一批）」策略；中古屋趁央行限貸與年底冷清期，善用<strong>雙斡旋破除屋主高價錨定</strong>。</td>
-              <td data-label="陳侯勳｜九把刀與談判" class="p-3.5"><strong>核對實登期間、特殊交易與車位拆價後建立比較基準</strong>！打 8 折為心中底價，設 60% / 68% / 75% 三階假底價，按假設 4% 仲介費試算實拿。</td>
+              <td class="p-4 sm:p-5 font-bold text-white">實價登錄與出價</td>
+              <td data-label="吳淡如｜房商必修課" class="p-4 sm:p-5 leading-relaxed">預售屋採「寧為雞首（第一批）」策略；中古屋趁央行限貸與年底冷清期，善用<strong>雙斡旋破除屋主高價錨定</strong>。</td>
+              <td data-label="陳侯勳｜九把刀與談判" class="p-4 sm:p-5 leading-relaxed"><strong>核對實登期間、特殊交易與車位拆價後建立比較基準</strong>！打 8 折為心中底價，設 60% / 68% / 75% 三階假底價，按假設 4% 仲介費試算實拿。</td>
             </tr>
             <tr class="hover:bg-slate-800/30">
-              <td class="p-3.5 font-bold text-white">小房間與仲介博弈</td>
-              <td data-label="吳淡如｜房商必修課" class="p-3.5"><strong>絕不砍房仲 1% 服務費</strong>（甚至成交另包紅包），讓仲介全力幫你向急售屋主砍價 10%～15%。</td>
-              <td data-label="陳侯勳｜九把刀與談判" class="p-3.5"><strong>被動談判術</strong>：扮演被說服者、閉嘴留白、要價進攻 2:1、見面談前 2 小時預告放鴿子、最後一口價讓屋主親口說並猶豫 1 小時。</td>
+              <td class="p-4 sm:p-5 font-bold text-white">小房間與仲介博弈</td>
+              <td data-label="吳淡如｜房商必修課" class="p-4 sm:p-5 leading-relaxed"><strong>絕不砍房仲 1% 服務費</strong>（甚至成交另包紅包），讓仲介全力幫你向急售屋主砍價 10%～15%。</td>
+              <td data-label="陳侯勳｜九把刀與談判" class="p-4 sm:p-5 leading-relaxed"><strong>被動談判術</strong>：扮演被說服者、閉嘴留白、要價進攻 2:1、見面談前 2 小時預告放鴿子、最後一口價讓屋主親口說並猶豫 1 小時。</td>
             </tr>
             <tr class="hover:bg-slate-800/30">
-              <td class="p-3.5 font-bold text-white">房貸與財務工程</td>
-              <td data-label="吳淡如｜房商必修課" class="p-3.5"><strong>40年房貸＋25年無限寬限之術</strong>（每 5 年轉貸增貸），房貸月付≤收入 35%~40%，省下本金定期定額買 0050。</td>
-              <td data-label="陳侯勳｜九把刀與談判" class="p-3.5"><strong>房貸印鈔機（月租+4,300元＝免費提領100萬房貸）</strong>，將科目一（購置貸）洗成科目四（理財型房貸）抽回本金達成無限 ROI。</td>
+              <td class="p-4 sm:p-5 font-bold text-white">房貸與財務工程</td>
+              <td data-label="吳淡如｜房商必修課" class="p-4 sm:p-5 leading-relaxed"><strong>40年房貸＋25年無限寬限之術</strong>（每 5 年轉貸增貸），房貸月付≤收入 35%~40%，省下本金定期定額買 0050。</td>
+              <td data-label="陳侯勳｜九把刀與談判" class="p-4 sm:p-5 leading-relaxed"><strong>房貸印鈔機（月租+4,300元＝免費提領100萬房貸）</strong>，將科目一（購置貸）洗成科目四（理財型房貸）抽回本金達成無限 ROI。</td>
             </tr>
             <tr class="bg-slate-900/70">
-              <td class="p-3.5 font-bold text-white">專頁快速入口</td>
-              <td data-label="吳淡如｜房商必修課" class="p-3.5">
-                <a href="吳淡如_房商必修課.html" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition shadow-md">
+              <td class="p-4 sm:p-5 font-bold text-white">專頁快速入口</td>
+              <td data-label="吳淡如｜房商必修課" class="p-4 sm:p-5">
+                <a href="吳淡如_房商必修課.html" class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs sm:text-sm transition shadow-md">
                   <span>前往吳淡如《房商必修課》專頁</span>
                   <span>➔</span>
                 </a>
               </td>
-              <td data-label="陳侯勳｜九把刀與談判" class="p-3.5">
-                <a href="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_06" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-sky-400 hover:bg-sky-300 text-slate-950 font-black text-xs transition shadow-md">
+              <td data-label="陳侯勳｜九把刀與談判" class="p-4 sm:p-5">
+                <a href="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_07" class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-sky-400 hover:bg-sky-300 text-slate-950 font-black text-xs sm:text-sm transition shadow-md">
                   <span>前往陳侯勳《買房九把刀》專頁</span>
                   <span>➔</span>
                 </a>
@@ -888,7 +892,7 @@
       <div class="flex flex-wrap items-center gap-4 font-semibold">
         <a href="吳淡如_房商必修課.html" class="text-amber-400 hover:underline">🐎 吳淡如《房商必修課》</a>
         <span class="text-slate-700">|</span>
-        <a href="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_06" class="text-sky-400 hover:underline">🗡️ 陳侯勳《買房九把刀》</a>
+        <a href="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_07" class="text-sky-400 hover:underline">🗡️ 陳侯勳《買房九把刀》</a>
         <span class="text-slate-700">|</span>
         <a href="second_house.html" class="text-emerald-400 hover:underline font-bold">🏦 第二屋實戰決策方案</a>
       </div>
@@ -1002,7 +1006,7 @@
         advice: "開啟【陳侯勳《買房九把刀》】專頁，貼上售屋網址。系統核對可取得的物件與社區成交資料，揭露筆數、期間、排除原因及車位估算；資料完整、有效樣本達5筆且本戶車位分價已確認後才建立比較基準。其餘條件保留待確認，再搭配買房五力逐項查核。",
         wuFocus: "必看章節：買房四步法、互動工具 B「五力分析看房實戰評分卡」",
         chenFocus: "必看章節：買房九把刀條件檢核、實價登錄來源與筆數、車位拆算面板",
-        primaryLink: "「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_06",
+        primaryLink: "「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_07",
         primaryLabel: "立即使用陳侯勳：買房九把刀與 591 分析器"
       },
       s3: {
@@ -1010,7 +1014,7 @@
         advice: "請立刻進入【陳侯勳《被動談判術與破局話術》】分頁！掌握「見面談前 2 小時打電話預告不去談」反客為主、小房間「閉嘴留白」、要價進攻 2:1，以及根據未通過的九把刀項目自動生成的「現場挑缺點砍價武器庫」；同時結合【吳淡如】與陳侯勳對談的「雙斡旋破錨定技術」同時鋪 30 張斡旋單，做到不怕失去。",
         wuFocus: "必看章節：買房四步法之「挑時機＆雙斡旋殺價技術」、不砍房仲 1% 服務費心法",
         chenFocus: "必看章節：小房間實戰拆招圖鑑、現場挑缺點砍價武器庫、內湖文德站 55 萬殺到 40.8 萬復盤",
-        primaryLink: "「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_06",
+        primaryLink: "「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_07",
         primaryLabel: "立即查看陳侯勳：小房間破局話術與砍價武器"
       },
       s4: {
@@ -1018,7 +1022,7 @@
         advice: "這部分兩位名師都是頂級實戰家！請先看【吳淡如】的「25年無限寬限之術」了解如何運用 40 年房貸、每 5 年轉貸增貸降低月付金並定投 ETF；再看【陳侯勳】的「房貸印鈔機試算器」，計算透過軟裝/共生公寓改造每增加 4,300 元月租金如何免費多提領 100 萬房貸，並將購置型房貸（科目一）洗成理財型房貸（科目四）抽回本金。",
         wuFocus: "必看章節：開槓桿（40年房貸與無限寬限之術）、東京淺草店面 72 法則養雞學",
         chenFocus: "必看章節：房貸印鈔機試算器（+4,300元=100萬）、科目一轉科目四無限大 ROI",
-        primaryLink: "「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_06",
+        primaryLink: "「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_07",
         primaryLabel: "前往陳侯勳：房貸印鈔機與無限 ROI 試算"
       }
     };
@@ -1047,7 +1051,7 @@
             <a href="吳淡如_房商必修課.html" class="flex-1 py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-amber-300 text-xs font-semibold text-center border border-slate-700 transition">
               吳淡如專頁
             </a>
-            <a href="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_06" class="flex-1 py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-sky-300 text-xs font-semibold text-center border border-slate-700 transition">
+            <a href="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_07" class="flex-1 py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-sky-300 text-xs font-semibold text-center border border-slate-700 transition">
               陳侯勳專頁
             </a>
           </div>
@@ -1255,7 +1259,7 @@
       // 註冊 Service Worker (sw.js)
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js?v=20261020_06').then((registration) => {
+          navigator.serviceWorker.register('./sw.js?v=20261020_07').then((registration) => {
             console.log('[PWA] ServiceWorker 註冊成功，Scope:', registration.scope);
             registration.update();
           }).catch((err) => {
@@ -1285,7 +1289,7 @@
         console.warn('Cache clear error:', e);
       }
       const url = new URL(window.location.href);
-      url.searchParams.set('v', '20261020_06_' + Date.now());
+      url.searchParams.set('v', '20261020_07_' + Date.now());
       window.location.href = url.toString();
     };
   </script>
