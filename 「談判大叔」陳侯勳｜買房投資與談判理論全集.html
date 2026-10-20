@@ -19,8 +19,8 @@
   <link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
   <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192x192.png">
   <link rel="icon" type="image/png" sizes="512x512" href="./icons/icon-512x512.png">
-  <link rel="stylesheet" href="./chen-reading.css">
-  <script src="./registration-core.js"></script>
+  <link rel="stylesheet" href="./chen-reading.css?v=20261020_06">
+  <script src="./registration-core.js?v=20261020_06"></script>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -132,6 +132,12 @@
 
       <!-- Right Header Actions -->
       <div class="flex items-center gap-1.5 sm:gap-2">
+        <!-- Force Refresh Cache Button -->
+        <button type="button" id="btnForceRefresh" onclick="forceClearCacheAndReload()" title="清除本機快取並載入最新版本" class="px-2.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-sky-300 hover:text-sky-200 border border-slate-700 hover:border-sky-500/40 text-xs font-bold transition flex items-center gap-1 shadow-sm">
+          <span>🔄</span>
+          <span class="hidden sm:inline">清除快取更新</span>
+        </button>
+
         <!-- Mobile Dropdown Selector (支援下拉式選單) -->
         <div class="md:hidden relative">
           <select id="mobilePageNavSelect" class="bg-slate-900 text-sky-300 border border-slate-700 text-xs font-bold rounded-xl px-2 py-1.5 pr-6 appearance-none focus:outline-none focus:ring-1 focus:ring-sky-500 cursor-pointer" aria-label="手機切換專區下拉選單">
@@ -177,6 +183,9 @@
       <a href="./second_house.html" class="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs font-bold shrink-0">
         🏦 第二屋決策 ↗
       </a>
+      <button type="button" onclick="forceClearCacheAndReload()" class="px-2.5 py-1 rounded-lg bg-slate-900 text-sky-300 border border-slate-700 text-xs font-bold shrink-0 flex items-center gap-1">
+        🔄 強制更新快取
+      </button>
     </div>
   </nav>
 
@@ -1846,18 +1855,49 @@
       checkUrlHashImport();
       window.addEventListener('hashchange', checkUrlHashImport);
 
-      // Register Service Worker for PWA support
+      // Register Service Worker for PWA support with auto-update & controllerchange reload
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js').then((registration) => {
+          navigator.serviceWorker.register('./sw.js?v=20261020_06').then((registration) => {
             console.log('[PWA] ServiceWorker registered from Chen Hou-xun page:', registration.scope);
+            registration.update();
           }).catch((err) => {
             console.log('[PWA] ServiceWorker registration failed:', err);
           });
         });
+
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          console.log('[PWA] Controller changed, reloading for newest version...');
+          window.location.reload();
+        });
       }
     });
+
+    // 強制清除快取並載入最新版
+    window.forceClearCacheAndReload = async function() {
+      const btn = document.getElementById('btnForceRefresh');
+      if (btn) btn.innerHTML = '<span>⏳</span><span>更新中...</span>';
+      try {
+        if ('serviceWorker' in navigator) {
+          const registrations = await navigator.serviceWorker.getRegistrations();
+          for (const reg of registrations) {
+            await reg.unregister();
+          }
+        }
+        if ('caches' in window) {
+          const keys = await caches.keys();
+          for (const key of keys) {
+            await caches.delete(key);
+          }
+        }
+      } catch (err) {
+        console.warn('Cache clearing error:', err);
+      }
+      const url = new URL(window.location.href);
+      url.searchParams.set('v', '20261020_06_' + Date.now());
+      window.location.href = url.toString();
+    };
   </script>
-  <script src="./registration-ui.js"></script>
+  <script src="./registration-ui.js?v=20261020_06"></script>
 </body>
 </html>

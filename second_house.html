@@ -128,7 +128,7 @@
           <select id="mobilePageNavSelect" class="w-full bg-slate-900 text-emerald-300 border border-emerald-500/40 rounded-xl px-2.5 py-1.5 text-xs font-bold focus:outline-none focus:ring-1 focus:ring-emerald-400 cursor-pointer shadow-sm" aria-label="切換專區選單">
             <option value="./index.html">🏛️ 總首頁 (雙師指揮中心)</option>
             <option value="./吳淡如_房商必修課.html">🐎 吳淡如《房商必修課》</option>
-            <option value="./「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261019_03">🗡️ 陳侯勳《房產剎價學》</option>
+            <option value="./「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_06">🗡️ 陳侯勳《房產剎價學》</option>
             <option value="./second_house.html" selected>🏦 第二屋決策 (本頁)</option>
           </select>
         </div>
@@ -139,7 +139,7 @@
             <span>🐎</span>
             <span>吳淡如《房商必修課》</span>
           </a>
-          <a href="./「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261019_03" class="px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 bg-slate-900 text-sky-300 hover:bg-sky-400 hover:text-slate-950 border border-sky-500/30">
+          <a href="./「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_06" class="px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 bg-slate-900 text-sky-300 hover:bg-sky-400 hover:text-slate-950 border border-sky-500/30">
             <span>🗡️</span>
             <span>陳侯勳《房產剎價學》</span>
           </a>
@@ -158,7 +158,7 @@
         <a href="./吳淡如_房商必修課.html" class="shrink-0 px-3 py-1 rounded-lg text-xs font-bold bg-slate-900 text-amber-300 border border-amber-500/30 hover:bg-amber-500 hover:text-slate-950 transition">
           🐎 吳淡如專區 ↗
         </a>
-        <a href="./「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261019_03" class="shrink-0 px-3 py-1 rounded-lg text-xs font-bold bg-slate-900 text-sky-300 border border-sky-500/30 hover:bg-sky-400 hover:text-slate-950 transition">
+        <a href="./「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_06" class="shrink-0 px-3 py-1 rounded-lg text-xs font-bold bg-slate-900 text-sky-300 border border-sky-500/30 hover:bg-sky-400 hover:text-slate-950 transition">
           🗡️ 陳侯勳專區 ↗
         </a>
         <span class="shrink-0 px-3 py-1 rounded-lg text-xs font-black bg-gradient-to-r from-emerald-400 to-sky-400 text-slate-950 shadow-sm">
@@ -1134,7 +1134,7 @@
         <span class="text-slate-700">|</span>
         <a href="./吳淡如_房商必修課.html" class="text-amber-400 hover:underline">🐎 吳淡如《房商必修課》</a>
         <span class="text-slate-700">|</span>
-        <a href="./「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261019_03" class="text-sky-400 hover:underline">🗡️ 陳侯勳《房產剎價學》</a>
+        <a href="./「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_06" class="text-sky-400 hover:underline">🗡️ 陳侯勳《房產剎價學》</a>
       </div>
     </div>
   </footer>
@@ -2020,14 +2020,20 @@
         fallbackCopyText(summaryText, "已複製 V3 完整決策報告！可直接貼到 LINE 儲存");
       });
 
-      // Register Service Worker for PWA support
+      // Register Service Worker for PWA support with auto-update
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js').then((registration) => {
+          navigator.serviceWorker.register('./sw.js?v=20261020_06').then((registration) => {
             console.log('[PWA] ServiceWorker registered from second_house page:', registration.scope);
+            registration.update();
           }).catch((err) => {
             console.log('[PWA] ServiceWorker registration failed:', err);
           });
+        });
+
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          console.log('[PWA] Controller changed, reloading for newest version...');
+          window.location.reload();
         });
       }
     });
