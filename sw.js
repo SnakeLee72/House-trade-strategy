@@ -4,11 +4,16 @@
  * 支援 PWA 離線快取、即時網路優先策略與背景更新
  */
 
-const CACHE_NAME = 'hts-cache-v20261019_01';
+const CACHE_NAME = 'hts-cache-v20261020_03';
 
 const PRECACHE_URLS = [
   './',
   './index.html',
+  './pwa-install.js',
+  './home-mobile.css',
+  './chen-reading.css',
+  './registration-core.js',
+  './registration-ui.js',
   './吳淡如_房商必修課.html',
   './「談判大叔」陳侯勳｜買房投資與談判理論全集.html',
   './second_house.html',

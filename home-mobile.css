@@ -1,0 +1,46 @@
+/* Overrides are limited to the homepage's portrait layout. */
+html[data-pwa-installed="true"] #pwaHeroBanner,
+html[data-pwa-installed="true"] #pwaInstallBtn,
+[hidden] { display: none !important; }
+
+main, main section, main .grid > *, #scenario-content > * { min-width: 0; }
+main { width: 100%; }
+main section { scroll-margin-top: 8rem; }
+.chart-frame { min-width: 0; }
+.chart-frame canvas { max-width: 100%; }
+
+@media (max-width: 379px) {
+  body > header > div > a { min-width: 0; flex-shrink: 1; }
+  #mobileHeaderJump { max-width: 110px; }
+}
+
+@media (max-width: 639px) {
+  main { padding-top: 2rem !important; padding-bottom: 2rem !important; }
+  main > section.glass-panel, #charts-section > .glass-panel { padding: 1rem; border-radius: 1.25rem; }
+  main > section + section { margin-top: 2rem !important; }
+  main h2 { font-size: 1.25rem !important; line-height: 1.6 !important; }
+  main h3 { line-height: 1.6 !important; }
+  main p, main li { line-height: 1.85; }
+  #simulator-section .sim-heading { flex-direction: column; align-items: flex-start; gap: .6rem; }
+  #simulator-section .sim-output { padding: 1rem; }
+  #simulator-section .sim-detail { flex-direction: column; gap: .3rem; }
+  #simulator-section .sim-detail strong { align-self: flex-end; white-space: nowrap; }
+  #simulator-section input, #simulator-section select { min-width: 0; font-size: 16px; min-height: 44px; }
+  #simulator-section .sim-intro { display: flex; flex-wrap: wrap; border-radius: .75rem; line-height: 1.7; }
+  #charts-section .chart-heading { flex-direction: column; align-items: flex-start; gap: .5rem; }
+  #charts-section .chart-frame { height: 20rem; }
+  #scenario-btns { display: none; }
+  #scenario-content a { white-space: normal; line-height: 1.6; }
+
+  /* Read each decision from top to bottom, with both teachers next to their labels. */
+  #matrix-section .comparison-table-wrap { overflow: visible; white-space: normal; }
+  #matrix-section table { display: block; min-width: 0; }
+  #matrix-section thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  #matrix-section tbody { display: grid; gap: 1rem; }
+  #matrix-section tbody tr { display: block; border: 1px solid #334155; border-radius: 1rem; overflow: hidden; background: #0f172a; }
+  #matrix-section tbody td { display: block; width: 100%; padding: .9rem 1rem; white-space: normal; font-size: .875rem; line-height: 1.85; }
+  #matrix-section tbody td:first-child { background: #1e293b; font-size: 1rem; }
+  #matrix-section tbody td + td { border-top: 1px solid #334155; }
+  #matrix-section td[data-label]::before { content: attr(data-label); display: block; margin-bottom: .35rem; color: #fbbf24; font-size: .75rem; font-weight: 700; }
+  #matrix-section td[data-label]:last-child::before { color: #38bdf8; }
+}

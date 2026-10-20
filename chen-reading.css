@@ -1,0 +1,28 @@
+/* Reading palette matches the Wu Dan-ru page: warm paper, white cards, navy text. */
+:root { color-scheme: light; }
+body { background: #faf8f5; color: #1e293b; }
+main { line-height: 1.8; }
+main section, main .grid > * { min-width: 0; }
+main .glass-card, main .glass-card-spotlight { background: #fff; box-shadow: 0 2px 8px #0f172a06; }
+#tab-overview p, #tab-negotiation p, #tab-money-machine p,
+#tab-overview td, #tab-negotiation td, #tab-money-machine td,
+#tab-videos p { font-size: .9375rem; line-height: 1.95; }
+#tab-overview blockquote { line-height: 1.8; }
+main p a { text-underline-offset: 3px; }
+main p a:hover { text-decoration: underline; }
+main :is(p, td, li) { overflow-wrap: anywhere; }
+main h2, main h3 { text-wrap: pretty; line-height: 1.6; }
+main :is(input, textarea, select, button, a):focus-visible { outline: 2px solid #0369a1; outline-offset: 3px; }
+#tab-negotiation .tactic-reading { font-size: .9375rem; line-height: 1.95; }
+#tab-nine-knives #auto-analyzer-input { font-size: 1rem; line-height: 1.8; }
+@media (max-width: 639px) {
+  #mobilePageNavSelect { max-width: calc(100vw - 132px); text-overflow: ellipsis; }
+  main { padding-left: 1rem !important; padding-right: 1rem !important; }
+  main .glass-card, main .glass-card-spotlight { padding: 1.1rem; border-radius: 1rem; }
+  main .glass-card h2 { font-size: 1.125rem; }
+  main input, main select, main textarea { font-size: 16px !important; }
+  #tab-overview .flex.items-start.gap-3 { flex-direction: column; }
+  #tab-money-machine .flex.justify-between { flex-wrap: wrap; gap: .5rem; }
+  #tab-money-machine .flex.justify-between > span:last-child { margin-left: auto; }
+  #auto-analysis-status { overflow-wrap: anywhere; }
+}

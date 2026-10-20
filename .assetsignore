@@ -7,3 +7,6 @@ wrangler.toml
 .assetsignore
 .wrangler
 test_*.js
+tests
+scripts
+docs

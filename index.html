@@ -19,6 +19,8 @@
   <link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
   <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192x192.png">
   <link rel="icon" type="image/png" sizes="512x512" href="./icons/icon-512x512.png">
+  <link rel="stylesheet" href="./home-mobile.css">
+  <script src="./pwa-install.js"></script>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -126,13 +128,13 @@
   <div class="relative z-50 bg-slate-950/95 border-b border-slate-800/80 py-1.5 overflow-hidden text-xs">
     <div class="animate-ticker items-center gap-8 text-slate-300">
       <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-amber-400"></span><strong class="text-amber-400">吳淡如核心鐵律：</strong>先有財商再談房商，房貸月付金絕不超過家庭月收入 35%～40%</span>
-      <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-sky-400"></span><strong class="text-sky-400">陳侯勳定錨公式：</strong>實價登錄去頭去尾拆車位＝出價天花板，打 8 折為心中真實底價</span>
+      <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-sky-400"></span><strong class="text-sky-400">陳侯勳定錨公式：</strong>核對實登期間、特殊交易與車位拆價後建立比較基準，打 8 折為心中真實底價</span>
       <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span><strong class="text-emerald-400">馬・雞・豬動物理論：</strong>第一間買自住「馬」（通勤≤1hr），第二間養現金流「雞」（鬧區一樓不折舊），絕不買第二匹馬（度假屋）</span>
       <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-rose-400"></span><strong class="text-rose-400">被動談判心法：</strong>扮演被說服者、要價進攻 2:1、見面談前 2 小時預告退場、最後一口價讓屋主親口說</span>
       <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-purple-400"></span><strong class="text-purple-400">房貸印鈔機：</strong>每創造 4,300 元月租金＝免費提領 100 萬房貸額度；善用 40 年房貸與無限寬限之術</span>
       <!-- Duplicate for seamless loop -->
       <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-amber-400"></span><strong class="text-amber-400">吳淡如核心鐵律：</strong>先有財商再談房商，房貸月付金絕不超過家庭月收入 35%～40%</span>
-      <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-sky-400"></span><strong class="text-sky-400">陳侯勳定錨公式：</strong>實價登錄去頭去尾拆車位＝出價天花板，打 8 折為心中真實底價</span>
+      <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-sky-400"></span><strong class="text-sky-400">陳侯勳定錨公式：</strong>核對實登期間、特殊交易與車位拆價後建立比較基準，打 8 折為心中真實底價</span>
       <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span><strong class="text-emerald-400">馬・雞・豬動物理論：</strong>第一間買自住「馬」（通勤≤1hr），第二間養現金流「雞」（鬧區一樓不折舊），絕不買第二匹馬（度假屋）</span>
       <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-rose-400"></span><strong class="text-rose-400">被動談判心法：</strong>扮演被說服者、要價進攻 2:1、見面談前 2 小時預告退場、最後一口價讓屋主親口說</span>
     </div>
@@ -147,7 +149,8 @@
         </div>
         <div>
           <div class="flex items-center gap-1.5 sm:gap-2">
-            <span class="font-black text-white text-xs sm:text-base tracking-tight">HOUSE TRADE STRATEGY</span>
+            <span class="sm:hidden font-black text-white text-xs tracking-tight">房商智庫</span>
+            <span class="hidden sm:inline font-black text-white sm:text-base tracking-tight">HOUSE TRADE STRATEGY</span>
             <span class="hidden md:inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">雙師戰略指揮中心</span>
           </div>
           <div class="text-[11px] text-slate-400 hidden sm:block">吳淡如《房商必修課》 × 「談判大叔」陳侯勳《房產剎價學》</div>
@@ -261,7 +264,7 @@
         </h1>
 
         <p class="text-slate-300 text-sm sm:text-base lg:text-lg leading-relaxed max-w-3xl mx-auto">
-          買房是人生最大規模的資本配置與心理博弈。本站將<strong>吳淡如《房商必修課》</strong>（35年海內外百間置產、馬雞豬理論與五力分析）與<strong>「談判大叔」陳侯勳《房產剎價學》</strong>（買房九把刀 AI 評分、實登打 8 折與小房間被動談判術）融會貫通，為您打造進可攻、退可守的買房決策系統。
+          買房是人生最大規模的資本配置與心理博弈。本站將<strong>吳淡如《房商必修課》</strong>（35年海內外百間置產、馬雞豬理論與五力分析）與<strong>「談判大叔」陳侯勳《房產剎價學》</strong>（買房九把刀條件檢核、實登打 8 折與小房間被動談判術）融會貫通，為您打造進可攻、退可守的買房決策系統。
         </p>
 
         <!-- Key Stats Counter Bar -->
@@ -295,12 +298,12 @@
           </div>
           <div class="space-y-1">
             <div class="flex flex-wrap items-center gap-2">
-              <span class="font-black text-white text-base sm:text-lg">下載安裝《房商智庫》官方原生 App</span>
+              <span class="font-black text-white text-base sm:text-lg">將《房商智庫》加入主畫面</span>
               <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-purple-500/20 text-purple-300 border border-purple-400/30">PWA 離線快取</span>
               <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">iOS / Android / PC 通用</span>
             </div>
             <p class="text-xs text-slate-300 leading-relaxed">
-              免開商店、不佔手機容量！點擊一鍵「加入主畫面」，立即享有獨立全螢幕極速開啟、離線隨身查房與首頁雙師試算工具。
+              從主畫面快速開啟，使用離線文章與雙師試算工具。即時物件分析需連線。
             </p>
           </div>
         </div>
@@ -394,7 +397,7 @@
                 🗡️ 量化選屋 × 極限被動談判流派
               </span>
               <span class="text-xs text-sky-200/80 font-mono-num bg-sky-950/60 px-2.5 py-1 rounded-lg border border-sky-800/50">
-                591 AI 自動解析 ＋ 實登拆算系統
+                591 物件資料 ＋ 社區成交查核
               </span>
             </div>
 
@@ -402,7 +405,7 @@
               「談判大叔」陳侯勳<span class="text-sky-400">買房與剎價全集</span>
             </h2>
             <p class="text-slate-300 text-sm mt-2.5 leading-relaxed">
-              「怕失去就不要上談判桌！」以「買賣房九把刀」量化過濾地段與產品，搭配「實價登錄車位拆算與極端值剔除」及小房間心理戰，讓你買在社區最低單價。
+              「怕失去就不要上談判桌！」以「買賣房九把刀」量化過濾地段與產品，搭配「實登來源與車位拆算」及小房間心理戰，協助核對資料與比較價格。
             </p>
 
             <!-- Feature Grid -->
@@ -410,10 +413,10 @@
               <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800/90 hover:border-sky-500/40 transition">
                 <div class="text-xs font-bold text-sky-400 flex items-center gap-1.5">
                   <span>⚡</span>
-                  <span>九把刀 AI 智慧看屋評分器</span>
+                  <span>九把刀物件資料與條件檢核</span>
                 </div>
                 <p class="text-[11px] text-slate-300 mt-1 leading-relaxed">
-                  貼上 591/樂居/信義文字或網址，<strong>0.1秒自動萃取開價、坪數、捷運時間與戶數</strong>，即時算出安全指數與砍價破口。
+                  貼上售屋物件網址，<strong>核對開價、坪數與可取得的社區成交</strong>。捷運時間、戶數及現金流缺乏證據時保留待確認。
                 </p>
               </div>
               <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800/90 hover:border-sky-500/40 transition">
@@ -422,7 +425,7 @@
                   <span>實登車位拆算 ＆ 四階出價</span>
                 </div>
                 <p class="text-[11px] text-slate-300 mt-1 leading-relaxed">
-                  剔除親友特殊交易與極端高低價，嚴格拆算車位還原淨單價；自動推算 <strong>60% 敲門、68% 試探、75% 防守、80% 底價</strong>。
+                  揭露來源筆數、期間、特殊交易與估算車位；資料完整且樣本足夠才試算 <strong>60% 敲門、68% 試探、75% 防守、80% 底價</strong>。
                 </p>
               </div>
               <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800/90 hover:border-sky-500/40 transition">
@@ -448,7 +451,7 @@
 
           <div class="mt-7 pt-5 border-t border-slate-800/90 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div class="text-xs text-slate-400">
-              🎯 <strong class="text-sky-300">內建工具：</strong>591自動評分器、日安巴黎實測案、LINE報告匯出
+              🎯 <strong class="text-sky-300">內建工具：</strong>591物件與成交查核、來源筆數與計算依據、LINE摘要匯出
             </div>
             <a href="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261019_03" class="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-sky-400 to-sky-600 hover:from-sky-300 hover:to-sky-500 text-slate-950 font-black text-sm flex items-center justify-center gap-2 shadow-xl shadow-sky-500/25 transition shrink-0">
               <span>進入陳侯勳《買房九把刀》</span>
@@ -508,14 +511,13 @@
     <section id="simulator-section" class="glass-panel rounded-3xl p-6 sm:p-8 border-2 border-emerald-500/30 shadow-2xl">
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-800 pb-5">
         <div>
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-bold mb-2">
+          <div class="sim-intro inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-bold mb-2">
             <span>⚡ 雙師核心公式即時聯動</span>
             <span>•</span>
             <span>輸入一組數字，同步取得兩位名師診斷</span>
           </div>
           <h2 class="text-2xl sm:text-3xl font-black text-white">
-            雙師聯合「買房出價定錨 × 房貸收支比 × 印鈔機」戰略模擬器
-          </h2>
+            雙師聯合「買房出價定錨 × 房貸收支比 × 印鈔機」戰略模擬器</h2><p class="text-xs text-slate-400 mt-2">以下為獨立手動情境試算，預填數字為教學範例，未連接即時實價登錄。</p>
         </div>
         <div class="text-xs text-slate-400 max-w-md">
           同時結合<strong>陳侯勳「實登拆算打8折定錨＋4,300元房貸印鈔機」</strong>與<strong>吳淡如「35%～40%收支紅線＋無限寬限利差複利」</strong>進行綜合運算。
@@ -523,13 +525,13 @@
       </div>
 
       <!-- Inputs Row -->
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mt-6">
+      <div class="grid grid-cols-1 min-[360px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mt-6">
         <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800">
           <label for="sim-asking" class="block text-[11px] font-bold text-slate-400 mb-1">1. 屋主開價 (萬元)</label>
           <input id="sim-asking" type="number" value="2580" step="20" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono-num font-bold text-sm focus:outline-none focus:border-amber-400" />
         </div>
         <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800">
-          <label for="sim-reg" class="block text-[11px] font-bold text-slate-400 mb-1">2. 實登天花板 (萬元)</label>
+          <label for="sim-reg" class="block text-[11px] font-bold text-slate-400 mb-1">2. 手動比較基準 (萬元)</label>
           <input id="sim-reg" type="number" value="2200" step="20" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-amber-300 font-mono-num font-bold text-sm focus:outline-none focus:border-amber-400" />
         </div>
         <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800">
@@ -558,8 +560,8 @@
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
         
         <!-- Output Left: Chen Hou-Hsun Pricing & Free Money -->
-        <div class="p-5 rounded-2xl bg-slate-950/90 border border-sky-500/30 space-y-4">
-          <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+        <div class="sim-output p-5 rounded-2xl bg-slate-950/90 border border-sky-500/30 space-y-4">
+          <div class="sim-heading flex items-center justify-between border-b border-slate-800 pb-2.5">
             <span class="font-bold text-sky-400 text-sm flex items-center gap-1.5">
               <span>🗡️</span>
               <span>陳侯勳「剎價定錨 ＆ 房貸印鈔機」診斷</span>
@@ -569,7 +571,7 @@
             </span>
           </div>
 
-          <div class="grid grid-cols-4 gap-2 text-center">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
             <div class="p-2.5 rounded-xl bg-slate-900 border border-emerald-500/30">
               <div class="text-[10px] text-emerald-400 font-semibold">🥊 60% 敲門價</div>
               <div id="sim-p60" class="text-sm sm:text-base font-black text-white font-mono-num mt-1">1,320萬</div>
@@ -583,17 +585,17 @@
               <div id="sim-p75" class="text-sm sm:text-base font-black text-white font-mono-num mt-1">1,650萬</div>
             </div>
             <div class="p-2.5 rounded-xl bg-amber-500/15 border border-amber-500/50">
-              <div class="text-[10px] text-amber-300 font-bold">🎯 80% 真實底價</div>
+              <div class="text-[10px] text-amber-300 font-bold">🎯 80% 策略試算</div>
               <div id="sim-p80" class="text-sm sm:text-base font-black text-amber-400 font-mono-num mt-1">1,760萬</div>
             </div>
           </div>
 
           <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 text-xs space-y-1.5 text-slate-300">
-            <div class="flex justify-between">
-              <span>• 屋主開價扣除 4% 仲介費實拿底線（開價 ÷ 1.04）：</span>
+            <div class="sim-detail flex justify-between">
+              <span>• 假設按開價扣除 4% 仲介費後實拿（開價 × 0.96）：</span>
               <strong id="sim-net-seller" class="text-rose-300 font-mono-num">2,481 萬元</strong>
             </div>
-            <div class="flex justify-between">
+            <div class="sim-detail flex justify-between">
               <span>• 月租可支撐之免費房貸額度（月租 ÷ 4,300 × 100萬）：</span>
               <strong id="sim-free-loan" class="text-emerald-400 font-mono-num">1,116 萬元</strong>
             </div>
@@ -601,8 +603,8 @@
         </div>
 
         <!-- Output Right: Wu Dan-Ru Financial Safety & Leverage -->
-        <div class="p-5 rounded-2xl bg-slate-950/90 border border-amber-500/30 space-y-4">
-          <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+        <div class="sim-output p-5 rounded-2xl bg-slate-950/90 border border-amber-500/30 space-y-4">
+          <div class="sim-heading flex items-center justify-between border-b border-slate-800 pb-2.5">
             <span class="font-bold text-amber-400 text-sm flex items-center gap-1.5">
               <span>🐎</span>
               <span>吳淡如「35% 收支紅線 ＆ 寬限期複利」診斷</span>
@@ -612,11 +614,11 @@
             </span>
           </div>
 
-          <div class="grid grid-cols-3 gap-2.5 text-center">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-center">
             <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
               <div class="text-[10px] text-slate-400">預估貸款總額</div>
               <div id="sim-loan-amt" class="text-sm sm:text-base font-black text-white font-mono-num mt-1">1,700 萬</div>
-              <div id="sim-down-pct" class="text-[10px] text-slate-400 mt-0.5">自備佔實登 22.7%</div>
+              <div id="sim-down-pct" class="text-[10px] text-slate-400 mt-0.5">自備佔基準 22.7%</div>
             </div>
             <div class="p-2.5 rounded-xl bg-slate-900 border border-amber-500/30">
               <div class="text-[10px] text-amber-300 font-semibold">寬限期只繳息 / 佔收入</div>
@@ -742,14 +744,14 @@
     <!-- SECTION C: Visual Analytics Charts (雙師戰力雷達圖 ＆ 2011-2024 報酬實證圖) -->
     <section id="charts-section" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
       <div class="lg:col-span-6 glass-panel rounded-3xl p-6 border border-slate-800">
-        <div class="flex items-center justify-between mb-4">
+        <div class="chart-heading flex items-center justify-between mb-4">
           <div>
             <span class="text-xs font-bold text-amber-400 uppercase">Synergy Radar</span>
             <h3 class="text-lg font-bold text-white">雙流派戰力互補雷達圖（吳淡如 × 陳侯勳）</h3>
           </div>
           <span class="text-[11px] text-slate-400">6 大維度全覆蓋</span>
         </div>
-        <div class="relative h-72 w-full">
+        <div class="chart-frame relative h-72 w-full">
           <canvas id="synergyRadarChart"></canvas>
         </div>
         <p class="text-xs text-slate-400 mt-3 leading-relaxed">
@@ -758,14 +760,14 @@
       </div>
 
       <div class="lg:col-span-6 glass-panel rounded-3xl p-6 border border-slate-800">
-        <div class="flex items-center justify-between mb-4">
+        <div class="chart-heading flex items-center justify-between mb-4">
           <div>
             <span class="text-xs font-bold text-sky-400 uppercase">Leverage & Return Proof</span>
             <h3 class="text-lg font-bold text-white">台灣各區房價漲幅 vs. 五倍房貸槓桿威力（2011–2024）</h3>
           </div>
           <span class="text-[11px] text-slate-400">資料基準：信義房價指數與 0050</span>
         </div>
-        <div class="relative h-72 w-full">
+        <div class="chart-frame relative h-72 w-full">
           <canvas id="leverageBarChart"></canvas>
         </div>
         <p class="text-xs text-slate-400 mt-3 leading-relaxed">
@@ -813,12 +815,9 @@
           <h2 class="text-xl sm:text-2xl font-bold text-white">📊 兩大房產實戰體系深度對照矩陣</h2>
           <p class="text-xs sm:text-sm text-slate-400 mt-1">一表看懂兩位專家在「第一間房定位、地段鐵律、實價登錄解讀、殺價戰術、房貸操作」上的互補策略：</p>
         </div>
-        <div class="md:hidden inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-semibold shrink-0">
-          <span>👈 左右滑動可瀏覽完整對照 👉</span>
-        </div>
       </div>
 
-      <div class="overflow-x-auto no-scrollbar mobile-scroll-x">
+      <div class="comparison-table-wrap overflow-x-auto">
         <table class="w-full text-left border-collapse text-xs sm:text-sm min-w-[620px]">
           <thead>
             <tr class="border-b border-slate-700 bg-slate-900/90 text-slate-300">
@@ -830,38 +829,38 @@
           <tbody class="divide-y divide-slate-800/80 text-slate-200">
             <tr class="hover:bg-slate-800/30">
               <td class="p-3.5 font-bold text-white">第一間房定位</td>
-              <td class="p-3.5"><strong>先求有再求好（騎驢找馬）</strong>：第一間必買自住「馬」解決高齡租屋歧視並作為增貸底牌；第二間養現金流「雞」；絕不買度假屋。</td>
-              <td class="p-3.5"><strong>前兩間必買「出租房」養自己</strong>：利用共生公寓或高投報老屋創造現金流，第三間才用租金收益買自住房。</td>
+              <td data-label="吳淡如｜房商必修課" class="p-3.5"><strong>先求有再求好（騎驢找馬）</strong>：第一間必買自住「馬」解決高齡租屋歧視並作為增貸底牌；第二間養現金流「雞」；絕不買度假屋。</td>
+              <td data-label="陳侯勳｜九把刀與談判" class="p-3.5"><strong>前兩間必買「出租房」養自己</strong>：利用共生公寓或高投報老屋創造現金流，第三間才用租金收益買自住房。</td>
             </tr>
             <tr class="hover:bg-slate-800/30">
               <td class="p-3.5 font-bold text-white">選屋評估模型</td>
-              <td class="p-3.5"><strong>買房五力分析</strong>（需求力、政策力、稅法力、融資力、脫手力）＋ 通勤≤1小時捷運宅 ＋ 指名上市模範生建商。</td>
-              <td class="p-3.5"><strong>買賣房九把刀</strong>（5km強勢辦公區、捷運通勤30分內、步行10分內、避開總價天花板、控制社區總戶數、3年不斷鏈）。</td>
+              <td data-label="吳淡如｜房商必修課" class="p-3.5"><strong>買房五力分析</strong>（需求力、政策力、稅法力、融資力、脫手力）＋ 通勤≤1小時捷運宅 ＋ 指名上市模範生建商。</td>
+              <td data-label="陳侯勳｜九把刀與談判" class="p-3.5"><strong>買賣房九把刀</strong>（5km強勢辦公區、捷運通勤30分內、步行10分內、避開總價天花板、控制社區總戶數、3年不斷鏈）。</td>
             </tr>
             <tr class="hover:bg-slate-800/30">
               <td class="p-3.5 font-bold text-white">實價登錄與出價</td>
-              <td class="p-3.5">預售屋採「寧為雞首（第一批）」策略；中古屋趁央行限貸與年底冷清期，善用<strong>雙斡旋破除屋主高價錨定</strong>。</td>
-              <td class="p-3.5"><strong>實價登錄去頭去尾拆車位＝出價天花板</strong>！打 8 折為心中底價，設 60% / 68% / 75% 三階假底價，反推屋主除 1.04 底線。</td>
+              <td data-label="吳淡如｜房商必修課" class="p-3.5">預售屋採「寧為雞首（第一批）」策略；中古屋趁央行限貸與年底冷清期，善用<strong>雙斡旋破除屋主高價錨定</strong>。</td>
+              <td data-label="陳侯勳｜九把刀與談判" class="p-3.5"><strong>核對實登期間、特殊交易與車位拆價後建立比較基準</strong>！打 8 折為心中底價，設 60% / 68% / 75% 三階假底價，按假設 4% 仲介費試算實拿。</td>
             </tr>
             <tr class="hover:bg-slate-800/30">
               <td class="p-3.5 font-bold text-white">小房間與仲介博弈</td>
-              <td class="p-3.5"><strong>絕不砍房仲 1% 服務費</strong>（甚至成交另包紅包），讓仲介全力幫你向急售屋主砍價 10%～15%。</td>
-              <td class="p-3.5"><strong>被動談判術</strong>：扮演被說服者、閉嘴留白、要價進攻 2:1、見面談前 2 小時預告放鴿子、最後一口價讓屋主親口說並猶豫 1 小時。</td>
+              <td data-label="吳淡如｜房商必修課" class="p-3.5"><strong>絕不砍房仲 1% 服務費</strong>（甚至成交另包紅包），讓仲介全力幫你向急售屋主砍價 10%～15%。</td>
+              <td data-label="陳侯勳｜九把刀與談判" class="p-3.5"><strong>被動談判術</strong>：扮演被說服者、閉嘴留白、要價進攻 2:1、見面談前 2 小時預告放鴿子、最後一口價讓屋主親口說並猶豫 1 小時。</td>
             </tr>
             <tr class="hover:bg-slate-800/30">
               <td class="p-3.5 font-bold text-white">房貸與財務工程</td>
-              <td class="p-3.5"><strong>40年房貸＋25年無限寬限之術</strong>（每 5 年轉貸增貸），房貸月付≤收入 35%~40%，省下本金定期定額買 0050。</td>
-              <td class="p-3.5"><strong>房貸印鈔機（月租+4,300元＝免費提領100萬房貸）</strong>，將科目一（購置貸）洗成科目四（理財型房貸）抽回本金達成無限 ROI。</td>
+              <td data-label="吳淡如｜房商必修課" class="p-3.5"><strong>40年房貸＋25年無限寬限之術</strong>（每 5 年轉貸增貸），房貸月付≤收入 35%~40%，省下本金定期定額買 0050。</td>
+              <td data-label="陳侯勳｜九把刀與談判" class="p-3.5"><strong>房貸印鈔機（月租+4,300元＝免費提領100萬房貸）</strong>，將科目一（購置貸）洗成科目四（理財型房貸）抽回本金達成無限 ROI。</td>
             </tr>
             <tr class="bg-slate-900/70">
               <td class="p-3.5 font-bold text-white">專頁快速入口</td>
-              <td class="p-3.5">
+              <td data-label="吳淡如｜房商必修課" class="p-3.5">
                 <a href="吳淡如_房商必修課.html" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition shadow-md">
                   <span>前往吳淡如《房商必修課》專頁</span>
                   <span>➔</span>
                 </a>
               </td>
-              <td class="p-3.5">
+              <td data-label="陳侯勳｜九把刀與談判" class="p-3.5">
                 <a href="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261019_03" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-sky-400 hover:bg-sky-300 text-slate-950 font-black text-xs transition shadow-md">
                   <span>前往陳侯勳《買房九把刀》專頁</span>
                   <span>➔</span>
@@ -906,12 +905,13 @@
     // 2. Dual-Master Combat Simulator Logic
     const simInputs = ['sim-asking', 'sim-reg', 'sim-income', 'sim-down', 'sim-rent', 'sim-years'];
     function updateSimulator() {
-      const asking = parseFloat(document.getElementById('sim-asking').value) || 2580;
-      const reg = parseFloat(document.getElementById('sim-reg').value) || 2200;
-      const income = parseFloat(document.getElementById('sim-income').value) || 12;
-      const down = parseFloat(document.getElementById('sim-down').value) || 500;
-      const rent = parseFloat(document.getElementById('sim-rent').value) || 48000;
-      const years = parseInt(document.getElementById('sim-years').value, 10) || 40;
+      const read=id=>{const text=document.getElementById(id).value.trim();return text!=='' && Number.isFinite(Number(text))?Number(text):null;};
+      const asking=read('sim-asking'),reg=read('sim-reg'),income=read('sim-income'),down=read('sim-down'),rent=read('sim-rent'),years=read('sim-years');
+      if(asking==null || reg==null || income==null || down==null || rent==null || years==null || asking<=0 || reg<=0 || income<=0 || down<0 || rent<0 || years<=0){
+        for(const id of ['sim-p60','sim-p68','sim-p75','sim-p80','sim-net-seller','sim-free-loan','sim-loan-amt','sim-down-pct','sim-io-pay','sim-io-ratio','sim-pi-pay','sim-pi-ratio','sim-premium-badge','sim-wu-status'])document.getElementById(id).textContent='待確認';
+        document.getElementById('sim-wu-advice').textContent='請完整填入有效的手動情境數字。資料缺漏時不套用預設價格或產生判讀。';
+        return;
+      }
       const rate = 2.25;
 
       // Chen Hou-Hsun Pricing
@@ -919,7 +919,7 @@
       const p68 = Math.round(reg * 0.68);
       const p75 = Math.round(reg * 0.75);
       const p80 = Math.round(reg * 0.80);
-      const netSeller = Math.round(asking / 1.04);
+      const netSeller = Math.round(asking * 0.96);
       const freeLoan = Math.round((rent / 4300) * 100);
       const premium = reg > 0 ? (((asking - reg) / reg) * 100).toFixed(1) : 0;
 
@@ -936,7 +936,7 @@
         premBadge.textContent = `開價溢價 +${premium}%`;
       } else {
         premBadge.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
-        premBadge.textContent = `低於實登 ${premium}%`;
+        premBadge.textContent = `低於手動基準 ${premium}%`;
       }
 
       // Wu Dan-Ru Mortgage Safety (Assuming purchase at Reg Ceiling price)
@@ -951,7 +951,7 @@
       const piRatio = income > 0 ? ((piMonthly / income) * 100).toFixed(1) : 0;
 
       document.getElementById('sim-loan-amt').textContent = `${loan.toLocaleString()} 萬`;
-      document.getElementById('sim-down-pct').textContent = `自備佔實登 ${downPct}%`;
+      document.getElementById('sim-down-pct').textContent = `自備佔基準 ${downPct}%`;
       document.getElementById('sim-io-pay').textContent = `${ioMonthly.toFixed(2)} 萬/月`;
       document.getElementById('sim-io-ratio').textContent = `佔月入 ${ioRatio}%`;
       document.getElementById('sim-pi-pay').textContent = `${piMonthly.toFixed(2)} 萬/月`;
@@ -967,7 +967,7 @@
       } else if (ioRatio <= 35) {
         statusBadge.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30';
         statusBadge.textContent = '💡 需搭配寬限與殺價';
-        adviceEl.innerHTML = `💡 <strong>雙師綜合判讀：</strong>若以實登 ${reg} 萬買入，本息攤還佔收入 <strong>${piRatio}%</strong> 略高，但寬限期只繳息僅佔 <strong>${ioRatio}%</strong>。建議：(1) 善用 5 年寬限期＋轉貸策略；或 (2) 運用大叔被動談判術將總價殺至 8 折底價（<strong>${p80} 萬</strong>），即可大幅壓低月付金！`;
+        adviceEl.innerHTML = `💡 <strong>雙師綜合判讀：</strong>若以手動基準 ${reg} 萬買入，本息攤還佔收入 <strong>${piRatio}%</strong> 略高，但寬限期只繳息僅佔 <strong>${ioRatio}%</strong>。建議：(1) 善用 5 年寬限期＋轉貸策略；或 (2) 運用大叔被動談判術將總價殺至 8 折底價（<strong>${p80} 萬</strong>），即可大幅壓低月付金！`;
       } else {
         statusBadge.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30';
         statusBadge.textContent = '🚨 超過 35% 警戒線';
@@ -995,9 +995,9 @@
       },
       s2: {
         title: "痛點二：在 591 或房仲網看到心儀物件，不知道開價是否太貴、該出多少錢？",
-        advice: "強烈建議直接使用【陳侯勳《買房九把刀》】專頁中的「AI 智慧網址/文字自動分析評分器」！把 591 售屋文字貼進去，系統會 0.1 秒自動幫你拆算車位坪數與價格、剔除親友極端值，算出實登天花板價與 60% / 68% / 75% / 80% 四階出價，再對照【吳淡如】的買房五力分析雷達圖做雙重確認。",
+        advice: "開啟【陳侯勳《買房九把刀》】專頁，貼上售屋網址。系統核對可取得的物件與社區成交資料，揭露筆數、期間、排除原因及車位估算；資料完整、有效樣本達5筆且本戶車位分價已確認後才建立比較基準。其餘條件保留待確認，再搭配買房五力逐項查核。",
         wuFocus: "必看章節：買房四步法、互動工具 B「五力分析看房實戰評分卡」",
-        chenFocus: "必看章節：買房九把刀 AI 評分系統、實價登錄車位拆算面板、三重日安巴黎實測範例",
+        chenFocus: "必看章節：買房九把刀條件檢核、實價登錄來源與筆數、車位拆算面板",
         primaryLink: "「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261019_03",
         primaryLabel: "立即使用陳侯勳：買房九把刀與 591 分析器"
       },
@@ -1159,7 +1159,7 @@
       new Chart(ctxRadar, {
         type: 'radar',
         data: {
-          labels: ['宏觀財商與股房配置', '量化選屋護城河(九把刀/五力)', '小房間極限殺價心理戰', '房貸印鈔機與無限寬限', '租金投報與軟裝改造', '海外置產與法律防線'],
+          labels: [['宏觀財商', '股房配置'], ['量化選屋', '九把刀／五力'], ['小房間談判', '殺價心理'], ['房貸印鈔機', '寬限期'], ['租金投報', '軟裝改造'], ['海外置產', '法律防線']],
           datasets: [
             {
               label: '吳淡如《房商必修課》',
@@ -1184,6 +1184,7 @@
           maintainAspectRatio: false,
           plugins: {
             legend: {
+              position: 'bottom',
               labels: { color: '#cbd5e1', font: { size: 11, weight: 'bold' } }
             }
           },
@@ -1205,7 +1206,7 @@
       new Chart(ctxBar, {
         type: 'bar',
         data: {
-          labels: ['台北市房價', '全台平均房價', '台中市房價', '0050 指數ETF', '全台房產(含8成房貸槓桿)'],
+          labels: [['台北市', '房價'], ['全台平均', '房價'], ['台中市', '房價'], ['0050', '指數ETF'], ['全台房產', '8成房貸槓桿']],
           datasets: [{
             label: '2011–2024 累積報酬率 (%)',
             data: [52, 82, 127, 320, 410],
@@ -1245,111 +1246,6 @@
             }
           }
         }
-      });
-
-      // --- Progressive Web App (PWA) Installation Logic (像靈蛇週報) ---
-      let deferredPrompt = null;
-      const pwaNavBtn = document.getElementById('pwaInstallBtn');
-      const pwaHeroBtn = document.getElementById('pwaHeroInstallBtn');
-      const pwaModal = document.getElementById('pwaGuideModal');
-      const closePwaModalBtn = document.getElementById('closePwaModal');
-      const confirmPwaModalBtn = document.getElementById('confirmPwaModal');
-      const pwaGuideContent = document.getElementById('pwaGuideContent');
-
-      // 偵測裝置與是否已處於獨立 App 模式
-      const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-      const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-
-      function openPwaGuide(type) {
-        if (!pwaGuideContent || !pwaModal) return;
-        if (type === 'ios' || isIos) {
-          pwaGuideContent.innerHTML = `
-            <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-purple-500/30 space-y-2">
-              <div class="font-bold text-amber-400 text-xs flex items-center gap-1.5">
-                <span>🍎 iPhone / iPad (Safari) 快速安裝步驟：</span>
-              </div>
-              <ol class="list-decimal list-inside space-y-1.5 text-slate-300 text-[11px] leading-relaxed">
-                <li>點擊 Safari 瀏覽器正下方工具列的 <strong>「分享」</strong> 按鈕（<span class="text-sky-300 font-mono">⬆️ 帶箭頭方框圖示</span>）。</li>
-                <li>在彈出的選單中往下滑動，點選 <strong>「加入主畫面」</strong>（<span class="text-emerald-300 font-mono">➕ Add to Home Screen</span>）。</li>
-                <li>點選右上角 <strong>「新增」</strong>，即可在手機桌面生成專屬《房商智庫》App 圖示！</li>
-              </ol>
-            </div>
-            <div class="p-2.5 rounded-xl bg-purple-500/10 border border-purple-500/20 text-[11px] text-purple-200">
-              💡 設成 App 後，直接點開即可享受如同原生 App 的無網址列全螢幕體驗與極速載入！
-            </div>
-          `;
-        } else if (isStandalone) {
-          pwaGuideContent.innerHTML = `
-            <div class="p-4 rounded-2xl bg-emerald-950/40 border border-emerald-500/30 text-center space-y-2">
-              <div class="text-3xl">🎉</div>
-              <div class="font-bold text-emerald-400 text-sm">您已成功安裝《房商智庫》App！</div>
-              <p class="text-[11px] text-slate-300 leading-relaxed">目前正以獨立 App 全螢幕模式運行中，支援離線資料讀取、動態快取與最快啟動速度。</p>
-            </div>
-          `;
-        } else {
-          pwaGuideContent.innerHTML = `
-            <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-sky-500/30 space-y-2">
-              <div class="font-bold text-sky-400 text-xs flex items-center gap-1.5">
-                <span>💻 Android / Chrome / Edge 快速安裝指南：</span>
-              </div>
-              <p class="text-[11px] text-slate-300 leading-relaxed">
-                若瀏覽器未自動彈出安裝視窗，請點擊瀏覽器<strong>網址列右側的「安裝」圖示</strong>（電腦版），或點擊瀏覽器右上角<strong>「⋮」選單 ➔ 選擇「安裝應用程式」或「加到主螢幕」</strong>即可安裝！
-              </p>
-            </div>
-          `;
-        }
-        pwaModal.classList.remove('hidden');
-      }
-
-      function closePwaGuide() {
-        if (pwaModal) pwaModal.classList.add('hidden');
-      }
-
-      if (closePwaModalBtn) closePwaModalBtn.addEventListener('click', closePwaGuide);
-      if (confirmPwaModalBtn) confirmPwaModalBtn.addEventListener('click', closePwaGuide);
-      if (pwaModal) {
-        pwaModal.addEventListener('click', (e) => {
-          if (e.target === pwaModal) closePwaGuide();
-        });
-      }
-
-      // 監聽 PWA 安裝事件（Android / Chrome / Edge / Windows）
-      window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-        if (pwaNavBtn) pwaNavBtn.style.display = 'inline-flex';
-        if (pwaHeroBtn) pwaHeroBtn.innerHTML = '<span>📲</span><span>下載設成 App</span>';
-      });
-
-      function handleInstallClick() {
-        if (deferredPrompt) {
-          deferredPrompt.prompt();
-          deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-              console.log('[PWA] 使用者同意安裝 App');
-              if (pwaNavBtn) pwaNavBtn.style.display = 'none';
-              if (pwaHeroBtn) pwaHeroBtn.innerHTML = '<span>✅</span><span>已安裝為 App</span>';
-            }
-            deferredPrompt = null;
-          });
-        } else if (isIos) {
-          openPwaGuide('ios');
-        } else if (isStandalone) {
-          openPwaGuide('standalone');
-        } else {
-          openPwaGuide('manual');
-        }
-      }
-
-      if (pwaNavBtn) pwaNavBtn.addEventListener('click', handleInstallClick);
-      if (pwaHeroBtn) pwaHeroBtn.addEventListener('click', handleInstallClick);
-
-      // 安裝成功監聽
-      window.addEventListener('appinstalled', () => {
-        console.log('[PWA] 房商智庫 App 已成功安裝');
-        if (pwaNavBtn) pwaNavBtn.style.display = 'none';
-        if (pwaHeroBtn) pwaHeroBtn.innerHTML = '<span>✅</span><span>已安裝為 App</span>';
-        deferredPrompt = null;
       });
 
       // 註冊 Service Worker (sw.js)
