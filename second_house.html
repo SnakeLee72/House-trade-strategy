@@ -7,7 +7,7 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   <title>第二屋購屋與資產槓桿決策中心（V3 統一財務模型版）｜科目一轉科目四 × 首購八成 × 0050 套利全解析</title>
-  
+
   <!-- PWA Manifest & App Configuration -->
   <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#0f172a">
@@ -21,6 +21,7 @@
   <link rel="icon" type="image/png" sizes="512x512" href="./icons/icon-512x512.png">
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="./site-ui.js?v=20261021_sticky1"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
@@ -39,9 +40,30 @@
     .font-mono-num {
       font-family: 'JetBrains Mono', 'Inter', monospace;
     }
+    body #matrix-section .matrix-scroll {
+      width: 100%; max-width: 100%; overflow-x: auto;
+      scrollbar-width: auto;
+    }
+    body #matrix-section .matrix-scroll table {
+      min-width: 1280px !important; table-layout: fixed;
+    }
+    body #matrix-section .matrix-scroll::-webkit-scrollbar { height: 12px; }
+    body #matrix-section .matrix-scroll::-webkit-scrollbar-thumb { background: #64748b; border-radius: 12px; }
+    body #matrix-section .matrix-scroll :is(th,td):first-child {
+      position: sticky; left: 0; z-index: 1; background: #0f172a;
+    }
+    body #matrix-section .matrix-scroll thead th:first-child { z-index: 2; }
+    body .site-hero .primary-ranking-link {
+      background: linear-gradient(115deg,#0369a1,#075985);
+      color: #f8fafc !important; border-color: #7dd3fc;
+      box-shadow: 0 6px 20px #0369a166;
+    }
+    body .site-hero .primary-ranking-link:hover {
+      background: #0369a1; color: #f8fafc !important; border-color: #bae6fd;
+    }
     .cyber-grid {
       background-size: 40px 40px;
-      background-image: 
+      background-image:
         linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
     }
@@ -90,34 +112,59 @@
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     .mobile-scroll-x { -webkit-overflow-scrolling: touch; }
   </style>
+  <meta name="description" content="第二屋資產槓桿實戰決策：以第一屋、第二屋與0050連動情境，檢視租金、房貸、現金流及資產配置的教學試算。">
+  <meta property="og:title" content="第二屋購屋與資產槓桿決策中心（V3 統一財務模型版）｜科目一轉科目四 × 首購八成 × 0050 套利全解析">
+  <meta property="og:description" content="第二屋資產槓桿實戰決策：以第一屋、第二屋與0050連動情境，檢視租金、房貸、現金流及資產配置的教學試算。">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://house-trade-strategy.snakelee72.workers.dev/icons/icon-512x512.png">
+  <link rel="stylesheet" href="./site-ui.css?v=20261021_sticky1">
+<!-- Lucide inline SVG; Copyright (c) Lucide Contributors. ISC/MIT notices: ./icons/lucide-license.txt -->
 </head>
-<body class="min-h-screen flex flex-col cyber-grid selection:bg-amber-400 selection:text-slate-950">
+<body class="min-h-screen flex flex-col cyber-grid selection:bg-amber-500 selection:text-slate-950">
 
   <!-- Background Particle Canvas -->
   <canvas id="bg-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-45"></canvas>
 
   <!-- Live Strategy Ticker Tape -->
-  <div class="relative z-50 bg-slate-950/95 border-b border-slate-800/80 py-1.5 overflow-hidden text-xs">
+  <div class="relative z-50 bg-slate-950/95 border-b border-slate-800/80 py-1.5 overflow-hidden text-sm">
     <div class="animate-ticker items-center gap-8 text-slate-300">
       <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-amber-400"></span><strong class="text-amber-400">陳侯勳「科目一轉科目四」核心：</strong>消除聯徵「購置住宅貸款（科目一）」紀錄，即可恢復名下無房貸之首購 8 成資格！</span>
-      <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-purple-400"></span><strong class="text-purple-400">央行第七波管制注意：</strong>若本人名下已有第一屋（縱使無房貸），本人申辦第二屋仍無寬限期；必須由「名下無房之配偶」擔任買方與借款人，方能同享 8 成＋寬限期！</span>
+      <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-purple-400"></span><strong class="text-purple-400">央行第七波管制注意：</strong>若本人名下已有第一屋（縱使無房貸），本人申辦第二屋仍無寬限期；可改由「名下無房之配偶」擔任買方與借款人（配偶的第 1 戶貸款），原則上可爭取 8 成＋寬限期，實際以銀行核貸結果為準；此舉不符合新青安等首購優惠！</span>
       <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-rose-400"></span><strong class="text-rose-400">央行金檢絕對紅線：</strong>第一屋增貸／理財型房貸（科目四）資金嚴禁直接匯入第二屋履保專戶當頭期款，違者銀行強制追回貸款並罰違約金！</span>
       <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span><strong class="text-emerald-400">豪宅線與總價天花板：</strong>雙北買第二屋務必將成交總價壓在 3,200 萬內（更要避開台北 7,000 萬／新北 6,000 萬／其他地區 4,000 萬高價住宅緊箍咒）！</span>
       <!-- Duplicate for loop -->
       <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-amber-400"></span><strong class="text-amber-400">陳侯勳「科目一轉科目四」核心：</strong>消除聯徵「購置住宅貸款（科目一）」紀錄，即可恢復名下無房貸之首購 8 成資格！</span>
-      <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-purple-400"></span><strong class="text-purple-400">央行第七波管制注意：</strong>若本人名下已有第一屋（縱使無房貸），本人申辦第二屋仍無寬限期；必須由「名下無房之配偶」擔任買方與借款人，方能同享 8 成＋寬限期！</span>
+      <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-purple-400"></span><strong class="text-purple-400">央行第七波管制注意：</strong>若本人名下已有第一屋（縱使無房貸），本人申辦第二屋仍無寬限期；可改由「名下無房之配偶」擔任買方與借款人（配偶的第 1 戶貸款），原則上可爭取 8 成＋寬限期，實際以銀行核貸結果為準；此舉不符合新青安等首購優惠！</span>
     </div>
   </div>
 
   <!-- Sticky Cross-Page Navigation Header (支援選單左右滑動與下拉式選單) -->
-  <nav class="sticky top-0 z-50 bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/80 text-white shadow-lg">
+  <nav id="siteTopbar" class="site-topbar site-compact-topbar site-topbar--second sticky top-0 z-50 bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/80 text-white shadow-lg">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5">
       <!-- Top Row: Logo / Back + Mobile Dropdown + Desktop Links -->
-      <div class="flex items-center justify-between gap-3 text-xs sm:text-sm">
+      <div class="flex items-center justify-between gap-3 text-sm sm:text-sm">
         <div class="flex items-center gap-2 shrink-0">
           <a href="./index.html" class="inline-flex items-center gap-1.5 text-slate-300 hover:text-amber-400 font-bold transition group">
-            <span class="px-2.5 py-1 rounded-lg bg-slate-900 group-hover:bg-amber-500/20 text-amber-400 border border-slate-700 group-hover:border-amber-500/40 transition">
-              🏛️ 總首頁
+            <span class="px-2.5 py-1 rounded-full bg-slate-900 group-hover:bg-amber-500/20 text-amber-400 border border-slate-700 group-hover:border-amber-500/40 transition">
+              <svg class="site-icon lucide lucide-landmark" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M10 18v-7" />
+  <path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" />
+  <path d="M14 18v-7" />
+  <path d="M18 18v-7" />
+  <path d="M3 22h18" />
+  <path d="M6 18v-7" />
+</svg>
+ 總首頁
             </span>
             <span class="hidden md:inline text-slate-300 group-hover:text-white">指揮中心</span>
           </a>
@@ -125,26 +172,140 @@
 
         <!-- Mobile Dropdown Selector (支援下拉式選單) -->
         <div class="sm:hidden flex-1 max-w-[210px]">
-          <select id="mobilePageNavSelect" class="w-full bg-slate-900 text-emerald-300 border border-emerald-500/40 rounded-xl px-2.5 py-1.5 text-xs font-bold focus:outline-none focus:ring-1 focus:ring-emerald-400 cursor-pointer shadow-sm" aria-label="切換專區選單">
-            <option value="./index.html">🏛️ 總首頁 (雙師指揮中心)</option>
-            <option value="./吳淡如_房商必修課.html">🐎 吳淡如《房商必修課》</option>
-            <option value="./「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_07">🗡️ 陳侯勳《房產剎價學》</option>
-            <option value="./second_house.html" selected>🏦 第二屋決策 (本頁)</option>
+          <select id="mobilePageNavSelect" class="w-full bg-slate-900 text-emerald-300 border border-emerald-500/40 rounded-xl px-2.5 py-1.5 text-sm font-bold focus:outline-none focus:ring-1 focus:ring-emerald-400 cursor-pointer shadow-sm" aria-label="切換專區選單">
+            <option value="./index.html"><svg class="site-icon lucide lucide-landmark" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M10 18v-7" />
+  <path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" />
+  <path d="M14 18v-7" />
+  <path d="M18 18v-7" />
+  <path d="M3 22h18" />
+  <path d="M6 18v-7" />
+</svg>
+ 總首頁 (雙師指揮中心)</option>
+            <option value="./吳淡如_房商必修課.html"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 吳淡如《房商必修課》</option>
+            <option value="./「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_07"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 陳侯勳《房產剎價學》</option>
+            <option value="./second_house.html" selected><svg class="site-icon lucide lucide-landmark" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M10 18v-7" />
+  <path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" />
+  <path d="M14 18v-7" />
+  <path d="M18 18v-7" />
+  <path d="M3 22h18" />
+  <path d="M6 18v-7" />
+</svg>
+ 第二屋決策 (本頁)</option>
           </select>
         </div>
 
         <!-- Desktop Nav Items -->
         <div class="hidden sm:flex items-center gap-2">
           <a href="./吳淡如_房商必修課.html" class="px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 bg-slate-900 text-amber-300 hover:bg-amber-500 hover:text-slate-950 border border-amber-500/30">
-            <span>🐎</span>
+            <span><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</span>
             <span>吳淡如《房商必修課》</span>
           </a>
           <a href="./「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_07" class="px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 bg-slate-900 text-sky-300 hover:bg-sky-400 hover:text-slate-950 border border-sky-500/30">
-            <span>🗡️</span>
+            <span><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</span>
             <span>陳侯勳《房產剎價學》</span>
           </a>
-          <span class="px-3 py-1.5 rounded-xl font-black flex items-center gap-1.5 bg-gradient-to-r from-emerald-400 to-sky-400 text-slate-950 shadow-md">
-            <span>🏦</span>
+          <span class="px-3 py-1.5 rounded-full font-bold flex items-center gap-1.5 bg-gradient-to-r from-emerald-400 to-sky-400 text-slate-950 shadow-md">
+            <span><svg class="site-icon lucide lucide-landmark" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M10 18v-7" />
+  <path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" />
+  <path d="M14 18v-7" />
+  <path d="M18 18v-7" />
+  <path d="M3 22h18" />
+  <path d="M6 18v-7" />
+</svg>
+</span>
             <span>第二屋決策 (V3統一模型)</span>
           </span>
         </div>
@@ -152,29 +313,140 @@
 
       <!-- Mobile Horizontal Scrollable Pill Bar (選單左右移動) -->
       <div class="sm:hidden flex items-center gap-2 pt-2 mt-2 border-t border-slate-800/80 overflow-x-auto whitespace-nowrap no-scrollbar mobile-scroll-x">
-        <a href="./index.html" class="shrink-0 px-3 py-1 rounded-lg text-xs font-bold bg-slate-900 text-slate-300 border border-slate-800 hover:text-white transition">
-          🏛️ 總首頁
+        <a href="./index.html" class="shrink-0 px-3 py-1 rounded-xl text-sm font-bold bg-slate-900 text-slate-300 border border-slate-800 hover:text-white transition">
+          <svg class="site-icon lucide lucide-landmark" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M10 18v-7" />
+  <path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" />
+  <path d="M14 18v-7" />
+  <path d="M18 18v-7" />
+  <path d="M3 22h18" />
+  <path d="M6 18v-7" />
+</svg>
+ 總首頁
         </a>
-        <a href="./吳淡如_房商必修課.html" class="shrink-0 px-3 py-1 rounded-lg text-xs font-bold bg-slate-900 text-amber-300 border border-amber-500/30 hover:bg-amber-500 hover:text-slate-950 transition">
-          🐎 吳淡如專區 ↗
+        <a href="./吳淡如_房商必修課.html" class="shrink-0 px-3 py-1 rounded-xl text-sm font-bold bg-slate-900 text-amber-300 border border-amber-500/30 hover:bg-amber-500 hover:text-slate-950 transition">
+          <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 吳淡如專區 <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+
         </a>
-        <a href="./「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_07" class="shrink-0 px-3 py-1 rounded-lg text-xs font-bold bg-slate-900 text-sky-300 border border-sky-500/30 hover:bg-sky-400 hover:text-slate-950 transition">
-          🗡️ 陳侯勳專區 ↗
+        <a href="./「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_07" class="shrink-0 px-3 py-1 rounded-xl text-sm font-bold bg-slate-900 text-sky-300 border border-sky-500/30 hover:bg-sky-400 hover:text-slate-950 transition">
+          <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 陳侯勳專區 <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+
         </a>
-        <span class="shrink-0 px-3 py-1 rounded-lg text-xs font-black bg-gradient-to-r from-emerald-400 to-sky-400 text-slate-950 shadow-sm">
-          🏦 第二屋決策 (本頁)
+        <span class="shrink-0 px-3 py-1 rounded-full text-sm font-bold bg-gradient-to-r from-emerald-400 to-sky-400 text-slate-950 shadow-sm">
+          <svg class="site-icon lucide lucide-landmark" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M10 18v-7" />
+  <path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" />
+  <path d="M14 18v-7" />
+  <path d="M18 18v-7" />
+  <path d="M3 22h18" />
+  <path d="M6 18v-7" />
+</svg>
+ 第二屋決策 (本頁)
         </span>
       </div>
     </div>
   </nav>
 
   <!-- Hero & Current Asset Snapshot -->
-  <header class="relative z-10 border-b border-slate-800/80 bg-gradient-to-b from-slate-900/80 via-slate-950/90 to-[#050811] py-8 lg:py-10">
+  <header class="site-hero relative z-10 border-b border-slate-800/80 bg-gradient-to-b from-slate-900/80 via-slate-950/90 to-[#050811] py-8 lg:py-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
       <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div>
-          <div class="inline-flex flex-wrap items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-bold mb-3">
-            <span>🎯 V3 統一財務工程模型版</span>
+          <div class="inline-flex flex-wrap items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-sm font-bold mb-3">
+            <span><svg class="site-icon lucide lucide-target" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <circle cx="12" cy="12" r="6" />
+  <circle cx="12" cy="12" r="2" />
+</svg>
+ V3 統一財務工程模型版</span>
             <span>•</span>
             <span>第一屋增值 580 萬 ＋ 釋放 1,550 萬淨值</span>
             <span>•</span>
@@ -188,14 +460,65 @@
           </p>
         </div>
         <div class="flex items-center gap-2 overflow-x-auto whitespace-nowrap no-scrollbar py-1 mobile-scroll-x shrink-0 w-full lg:w-auto">
-          <a href="#ranking-section" class="shrink-0 px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs sm:text-sm transition shadow-lg shadow-amber-500/20">
-            🏆 看 4 大方案優先順序
+          <a href="#ranking-section" class="primary-ranking-link shrink-0 px-4 py-2.5 rounded-xl text-sky-100 border border-sky-300 font-bold text-sm sm:text-sm transition shadow-lg shadow-sky-500/20">
+            <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 看 4 大方案優先順序
           </a>
-          <a href="#matrix-section" class="shrink-0 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-sky-300 border border-sky-500/40 font-bold text-xs sm:text-sm transition">
-            📊 看完整比較總表
+          <a href="#matrix-section" class="shrink-0 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-sky-300 border border-sky-500/40 font-bold text-sm sm:text-sm transition">
+            <svg class="site-icon lucide lucide-chart-no-axes-combined" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 16v5" />
+  <path d="M16 14.639V21" />
+  <path d="M20 10.656V21" />
+  <path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15" />
+  <path d="M4 18.463V21" />
+  <path d="M8 14.656V21" />
+</svg>
+ 看完整比較總表
           </a>
-          <a href="#simulator-section" class="shrink-0 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-emerald-300 border border-emerald-500/40 font-bold text-xs sm:text-sm transition">
-            🧮 V3 統一財務模擬器
+          <a href="#simulator-section" class="shrink-0 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-emerald-300 border border-emerald-500/40 font-bold text-sm sm:text-sm transition">
+            <svg class="site-icon lucide lucide-chart-no-axes-combined" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 16v5" />
+  <path d="M16 14.639V21" />
+  <path d="M20 10.656V21" />
+  <path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15" />
+  <path d="M4 18.463V21" />
+  <path d="M8 14.656V21" />
+</svg>
+ V3 統一財務模擬器
           </a>
         </div>
       </div>
@@ -203,39 +526,96 @@
       <!-- Current Status 4-Card Dashboard -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div class="glass-card-spotlight rounded-2xl p-4 border border-amber-500/30">
-          <div class="flex items-center justify-between text-xs text-slate-400 font-semibold">
-            <span>🏠 第一屋現況（出租母雞）</span>
-            <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[10px]">買入 1,420萬</span>
+          <div class="flex items-center justify-between text-sm text-slate-400 font-semibold">
+            <span><svg class="site-icon lucide lucide-house" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+  <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+</svg>
+ 第一屋現況（出租母雞）</span>
+            <span class="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px]">買入 1,420萬</span>
           </div>
           <div class="text-2xl font-black text-amber-400 font-mono-num mt-1.5">現值 2,000 萬</div>
-          <div class="text-xs text-slate-300 mt-1">帳面增值 <strong class="text-emerald-400">+580萬 (+40.8%)</strong>，出租預估月收 3.5~4.2 萬。</div>
+          <div class="text-sm text-slate-300 mt-1">帳面增值 <strong class="text-emerald-400">+580萬 (+40.8%)</strong>，出租預估月收 3.5~4.2 萬。</div>
         </div>
 
         <div class="glass-card-spotlight rounded-2xl p-4 border border-emerald-500/30">
-          <div class="flex items-center justify-between text-xs text-slate-400 font-semibold">
-            <span>💎 第一屋沉睡淨值（可活化）</span>
-            <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px]">殘貸僅 450萬</span>
+          <div class="flex items-center justify-between text-sm text-slate-400 font-semibold">
+            <span><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 第一屋沉睡淨值（可活化）</span>
+            <span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px]">殘貸僅 450萬</span>
           </div>
           <div class="text-2xl font-black text-emerald-400 font-mono-num mt-1.5">淨值 1,550 萬</div>
-          <div class="text-xs text-slate-300 mt-1">按 8 成鑑價可貸 <strong>1,600 萬</strong>，扣掉 450 萬後可淨釋放 <strong class="text-amber-300">1,150 萬</strong> 資金！</div>
+          <div class="text-sm text-slate-300 mt-1">按 8 成鑑價可貸 <strong>1,600 萬</strong>，扣掉 450 萬後可淨釋放 <strong class="text-amber-300">1,150 萬</strong> 資金！</div>
         </div>
 
         <div class="glass-card-spotlight rounded-2xl p-4 border border-sky-500/30">
-          <div class="flex items-center justify-between text-xs text-slate-400 font-semibold">
-            <span>🏢 第二屋目標（新房自住/置產）</span>
-            <span class="px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 text-[10px]">建議壓在3,200萬</span>
+          <div class="flex items-center justify-between text-sm text-slate-400 font-semibold">
+            <span><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 第二屋目標（新房自住/置產）</span>
+            <span class="px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 text-[10px]">建議壓在3,200萬</span>
           </div>
           <div class="text-2xl font-black text-sky-400 font-mono-num mt-1.5">3,200 ~ 3,500 萬</div>
-          <div class="text-xs text-slate-300 mt-1">8 成可貸 <strong>2,560~2,800萬</strong>（自備 640~700萬）；若卡二屋 5 成則需自備 1,600萬+。</div>
+          <div class="text-sm text-slate-300 mt-1">8 成可貸 <strong>2,560~2,800萬</strong>（自備 640~700萬）；若卡第 2 戶 7 成（現行上限）則需自備 960~1,050萬+。</div>
         </div>
 
         <div class="glass-card-spotlight rounded-2xl p-4 border border-rose-500/30">
-          <div class="flex items-center justify-between text-xs text-slate-400 font-semibold">
-            <span>⚡ 授信規範：消除科目一＆配偶名義</span>
-            <span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 text-[10px]">第七波管制校準</span>
+          <div class="flex items-center justify-between text-sm text-slate-400 font-semibold">
+            <span><svg class="site-icon lucide lucide-zap" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z" />
+</svg>
+ 授信規範：消除科目一＆配偶名義</span>
+            <span class="px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 text-[10px]">第七波管制校準</span>
           </div>
-          <div class="text-2xl font-black text-rose-400 font-mono-num mt-1.5">8成 vs 二屋 5成</div>
-          <div class="text-xs text-slate-300 mt-1">塗銷第一屋科目一可拿 <strong>8 成</strong>；若要<strong>寬限期</strong>，須由名下無房之配偶買入（或先將一屋贈與配偶）。</div>
+          <div class="text-2xl font-black text-rose-400 font-mono-num mt-1.5">8成 vs 二屋 7成</div>
+          <div class="text-sm text-slate-300 mt-1">塗銷第一屋科目一可拿 <strong>8 成</strong>；若要<strong>寬限期</strong>，須由名下無房之配偶買入（或先將一屋贈與配偶）。</div>
         </div>
       </div>
     </div>
@@ -247,152 +627,441 @@
     <section id="ranking-section" class="space-y-5">
       <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-slate-800 pb-4">
         <div>
-          <span class="text-xs font-bold uppercase tracking-wider text-amber-400">Executive Recommendation</span>
-          <h2 class="text-2xl sm:text-3xl font-black text-white mt-1">🏆 四大購屋方案【優先順序總排行】與決策結論</h2>
+          <span class="text-sm font-bold uppercase tracking-wider text-amber-400">Executive Recommendation</span>
+          <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 四大購屋方案【優先順序總排行】與決策結論</h2>
         </div>
-        <div class="text-xs text-slate-400 mt-1 md:mt-0">
+        <div class="text-sm text-slate-400 mt-1 md:mt-0">
           結論：<strong class="text-emerald-400">作法 1 與 作法 3 為並列第一首選</strong>（差別僅在先用自有資金清償 450 萬，或用新科目四直接代償）
         </div>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <!-- RANK 1A: Method 1 -->
-        <div class="glass-card-spotlight rounded-3xl p-6 border-2 border-amber-500/60 bg-gradient-to-br from-amber-500/10 via-slate-900/95 to-slate-950 shadow-2xl flex flex-col justify-between">
+        <div class="glass-card-spotlight rounded-2xl p-6 border-2 border-amber-500/60 bg-gradient-to-br from-amber-500/10 via-slate-900/95 to-slate-950 shadow-2xl flex flex-col justify-between">
           <div>
             <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-              <span class="px-3 py-1 rounded-full bg-amber-500 text-slate-950 font-black text-xs shadow-md">
-                🥇 第一優先（並列首選 A）：手頭現金充裕（可覆蓋頭期＋450萬舊貸）時採用
+              <span class="px-3 py-1 rounded-full bg-amber-500 text-slate-950 font-bold text-xs shadow-md">
+                <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 第一優先（並列首選 A）：手頭現金充裕（可覆蓋頭期＋450萬舊貸）時採用
               </span>
-              <span class="text-xs font-mono-num font-bold text-amber-300">推薦指數：★★★★★ (98分)</span>
+              <span class="text-sm font-mono-num font-bold text-amber-300">推薦指數：★★★★★ (98分)</span>
             </div>
-            <h3 class="text-xl font-black text-white">
+            <h3 class="text-xl font-bold text-white">
               作法 1：先清償第一屋 450 萬（消滅科目一）➔ 8 成買第二屋 ➔ 第一屋辦科目四（1,600 萬）買 0050 ＋ 出租
             </h3>
-            <p class="text-xs sm:text-sm text-slate-300 mt-2.5 leading-relaxed">
+            <p class="text-sm sm:text-sm text-slate-300 mt-2.5 leading-relaxed">
               這是<strong>金流時序最乾淨、100% 避開央行金檢紅線</strong>的做法！您先用自有現金還清第一屋 450 萬並付第二屋頭期款，等第二屋順利核貸 8 成撥款交屋後，再拿第一屋乾淨產權申辦 1,600 萬「科目四（分期型原屋融資／理財型房貸）」。此時抽出的 1,600 萬（含補回先前掏出的 450 萬＋新增 1,150 萬）全數投入 0050，完全不會有「增貸資金流入房市」的疑慮。
             </p>
-            <div class="mt-4 p-3.5 rounded-2xl bg-slate-950/90 border border-amber-500/30 text-xs space-y-1.5">
-              <div class="font-bold text-amber-300">💡 央行第七波管制「寬限期」實戰提醒：</div>
+            <div class="mt-4 p-3.5 rounded-2xl bg-slate-950/90 border border-amber-500/30 text-sm space-y-1.5">
+              <div class="font-bold text-amber-300"><svg class="site-icon lucide lucide-lightbulb" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
+  <path d="M9 18h6" />
+  <path d="M10 22h4" />
+</svg>
+ 央行第七波管制「寬限期」實戰提醒：</div>
               <div class="text-slate-300">• 塗銷第一屋 450 萬後，您名下雖無「科目一房貸」可貸 8 成，但因名下仍有第一屋產權，依央行第七波規定<strong>本人申辦第二屋無法取得寬限期</strong>。</div>
-              <div class="text-emerald-300">• <strong>完美解法：</strong>若已婚且配偶名下無房，第二屋直接由<strong>配偶擔任買方與借款人</strong>（連第一屋 450 萬都不必急著還！），或透過夫妻贈與調整名義，即可同時拿到 <strong>8 成＋3~5 年寬限期</strong>！</div>
+              <div class="text-emerald-300">• <strong>替代做法：</strong>若已婚且配偶名下無房，第二屋可改由<strong>配偶擔任買方與借款人</strong>（使用配偶的第 1 戶貸款條件；連第一屋 450 萬都不必急著還），或透過夫妻贈與調整名義，原則上有機會爭取 <strong>8 成＋3~5 年寬限期</strong>；實際成數、利率與寬限期仍以銀行核貸結果為準，且配偶此舉不符合新青安等政府首購優惠。</div>
             </div>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs">
-            <span class="text-amber-400 font-bold">✅ 優勢：買二屋時聯徵 0 負債、金流時序 100% 隔離</span>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-sm">
+            <span class="text-amber-400 font-bold"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 優勢：買二屋時聯徵 0 負債、金流時序 100% 隔離</span>
             <span class="text-slate-400">科目四抽回後全數投入 0050 複利</span>
           </div>
         </div>
 
         <!-- RANK 1B: Method 3 -->
-        <div class="glass-card-spotlight rounded-3xl p-6 border-2 border-sky-500/60 bg-gradient-to-br from-sky-500/10 via-slate-900/95 to-slate-950 shadow-2xl flex flex-col justify-between">
+        <div class="glass-card-spotlight rounded-2xl p-6 border-2 border-sky-500/60 bg-gradient-to-br from-sky-500/10 via-slate-900/95 to-slate-950 shadow-2xl flex flex-col justify-between">
           <div>
             <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-              <span class="px-3 py-1 rounded-full bg-sky-400 text-slate-950 font-black text-xs shadow-md">
-                🥇 第一優先（並列首選 B）：不想動用 450 萬現金還舊貸時採用
+              <span class="px-3 py-1 rounded-full bg-sky-400 text-slate-950 font-bold text-xs shadow-md">
+                <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 第一優先（並列首選 B）：不想動用 450 萬現金還舊貸時採用
               </span>
-              <span class="text-xs font-mono-num font-bold text-sky-300">推薦指數：★★★★★ (95分)</span>
+              <span class="text-sm font-mono-num font-bold text-sky-300">推薦指數：★★★★★ (95分)</span>
             </div>
-            <h3 class="text-xl font-black text-white">
+            <h3 class="text-xl font-bold text-white">
               作法 3：第一屋直接「轉增貸科目四」代償原 450 萬（科目一轉四）➔ 恢復無房貸 8 成買第二屋 ＋ 第一屋出租
             </h3>
-            <p class="text-xs sm:text-sm text-slate-300 mt-2.5 leading-relaxed">
+            <p class="text-sm sm:text-sm text-slate-300 mt-2.5 leading-relaxed">
               這是<strong>陳侯勳「科目一洗成科目四」的標準操作</strong>。找 B 銀行以「投資理財周轉（科目四）」名義申貸 1,600 萬，由 B 銀行直接代償塗銷 A 銀行的 450 萬「科目一」，多貸出的 1,150 萬直接進證券戶買 0050；您手頭原本的現金只需用來付第二屋的 2 成頭期款與裝潢費。
             </p>
-            <div class="mt-4 p-3.5 rounded-2xl bg-slate-950/90 border border-sky-500/30 text-xs space-y-1.5">
-              <div class="font-bold text-sky-300">⚠️ 實戰關鍵防雷（極重要！）：</div>
+            <div class="mt-4 p-3.5 rounded-2xl bg-slate-950/90 border border-sky-500/30 text-sm space-y-1.5">
+              <div class="font-bold text-sky-300"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 實戰關鍵防雷（極重要！）：</div>
               <div class="text-slate-300">1. <strong>嚴格金流防火牆</strong>：第一屋科目四多貸出的 1,150 萬，<strong>必須 100% 轉入證券交割戶買 0050</strong>（保留買進對帳單），<strong>絕對不可</strong>轉入用來付第二屋頭期款的帳戶！</div>
               <div class="text-amber-300">2. <strong>總收支比（DBR）審核</strong>：因買第二屋時，第一屋的 1,600 萬科目四已在帳上，銀行會合併計算兩筆貸款月付金，請務必先將第一屋出租簽妥公證租約，以租金＋股息＋薪資共同認列收入。</div>
             </div>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs">
-            <span class="text-sky-400 font-bold">✅ 優勢：免掏 450 萬現金還舊貸、直接借新還舊轉科目四</span>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-sm">
+            <span class="text-sky-400 font-bold"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 優勢：免掏 450 萬現金還舊貸、直接借新還舊轉科目四</span>
             <span class="text-slate-400">現金需求較作法 1 少 450 萬</span>
           </div>
         </div>
 
         <!-- RANK 3: Method 2 -->
-        <div class="glass-card-spotlight rounded-3xl p-6 border border-rose-500/40 bg-slate-900/80 flex flex-col justify-between">
+        <div class="glass-card-spotlight rounded-2xl p-6 border border-rose-500/40 bg-slate-900/80 flex flex-col justify-between">
           <div>
             <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
               <span class="px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40 font-bold text-xs">
-                ⚠️ 第三順位（高風險不推薦）：同時踩中「第二戶限貸 5 成」與「金檢違約」
+                <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 第三順位（高風險不推薦）：同時踩中「第二戶限貸 7 成」與「金檢違約」
               </span>
-              <span class="text-xs font-mono-num font-bold text-rose-400">推薦指數：★★☆☆☆ (35分)</span>
+              <span class="text-sm font-mono-num font-bold text-rose-400">推薦指數：★★☆☆☆ (35分)</span>
             </div>
-            <h3 class="text-lg font-black text-white">
+            <h3 class="text-lg font-bold text-white">
               作法 2：第一屋 450 萬不還、直接申請增貸 ➔ 想拿增貸資金去買第二屋 ＋ 第一屋出租
             </h3>
-            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+            <p class="text-sm text-slate-300 mt-2 leading-relaxed">
               1. <strong>違反央行切結規定：</strong>增貸（科目四）資金嚴禁直接或間接流入房市支付頭期款，一旦金檢發現匯入履保專戶，銀行將強制收回貸款並罰違約金。<br>
-              2. <strong>卡死第二屋貸款成數：</strong>因第一屋 450 萬「科目一」未塗銷，買第二屋屬於「第 2 戶購屋貸款」，受央行管制<strong>最高僅能貸 5 成且無寬限期</strong>！為了不還 450 萬舊貸，導致第二屋少貸 3 成（約 1,005 萬），自備款缺口暴增！
+              2. <strong>卡死第二屋貸款成數：</strong>因第一屋 450 萬「科目一」未塗銷，買第二屋屬於「第 2 戶購屋貸款」，受央行管制<strong>最高僅能貸 7 成且無寬限期</strong>（2026 年央行兩度放寬後之現行規定；第七波 2024-09 原為 5 成）！為了不還 450 萬舊貸，導致第二屋少貸 1 成（約 335 萬）且失去寬限期，自備款缺口擴大！
             </p>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/80 text-xs text-rose-300 font-semibold">
-            ⛔ 結論：絕對不要為了保留 450 萬舊貸，而讓第二屋跌入 5 成限貸陷阱！
+          <div class="mt-4 pt-3 border-t border-slate-800/80 text-sm text-rose-300 font-semibold">
+            <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 結論：絕對不要為了保留 450 萬舊貸，而讓第二屋跌入第 2 戶 7 成限貸、無寬限期陷阱！
           </div>
         </div>
 
         <!-- RANK 4: Method 4 -->
-        <div class="glass-card-spotlight rounded-3xl p-6 border border-slate-700/80 bg-slate-900/60 flex flex-col justify-between opacity-90">
+        <div class="glass-card-spotlight rounded-2xl p-6 border border-slate-700/80 bg-slate-900/60 flex flex-col justify-between opacity-90">
           <div>
             <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
               <span class="px-3 py-1 rounded-full bg-slate-800 text-slate-300 border border-slate-700 font-bold text-xs">
-                🛑 第四順位（最不推薦・Not Preferred）：殺掉會下蛋的收租母雞
+                <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 第四順位（最不推薦・Not Preferred）：殺掉會下蛋的收租母雞
               </span>
-              <span class="text-xs font-mono-num font-bold text-slate-400">推薦指數：★☆☆☆☆ (25分)</span>
+              <span class="text-sm font-mono-num font-bold text-slate-400">推薦指數：★☆☆☆☆ (25分)</span>
             </div>
-            <h3 class="text-lg font-black text-white">
+            <h3 class="text-lg font-bold text-white">
               作法 4：賣掉第一間房（2,000萬）➔ 拿差價去買第二間房
             </h3>
-            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+            <p class="text-sm text-slate-300 mt-2 leading-relaxed">
               1. <strong>損失高額交易摩擦成本：</strong>賣掉 2,000 萬房屋需付仲介費、土增稅與房地合一稅（合計約 80~150 萬）。<br>
               2. <strong>失去抗通膨雙引擎：</strong>賣掉第一屋後，您少了每年 40 萬以上的淨租金現金流，以及 2,000 萬房產隨通膨增值的複利效果，10 年後總淨值將大幅落後作法 1 與作法 3。
             </p>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/80 text-xs text-slate-400">
-            💡 除非第一屋地段衰退或屋況有結構瑕疵，否則優質收租母雞應長期持有。
+          <div class="mt-4 pt-3 border-t border-slate-800/80 text-sm text-slate-400">
+            <svg class="site-icon lucide lucide-lightbulb" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
+  <path d="M9 18h6" />
+  <path d="M10 22h4" />
+</svg>
+ 除非第一屋地段衰退或屋況有結構瑕疵，否則優質收租母雞應長期持有。
           </div>
         </div>
       </div>
     </section>
 
     <!-- SECTION 2: COMPREHENSIVE HTML COMPARISON TABLE -->
-    <section id="matrix-section" class="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-2xl space-y-5">
+    <section id="matrix-section" class="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800 shadow-2xl space-y-5">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-4">
         <div>
           <span class="px-2.5 py-0.5 rounded-full bg-sky-500/20 text-sky-300 text-xs font-bold border border-sky-500/30">量化對照矩陣</span>
-          <h2 class="text-xl sm:text-2xl font-black text-white mt-1.5">📊 四大購屋與貸款方案【全方位優缺點＆授信指標比較表】</h2>
-          <p class="text-xs text-slate-400 mt-0.5">
+          <h2 class="text-xl sm:text-2xl font-bold text-white mt-1.5"><svg class="site-icon lucide lucide-chart-no-axes-combined" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 16v5" />
+  <path d="M16 14.639V21" />
+  <path d="M20 10.656V21" />
+  <path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15" />
+  <path d="M4 18.463V21" />
+  <path d="M8 14.656V21" />
+</svg>
+ 四大購屋與貸款方案【全方位優缺點＆授信指標比較表】</h2>
+          <p class="text-sm text-slate-400 mt-0.5">
             基準假設：第一屋現值 <strong>2,000 萬</strong>（殘貸 450 萬）；第二屋目標成交價 <strong>3,350 萬</strong>（可於下方模擬器動態調整）。
           </p>
         </div>
-        <button type="button" id="btn-copy-summary" class="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs flex items-center gap-1.5 shadow-lg shadow-emerald-500/20 transition shrink-0">
-          <span>📋 複製 V3 完整分析報告 (LINE格式)</span>
+        <button type="button" id="btn-copy-summary" class="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm flex items-center gap-1.5 shadow-lg shadow-emerald-500/20 transition shrink-0">
+          <span><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 複製 V3 完整分析報告 (LINE格式)</span>
         </button>
-      <!-- Mobile Horizontal Scroll Hint -->
-      <div class="sm:hidden text-center text-xs text-amber-400 font-bold py-1.5 px-3 bg-amber-500/10 border border-amber-500/20 rounded-xl mb-3 shadow-sm">
-        👈 左右滑動查看四大方案完整比較總表 👉
+      </div>
+      <!-- Horizontal Scroll Hint -->
+      <div class="text-center text-sm text-amber-400 font-bold py-1.5 px-3 bg-amber-500/10 border border-amber-500/20 rounded-2xl mb-3 shadow-sm">
+        <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 左右滑動查看四大方案完整比較總表 <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+
       </div>
 
-      <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse text-xs sm:text-sm min-w-[960px]">
+      <div class="matrix-scroll site-table-scroll overflow-x-auto" tabindex="0" role="region" aria-label="可橫向捲動的量化對照矩陣">
+        <table class="w-full text-left border-collapse text-sm sm:text-sm min-w-[960px]">
           <thead>
             <tr class="border-b-2 border-slate-700 bg-slate-900/95 text-slate-200">
-              <th class="p-3.5 font-black w-[15%]">比較維度</th>
-              <th class="p-3.5 font-black text-amber-400 bg-amber-500/10 border-x border-amber-500/20 w-[23%]">
-                🥇 作法 1（首選 A：先清償再科目四）<br>
+              <th class="p-3.5 font-bold w-[15%]">比較維度</th>
+              <th class="p-3.5 font-bold text-amber-400 bg-amber-500/10 border-x border-amber-500/20 w-[23%]">
+                <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 作法 1（首選 A：先清償再科目四）<br>
                 <span class="text-[11px] font-semibold text-amber-200">還清450萬 ➔ 8成買二屋 ➔ 科目四買0050</span>
               </th>
-              <th class="p-3.5 font-black text-sky-400 bg-sky-500/10 border-r border-sky-500/20 w-[23%]">
-                🥇 作法 3（首選 B：科目一洗成科目四）<br>
+              <th class="p-3.5 font-bold text-sky-400 bg-sky-500/10 border-r border-sky-500/20 w-[23%]">
+                <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 作法 3（首選 B：科目一洗成科目四）<br>
                 <span class="text-[11px] font-semibold text-sky-200">辦科目四代償450萬 ➔ 8成買二屋</span>
               </th>
               <th class="p-3.5 font-bold text-rose-400 w-[20%]">
-                ⚠️ 作法 2（不還舊貸直接增貸）<br>
+                <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 作法 2（不還舊貸直接增貸）<br>
                 <span class="text-[11px] font-normal text-rose-300">留450萬 ➔ 增貸買二屋（高風險）</span>
               </th>
               <th class="p-3.5 font-bold text-slate-400 w-[19%]">
-                🛑 作法 4（賣一屋買二屋）<br>
+                <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 作法 4（賣一屋買二屋）<br>
                 <span class="text-[11px] font-normal text-slate-400">賣2,000萬 ➔ 換買3,350萬</span>
               </th>
             </tr>
@@ -400,20 +1069,80 @@
           <tbody class="divide-y divide-slate-800/90 text-slate-200">
             <tr class="hover:bg-slate-900/50">
               <td class="p-3.5 font-bold text-white">優先順序與評級</td>
-              <td class="p-3.5 bg-amber-500/5 border-x border-amber-500/15 font-black text-amber-400">
-                🏆 第 1 順位（現金充裕首選）<br>
+              <td class="p-3.5 bg-amber-500/5 border-x border-amber-500/15 font-bold text-amber-400">
+                <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 第 1 順位（現金充裕首選）<br>
                 <span class="text-[11px] text-emerald-400">★ 金流時序 100% 隔離無瑕疵</span>
               </td>
-              <td class="p-3.5 bg-sky-500/5 border-r border-sky-500/15 font-black text-sky-400">
-                🏆 第 1 順位（省現金首選）<br>
+              <td class="p-3.5 bg-sky-500/5 border-r border-sky-500/15 font-bold text-sky-400">
+                <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 第 1 順位（省現金首選）<br>
                 <span class="text-[11px] text-emerald-400">★ 免掏 450 萬、借新還舊轉科目四</span>
               </td>
               <td class="p-3.5 text-rose-400 font-bold">
-                ⚠️ 第 3 順位（極不推薦）<br>
-                <span class="text-[11px]">踩中二屋 5 成限貸＋金檢紅線</span>
+                <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 第 3 順位（極不推薦）<br>
+                <span class="text-[11px]">踩中二屋 7 成限貸＋金檢紅線</span>
               </td>
               <td class="p-3.5 text-slate-400 font-bold">
-                🛑 第 4 順位（Not Prefer）<br>
+                <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 第 4 順位（Not Prefer）<br>
                 <span class="text-[11px]">喪失收租母雞與長期抗通膨槓桿</span>
               </td>
             </tr>
@@ -421,19 +1150,79 @@
             <tr class="hover:bg-slate-900/50">
               <td class="p-3.5 font-bold text-white">聯徵中心「科目一」狀態</td>
               <td class="p-3.5 bg-amber-500/5 border-x border-amber-500/15 text-emerald-300 font-semibold">
-                ✅ <strong>0 筆（完全塗銷清零）</strong><br>
+                <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ <strong>0 筆（完全塗銷清零）</strong><br>
                 申辦第二屋時名下無任何貸款
               </td>
               <td class="p-3.5 bg-sky-500/5 border-r border-sky-500/15 text-emerald-300 font-semibold">
-                ✅ <strong>0 筆（科目一已轉為科目四）</strong><br>
+                <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ <strong>0 筆（科目一已轉為科目四）</strong><br>
                 聯徵僅顯示「周轉金/理財貸款」
               </td>
               <td class="p-3.5 text-rose-300">
-                ❌ <strong>仍有 1 筆科目一（450萬）</strong><br>
+                <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ <strong>仍有 1 筆科目一（450萬）</strong><br>
                 直接觸發央行「第 2 戶限貸令」
               </td>
               <td class="p-3.5 text-slate-300">
-                ✅ <strong>0 筆（賣屋塗銷）</strong>
+                <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ <strong>0 筆（賣屋塗銷）</strong>
               </td>
             </tr>
 
@@ -441,21 +1230,21 @@
               <td class="p-3.5 font-bold text-white">第二屋（3,350萬）<br>成數與寬限期（第七波校準）</td>
               <td class="p-3.5 bg-amber-500/5 border-x border-amber-500/15 font-mono-num">
                 <strong class="text-amber-300 text-base">可貸 8 成（2,680 萬）</strong><br>
-                <span class="text-xs text-emerald-300">✓ 配偶無房買入：享 3~5 年寬限期</span><br>
+                <span class="text-sm text-emerald-300">✓ 配偶無房買入：享 3~5 年寬限期</span><br>
                 <span class="text-[11px] text-amber-200/80">※ 本人名下有第一屋買入：8成但無寬限期</span>
               </td>
               <td class="p-3.5 bg-sky-500/5 border-r border-sky-500/15 font-mono-num">
                 <strong class="text-sky-300 text-base">可貸 8 成（2,680 萬）</strong><br>
-                <span class="text-xs text-emerald-300">✓ 配偶無房買入：享 3~5 年寬限期</span><br>
+                <span class="text-sm text-emerald-300">✓ 配偶無房買入：享 3~5 年寬限期</span><br>
                 <span class="text-[11px] text-sky-200/80">※ 本人名下有第一屋買入：8成但無寬限期</span>
               </td>
               <td class="p-3.5 font-mono-num">
-                <strong class="text-rose-400 text-base">受限第2戶僅 5 成（1,675 萬）</strong><br>
-                <span class="text-xs text-rose-300">✗ 強制無寬限期、利率加碼至 2.6%+</span>
+                <strong class="text-rose-400 text-base">受限第2戶僅 7 成（2,345 萬）</strong><br>
+                <span class="text-sm text-rose-300">✗ 強制無寬限期、利率加碼至 2.6%+</span>
               </td>
               <td class="p-3.5 font-mono-num">
                 <strong class="text-slate-200">可貸 8 成（2,680 萬）</strong><br>
-                <span class="text-xs text-slate-400">✓ 名下無房享首購寬限期</span>
+                <span class="text-sm text-slate-400">✓ 名下無房享首購寬限期</span>
               </td>
             </tr>
 
@@ -463,19 +1252,19 @@
               <td class="p-3.5 font-bold text-white">交屋前需準備之現金<br>（含2成頭期+150萬裝潢+規費）</td>
               <td class="p-3.5 bg-amber-500/5 border-x border-amber-500/15 font-mono-num">
                 <strong>短期需 1,320 萬</strong>（450萬還舊貸＋670萬二屋頭期＋200萬裝潢規費）；<br>
-                <span class="text-xs text-amber-300">二屋交屋後辦科目四可抽回 1,600 萬買 0050！</span>
+                <span class="text-sm text-amber-300">二屋交屋後辦科目四可抽回 1,600 萬買 0050！</span>
               </td>
               <td class="p-3.5 bg-sky-500/5 border-r border-sky-500/15 font-mono-num">
                 <strong>僅需自備 870 萬</strong>（670萬二屋頭期＋200萬裝潢規費）；<br>
-                <span class="text-xs text-sky-300">舊貸 450 萬由新辦科目四直接代償！</span>
+                <span class="text-sm text-sky-300">舊貸 450 萬由新辦科目四直接代償！</span>
               </td>
               <td class="p-3.5 font-mono-num">
-                <strong>高達 1,875 萬</strong>（1,675萬二屋5成頭期＋200萬裝潢規費）；<br>
-                <span class="text-xs text-rose-300">且增貸之 1,150 萬依法不得直接匯入二屋！</span>
+                <strong>高達 1,205 萬</strong>（1,005萬二屋7成頭期＋200萬裝潢規費）；<br>
+                <span class="text-sm text-rose-300">且增貸之 1,150 萬依法不得直接匯入二屋！</span>
               </td>
               <td class="p-3.5 font-mono-num">
                 <strong>0 元額外現金</strong><br>
-                <span class="text-xs text-slate-400">賣屋扣除稅費實拿約 1,430 萬，付完 870 萬還剩 560 萬</span>
+                <span class="text-sm text-slate-400">賣屋扣除稅費實拿約 1,430 萬，付完 870 萬還剩 560 萬</span>
               </td>
             </tr>
 
@@ -490,8 +1279,8 @@
                 <span class="text-[11px] text-slate-300">科目四代償後淨拿 1,150 萬 ＋ 手頭省下未還舊貸之 450 萬現金同買 0050</span>
               </td>
               <td class="p-3.5 font-mono-num">
-                <strong class="text-rose-400 text-base">0 元（還倒缺 555 萬）</strong><br>
-                <span class="text-[11px] text-slate-400">現金全卡死在第二屋 5 成自備款中</span>
+                <strong class="text-rose-400 text-base">115 萬元</strong><br>
+                <span class="text-[11px] text-slate-400">1,320 萬現金扣除第 2 戶 7 成自備款 1,205 萬後僅剩 115 萬</span>
               </td>
               <td class="p-3.5 font-mono-num">
                 <strong class="text-slate-300 text-base">1,880 萬元</strong><br>
@@ -504,48 +1293,159 @@
     </section>
 
     <!-- SECTION 3: V3 UNIFIED FINANCIAL SIMULATOR -->
-    <section id="simulator-section" class="glass-panel rounded-3xl p-6 sm:p-8 border-2 border-emerald-500/35 shadow-2xl space-y-6">
+    <section id="simulator-section" class="glass-panel rounded-2xl p-6 sm:p-8 border-2 border-emerald-500/35 shadow-2xl space-y-6">
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-800 pb-4">
         <div>
           <span class="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold border border-emerald-500/30">V3 統一連動財務引擎</span>
-          <h2 class="text-xl sm:text-2xl font-black text-white mt-1.5">🧮 第一屋（2,000萬）× 第二屋（3,200~3,500萬）× 0050 全景連動試算器</h2>
-          <p class="text-xs text-slate-300 mt-0.5">
+          <h2 id="simulation-title" class="text-xl sm:text-2xl font-bold text-white mt-1.5"><svg class="site-icon lucide lucide-chart-no-axes-combined" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 16v5" />
+  <path d="M16 14.639V21" />
+  <path d="M20 10.656V21" />
+  <path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15" />
+  <path d="M4 18.463V21" />
+  <path d="M8 14.656V21" />
+</svg>
+ 第一屋（2,000萬）× 第二屋（3,200~3,500萬）× 0050 全景連動試算器</h2>
+          <p class="text-sm text-slate-300 mt-0.5">
             修改任一參數，下方<strong>「購屋上限反推」、「科目四印鈔機額度」、「房貸三情境懸崖月付」與「10 年本息攤還淨資產對決圖」</strong>將 100% 同步精算更新！
           </p>
         </div>
 
         <!-- NEW: Borrower Identity Switcher (Central Bank 7th Wave Calibration) -->
         <div class="p-2.5 rounded-2xl bg-slate-950 border border-purple-500/40 flex flex-col sm:flex-row sm:items-center gap-2 shrink-0 w-full lg:w-auto">
-          <span class="text-xs font-bold text-purple-300 px-1 shrink-0">👤 第二屋買方名義：</span>
+          <span class="text-sm font-bold text-purple-300 px-1 shrink-0"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 第二屋買方名義：</span>
           <!-- Mobile Dropdown Selector (支援下拉式選單) -->
           <div class="sm:hidden w-full">
-            <select id="mobileBorrowerSelect" class="w-full bg-slate-900 text-purple-200 border border-purple-500/50 rounded-xl px-3 py-2 text-xs font-bold focus:outline-none focus:ring-1 focus:ring-purple-400 cursor-pointer shadow-sm" aria-label="借款人名義下拉選單">
-              <option value="spouse" selected>👩‍❤️‍👨 配偶名下無房首購 (享8成+寬限期)</option>
-              <option value="self">🙋‍♂️ 本人名下有第一屋 (8成但無寬限期)</option>
+            <select id="mobileBorrowerSelect" class="w-full bg-slate-900 text-purple-200 border border-purple-500/50 rounded-xl px-3 py-2 text-sm font-bold focus:outline-none focus:ring-1 focus:ring-purple-400 cursor-pointer shadow-sm" aria-label="借款人名義下拉選單">
+              <option value="spouse" selected><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 配偶名下無房（第 1 戶貸款）</option>
+              <option value="self"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 本人名下有第一屋 (8成但無寬限期)</option>
             </select>
           </div>
           <!-- Desktop / Tablet Buttons (選單左右滑動支援) -->
           <div class="hidden sm:flex items-center gap-1.5 overflow-x-auto whitespace-nowrap no-scrollbar mobile-scroll-x" id="buyer-btn-group">
-            <button type="button" id="btn-buyer-spouse" class="shrink-0 px-3 py-1.5 rounded-xl text-xs font-black bg-purple-500 text-slate-950 shadow transition">
-              👩‍❤️‍👨 配偶名下無房首購 (享8成+寬限期)
+            <button type="button" id="btn-buyer-spouse" class="shrink-0 px-3 py-1.5 rounded-xl text-sm font-bold bg-purple-500 text-slate-950 shadow transition">
+              <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 配偶名下無房（第 1 戶貸款）
             </button>
-            <button type="button" id="btn-buyer-self" class="shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-700 transition">
-              🙋‍♂️ 本人名下有第一屋 (8成但無寬限期)
+            <button type="button" id="btn-buyer-self" class="shrink-0 px-3 py-1.5 rounded-xl text-sm font-bold bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-700 transition">
+              <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 本人名下有第一屋 (8成但無寬限期)
             </button>
           </div>
         </div>
       </div>
 
       <!-- Central Bank 7th Wave Alert Banner (Dynamic) -->
-      <div id="cb-rule-banner" class="p-3.5 rounded-2xl bg-purple-500/10 border border-purple-500/30 text-xs text-purple-200 flex items-start gap-2.5 leading-relaxed">
-        <span class="text-base shrink-0">🏛️</span>
+      <div id="cb-rule-banner" class="p-3.5 rounded-2xl bg-purple-500/10 border border-purple-500/30 text-sm text-purple-200 flex items-start gap-2.5 leading-relaxed">
+        <span class="text-base shrink-0"><svg class="site-icon lucide lucide-landmark" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M10 18v-7" />
+  <path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" />
+  <path d="M14 18v-7" />
+  <path d="M18 18v-7" />
+  <path d="M3 22h18" />
+  <path d="M6 18v-7" />
+</svg>
+</span>
         <div id="cb-rule-text">
-          <strong>【央行第七波授信校準：配偶名下無房首購模式】</strong> 當第一屋消除「科目一」或登記於您名下，並由<strong>「名下無自有住宅之配偶」</strong>擔任第二屋買方與借款人（或先將第一屋夫妻贈與過戶予配偶），第二屋即可合法享有<strong>最高 8 成貸款 ＋ 3~5 年寬限期</strong>！
+          <strong>【央行信用管制口徑：配偶名下無房（第 1 戶貸款）模式】</strong> 當第一屋消除「科目一」或登記於您名下，並由<strong>「名下無自有住宅之配偶」</strong>擔任第二屋買方與借款人（或先將第一屋夫妻贈與過戶予配偶），第二屋原則上可爭取<strong>最高 8 成貸款 ＋ 3~5 年寬限期</strong>；實際成數、利率與寬限期仍以銀行核貸結果為準。<br><span class="block mt-1 text-[12px] text-purple-200/90">① 此為央行信用管制口徑（以借款人本人歸戶）：配偶擔任買方與借款人，即用掉配偶的第 1 戶購屋貸款條件。<br>② 配偶此舉<strong>不符合新青安等政府首購優惠</strong>（該資格審查含借款人本人、配偶及未成年子女名下皆無自有住宅），請勿把「第 1 戶貸款條件」與「首購優惠」混為一談。</span>
         </div>
       </div>
 
-      <!-- Primary Simulator Input Controls (7 Inputs including Effective Rent Ratio) -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 text-xs">
+      <!-- Primary Simulator Input Controls (10 Inputs including Effective Rent Ratio) -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3 text-sm">
         <div class="p-3 rounded-2xl bg-slate-900/90 border border-slate-800">
           <label for="inp-h1-val" class="block font-bold text-slate-400 mb-1">第一屋現值 (萬)</label>
           <input id="inp-h1-val" type="number" value="2000" step="50" class="w-full px-2.5 py-1.5 rounded-xl bg-slate-950 border border-slate-700 text-amber-300 font-mono-num font-bold text-sm focus:outline-none focus:border-amber-400" />
@@ -553,6 +1453,14 @@
         <div class="p-3 rounded-2xl bg-slate-900/90 border border-slate-800">
           <label for="inp-h1-loan" class="block font-bold text-slate-400 mb-1">第一屋殘貸 (萬)</label>
           <input id="inp-h1-loan" type="number" value="450" step="10" class="w-full px-2.5 py-1.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono-num font-bold text-sm focus:outline-none focus:border-amber-400" />
+        </div>
+        <div class="p-3 rounded-2xl bg-slate-900/90 border border-slate-800">
+          <label for="inp-h1-loan-interest" class="block font-bold text-slate-400 mb-1" title="作法 2（保留第一屋舊貸）之舊貸利率">第一屋殘貸利率 (%)</label>
+          <input id="inp-h1-loan-interest" type="number" value="2.20" min="0" max="15" step="0.05" class="w-full px-2.5 py-1.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono-num font-bold text-sm focus:outline-none focus:border-amber-400" />
+        </div>
+        <div class="p-3 rounded-2xl bg-slate-900/90 border border-slate-800">
+          <label for="inp-h1-loan-years" class="block font-bold text-slate-400 mb-1" title="作法 2（保留第一屋舊貸）之舊貸剩餘年期">第一屋殘貸剩餘年期 (年)</label>
+          <input id="inp-h1-loan-years" type="number" value="20" min="1" max="40" step="1" class="w-full px-2.5 py-1.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono-num font-bold text-sm focus:outline-none focus:border-amber-400" />
         </div>
         <div class="p-3 rounded-2xl bg-slate-900/90 border border-slate-800">
           <label for="inp-h1-rent" class="block font-bold text-slate-400 mb-1">第一屋表定月租 (元)</label>
@@ -571,8 +1479,12 @@
           <input id="inp-etf-return" type="number" value="8.5" step="0.5" class="w-full px-2.5 py-1.5 rounded-xl bg-slate-950 border border-slate-700 text-purple-300 font-mono-num font-bold text-sm focus:outline-none focus:border-purple-400" />
         </div>
         <div class="p-3 rounded-2xl bg-slate-900/90 border border-slate-800">
+          <label for="inp-prop-growth" class="block font-bold text-sky-400 mb-1">房價年增率 (%)</label>
+          <input id="inp-prop-growth" type="number" value="3.0" min="-10" max="20" step="0.5" class="w-full px-2.5 py-1.5 rounded-xl bg-slate-950 border border-slate-700 text-sky-300 font-mono-num font-bold text-sm focus:outline-none focus:border-sky-400" />
+        </div>
+        <div class="p-3 rounded-2xl bg-slate-900/90 border border-slate-800">
           <label for="inp-loan-rate" class="block font-bold text-amber-400 mb-1">科目四利率 (%)</label>
-          <input id="inp-loan-rate" type="number" value="2.45" step="0.05" class="w-full px-2.5 py-1.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono-num font-bold text-sm focus:outline-none focus:border-amber-400" />
+          <input id="inp-loan-rate" type="text" inputmode="decimal" data-rate-input="true" autocomplete="off" value="2.45" step="0.05" class="w-full px-2.5 py-1.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono-num font-bold text-sm focus:outline-none focus:border-amber-400" />
         </div>
       </div>
 
@@ -580,42 +1492,120 @@
       <div class="p-5 rounded-2xl bg-gradient-to-r from-sky-500/10 via-slate-900/95 to-indigo-500/10 border-2 border-sky-500/40 shadow-xl space-y-4">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-800 pb-3">
           <div class="flex items-center gap-2.5">
-            <span class="text-2xl">🎯</span>
+            <span class="text-2xl"><svg class="site-icon lucide lucide-target" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <circle cx="12" cy="12" r="6" />
+  <circle cx="12" cy="12" r="2" />
+</svg>
+</span>
             <div>
               <div class="flex flex-wrap items-center gap-2">
-                <span class="font-black text-white text-sm sm:text-base">模組一：自備款 ＆ 裝潢費反推買房總價與 Cover 壓力診斷</span>
-                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-500/20 text-sky-300 border border-sky-500/30">連動下方貸款成數與 10 年淨值池</span>
+                <span class="font-bold text-white text-sm sm:text-base">模組一：自備款 ＆ 裝潢費反推買房總價與 Cover 壓力診斷</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-500/20 text-sky-300 border border-sky-500/30">連動下方貸款成數與 10 年淨值池</span>
               </div>
-              <p class="text-xs text-slate-300 mt-0.5">
+              <p class="text-sm text-slate-300 mt-0.5">
                 輸入您的手頭總可用資金與裝潢預算，即時精算<strong>「作法 3（免掏 450 萬還舊貸）」</strong>與<strong>「作法 1（需先掏 450 萬過橋清償）」</strong>的現金流裕度！
               </p>
             </div>
           </div>
-          <div class="text-xs text-left md:text-right shrink-0">
+          <div class="text-sm text-left md:text-right shrink-0">
             <span class="text-slate-400">目前看中目標總價：</span>
             <strong id="disp-eval-target-price" class="text-sky-400 font-mono-num font-bold text-sm sm:text-base">3,350 萬</strong>
           </div>
         </div>
 
         <!-- 4 Down Payment & Renovation Input Controls -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
           <div class="p-3.5 rounded-2xl bg-slate-950/90 border border-sky-500/30">
-            <label for="inp-buyer-cash" class="block font-bold text-sky-300 mb-1">💰 手頭總可用現金池 (萬)</label>
+            <label for="inp-buyer-cash" class="block font-bold text-sky-300 mb-1"><svg class="site-icon lucide lucide-landmark" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M10 18v-7" />
+  <path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" />
+  <path d="M14 18v-7" />
+  <path d="M18 18v-7" />
+  <path d="M3 22h18" />
+  <path d="M6 18v-7" />
+</svg>
+ 手頭總可用現金池 (萬)</label>
             <input id="inp-buyer-cash" type="number" value="950" step="10" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-sky-300 font-mono-num font-bold text-sm focus:outline-none focus:border-sky-400" />
             <span class="text-[10px] text-slate-400 mt-1 block">作為全方案統一初始自有資金池基準</span>
           </div>
           <div class="p-3.5 rounded-2xl bg-slate-950/90 border border-amber-500/30">
-            <label for="inp-renovation" class="block font-bold text-amber-300 mb-1">🛋️ 預估裝潢與家具家電 (萬)</label>
+            <label for="inp-renovation" class="block font-bold text-amber-300 mb-1"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 預估裝潢與家具家電 (萬)</label>
             <input id="inp-renovation" type="number" value="150" step="10" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-amber-300 font-mono-num font-bold text-sm focus:outline-none focus:border-amber-400" />
             <span class="text-[10px] text-slate-400 mt-1 block">新屋軟硬裝潢、冷氣與家電預算</span>
           </div>
           <div class="p-3.5 rounded-2xl bg-slate-950/90 border border-slate-800">
-            <label for="inp-reserve-fund" class="block font-bold text-emerald-300 mb-1">🛡️ 預留緊急預備金 (萬)</label>
+            <label for="inp-reserve-fund" class="block font-bold text-emerald-300 mb-1"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 預留緊急預備金 (萬)</label>
             <input id="inp-reserve-fund" type="number" value="50" step="10" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-emerald-300 font-mono-num font-bold text-sm focus:outline-none focus:border-emerald-400" />
             <span class="text-[10px] text-slate-400 mt-1 block">交屋後戶頭保留的週轉金（可填0）</span>
           </div>
           <div class="p-3.5 rounded-2xl bg-slate-950/90 border border-slate-800">
-            <label for="inp-fee-rate" class="block font-bold text-purple-300 mb-1">📝 契稅代書等各項規費率 (%)</label>
+            <label for="inp-fee-rate" class="block font-bold text-purple-300 mb-1"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 契稅代書等各項規費率 (%)</label>
             <input id="inp-fee-rate" type="number" value="1.5" step="0.1" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-purple-300 font-mono-num font-bold text-sm focus:outline-none focus:border-purple-400" />
             <span class="text-[10px] text-slate-400 mt-1 block">契稅、印花、地政規費等（約1.5%）</span>
           </div>
@@ -626,45 +1616,134 @@
           <!-- Left 6 Cols: Affordability Max Price Calculation -->
           <div class="lg:col-span-6 p-4 rounded-2xl bg-slate-950/90 border border-sky-500/30 flex flex-col justify-between space-y-3">
             <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-              <span class="font-bold text-sky-400 text-xs">🏡 購屋上限反推：自備款到底能買多少總價？</span>
-              <span class="text-[10px] px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 font-bold">消除科目一貸 8 成基準</span>
+              <span class="font-bold text-sky-400 text-sm"><svg class="site-icon lucide lucide-house" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+  <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+</svg>
+ 購屋上限反推：自備款到底能買多少總價？</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 font-bold">消除科目一貸 8 成基準</span>
             </div>
 
-            <div class="space-y-2 text-xs">
-              <div class="p-3 rounded-xl bg-gradient-to-r from-emerald-500/15 to-slate-900 border border-emerald-500/30 space-y-1.5">
+            <div class="space-y-2 text-sm">
+              <div class="p-3 rounded-2xl bg-gradient-to-r from-emerald-500/15 to-slate-900 border border-emerald-500/30 space-y-1.5">
                 <div class="flex items-center justify-between">
-                  <span class="text-slate-300 font-bold">🎯 安全推薦購屋總價（預留預備金）：</span>
+                  <span class="text-slate-300 font-bold"><svg class="site-icon lucide lucide-target" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <circle cx="12" cy="12" r="6" />
+  <circle cx="12" cy="12" r="2" />
+</svg>
+ 安全推薦購屋總價（預留預備金）：</span>
                   <strong id="out-safe-h2-price" class="text-xl sm:text-2xl font-black text-emerald-400 font-mono-num">3,488 萬元</strong>
                 </div>
                 <div class="text-[11px] text-emerald-300/90 leading-relaxed flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <span>保留 <span id="disp-safe-reserve" class="font-mono-num font-bold">50</span> 萬備用金＋扣除裝潢規費後，2 成頭期可負擔總價</span>
-                  <button type="button" id="btn-apply-safe-price" class="shrink-0 px-2.5 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-[11px] shadow transition">
-                    👉 一鍵套用至目標價
+                  <button type="button" id="btn-apply-safe-price" class="shrink-0 px-2.5 py-1 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-[11px] shadow transition">
+                    <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 一鍵套用至目標價
                   </button>
                 </div>
               </div>
 
-              <div class="p-3 rounded-xl bg-gradient-to-r from-sky-500/15 to-slate-900 border border-sky-500/30 space-y-1.5">
+              <div class="p-3 rounded-2xl bg-gradient-to-r from-sky-500/15 to-slate-900 border border-sky-500/30 space-y-1.5">
                 <div class="flex items-center justify-between">
-                  <span class="text-slate-300 font-bold">🚀 極限衝刺購屋總價（零備用金全出）：</span>
+                  <span class="text-slate-300 font-bold"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 極限衝刺購屋總價（零備用金全出）：</span>
                   <strong id="out-extreme-h2-price" class="text-lg sm:text-xl font-black text-sky-400 font-mono-num">3,721 萬元</strong>
                 </div>
                 <div class="text-[11px] text-sky-300/90 leading-relaxed flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <span>自備款扣除裝潢與規費全部投入頭期款之極限能力</span>
-                  <button type="button" id="btn-apply-max-price" class="shrink-0 px-2.5 py-1 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 font-black text-[11px] shadow transition">
-                    🚀 一鍵套用至目標價
+                  <button type="button" id="btn-apply-max-price" class="shrink-0 px-2.5 py-1 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-[11px] shadow transition">
+                    <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 一鍵套用至目標價
                   </button>
                 </div>
               </div>
 
-              <div class="p-2.5 rounded-xl bg-rose-950/30 border border-rose-500/30 text-[11px] text-slate-300 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+              <div class="p-2.5 rounded-2xl bg-rose-950/30 border border-rose-500/30 text-[11px] text-slate-300 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
                 <div>
-                  <span class="text-rose-400 font-bold">⚠️ 殘酷對照（作法2卡二屋5成）：</span>
+                  <span class="text-rose-400 font-bold"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 殘酷對照（作法2卡二屋7成）：</span>
                   <span class="text-slate-400">若未消滅科目一僅能買</span>
-                  <strong id="out-second-50-price" class="text-rose-300 font-mono-num font-bold ml-1">約 1,456 萬</strong>
+                  <strong id="out-second-50-price" class="text-rose-300 font-mono-num font-bold ml-1">約 2,381 萬</strong>
                 </div>
                 <div class="text-right text-[10px] text-amber-400 font-bold">
-                  作法1/3多釋放 <span id="out-leverage-gap" class="font-mono-num">+2,032 萬</span> 購屋力！
+                  作法1/3多釋放 <span id="out-leverage-gap" class="font-mono-num">+1,107 萬</span> 購屋力！
                 </div>
               </div>
             </div>
@@ -673,14 +1752,44 @@
           <!-- Right 6 Cols: Current Target Price Cover Pressure Diagnostic -->
           <div class="lg:col-span-6 p-4 rounded-2xl bg-slate-950/90 border border-amber-500/30 flex flex-col justify-between space-y-3">
             <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-              <span class="font-bold text-amber-400 text-xs">⚖️ 當前目標（<span id="disp-curr-target-price-title" class="font-mono-num">3,350萬</span>）現金與月付 Cover 診斷</span>
-              <span id="out-cash-status-badge" class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30">
-                ✅ 現金充足
+              <span class="font-bold text-amber-400 text-sm"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 當前目標（<span id="disp-curr-target-price-title" class="font-mono-num">3,350萬</span>）現金與月付 Cover 診斷</span>
+              <span id="out-cash-status-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30">
+                <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 現金充足
               </span>
             </div>
 
-            <div class="space-y-2 text-xs text-slate-300">
-              <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+            <div class="space-y-2 text-sm text-slate-300">
+              <div class="p-2.5 rounded-2xl bg-slate-900 border border-slate-800 space-y-1.5">
                 <div class="flex justify-between items-center">
                   <span class="text-slate-400">• 二屋頭期＋裝潢＋規費總需現金（作法3基準）：</span>
                   <strong id="out-total-cash-needed" class="font-mono-num text-white font-bold text-sm">870 萬元</strong>
@@ -698,7 +1807,7 @@
                 </div>
               </div>
 
-              <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+              <div class="p-2.5 rounded-2xl bg-slate-900 border border-slate-800 space-y-1.5">
                 <div class="flex justify-between items-center">
                   <span>• 第二屋初期月付（依下方設定成數與寬限期）：</span>
                   <strong id="out-h2-raw-io" class="font-mono-num text-slate-300">49,133 元/月</strong>
@@ -707,13 +1816,13 @@
                   <span>• 第一屋有效淨租金支援（扣除科目四月息）：</span>
                   <strong id="out-h1-support-display" class="font-mono-num text-emerald-400 font-bold">+1,533 元/月</strong>
                 </div>
-                <div class="flex justify-between items-center bg-amber-500/10 px-2 py-1 rounded-lg border border-amber-500/20">
+                <div class="flex justify-between items-center bg-amber-500/10 px-2 py-1 rounded-2xl border border-amber-500/20">
                   <span class="text-white font-semibold">• 經第一屋抵付後【初期實質自掏腰包】：</span>
                   <strong id="out-real-monthly-io" class="font-mono-num text-amber-300 font-bold text-sm">47,600 元/月</strong>
                 </div>
               </div>
 
-              <div id="out-cover-verdict" class="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-[11px] text-emerald-200 leading-relaxed">
+              <div id="out-cover-verdict" class="p-2.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-[11px] text-emerald-200 leading-relaxed">
                 <!-- Dynamically generated verdict text -->
               </div>
             </div>
@@ -725,18 +1834,33 @@
       <div class="p-5 rounded-2xl bg-gradient-to-r from-amber-500/10 via-slate-900/95 to-emerald-500/10 border-2 border-amber-500/40 shadow-xl space-y-4">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-800 pb-3">
           <div class="flex items-center gap-2.5">
-            <span class="text-2xl">💸</span>
+            <span class="text-2xl"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</span>
             <div>
               <div class="flex flex-wrap items-center gap-2">
-                <span class="font-black text-white text-sm sm:text-base">模組二：第一屋租金印鈔機 ＆「科目四」申貸額度動態決策器</span>
-                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">已連動科目四利率與有效淨租金率</span>
+                <span class="font-bold text-white text-sm sm:text-base">模組二：第一屋租金印鈔機 ＆「科目四」申貸額度動態決策器</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">已連動科目四利率與有效淨租金率</span>
               </div>
-              <p class="text-xs text-slate-300 mt-0.5">
+              <p class="text-sm text-slate-300 mt-0.5">
                 依據您的<strong>第一屋有效淨租金（表定月租 × 有效淨租金率）</strong>與<strong>科目四利率</strong>，動態精算三種風險檔位的最佳申貸金額：
               </p>
             </div>
           </div>
-          <div class="text-xs text-left md:text-right shrink-0">
+          <div class="text-sm text-left md:text-right shrink-0">
             <span class="text-slate-400">第一屋鑑價 8 成上限：</span>
             <strong id="disp-h1-cap" class="text-amber-400 font-mono-num font-bold text-sm sm:text-base">1,600 萬</strong>
           </div>
@@ -744,10 +1868,25 @@
 
         <!-- 3 Quick Strategy Preset Buttons -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <button type="button" id="btn-preset-safe" class="group p-3.5 rounded-2xl bg-slate-950/85 hover:bg-amber-950/30 border border-amber-500/40 text-left transition flex flex-col justify-between">
+          <button type="button" id="btn-preset-safe" class="group p-3.5 rounded-xl bg-slate-950/85 hover:bg-amber-950/30 border border-amber-500/40 text-left transition flex flex-col justify-between">
             <div class="flex items-center justify-between w-full">
-              <span class="text-xs font-black text-amber-400">🛡️ 檔位 A：30年本息自償線</span>
-              <span class="px-2 py-0.5 rounded text-[10px] bg-amber-500/20 text-amber-300 font-bold font-mono-num" id="tag-safe-loan">約 871 萬</span>
+              <span class="text-sm font-bold text-amber-400"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 檔位 A：30年本息自償線</span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] bg-amber-500/20 text-amber-300 font-bold font-mono-num" id="tag-safe-loan">約 871 萬</span>
             </div>
             <div class="mt-2 text-[11px] text-slate-300 leading-relaxed">
               依當前科目四利率計算每百萬 30 年本息月付（<span id="disp-unit-pmt" class="font-mono-num text-amber-300">3,925</span>元）。有效淨租金 100% 買單本息，<strong class="text-amber-300">零自掏腰包風險</strong>！
@@ -758,24 +1897,52 @@
             </div>
           </button>
 
-          <button type="button" id="btn-preset-balance" class="group p-3.5 rounded-2xl bg-slate-950/85 hover:bg-emerald-950/30 border border-emerald-500/40 text-left transition flex flex-col justify-between">
+          <button type="button" id="btn-preset-balance" class="group p-3.5 rounded-xl bg-slate-950/85 hover:bg-emerald-950/30 border border-emerald-500/40 text-left transition flex flex-col justify-between">
             <div class="flex items-center justify-between w-full">
-              <span class="text-xs font-black text-emerald-400">⚖️ 檔位 B：有效租金 100% 抵付利息</span>
-              <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-500/20 text-emerald-300 font-bold font-mono-num" id="tag-balance-loan">約 1,600 萬</span>
+              <span class="text-sm font-bold text-emerald-400"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 檔位 B：有效租金 100% 抵付利息</span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/20 text-emerald-300 font-bold font-mono-num" id="tag-balance-loan">約 1,600 萬</span>
             </div>
-            <div class="mt-2 text-[11px] text-slate-300 leading-relaxed">
-              以當前利率計算，第一屋有效淨租金剛好完全覆蓋科目四每月利息，<strong class="text-emerald-300">月現金流完全打平不貼錢</strong>！
-            </div>
+            <div id="balance-description" class="mt-2 text-[11px] text-slate-300 leading-relaxed"></div>
             <div class="mt-2 pt-2 border-t border-slate-800 text-[10px] text-emerald-400/90 font-semibold group-hover:text-emerald-300 flex items-center justify-between w-full">
               <span>點擊一鍵套用此額度</span>
               <span>➔</span>
             </div>
           </button>
 
-          <button type="button" id="btn-preset-max" class="group p-3.5 rounded-2xl bg-slate-950/85 hover:bg-sky-950/30 border border-sky-500/40 text-left transition flex flex-col justify-between">
+          <button type="button" id="btn-preset-max" class="group p-3.5 rounded-xl bg-slate-950/85 hover:bg-sky-950/30 border border-sky-500/40 text-left transition flex flex-col justify-between">
             <div class="flex items-center justify-between w-full">
-              <span class="text-xs font-black text-sky-400">🚀 檔位 C：鑑價 8 成極限槓桿</span>
-              <span class="px-2 py-0.5 rounded text-[10px] bg-sky-500/20 text-sky-300 font-bold font-mono-num" id="tag-max-loan">1,600 萬</span>
+              <span class="text-sm font-bold text-sky-400"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 檔位 C：鑑價 8 成極限槓桿</span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] bg-sky-500/20 text-sky-300 font-bold font-mono-num" id="tag-max-loan">1,600 萬</span>
             </div>
             <div class="mt-2 text-[11px] text-slate-300 leading-relaxed">
               貸滿第一屋 8 成上限！最大化釋放資金投入 0050 賺取長期複利利差，實現<strong class="text-sky-300">最大資產池成長</strong>！
@@ -791,8 +1958,23 @@
         <div class="p-4 rounded-2xl bg-slate-950/90 border border-slate-800 space-y-3">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
-              <span class="text-xs font-bold text-white flex items-center gap-2">
-                <span>🎛️ 您決定「第一屋科目四（周轉金/理財房貸）」申貸總額：</span>
+              <span class="text-sm font-bold text-white flex items-center gap-2">
+                <span><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 您決定「第一屋科目四（周轉金/理財房貸）」申貸總額：</span>
                 <span id="disp-chosen-loan" class="text-lg font-black text-amber-400 font-mono-num">1,600 萬元</span>
               </span>
               <div class="text-[11px] text-slate-400 mt-0.5">
@@ -800,25 +1982,70 @@
               </div>
             </div>
             <div class="flex items-center gap-2">
-              <label for="inp-t4-loan" class="text-xs text-slate-400 shrink-0">自訂申貸 (萬)：</label>
-              <input id="inp-t4-loan" type="number" value="1600" step="10" min="450" max="1600" class="w-28 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-amber-300 font-mono-num font-bold text-sm focus:outline-none focus:border-amber-400" />
+              <label for="inp-t4-loan" class="text-sm text-slate-400 shrink-0">自訂申貸 (萬)：</label>
+              <input id="inp-t4-loan" type="number" value="1600" step="1" min="450" max="1600" class="w-28 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-amber-300 font-mono-num font-bold text-sm focus:outline-none focus:border-amber-400" />
             </div>
           </div>
 
           <div class="space-y-1.5">
-            <input id="range-t4-loan" type="range" value="1600" step="10" min="450" max="1600" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-400" />
+            <input id="range-t4-loan" type="range" value="1600" step="1" min="450" max="1600" class="w-full h-2 bg-slate-800 rounded-xl appearance-none cursor-pointer accent-amber-400" />
             <div class="flex justify-between text-[10px] text-slate-400 font-mono-num">
               <span>最低 450 萬 (僅代償舊貸)</span>
-              <span id="slider-safe-mark" class="text-amber-400">🛡️ 本息自償: 871萬</span>
-              <span id="slider-balance-mark" class="text-emerald-400">⚖️ 利息打平: 1,675萬</span>
-              <span class="text-sky-400">8成上限: 1,600萬</span>
+              <span id="slider-safe-mark" class="text-amber-400"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 本息自償: 871萬</span>
+              <span id="slider-balance-mark" class="text-emerald-400"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 利息打平: 1,675萬</span>
+              <span id="slider-max-mark" class="text-sky-400">8成上限: 1,600萬</span>
             </div>
           </div>
         </div>
 
-        <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-[11px] text-slate-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div class="p-3 rounded-2xl bg-slate-900/80 border border-slate-800 text-[11px] text-slate-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div class="flex items-center gap-2">
-            <span class="text-amber-400 font-bold">💡 動態自償公式：</span>
+            <span class="text-amber-400 font-bold"><svg class="site-icon lucide lucide-lightbulb" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
+  <path d="M9 18h6" />
+  <path d="M10 22h4" />
+</svg>
+ 動態自償公式：</span>
             <span>第一屋表定月租 <strong id="disp-raw-rent" class="font-mono-num text-white">38,000</strong> 元 × 有效率 <strong id="disp-net-factor" class="font-mono-num text-emerald-300">90%</strong> ＝ 實拿有效月租 <strong id="disp-eff-rent" class="font-mono-num text-emerald-400">34,200</strong> 元/月</span>
           </div>
           <div class="text-slate-400">
@@ -831,46 +2058,79 @@
       <div class="p-5 rounded-2xl bg-gradient-to-r from-purple-500/10 via-slate-900/95 to-sky-500/10 border-2 border-purple-500/40 shadow-xl space-y-4">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-800 pb-3">
           <div class="flex items-center gap-2.5">
-            <span class="text-2xl">💳</span>
+            <span class="text-2xl"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</span>
             <div>
               <div class="flex flex-wrap items-center gap-2">
-                <span class="font-black text-white text-sm sm:text-base">模組三：第二屋房貸月付金全周期精算（只還息 vs 無寬限本息 vs 寬限期後懸崖）</span>
-                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">連動 10 年本金攤還模型</span>
+                <span class="font-bold text-white text-sm sm:text-base">模組三：第二屋房貸月付金全周期精算（只還息 vs 無寬限本息 vs 寬限期後懸崖）</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">連動 10 年本金攤還模型</span>
               </div>
-              <p class="text-xs text-slate-300 mt-0.5">
+              <p class="text-sm text-slate-300 mt-0.5">
                 比較第二屋在不同成數、年期與寬限期下的月付金變化，並自動計算 <strong>10 年（120 期）後已償還本金與剩餘房貸餘額</strong>。
               </p>
             </div>
           </div>
-          <div class="text-xs text-left md:text-right shrink-0">
+          <div class="text-sm text-left md:text-right shrink-0">
             <span class="text-slate-400">第二屋試算貸款本金：</span>
             <strong id="disp-calc-loan-amt" class="text-purple-400 font-mono-num font-bold text-sm sm:text-base">2,680 萬</strong>
           </div>
         </div>
 
         <!-- Loan Configuration Interactive Bar -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3 text-xs">
+        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3 text-sm">
           <div class="p-3.5 rounded-2xl bg-slate-950/90 border border-purple-500/30 col-span-2 sm:col-span-2 lg:col-span-2 space-y-2">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
-              <label for="inp-loan-calc-amt" class="font-bold text-purple-300 shrink-0">🏦 第二屋貸款本金 (萬元)</label>
+              <label for="inp-loan-calc-amt" class="font-bold text-purple-300 shrink-0"><svg class="site-icon lucide lucide-landmark" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M10 18v-7" />
+  <path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" />
+  <path d="M14 18v-7" />
+  <path d="M18 18v-7" />
+  <path d="M3 22h18" />
+  <path d="M6 18v-7" />
+</svg>
+ 第二屋貸款本金 (萬元)</label>
               <!-- Mobile Dropdown Selector (支援下拉式選單) -->
               <div class="sm:hidden w-full">
-                <select id="mobileLtvSelect" class="w-full bg-slate-900 text-purple-200 border border-purple-500/40 rounded-lg px-2.5 py-1 text-xs font-bold focus:outline-none focus:ring-1 focus:ring-purple-400 cursor-pointer shadow-sm" aria-label="切換成數選單">
+                <select id="mobileLtvSelect" class="w-full bg-slate-900 text-purple-200 border border-purple-500/40 rounded-xl px-2.5 py-1 text-sm font-bold focus:outline-none focus:ring-1 focus:ring-purple-400 cursor-pointer shadow-sm" aria-label="切換成數選單">
                   <option value="0.80" selected>8成 (首購標準 80%)</option>
                   <option value="0.75">7.5成 (75%)</option>
-                  <option value="0.70">7成 (70%)</option>
-                  <option value="0.50">5成 (第二屋限貸 50%)</option>
+                  <option value="0.70">7成 (第二屋限貸 70%)</option>
+                  <option value="0.50">5成 (50%)</option>
                 </select>
               </div>
               <!-- Horizontal Scrollable Buttons (選單左右移動) -->
               <div class="hidden sm:flex items-center gap-1 overflow-x-auto whitespace-nowrap no-scrollbar mobile-scroll-x" id="ltv-btn-group">
-                <button type="button" data-ltv="0.80" id="btn-ltv-80" class="ltv-btn shrink-0 px-2 py-0.5 rounded text-[10px] bg-purple-500 text-slate-950 font-black border border-purple-400 transition">8成(首購)</button>
-                <button type="button" data-ltv="0.75" id="btn-ltv-75" class="ltv-btn shrink-0 px-2 py-0.5 rounded text-[10px] bg-slate-900 text-slate-400 hover:text-slate-200 font-bold border border-slate-700 transition">7.5成</button>
-                <button type="button" data-ltv="0.70" id="btn-ltv-70" class="ltv-btn shrink-0 px-2 py-0.5 rounded text-[10px] bg-slate-900 text-slate-400 hover:text-slate-200 font-bold border border-slate-700 transition">7成</button>
-                <button type="button" data-ltv="0.50" id="btn-ltv-50" class="ltv-btn shrink-0 px-2 py-0.5 rounded text-[10px] bg-rose-500/20 text-rose-300 hover:bg-rose-500/40 font-bold border border-rose-500/30 transition">5成(二屋)</button>
+                <button type="button" data-ltv="0.80" id="btn-ltv-80" class="ltv-btn shrink-0 px-2 py-0.5 rounded-xl text-[10px] bg-purple-500 text-slate-950 font-bold border border-purple-400 transition">8成(首購)</button>
+                <button type="button" data-ltv="0.75" id="btn-ltv-75" class="ltv-btn shrink-0 px-2 py-0.5 rounded-xl text-[10px] bg-slate-900 text-slate-400 hover:text-slate-200 font-bold border border-slate-700 transition">7.5成</button>
+                <button type="button" data-ltv="0.70" id="btn-ltv-70" class="ltv-btn shrink-0 px-2 py-0.5 rounded-xl text-[10px] bg-rose-500/20 text-rose-300 hover:bg-rose-500/40 font-bold border border-rose-500/30 transition">7成(二屋)</button>
+                <button type="button" data-ltv="0.50" id="btn-ltv-50" class="ltv-btn shrink-0 px-2 py-0.5 rounded-xl text-[10px] bg-slate-900 text-slate-400 hover:text-slate-200 font-bold border border-slate-700 transition">5成</button>
               </div>
             </div>
-            <input id="inp-loan-calc-amt" type="number" value="2680" step="10" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-purple-300 font-mono-num font-bold text-sm focus:outline-none focus:border-purple-400" />
+            <input id="inp-loan-calc-amt" type="number" value="2680" step="1" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-purple-300 font-mono-num font-bold text-sm focus:outline-none focus:border-purple-400" />
             <div class="text-[10px] text-slate-400 flex justify-between">
               <span>目前貸款成數：<strong id="disp-current-ltv-pct" class="text-purple-300 font-mono-num">80.0%</strong></span>
               <span>10年後剩餘本金：<strong id="disp-10yr-rem-loan" class="text-sky-300 font-mono-num">2,192萬</strong></span>
@@ -878,13 +2138,46 @@
           </div>
 
           <div class="p-3.5 rounded-2xl bg-slate-950/90 border border-slate-800 space-y-1">
-            <label for="inp-h2-mortgage-rate" class="block font-bold text-slate-300 mb-1">📈 第二屋房貸利率 (%)</label>
-            <input id="inp-h2-mortgage-rate" type="number" value="2.20" step="0.01" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white font-mono-num font-bold text-sm focus:outline-none focus:border-purple-400" />
+            <label for="inp-h2-mortgage-rate" class="block font-bold text-slate-300 mb-1"><svg class="site-icon lucide lucide-chart-no-axes-combined" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 16v5" />
+  <path d="M16 14.639V21" />
+  <path d="M20 10.656V21" />
+  <path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15" />
+  <path d="M4 18.463V21" />
+  <path d="M8 14.656V21" />
+</svg>
+ 第二屋房貸利率 (%)</label>
+            <input id="inp-h2-mortgage-rate" type="text" inputmode="decimal" data-rate-input="true" autocomplete="off" value="2.20" step="0.01" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white font-mono-num font-bold text-sm focus:outline-none focus:border-purple-400" />
             <span class="text-[10px] text-slate-400 block">首購約 2.185%~2.28%</span>
           </div>
 
           <div class="p-3.5 rounded-2xl bg-slate-950/90 border border-slate-800 space-y-1">
-            <label for="sel-h2-loan-term" class="block font-bold text-sky-300 mb-1">⏱️ 貸款總年期</label>
+            <label for="sel-h2-loan-term" class="block font-bold text-sky-300 mb-1"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 貸款總年期</label>
             <select id="sel-h2-loan-term" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-sky-300 font-mono-num font-bold text-sm focus:outline-none focus:border-sky-400">
               <option value="30" selected>30 年期 (360期 主流)</option>
               <option value="40">40 年期 (480期 低月付)</option>
@@ -894,7 +2187,22 @@
           </div>
 
           <div class="p-3.5 rounded-2xl bg-slate-950/90 border border-slate-800 space-y-1">
-            <label for="sel-h2-grace-years" class="block font-bold text-amber-300 mb-1">🛡️ 寬限期長度 (只還息)</label>
+            <label for="sel-h2-grace-years" class="block font-bold text-amber-300 mb-1"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 寬限期長度 (只還息)</label>
             <select id="sel-h2-grace-years" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-amber-300 font-mono-num font-bold text-sm focus:outline-none focus:border-amber-400">
               <option value="0">0 年 (無寬限 一開始本息還)</option>
               <option value="1">1 年 寬限期 (前12期只繳息)</option>
@@ -902,7 +2210,7 @@
               <option value="3" selected>3 年 寬限期 (前36期只繳息・推薦)</option>
               <option value="5">5 年 寬限期 (前60期只繳息・極限)</option>
             </select>
-            <span id="grace-hint-text" class="text-[10px] text-slate-400 block">配偶無房首購可爭取 3~5 年</span>
+            <span id="grace-hint-text" class="text-[10px] text-slate-400 block">配偶無房（第 1 戶）可爭取 3~5 年</span>
           </div>
         </div>
 
@@ -910,23 +2218,38 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
           <!-- Scenario 1: Interest-Only -->
           <div class="p-4 rounded-2xl bg-slate-950/90 border border-emerald-500/40 flex flex-col justify-between space-y-3 relative overflow-hidden">
-            <div class="absolute top-0 right-0 px-2.5 py-0.5 rounded-bl-xl bg-emerald-500/20 text-emerald-300 font-bold text-[10px] border-b border-l border-emerald-500/30">
+            <div class="absolute top-0 right-0 px-2.5 py-0.5 rounded-2xl bg-emerald-500/20 text-emerald-300 font-bold text-[10px] border-b border-l border-emerald-500/30">
               前 <span id="disp-sc1-grace-yrs">3</span> 年期間
             </div>
             <div>
-              <div class="flex items-center gap-1.5 text-xs font-black text-emerald-400">
-                <span>🟢 情境一：每月只還息（寬限期內）</span>
+              <div class="flex items-center gap-1.5 text-sm font-bold text-emerald-400">
+                <span><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 情境一：每月只還息（寬限期內）</span>
               </div>
               <div class="mt-2 text-2xl sm:text-3xl font-black text-emerald-400 font-mono-num" id="out-sc1-monthly">
-                49,133 <span class="text-xs font-normal text-slate-400">元/月</span>
+                49,133 <span class="text-sm font-normal text-slate-400">元/月</span>
               </div>
               <div class="text-[11px] text-slate-400 mt-1">
                 本金還款：<strong class="text-slate-300 font-mono-num">0 元</strong> ｜ 純利息：<strong class="text-emerald-300 font-mono-num" id="out-sc1-interest">49,133 元</strong>
               </div>
             </div>
 
-            <div class="space-y-1.5 text-xs pt-2 border-t border-slate-800">
-              <div class="flex justify-between items-center bg-emerald-500/10 px-2 py-1 rounded-lg border border-emerald-500/20">
+            <div class="space-y-1.5 text-sm pt-2 border-t border-slate-800">
+              <div class="flex justify-between items-center bg-emerald-500/10 px-2 py-1 rounded-2xl border border-emerald-500/20">
                 <span class="text-white text-[11px]">• 經第一屋有效租金支援後【實付】：</span>
                 <strong id="out-sc1-real-pay" class="font-mono-num text-emerald-300 font-bold">47,600 元/月</strong>
               </div>
@@ -939,23 +2262,38 @@
 
           <!-- Scenario 2: P&I Without Grace Period -->
           <div class="p-4 rounded-2xl bg-slate-950/90 border border-amber-500/40 flex flex-col justify-between space-y-3 relative overflow-hidden">
-            <div class="absolute top-0 right-0 px-2.5 py-0.5 rounded-bl-xl bg-amber-500/20 text-amber-300 font-bold text-[10px] border-b border-l border-amber-500/30">
+            <div class="absolute top-0 right-0 px-2.5 py-0.5 rounded-2xl bg-amber-500/20 text-amber-300 font-bold text-[10px] border-b border-l border-amber-500/30">
               整期 <span id="disp-sc2-term-yrs">30</span> 年均攤
             </div>
             <div>
-              <div class="flex items-center gap-1.5 text-xs font-black text-amber-400">
-                <span>🟠 情境二：本息一起還（無寬限期）</span>
+              <div class="flex items-center gap-1.5 text-sm font-bold text-amber-400">
+                <span><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 情境二：本息一起還（無寬限期）</span>
               </div>
               <div class="mt-2 text-2xl sm:text-3xl font-black text-amber-400 font-mono-num" id="out-sc2-monthly">
-                101,760 <span class="text-xs font-normal text-slate-400">元/月</span>
+                101,760 <span class="text-sm font-normal text-slate-400">元/月</span>
               </div>
               <div class="text-[11px] text-slate-400 mt-1">
                 首期本金：<strong class="text-slate-300 font-mono-num" id="out-sc2-pure-principal">52,627 元</strong> ｜ 純利息：<strong class="text-slate-300 font-mono-num" id="out-sc2-pure-interest">49,133 元</strong>
               </div>
             </div>
 
-            <div class="space-y-1.5 text-xs pt-2 border-t border-slate-800">
-              <div class="flex justify-between items-center bg-amber-500/10 px-2 py-1 rounded-lg border border-amber-500/20">
+            <div class="space-y-1.5 text-sm pt-2 border-t border-slate-800">
+              <div class="flex justify-between items-center bg-amber-500/10 px-2 py-1 rounded-2xl border border-amber-500/20">
                 <span class="text-white text-[11px]">• 經第一屋有效租金支援後【實付】：</span>
                 <strong id="out-sc2-real-pay" class="font-mono-num text-amber-300 font-bold">100,227 元/月</strong>
               </div>
@@ -968,23 +2306,53 @@
 
           <!-- Scenario 3: P&I After Grace Period -->
           <div class="p-4 rounded-2xl bg-slate-950/90 border border-rose-500/40 flex flex-col justify-between space-y-3 relative overflow-hidden">
-            <div class="absolute top-0 right-0 px-2.5 py-0.5 rounded-bl-xl bg-rose-500/20 text-rose-300 font-bold text-[10px] border-b border-l border-rose-500/30">
+            <div class="absolute top-0 right-0 px-2.5 py-0.5 rounded-2xl bg-rose-500/20 text-rose-300 font-bold text-[10px] border-b border-l border-rose-500/30">
               寬限期滿後剩 <span id="disp-sc3-remain-yrs">27</span> 年
             </div>
             <div>
-              <div class="flex items-center gap-1.5 text-xs font-black text-rose-400">
-                <span>🔴 情境三：寬限期後本息攤還（房貸懸崖）</span>
+              <div class="flex items-center gap-1.5 text-sm font-bold text-rose-400">
+                <span><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 情境三：寬限期後本息攤還（房貸懸崖）</span>
               </div>
               <div class="mt-2 text-2xl sm:text-3xl font-black text-rose-400 font-mono-num" id="out-sc3-monthly">
-                109,337 <span class="text-xs font-normal text-slate-400">元/月</span>
+                109,337 <span class="text-sm font-normal text-slate-400">元/月</span>
               </div>
               <div class="text-[11px] text-rose-300 mt-1 font-bold">
-                ⚠️ 月付比寬限期跳升：<span id="out-sc3-jump" class="font-mono-num">+60,204 元/月 (+122%)</span>
+                <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 月付比寬限期跳升：<span id="out-sc3-jump" class="font-mono-num">+60,204 元/月 (+122%)</span>
               </div>
             </div>
 
-            <div class="space-y-1.5 text-xs pt-2 border-t border-slate-800">
-              <div class="flex justify-between items-center bg-rose-500/10 px-2 py-1 rounded-lg border border-rose-500/20">
+            <div class="space-y-1.5 text-sm pt-2 border-t border-slate-800">
+              <div class="flex justify-between items-center bg-rose-500/10 px-2 py-1 rounded-2xl border border-rose-500/20">
                 <span class="text-white text-[11px]">• 經第一屋有效租金支援後【實付】：</span>
                 <strong id="out-sc3-real-pay" class="font-mono-num text-rose-300 font-bold">107,804 元/月</strong>
               </div>
@@ -1004,10 +2372,25 @@
             <!-- Card A: First House + 0050 Engine -->
             <div class="p-4 rounded-2xl bg-slate-950/90 border border-amber-500/40 space-y-2.5">
               <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                <span class="font-bold text-amber-400 text-xs">🐔 第一屋出租 ＋ 科目四買 0050 引擎</span>
-                <span id="out-h1-badge" class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold">自給自足</span>
+                <span class="font-bold text-amber-400 text-sm"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 第一屋出租 ＋ 科目四買 0050 引擎</span>
+                <span id="out-h1-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-bold">自給自足</span>
               </div>
-              <div class="space-y-1.5 text-xs text-slate-300">
+              <div class="space-y-1.5 text-sm text-slate-300">
                 <div class="flex justify-between">
                   <span>• 第一屋最高鑑價 8 成上限：</span>
                   <strong id="out-h1-maxloan" class="font-mono-num text-slate-400">1,600 萬</strong>
@@ -1016,7 +2399,7 @@
                   <span>• 有效月租可 cover 30年本息額度：</span>
                   <strong id="out-rent-safe-cap" class="font-mono-num text-amber-300">871 萬</strong>
                 </div>
-                <div class="flex justify-between bg-amber-500/10 px-2 py-1 rounded-lg border border-amber-500/20">
+                <div class="flex justify-between bg-amber-500/10 px-2 py-1 rounded-2xl border border-amber-500/20">
                   <span class="text-white font-semibold">• 您設定之科目四申貸金額：</span>
                   <strong id="out-chosen-loan-display" class="font-mono-num text-amber-400 font-bold">1,600 萬</strong>
                 </div>
@@ -1041,7 +2424,7 @@
                   <strong id="out-etf-annual" class="font-mono-num text-purple-300">+97.8 萬/年</strong>
                 </div>
               </div>
-              <div id="out-h1-verdict" class="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-[11px] text-emerald-200 leading-relaxed">
+              <div id="out-h1-verdict" class="p-2.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-[11px] text-emerald-200 leading-relaxed">
                 <!-- Populated by JS -->
               </div>
             </div>
@@ -1049,21 +2432,36 @@
             <!-- Card B: Second House Purchase Engine -->
             <div class="p-4 rounded-2xl bg-slate-950/90 border border-sky-500/40 space-y-2.5">
               <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                <span class="font-bold text-sky-400 text-xs">🏢 第二屋（作法1/3 vs 作法2）槓桿與10年還本</span>
-                <span class="text-[10px] px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 font-bold">精確攤還</span>
+                <span class="font-bold text-sky-400 text-sm"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 第二屋（作法1/3 vs 作法2）槓桿與10年還本</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 font-bold">精確攤還</span>
               </div>
-              <div class="space-y-1.5 text-xs text-slate-300">
+              <div class="space-y-1.5 text-sm text-slate-300">
                 <div class="flex justify-between">
                   <span>• 【作法 1 & 3】第二屋設定貸款：</span>
                   <strong id="out-h2-loan80" class="font-mono-num text-sky-300">2,680 萬 (自備 670萬)</strong>
                 </div>
                 <div class="flex justify-between">
-                  <span>• 【作法 2】卡第二屋 5 成僅能貸：</span>
-                  <strong id="out-h2-loan50" class="font-mono-num text-rose-400">1,675 萬 (自備 1,675萬)</strong>
+                  <span>• 【作法 2】卡第二屋 7 成僅能貸：</span>
+                  <strong id="out-h2-loan50" class="font-mono-num text-rose-400">2,345 萬 (自備 1,005萬)</strong>
                 </div>
                 <div class="flex justify-between">
                   <span>• 消除科目一幫您少拿出的頭期款：</span>
-                  <strong id="out-saved-down" class="font-mono-num text-emerald-400">省下 1,005 萬現金！</strong>
+                  <strong id="out-saved-down" class="font-mono-num text-emerald-400">省下 335 萬現金！</strong>
                 </div>
                 <div class="flex justify-between pt-1.5 border-t border-slate-800">
                   <span>• 第二屋初期月付 (<span id="out-h2-rate-card-b">2.2%</span>)：</span>
@@ -1073,13 +2471,28 @@
                   <span>• 10年後第二屋已還本金 / 剩餘房貸：</span>
                   <strong id="out-h2-pi" class="font-mono-num text-emerald-300">已還 488萬 / 剩 2,192萬</strong>
                 </div>
-                <div class="flex justify-between bg-sky-500/10 px-2 py-1 rounded-lg border border-sky-500/20 font-bold">
+                <div class="flex justify-between bg-sky-500/10 px-2 py-1 rounded-2xl border border-sky-500/20 font-bold">
                   <span class="text-white">• 扣除第一屋支援後初期實質月付：</span>
                   <strong id="out-h2-real-pay" class="font-mono-num text-sky-300">47,600 元/月</strong>
                 </div>
               </div>
-              <div class="p-2.5 rounded-xl bg-sky-500/10 border border-sky-500/30 text-[11px] text-sky-200 leading-relaxed">
-                💡 V3 模型已將<strong>前 <span id="disp-cardb-grace">3</span> 年寬限期＋後 <span id="disp-cardb-amort">7</span> 年本息攤還</strong>所累積償還的本金（強制儲蓄轉為房屋淨值）精確計入 10 年總淨值中！
+              <div class="p-2.5 rounded-2xl bg-sky-500/10 border border-sky-500/30 text-[11px] text-sky-200 leading-relaxed">
+                <svg class="site-icon lucide lucide-lightbulb" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
+  <path d="M9 18h6" />
+  <path d="M10 22h4" />
+</svg>
+ V3 模型已將<strong>前 <span id="disp-cardb-grace">3</span> 年寬限期＋後 <span id="disp-cardb-amort">7</span> 年本息攤還</strong>所累積償還的本金（強制儲蓄轉為房屋淨值）精確計入 10 年總淨值中！
               </div>
             </div>
           </div>
@@ -1087,9 +2500,24 @@
           <!-- 10-Year Net Worth Projection Banner -->
           <div class="p-4 rounded-2xl bg-gradient-to-r from-amber-500/15 via-emerald-500/10 to-sky-500/15 border border-amber-500/40 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div class="space-y-1">
-              <div class="text-xs font-bold text-amber-300">🚀 V3 統一本金池 10 年後預估總淨值差距（作法 1/3 雙房＋0050 vs 作法 4 賣舊換新）</div>
-              <p class="text-xs text-slate-300">
-                以相同初始資金池、房價年增 3%、0050 年化 <span id="out-etf-rate-text">8.5</span>%、有效淨租金率 <span id="out-eff-rent-text">90</span>% 並計入 120 期房貸本息攤還精算：
+              <div class="text-sm font-bold text-amber-300"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ V3 統一本金池 10 年後預估總淨值差距（作法 1/3 雙房＋0050 vs 作法 4 賣舊換新）</div>
+              <p class="text-sm text-slate-300">
+                以相同初始資金池、房價年增 <span id="out-prop-growth-text">3</span>%、0050 年化 <span id="out-etf-rate-text">8.5</span>%、有效淨租金率 <span id="out-eff-rent-text">90</span>% 並計入 120 期房貸本息攤還精算（資金缺口以原額計入，未另計融資成本）：
               </p>
             </div>
             <div class="text-right shrink-0">
@@ -1101,14 +2529,42 @@
 
         <!-- Right 5 Cols: Chart.js Net Worth Growth Comparison -->
         <div class="lg:col-span-5 p-4 rounded-2xl bg-slate-950/90 border border-slate-800 flex flex-col justify-between">
-          <div class="text-xs font-bold text-slate-300 text-center border-b border-slate-800 pb-2">
-            📈 V3 統一模型：10 年後「總淨資產（資產－剩餘負債）」對決（萬元）
+          <div class="text-sm font-bold text-slate-300 text-center border-b border-slate-800 pb-2">
+            <svg class="site-icon lucide lucide-chart-no-axes-combined" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 16v5" />
+  <path d="M16 14.639V21" />
+  <path d="M20 10.656V21" />
+  <path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15" />
+  <path d="M4 18.463V21" />
+  <path d="M8 14.656V21" />
+</svg>
+ V3 統一模型：10 年後「總淨資產（資產－剩餘負債）」對決（萬元）
           </div>
           <div class="relative h-64 w-full my-auto pt-2">
             <canvas id="strategyChart"></canvas>
           </div>
           <div id="chart-footnote" class="text-[11px] text-slate-400 text-center pt-1 leading-normal">
             已統一初始本金池並計入裝潢規費、有效淨租金、0050複利與10年房貸剩餘本金
+          </div>
+          <div id="method-diff-notes" class="mt-2 pt-2 border-t border-slate-800 space-y-1.5 text-[11px] text-slate-400 leading-relaxed">
+            <p id="out-m1-diff-note" class="text-amber-200/90">作法 1 與作法 3 公式相同，差異僅來自假設：作法 1 另扣「科目四撥款 3 個月時間差」機會成本約 24 萬。</p>
+            <p id="out-m3-diff-note" class="text-sky-200/90">作法 3 與作法 1 公式相同，差異僅來自假設：作法 3 另扣固定 8 萬，為轉貸／過橋摩擦成本假設（不隨輸入變動）。</p>
+            <div class="flex items-center gap-2">
+              <label for="inp-sale-cost-pct" class="font-bold text-slate-300 shrink-0">作法 4 賣屋稅費假設 (%)</label>
+              <input id="inp-sale-cost-pct" type="number" value="5" min="0" max="60" step="0.5" class="w-20 px-2 py-1 rounded-xl bg-slate-950 border border-slate-700 text-slate-200 font-mono-num font-bold text-sm focus:outline-none focus:border-slate-400" />
+            </div>
+            <p id="out-m4-sale-note">作法 4：賣第一屋 2,000 萬 × (1 − 5%) − 殘貸 450 萬 ＝ 淨得 1,450 萬。</p>
+            <p id="m4-tax-warning" class="text-rose-300/90">本作法以單一百分比概括交易與稅務摩擦，未逐項計算房地合一稅；持有期間不同稅率差異極大（2 年內最高 45%、逾 10 年 15%），實際稅負請另行估算。</p>
           </div>
         </div>
       </div>
@@ -1117,30 +2573,109 @@
   </main>
 
   <!-- Global Toast Notification -->
-  <div id="app-toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 px-4 py-3 rounded-xl bg-emerald-600 text-white text-xs sm:text-sm font-bold shadow-2xl flex items-center gap-2 pointer-events-none">
-    <span class="text-base">✅</span>
+  <div id="app-toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 px-4 py-3 rounded-2xl bg-emerald-600 text-white text-sm sm:text-sm font-bold shadow-2xl flex items-center gap-2 pointer-events-none">
+    <span class="text-base"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</span>
     <span id="toast-message">訊息提示</span>
   </div>
 
   <!-- Footer -->
-  <footer class="relative z-10 mt-auto border-t border-slate-800/80 bg-slate-950 py-8 text-xs text-slate-400">
+  <footer class="relative z-10 mt-auto border-t border-slate-800/80 bg-slate-950 py-8 text-sm text-slate-400">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div class="flex items-center gap-2">
-        <span class="text-base">🏦</span>
+        <span class="text-base"><svg class="site-icon lucide lucide-landmark" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M10 18v-7" />
+  <path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" />
+  <path d="M14 18v-7" />
+  <path d="M18 18v-7" />
+  <path d="M3 22h18" />
+  <path d="M6 18v-7" />
+</svg>
+</span>
         <span><strong>第二屋購屋與科目四槓桿決策書（V3 統一財務模型版）</strong>｜吳淡如《房商必修課》× 陳侯勳《房產剎價學》</span>
       </div>
       <div class="flex flex-wrap items-center gap-4 font-semibold">
-        <a href="./index.html" class="text-slate-300 hover:text-white hover:underline">🏠 返回雙師總首頁</a>
+        <a href="./index.html" class="text-slate-300 hover:text-white hover:underline"><svg class="site-icon lucide lucide-house" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+  <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+</svg>
+ 返回雙師總首頁</a>
         <span class="text-slate-700">|</span>
-        <a href="./吳淡如_房商必修課.html" class="text-amber-400 hover:underline">🐎 吳淡如《房商必修課》</a>
+        <a href="./吳淡如_房商必修課.html" class="text-amber-400 hover:underline"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 吳淡如《房商必修課》</a>
         <span class="text-slate-700">|</span>
-        <a href="./「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_07" class="text-sky-400 hover:underline">🗡️ 陳侯勳《房產剎價學》</a>
+        <a href="./「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_07" class="text-sky-400 hover:underline"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 陳侯勳《房產剎價學》</a>
       </div>
     </div>
-  </footer>
+  <div class="site-footer-note"><p>© <span data-site-year>2026</span> House Trade Strategy</p><p>資料來源：本頁所列公開影片、文章及物件資料；試算依使用者輸入情境。</p><p>本站內容僅供教學參考，不構成投資建議</p></div></footer>
 
   <script>
     let strategyChartInstance = null;
+    // 第 2 戶購屋貸款現行上限 7 成、無寬限期（2026-09-17 央行放寬後之現行規定；第七波 2024-09 原為 5 成）
+    const SECOND_HOME_LTV = 0.70;
     let buyerMode = 'spouse'; // 'spouse' (名下無房首購可寬限) or 'self' (本人名下有第一屋無寬限)
     let currentLtvFactor = 0.80;
 
@@ -1184,7 +2719,7 @@
     function numericInput(id, fallback = 0) {
       const raw = document.getElementById(id)?.value;
       if (raw === undefined || raw === null || String(raw).trim() === '') return fallback;
-      const value = Number(raw);
+      const value = /rate/.test(id) ? SiteUI.readRate(document.getElementById(id)) : Number(raw);
       return Number.isFinite(value) ? value : fallback;
     }
 
@@ -1233,11 +2768,11 @@
       document.querySelectorAll('.ltv-btn').forEach(btn => {
         const f = parseFloat(btn.getAttribute('data-ltv'));
         if (Math.abs(f - activeFactor) < 0.01) {
-          btn.className = 'ltv-btn shrink-0 px-2 py-0.5 rounded text-[10px] bg-purple-500 text-slate-950 font-black border border-purple-400 transition shadow';
-        } else if (f === 0.50) {
-          btn.className = 'ltv-btn shrink-0 px-2 py-0.5 rounded text-[10px] bg-rose-500/20 text-rose-300 hover:bg-rose-500/40 font-bold border border-rose-500/30 transition';
+          btn.className = 'ltv-btn shrink-0 px-2 py-0.5 rounded-xl text-[10px] bg-purple-500 text-slate-950 font-bold border border-purple-400 transition shadow';
+        } else if (f === SECOND_HOME_LTV) {
+          btn.className = 'ltv-btn shrink-0 px-2 py-0.5 rounded-xl text-[10px] bg-rose-500/20 text-rose-300 hover:bg-rose-500/40 font-bold border border-rose-500/30 transition';
         } else {
-          btn.className = 'ltv-btn shrink-0 px-2 py-0.5 rounded text-[10px] bg-slate-900 text-slate-400 hover:text-slate-200 font-bold border border-slate-700 transition';
+          btn.className = 'ltv-btn shrink-0 px-2 py-0.5 rounded-xl text-[10px] bg-slate-900 text-slate-400 hover:text-slate-200 font-bold border border-slate-700 transition';
         }
       });
       const mobileLtvSelect = document.getElementById('mobileLtvSelect');
@@ -1287,14 +2822,25 @@
         const zeroY = toY(0), y = toY(v);
         ctx.fillStyle = colors[i];
         ctx.fillRect(x, Math.min(y, zeroY), w, Math.max(1, Math.abs(zeroY - y)));
-        ctx.textAlign = 'center'; ctx.font = 'bold 11px sans-serif'; ctx.fillStyle = '#e2e8f0';
+        ctx.textAlign = 'center'; ctx.font = 'bold 12px sans-serif'; ctx.fillStyle = '#e2e8f0';
         ctx.fillText(labels[i], x + w / 2, height - 26);
-        ctx.font = '10px sans-serif';
+        ctx.font = '12px sans-serif';
         ctx.fillText(Math.round(v).toLocaleString(), x + w / 2, Math.max(12, Math.min(height - 55, y - 8)));
       });
     }
 
-    function updateSimulation() {
+    let lastUpstreamAmounts='';
+    function updateSimulation(event) {
+      SiteUI.normalizeRates();
+      const upstream=['inp-h1-val','inp-h1-loan','inp-h1-rent','inp-rent-net-factor','inp-h2-price','inp-etf-return','inp-loan-rate','inp-buyer-cash','inp-renovation','inp-reserve-fund','inp-fee-rate','inp-h2-mortgage-rate','sel-h2-loan-term','sel-h2-grace-years'];
+      const key=JSON.stringify(upstream.map(id=>document.getElementById(id)?.value));
+      const upstreamChanged=lastUpstreamAmounts!==key;
+      lastUpstreamAmounts=key;
+      if (upstreamChanged) {
+        const value=SiteUI.readNumber(document.getElementById('inp-h1-val'));
+        if(value!==null) for(const id of ['inp-t4-loan','range-t4-loan']){const el=document.getElementById(id);el.min=0;el.max=Math.max(0,Math.round(value*.8));el.value=el.max;}
+      }
+      if(!SiteUI.validateSecondHouse())return;
       const h1Val = numericInput('inp-h1-val', 2000);
       const h1Loan = numericInput('inp-h1-loan', 450);
       const h1RawRent = numericInput('inp-h1-rent', 38000);
@@ -1303,6 +2849,10 @@
       const h2Price = numericInput('inp-h2-price', 3350);
       const etfReturn = numericInput('inp-etf-return', 8.5);
       const loanRate = numericInput('inp-loan-rate', 2.45);
+      const h1LoanRate = Math.max(0, numericInput('inp-h1-loan-interest', 2.20));
+      const h1LoanYears = Math.max(1, Math.round(numericInput('inp-h1-loan-years', 20)));
+      const propGrowthPct = numericInput('inp-prop-growth', 3);
+      const saleCostPct = Math.min(60, Math.max(0, numericInput('inp-sale-cost-pct', 5)));
 
       // Update Rent Factor UI
       document.getElementById('disp-raw-rent').textContent = h1RawRent.toLocaleString();
@@ -1323,20 +2873,26 @@
       const sliderEl = document.getElementById('range-t4-loan');
       const numInputEl = document.getElementById('inp-t4-loan');
       if (sliderEl) {
-        sliderEl.min = h1Loan;
+        sliderEl.min = Math.min(h1Loan,h1MaxLoan);
         sliderEl.max = h1MaxLoan;
       }
       if (numInputEl) {
-        numInputEl.min = h1Loan;
+        numInputEl.min = Math.min(h1Loan,h1MaxLoan);
         numInputEl.max = h1MaxLoan;
       }
 
+      document.getElementById('simulation-title').textContent='第一屋（'+h1Val.toLocaleString()+'萬）× 第二屋（'+h2Price.toLocaleString()+'萬）× 0050 全景連動試算器';
+      document.getElementById('slider-max-mark').textContent='8成上限: '+h1MaxLoan.toLocaleString()+'萬';
+      const balanceLoan=Math.min(h1MaxLoan,interestOnlyMaxCover);
+      const balanceInterest=Math.round(balanceLoan*10000*monthlyRate);
+      const balanceDiff=h1EffRent-balanceInterest;
+      document.getElementById('balance-description').textContent=balanceLoan>0&&h1EffRent>0?'依目前輸入，申貸 '+balanceLoan.toLocaleString()+' 萬，每月利息 '+balanceInterest.toLocaleString()+' 元，有效淨租金 '+h1EffRent.toLocaleString()+' 元，月差額 '+balanceDiff.toLocaleString()+' 元。':'待確認：需有效房屋現值與淨租金，才能判斷利息覆蓋。';
       document.getElementById('disp-h1-cap').textContent = `${h1MaxLoan.toLocaleString()} 萬`;
       document.getElementById('tag-safe-loan').textContent = `約 ${safeCoverLoan.toLocaleString()} 萬`;
       document.getElementById('tag-balance-loan').textContent = `約 ${Math.min(h1MaxLoan, interestOnlyMaxCover).toLocaleString()} 萬`;
       document.getElementById('tag-max-loan').textContent = `${h1MaxLoan.toLocaleString()} 萬`;
-      document.getElementById('slider-safe-mark').textContent = `🛡️ 本息自償: ${safeCoverLoan.toLocaleString()}萬`;
-      document.getElementById('slider-balance-mark').textContent = `⚖️ 利息打平: ${interestOnlyMaxCover.toLocaleString()}萬`;
+      document.getElementById('slider-safe-mark').textContent = ` 本息自償: ${safeCoverLoan.toLocaleString()}萬`;
+      document.getElementById('slider-balance-mark').textContent = ` 利息打平: ${interestOnlyMaxCover.toLocaleString()}萬`;
       document.getElementById('disp-io-cover-tip').textContent = `${interestOnlyMaxCover.toLocaleString()} 萬`;
 
       let chosenLoan = parseFloat(numInputEl ? numInputEl.value : h1MaxLoan);
@@ -1375,20 +2931,20 @@
       const verdictEl = document.getElementById('out-h1-verdict');
 
       if (chosenLoan <= safeCoverLoan) {
-        badgeEl.className = "text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30";
-        badgeEl.textContent = "🛡️ 本息超自償";
+        badgeEl.className = "text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30";
+        badgeEl.textContent = " 本息超自償";
         verdictEl.className = "p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-[11px] text-emerald-200 leading-relaxed";
-        verdictEl.innerHTML = `🛡️ <strong>【本息超自償線】：</strong>申貸 <strong>${chosenLoan} 萬</strong> 低於有效淨租金可支撐的 30 年本息額度（<strong>${safeCoverLoan} 萬</strong>）！有效租金（${h1EffRent.toLocaleString()}元）扣除利息後每月倒賺 <strong>+${netRentDiff.toLocaleString()} 元</strong>，連本金攤還都能由房客全額買單！`;
+        verdictEl.innerHTML = ` <strong>【本息超自償線】：</strong>申貸 <strong>${chosenLoan} 萬</strong> 低於有效淨租金可支撐的 30 年本息額度（<strong>${safeCoverLoan} 萬</strong>）！有效租金（${h1EffRent.toLocaleString()}元）扣除利息後每月倒賺 <strong>+${netRentDiff.toLocaleString()} 元</strong>，連本金攤還都能由房客全額買單！`;
       } else if (chosenLoan <= interestOnlyMaxCover) {
-        badgeEl.className = "text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30";
-        badgeEl.textContent = "⚖️ 租金正現金流";
+        badgeEl.className = "text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30";
+        badgeEl.textContent = " 租金正現金流";
         verdictEl.className = "p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-[11px] text-emerald-200 leading-relaxed";
-        verdictEl.innerHTML = `🎉 <strong>【黃金甜蜜點】：</strong>申貸 <strong>${chosenLoan} 萬</strong>，每月利息（${h1MonthlyInterest.toLocaleString()}元）完全被第一屋有效淨租金（${h1EffRent.toLocaleString()}元）吸收，每月享 <strong>+${netRentDiff.toLocaleString()} 元</strong> 正現金流，同時釋放 <strong>${etfPrincipalFromLoan} 萬</strong> 投入 0050！`;
+        verdictEl.innerHTML = ` <strong>【黃金甜蜜點】：</strong>申貸 <strong>${chosenLoan} 萬</strong>，每月利息（${h1MonthlyInterest.toLocaleString()}元）完全被第一屋有效淨租金（${h1EffRent.toLocaleString()}元）吸收，每月享 <strong>+${netRentDiff.toLocaleString()} 元</strong> 正現金流，同時釋放 <strong>${etfPrincipalFromLoan} 萬</strong> 投入 0050！`;
       } else {
-        badgeEl.className = "text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold border border-amber-500/30";
-        badgeEl.textContent = "🚀 利差套利進攻";
+        badgeEl.className = "text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-bold border border-amber-500/30";
+        badgeEl.textContent = " 利差套利進攻";
         verdictEl.className = "p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-[11px] text-amber-200 leading-relaxed";
-        verdictEl.innerHTML = `💡 <strong>【利差套利進攻】：</strong>申貸 <strong>${chosenLoan} 萬</strong>，有效淨租金折抵後每月僅需貼補 <strong>${Math.abs(netRentDiff).toLocaleString()} 元</strong> 利息，換取高達 <strong>${etfPrincipalFromLoan} 萬</strong> 的 0050 部位（年化收益約 +${etfAnnualGain.toFixed(1)} 萬）！`;
+        verdictEl.innerHTML = ` <strong>【利差套利進攻】：</strong>申貸 <strong>${chosenLoan} 萬</strong>，有效淨租金折抵後每月僅需貼補 <strong>${Math.abs(netRentDiff).toLocaleString()} 元</strong> 利息，換取高達 <strong>${etfPrincipalFromLoan} 萬</strong> 的 0050 部位（年化收益約 +${etfAnnualGain.toFixed(1)} 萬）！`;
       }
 
       // Module 3: Second House Loan & Repayment Scenarios
@@ -1422,7 +2978,7 @@
       const mRate = (h2Rate / 100) / 12;
       const totalMonths = loanTermYears * 12;
       const graceMonths = graceYears * 12;
-      const remainMonths = Math.max(12, totalMonths - graceMonths);
+      const remainMonths = Math.max(1, totalMonths - graceMonths); // 與 calcLoan10YrStatus 一致，不人為墊高剩餘月數
 
       // Scenario 1: Interest-Only
       const pmtIo = Math.round(loanAmt * 10000 * mRate);
@@ -1457,20 +3013,20 @@
 
       // Update Scenario DOMs
       document.getElementById('disp-sc1-grace-yrs').textContent = graceYears;
-      document.getElementById('out-sc1-monthly').innerHTML = `${pmtIo.toLocaleString()} <span class="text-xs font-normal text-slate-400">元/月</span>`;
+      document.getElementById('out-sc1-monthly').innerHTML = `${pmtIo.toLocaleString()} <span class="text-sm font-normal text-slate-400">元/月</span>`;
       document.getElementById('out-sc1-interest').textContent = `${pmtIo.toLocaleString()} 元`;
       document.getElementById('out-sc1-real-pay').textContent = `${realPayIo.toLocaleString()} 元/月`;
       document.getElementById('out-sc1-income').textContent = `約 ${incomeIo} 萬元`;
 
       document.getElementById('disp-sc2-term-yrs').textContent = loanTermYears;
-      document.getElementById('out-sc2-monthly').innerHTML = `${pmtPiNoGrace.toLocaleString()} <span class="text-xs font-normal text-slate-400">元/月</span>`;
+      document.getElementById('out-sc2-monthly').innerHTML = `${pmtPiNoGrace.toLocaleString()} <span class="text-sm font-normal text-slate-400">元/月</span>`;
       document.getElementById('out-sc2-pure-principal').textContent = `${sc2PurePrincipal.toLocaleString()} 元`;
       document.getElementById('out-sc2-pure-interest').textContent = `${sc2PureInterest.toLocaleString()} 元`;
       document.getElementById('out-sc2-real-pay').textContent = `${realPayNoGrace.toLocaleString()} 元/月`;
       document.getElementById('out-sc2-income').textContent = `約 ${incomeNoGrace} 萬元`;
 
       document.getElementById('disp-sc3-remain-yrs').textContent = Math.max(0, loanTermYears - graceYears);
-      document.getElementById('out-sc3-monthly').innerHTML = `${pmtPiAfterGrace.toLocaleString()} <span class="text-xs font-normal text-slate-400">元/月</span>`;
+      document.getElementById('out-sc3-monthly').innerHTML = `${pmtPiAfterGrace.toLocaleString()} <span class="text-sm font-normal text-slate-400">元/月</span>`;
       document.getElementById('out-sc3-jump').textContent = graceYears > 0 ? `+${jumpDiff.toLocaleString()} 元/月 (+${jumpPct}%)` : `無寬限期 (自首期即本息均攤)`;
       document.getElementById('out-sc3-real-pay').textContent = `${realPayAfterGrace.toLocaleString()} 元/月`;
       document.getElementById('out-sc3-income').textContent = `${incomeAfterGrace} 萬`;
@@ -1479,15 +3035,15 @@
 
       // Update Card B
       const h2DownActual = Math.max(0, h2Price - loanAmt);
-      const h2Loan50 = Math.round(h2Price * 0.5);
-      const h2Down50 = h2Price - h2Loan50;
-      const savedDown = Math.max(0, h2Down50 - h2DownActual);
+      const h2Loan2ndHome = Math.round(h2Price * SECOND_HOME_LTV);
+      const h2Down2ndHome = h2Price - h2Loan2ndHome;
+      const savedDown = Math.max(0, h2Down2ndHome - h2DownActual);
 
       const initialH2Monthly = graceYears > 0 ? pmtIo : pmtPiNoGrace;
       const initialRealH2Monthly = graceYears > 0 ? realPayIo : realPayNoGrace;
 
       document.getElementById('out-h2-loan80').textContent = `${loanAmt.toLocaleString()} 萬 (自備 ${h2DownActual.toLocaleString()}萬)`;
-      document.getElementById('out-h2-loan50').textContent = `${h2Loan50.toLocaleString()} 萬 (自備 ${h2Down50.toLocaleString()}萬)`;
+      document.getElementById('out-h2-loan50').textContent = `${h2Loan2ndHome.toLocaleString()} 萬 (自備 ${h2Down2ndHome.toLocaleString()}萬)`;
       document.getElementById('out-saved-down').textContent = `省下 ${savedDown.toLocaleString()} 萬現金！`;
       document.getElementById('out-h2-rate-card-b').textContent = `${h2Rate}%`;
       document.getElementById('out-h2-io').textContent = `${initialH2Monthly.toLocaleString()} 元/月`;
@@ -1508,12 +3064,12 @@
       const netDownCashMax = Math.max(0, buyerCash - renovation);
       const safeMaxH2Price = Math.round(netDownCashSafe / (downRatio + feeRate));
       const extremeMaxH2Price = Math.round(netDownCashMax / (downRatio + feeRate));
-      const secondHouse50MaxPrice = Math.round(netDownCashSafe / (0.50 + feeRate));
-      const leverageGap = safeMaxH2Price - secondHouse50MaxPrice;
+      const secondHouse2ndHomeMaxPrice = Math.round(netDownCashSafe / ((1 - SECOND_HOME_LTV) + feeRate));
+      const leverageGap = safeMaxH2Price - secondHouse2ndHomeMaxPrice;
 
       document.getElementById('out-safe-h2-price').textContent = `${safeMaxH2Price.toLocaleString()} 萬元`;
       document.getElementById('out-extreme-h2-price').textContent = `${extremeMaxH2Price.toLocaleString()} 萬元`;
-      document.getElementById('out-second-50-price').textContent = `約 ${secondHouse50MaxPrice.toLocaleString()} 萬`;
+      document.getElementById('out-second-50-price').textContent = `約 ${secondHouse2ndHomeMaxPrice.toLocaleString()} 萬`;
       document.getElementById('out-leverage-gap').textContent = `+${leverageGap.toLocaleString()} 萬`;
       document.getElementById('disp-safe-reserve').textContent = reserveFund;
 
@@ -1538,13 +3094,13 @@
       if (cashDiffM3 >= 0) {
         cashDiffEl.textContent = `+${cashDiffM3.toLocaleString()} 萬元 (充足結餘)`;
         cashDiffEl.className = "font-mono-num text-emerald-400 font-bold text-sm";
-        cashStatusBadgeEl.className = "text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30";
-        cashStatusBadgeEl.textContent = `✅ 作法3現金充足 (+${cashDiffM3}萬)`;
+        cashStatusBadgeEl.className = "text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30";
+        cashStatusBadgeEl.textContent = ` 作法3現金充足 (+${cashDiffM3}萬)`;
       } else {
         cashDiffEl.textContent = `-${Math.abs(cashDiffM3).toLocaleString()} 萬元 (資金缺口)`;
         cashDiffEl.className = "font-mono-num text-rose-400 font-bold text-sm";
-        cashStatusBadgeEl.className = "text-[10px] px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold border border-rose-500/30";
-        cashStatusBadgeEl.textContent = `⚠️ 作法3尚缺 -${Math.abs(cashDiffM3)}萬`;
+        cashStatusBadgeEl.className = "text-[10px] px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 font-bold border border-rose-500/30";
+        cashStatusBadgeEl.textContent = ` 作法3尚缺 -${Math.abs(cashDiffM3)}萬`;
       }
 
       if (cashDiffM1 >= 0) {
@@ -1564,19 +3120,20 @@
       const coverVerdictEl = document.getElementById('out-cover-verdict');
       if (cashDiffM1 >= 0) {
         coverVerdictEl.className = "p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-[11px] text-emerald-200 leading-relaxed";
-        coverVerdictEl.innerHTML = `🏆 <strong>【作法 1 ＆ 作法 3 雙軌皆可完美 Cover】：</strong>您的手頭現金池（${buyerCash}萬）連同第一屋舊貸（${h1Loan}萬）與第二屋頭期裝潢規費（${totalCashNeededM3}萬）都能一次付清還有結餘 <strong>+${cashDiffM1} 萬</strong>！強烈建議直接執行<strong>【作法 1】</strong>，先還清第一屋再買第二屋，交屋後辦出 ${chosenLoan} 萬科目四全買 0050！`;
+        coverVerdictEl.innerHTML = ` <strong>【作法 1 ＆ 作法 3 雙軌皆可完美 Cover】：</strong>您的手頭現金池（${buyerCash}萬）連同第一屋舊貸（${h1Loan}萬）與第二屋頭期裝潢規費（${totalCashNeededM3}萬）都能一次付清還有結餘 <strong>+${cashDiffM1} 萬</strong>！強烈建議直接執行<strong>【作法 1】</strong>，先還清第一屋再買第二屋，交屋後辦出 ${chosenLoan} 萬科目四全買 0050！`;
       } else if (cashDiffM3 >= 0) {
         coverVerdictEl.className = "p-2.5 rounded-xl bg-sky-500/10 border border-sky-500/30 text-[11px] text-sky-200 leading-relaxed";
-        coverVerdictEl.innerHTML = `🎯 <strong>【首選作法 3：免掏舊貸完美 Cover】：</strong>您的手頭現金（${buyerCash}萬）支付第二屋自備款＋裝潢規費（共 ${totalCashNeededM3} 萬）後仍結餘 <strong>+${cashDiffM3} 萬</strong>！請採用<strong>【作法 3】</strong>由新辦科目四直接代償第一屋 ${h1Loan} 萬舊貸，即可免找過橋資金順利交屋！`;
+        coverVerdictEl.innerHTML = ` <strong>【首選作法 3：免掏舊貸完美 Cover】：</strong>您的手頭現金（${buyerCash}萬）支付第二屋自備款＋裝潢規費（共 ${totalCashNeededM3} 萬）後仍結餘 <strong>+${cashDiffM3} 萬</strong>！請採用<strong>【作法 3】</strong>由新辦科目四直接代償第一屋 ${h1Loan} 萬舊貸，即可免找過橋資金順利交屋！`;
       } else {
         coverVerdictEl.className = "p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-[11px] text-amber-200 leading-relaxed";
-        coverVerdictEl.innerHTML = `💡 <strong>【頭期現金差額提醒】：</strong>購買 ${h2Price} 萬新房（含裝潢規費）共需 ${totalCashNeededM3} 萬，對比手頭現金尚差 <strong>${Math.abs(cashDiffM3)} 萬</strong>。建議點擊左方<strong>「一鍵套用安全總價（${safeMaxH2Price}萬）」</strong>，或適度調降裝潢預算。`;
+        coverVerdictEl.innerHTML = ` <strong>【頭期現金差額提醒】：</strong>購買 ${h2Price} 萬新房（含裝潢規費）共需 ${totalCashNeededM3} 萬，對比手頭現金尚差 <strong>${Math.abs(cashDiffM3)} 萬</strong>。建議點擊左方<strong>「一鍵套用安全總價（${safeMaxH2Price}萬）」</strong>，或適度調降裝潢預算。`;
       }
 
       // -------------------------------------------------------------
       // V3 UNIFIED 10-YEAR NET WORTH MODEL (Iso-Capital Pool & Amortization)
       // -------------------------------------------------------------
-      const propGrowth10Yr = Math.pow(1.03, 10);
+      const propGrowth10Yr = Math.pow(1 + (propGrowthPct / 100), 10);
+      document.getElementById('out-prop-growth-text').textContent = propGrowthPct;
       const etfGrowth10Yr = Math.pow(1 + (etfReturn / 100), 10);
       const h1Future = h1Val * propGrowth10Yr;
       const h2Future = h2Price * propGrowth10Yr;
@@ -1599,21 +3156,23 @@
 
       // Method 3: Refinance H1 into chosenLoan (net etfPrincipalFromLoan into ETF) + leftover cashDiffM3 into ETF.
       // Minor refinance/bridge friction ~ 8 Wan
+      const refiFrictionM3 = 8;
       const netWealthM3 = Math.round(
         (h1Future + h2Future + (etfPoolM1 * etfGrowth10Yr) + cashShortfallDebtM1 + netRent10YrWan)
         - (chosenLoan + h2Loan10YrStatus.remainWan)
         - h2Loan10YrStatus.totalOutflowWan
-        - 8
+        - refiFrictionM3
       );
 
-      // Method 2: Keep h1Loan (450W), H2 capped at 50% LTV (h2Loan50), 0 grace period, higher rate (h2Rate + 0.35%)
+      // Method 2: Keep h1Loan (450W), H2 capped at 2nd-home LTV 70% (h2Loan2ndHome), 0 grace period, higher rate (h2Rate + 0.35%)
       const h2RateM2 = h2Rate + 0.35;
-      const totalCashNeededM2 = h2Down50 + renovation + pureFee;
+      const totalCashNeededM2 = h2Down2ndHome + renovation + pureFee;
       const cashDiffM2 = buyerCash - totalCashNeededM2;
       const etfPoolM2 = Math.max(0, cashDiffM2);
-      const shortfallM2 = Math.min(0, cashDiffM2) * 1.25; // Financing cost for 50% down payment shortfall
-      const h1Loan10YrM2 = calcLoan10YrStatus(h1Loan, 2.20, 20, 0, 120);
-      const h2Loan10YrM2 = calcLoan10YrStatus(h2Loan50, h2RateM2, loanTermYears, 0, 120);
+      const shortfallM2 = Math.min(0, cashDiffM2); // 資金缺口以原額計入，未另計融資成本（與作法 1/3/4 一致）
+      // 第一屋舊貸依使用者輸入之利率與剩餘年期攤還（年期不足 10 年時只計到清償為止）
+      const h1Loan10YrM2 = calcLoan10YrStatus(h1Loan, h1LoanRate, h1LoanYears, 0, Math.min(120, h1LoanYears * 12));
+      const h2Loan10YrM2 = calcLoan10YrStatus(h2Loan2ndHome, h2RateM2, loanTermYears, 0, 120);
       const rawRent10YrWan = (h1EffRent * 120) / 10000;
 
       const netWealthM2 = Math.round(
@@ -1622,8 +3181,8 @@
         - (h1Loan10YrM2.totalOutflowWan + h2Loan10YrM2.totalOutflowWan)
       );
 
-      // Method 4: Sell H1 (net proceeds after 5% agency + tax friction = h1Val * 0.95 - h1Loan)
-      const h1SaleNetProceeds = Math.max(0, Math.round(h1Val * 0.95) - h1Loan);
+      // Method 4: Sell H1 (net proceeds after user-set agency + tax friction, default 5% = h1Val * 0.95 - h1Loan)
+      const h1SaleNetProceeds = Math.max(0, Math.round(h1Val * (1 - saleCostPct / 100)) - h1Loan);
       const totalCashPoolM4 = buyerCash + h1SaleNetProceeds - totalCashNeededM3;
       const etfPoolM4 = Math.max(0, totalCashPoolM4);
       const shortfallM4 = Math.min(0, totalCashPoolM4);
@@ -1633,6 +3192,9 @@
         - h2Loan10YrStatus.totalOutflowWan
       );
 
+      document.getElementById('out-m1-diff-note').textContent = `作法 1（${netWealthM1.toLocaleString()} 萬）與作法 3 公式相同，差異僅來自假設：作法 1 另扣「科目四撥款 3 個月時間差」機會成本約 ${timingLagCostM1.toLocaleString()} 萬（0050 部位 ${etfPrincipalFromLoan.toLocaleString()} 萬 × ${etfReturn}% × 3/12）。`;
+      document.getElementById('out-m3-diff-note').textContent = `作法 3（${netWealthM3.toLocaleString()} 萬）與作法 1 公式相同，差異僅來自假設：作法 3 另扣固定 ${refiFrictionM3} 萬，為轉貸／過橋摩擦成本假設（不隨輸入變動）。`;
+      document.getElementById('out-m4-sale-note').textContent = `作法 4（${netWealthM4.toLocaleString()} 萬）：賣第一屋 ${h1Val.toLocaleString()} 萬 × (1 − ${saleCostPct}%) − 殘貸 ${h1Loan.toLocaleString()} 萬 ＝ 淨得 ${h1SaleNetProceeds.toLocaleString()} 萬。`;
       const bestHoldWealth = Math.max(netWealthM1, netWealthM3);
       const diffAdvantage = bestHoldWealth - netWealthM4;
       document.getElementById('out-10yr-advantage').textContent = `${diffAdvantage >= 0 ? '+' : ''}${diffAdvantage.toLocaleString()} 萬元`;
@@ -1646,7 +3208,7 @@
         strategyChartInstance = new Chart(ctx, {
           type: 'bar',
           data: {
-            labels: ['🥇 作法 1 (先清償轉科目四)', '🥇 作法 3 (借新還舊轉四)', '⚠️ 作法 2 (不還卡5成限貸)', '🛑 作法 4 (賣一屋換二屋)'],
+            labels: [' 作法 1 (先清償轉科目四)', ' 作法 3 (借新還舊轉四)', ' 作法 2 (不還卡7成限貸)', ' 作法 4 (賣一屋換二屋)'],
             datasets: [{
               label: '10年後預估總淨值 (萬元)',
               data: chartData,
@@ -1773,26 +3335,26 @@
       function switchBuyerMode(mode) {
         buyerMode = mode;
         if (mode === 'spouse') {
-          if (btnSpouse) btnSpouse.className = 'shrink-0 px-3 py-1.5 rounded-xl text-xs font-black bg-purple-500 text-slate-950 shadow transition';
-          if (btnSelf) btnSelf.className = 'shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-700 transition';
+          if (btnSpouse) btnSpouse.className = 'shrink-0 px-3 py-1.5 rounded-xl text-sm font-bold bg-purple-500 text-slate-950 shadow transition';
+          if (btnSelf) btnSelf.className = 'shrink-0 px-3 py-1.5 rounded-xl text-sm font-bold bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-700 transition';
           if (graceSel) {
             graceSel.disabled = false;
             graceSel.value = '3';
           }
-          if (graceHint) graceHint.textContent = '配偶無房首購可爭取 3~5 年';
-          if (cbBanner) cbBanner.className = 'p-3.5 rounded-2xl bg-purple-500/10 border border-purple-500/30 text-xs text-purple-200 flex items-start gap-2.5 leading-relaxed';
-          if (cbText) cbText.innerHTML = '<strong>【央行第七波授信校準：配偶名下無房首購模式】</strong> 當第一屋消除「科目一」或登記於您名下，並由<strong>「名下無自有住宅之配偶」</strong>擔任第二屋買方與借款人（或先將第一屋夫妻贈與過戶予配偶），第二屋即可合法享有<strong>最高 8 成貸款 ＋ 3~5 年寬限期</strong>！';
-          showToast('已切換為【配偶名下無房首購】模式：啟用 8 成 ＋ 3 年寬限期');
+          if (graceHint) graceHint.textContent = '配偶無房（第 1 戶）可爭取 3~5 年';
+          if (cbBanner) cbBanner.className = 'p-3.5 rounded-2xl bg-purple-500/10 border border-purple-500/30 text-sm text-purple-200 flex items-start gap-2.5 leading-relaxed';
+          if (cbText) cbText.innerHTML = '<strong>【央行信用管制口徑：配偶名下無房（第 1 戶貸款）模式】</strong> 當第一屋消除「科目一」或登記於您名下，並由<strong>「名下無自有住宅之配偶」</strong>擔任第二屋買方與借款人（或先將第一屋夫妻贈與過戶予配偶），第二屋原則上可爭取<strong>最高 8 成貸款 ＋ 3~5 年寬限期</strong>；實際成數、利率與寬限期仍以銀行核貸結果為準。<br><span class="block mt-1 text-[12px] text-purple-200/90">① 此為央行信用管制口徑（以借款人本人歸戶）：配偶擔任買方與借款人，即用掉配偶的第 1 戶購屋貸款條件。<br>② 配偶此舉<strong>不符合新青安等政府首購優惠</strong>（該資格審查含借款人本人、配偶及未成年子女名下皆無自有住宅），請勿把「第 1 戶貸款條件」與「首購優惠」混為一談。</span>';
+          showToast('已切換為【配偶名下無房（第 1 戶貸款）】模式：試算採 8 成 ＋ 3 年寬限期（以銀行核貸為準）');
         } else {
-          if (btnSelf) btnSelf.className = 'shrink-0 px-3 py-1.5 rounded-xl text-xs font-black bg-amber-500 text-slate-950 shadow transition';
-          if (btnSpouse) btnSpouse.className = 'shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-700 transition';
+          if (btnSelf) btnSelf.className = 'shrink-0 px-3 py-1.5 rounded-xl text-sm font-bold bg-amber-500 text-slate-950 shadow transition';
+          if (btnSpouse) btnSpouse.className = 'shrink-0 px-3 py-1.5 rounded-xl text-sm font-bold bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-700 transition';
           if (graceSel) {
             graceSel.value = '0';
             graceSel.disabled = true;
           }
-          if (graceHint) graceHint.textContent = '⚠️ 名下有房受央行管制無寬限期';
-          if (cbBanner) cbBanner.className = 'p-3.5 rounded-2xl bg-amber-500/15 border border-amber-500/40 text-xs text-amber-200 flex items-start gap-2.5 leading-relaxed';
-          if (cbText) cbText.innerHTML = '<strong>⚠️【央行第七波授信警示：本人名下已有第一屋模式】</strong> 即使您已塗銷第一屋 450 萬「科目一」（名下無房貸），使第二屋可貸 <strong>8 成</strong>；但因您本人名下仍持有第一屋產權，依央行第七波信用管制規定，<strong>新申辦之第 1 戶購屋貸款「不得有寬限期（寬限期強制鎖定為 0 年）」</strong>！建議改由名下無房之配偶購買以取得寬限期。';
+          if (graceHint) graceHint.textContent = ' 名下有房受央行管制無寬限期';
+          if (cbBanner) cbBanner.className = 'p-3.5 rounded-2xl bg-amber-500/15 border border-amber-500/40 text-sm text-amber-200 flex items-start gap-2.5 leading-relaxed';
+          if (cbText) cbText.innerHTML = '<strong>【央行第七波授信警示：本人名下已有第一屋模式】</strong> 即使您已塗銷第一屋 450 萬「科目一」（名下無房貸），使第二屋可貸 <strong>8 成</strong>；但因您本人名下仍持有第一屋產權，依央行第七波信用管制規定，<strong>新申辦之第 1 戶購屋貸款「不得有寬限期（寬限期強制鎖定為 0 年）」</strong>！建議改由名下無房之配偶購買以取得寬限期。';
           showToast('已切換為【本人名下有第一屋】模式：依央行規範鎖定無寬限期');
         }
         if (mobileBorrowerSelect && mobileBorrowerSelect.value !== mode) {
@@ -1815,7 +3377,7 @@
         if (h2LoanEl) h2LoanEl.value = Math.round(numericInput('inp-h2-price', 3350) * currentLtvFactor);
       });
 
-      ['inp-h1-val', 'inp-h1-loan', 'inp-h1-rent', 'inp-rent-net-factor', 'inp-h2-price', 'inp-etf-return', 'inp-loan-rate', 'inp-buyer-cash', 'inp-renovation', 'inp-reserve-fund', 'inp-fee-rate', 'inp-loan-calc-amt', 'inp-h2-mortgage-rate', 'sel-h2-loan-term', 'sel-h2-grace-years'].forEach(id => {
+      ['inp-h1-val', 'inp-h1-loan', 'inp-h1-rent', 'inp-rent-net-factor', 'inp-h2-price', 'inp-etf-return', 'inp-loan-rate', 'inp-buyer-cash', 'inp-renovation', 'inp-reserve-fund', 'inp-fee-rate', 'inp-loan-calc-amt', 'inp-h2-mortgage-rate', 'sel-h2-loan-term', 'sel-h2-grace-years', 'inp-h1-loan-interest', 'inp-h1-loan-years', 'inp-prop-growth', 'inp-sale-cost-pct'].forEach(id => {
         const el = document.getElementById(id);
         if (el) {
           el.addEventListener('input', updateSimulation);
@@ -1825,12 +3387,14 @@
 
       const mobileLtvSelect = document.getElementById('mobileLtvSelect');
       const setLtvLoan = (factor, label) => {
+        if(!SiteUI.validateSecondHouse()){showToast(SiteUI.invalidMessage);return;}
         currentLtvFactor = factor;
         const h2Price = numericInput('inp-h2-price', 3350);
         const targetLoan = Math.round(h2Price * factor);
         const inpLoanCalc = document.getElementById('inp-loan-calc-amt');
         if (inpLoanCalc) {
-          inpLoanCalc.value = targetLoan;
+          inpLoanCalc.value = String(Math.round(targetLoan));
+          inpLoanCalc.setCustomValidity('');
           updateSimulation();
           showToast(`已套用【${label}】貸款本金：${targetLoan} 萬元`);
         }
@@ -1839,13 +3403,13 @@
 
       document.getElementById('btn-ltv-80')?.addEventListener('click', () => setLtvLoan(0.80, '8成 (首購)'));
       document.getElementById('btn-ltv-75')?.addEventListener('click', () => setLtvLoan(0.75, '7.5成'));
-      document.getElementById('btn-ltv-70')?.addEventListener('click', () => setLtvLoan(0.70, '7成'));
-      document.getElementById('btn-ltv-50')?.addEventListener('click', () => setLtvLoan(0.50, '5成 (二屋)'));
+      document.getElementById('btn-ltv-70')?.addEventListener('click', () => setLtvLoan(0.70, '7成 (二屋)'));
+      document.getElementById('btn-ltv-50')?.addEventListener('click', () => setLtvLoan(0.50, '5成'));
 
       if (mobileLtvSelect) {
         mobileLtvSelect.addEventListener('change', (e) => {
           const val = parseFloat(e.target.value);
-          const labelMap = { '0.80': '8成 (首購)', '0.75': '7.5成', '0.70': '7成', '0.50': '5成 (二屋)' };
+          const labelMap = { '0.80': '8成 (首購)', '0.75': '7.5成', '0.70': '7成 (二屋)', '0.50': '5成' };
           setLtvLoan(val, labelMap[e.target.value] || `${(val * 100).toFixed(0)}成`);
         });
       }
@@ -1950,6 +3514,7 @@
 
       // Fixed Bug #1 & #2 in Copy Summary: Uses dynamic unitPmt & safe mortgagePayment() helper
       document.getElementById('btn-copy-summary')?.addEventListener('click', () => {
+        if(!SiteUI.validateSecondHouse()){showToast(SiteUI.invalidMessage);return;}
         const h1Val = numericInput('inp-h1-val', 2000);
         const h1Loan = numericInput('inp-h1-loan', 450);
         const h1RawRent = numericInput('inp-h1-rent', 38000);
@@ -1994,25 +3559,25 @@
         const realPayNoGrace = Math.max(0, pmtPiNoGrace - netRentDiff);
         const realPayAfterGrace = Math.max(0, pmtPiAfterGrace - netRentDiff);
 
-        const summaryText = `🏦【第二間購屋＆科目四財務槓桿決策總結 (V3 統一模型版)】
+        const summaryText = `【第二間購屋＆科目四財務槓桿決策總結 (V3 統一模型版)】
 ━━━━━━━━━━━━━━━
-📌 目前資產底牌與名義設定：
-• 第二屋購買模式：${buyerMode === 'spouse' ? '配偶名下無房首購 (享8成+寬限期)' : '本人名下已有第一屋 (享8成但無寬限期)'}
+ 目前資產底牌與名義設定：
+• 第二屋購買模式：${buyerMode === 'spouse' ? '配偶名下無房（第 1 戶貸款，可爭取8成+寬限期，以銀行核貸為準）' : '本人名下已有第一屋 (享8成但無寬限期)'}
 • 第一屋鑑價：${h1Val.toLocaleString()} 萬 ｜ 原貸款：${h1Loan.toLocaleString()} 萬
 • 第一屋租金：表定 ${h1RawRent.toLocaleString()} 元 × 有效率 ${netFactorPct}% ＝ 有效淨租金 ${h1EffRent.toLocaleString()} 元/月
 • 第二屋目標：${h2Price.toLocaleString()} 萬（設定貸款 ${loanAmt.toLocaleString()} 萬，自備頭期 ${pureDown.toLocaleString()} 萬）
 
-🎯【自備款 ＆ 裝潢費 Cover 壓力檢核】：
+【自備款 ＆ 裝潢費 Cover 壓力檢核】：
 • 手頭可用現金池：${buyerCash} 萬 ｜ 裝潢預算：${renovation} 萬 ｜ 預留緊急金：${reserveFund} 萬
 • 二屋總需現金（作法3）：${totalCashNeeded.toLocaleString()} 萬（頭期 ${pureDown}萬 + 裝潢 ${renovation}萬 + 規費 ${pureFee}萬）
   ➔ 作法 3 現金結餘：${cashDiff >= 0 ? `+${cashDiff.toLocaleString()} 萬元` : `-${Math.abs(cashDiff).toLocaleString()} 萬元`}
 
-💳【第二屋房貸三情境月付精算 (${loanTermYears}年期・利率${h2Rate}%・寬限${graceYears}年)】：
-• 🟢【只還息 (寬限期內)】：應繳 ${pmtIo.toLocaleString()} 元/月 ➔ 扣除一屋淨租後實付 ${realPayIo.toLocaleString()} 元/月
-• 🟠【無寬限期本息均攤】：應繳 ${pmtPiNoGrace.toLocaleString()} 元/月 ➔ 實付 ${realPayNoGrace.toLocaleString()} 元/月
-• 🔴【寬限期後本息均攤】：應繳 ${pmtPiAfterGrace.toLocaleString()} 元/月 ➔ 實付 ${realPayAfterGrace.toLocaleString()} 元/月
+【第二屋房貸三情境月付精算 (${loanTermYears}年期・利率${h2Rate}%・寬限${graceYears}年)】：
+• 【只還息 (寬限期內)】：應繳 ${pmtIo.toLocaleString()} 元/月 ➔ 扣除一屋淨租後實付 ${realPayIo.toLocaleString()} 元/月
+• 【無寬限期本息均攤】：應繳 ${pmtPiNoGrace.toLocaleString()} 元/月 ➔ 實付 ${realPayNoGrace.toLocaleString()} 元/月
+• 【寬限期後本息均攤】：應繳 ${pmtPiAfterGrace.toLocaleString()} 元/月 ➔ 實付 ${realPayAfterGrace.toLocaleString()} 元/月
 
-💡【第一屋科目四申貸與 0050 套利引擎】：
+【第一屋科目四申貸與 0050 套利引擎】：
 • 科目四申貸額度：${chosenLoan.toLocaleString()} 萬（利率 ${rate}%，月繳息 ${h1MonthlyInterest.toLocaleString()} 元）
 • 動態 30 年本息自償線：${safeCoverLoan.toLocaleString()} 萬 ｜ 只繳息打平線：${interestOnlyMaxCover.toLocaleString()} 萬
 • 扣除舊貸後淨釋放買 0050：${etfPrincipal.toLocaleString()} 萬元（首年預期收益約 +${etfAnnualGain.toFixed(1)} 萬元）

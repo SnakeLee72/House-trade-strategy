@@ -4,13 +4,15 @@
  * 支援 PWA 離線快取、即時網路優先策略與背景更新
  */
 
-const CACHE_NAME = 'hts-cache-v20261020_07';
+const CACHE_NAME = 'hts-cache-v20261021_pigbadge7';
 
 const PRECACHE_URLS = [
   './',
   './index.html',
   './pwa-install.js',
   './home-mobile.css',
+  './site-ui.css',
+  './site-ui.js',
   './chen-reading.css',
   './registration-core.js',
   './registration-ui.js',
