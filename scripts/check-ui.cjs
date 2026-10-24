@@ -1,6 +1,6 @@
 const fs = require('node:fs');
 const vm = require('node:vm');
-for (const file of ['index.html', '「談判大叔」陳侯勳｜買房投資與談判理論全集.html']) {
+for (const file of ['index.html', '吳淡如_房商必修課.html', 'second_house.html', '「談判大叔」陳侯勳｜買房投資與談判理論全集.html']) {
   const html = fs.readFileSync(file, 'utf8');
   let count = 0;
   for (const match of html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)) {

@@ -7,7 +7,7 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   <title>吳淡如《房商必修課》＆買房實戰談話全集｜跨頻道深度整理與互動工具</title>
-  
+
   <!-- PWA Manifest & App Configuration -->
   <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#0f172a">
@@ -21,6 +21,7 @@
   <link rel="icon" type="image/png" sizes="512x512" href="./icons/icon-512x512.png">
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="./site-ui.js?v=20261021_sticky1"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
@@ -34,6 +35,10 @@
       background-color: #1E3A8A;
       color: #FFFFFF;
       box-shadow: 0 4px 12px rgba(30, 58, 138, 0.25);
+    }
+    body #mainTabNav .tab-btn:not(.active):hover {
+      background-color: #1e293b;
+      color: #7dd3fc !important;
     }
     .animal-btn.active {
       border-color: #D97706;
@@ -59,23 +64,48 @@
       -webkit-overflow-scrolling: touch;
     }
   </style>
+  <meta name="description" content="吳淡如房商必修課：整理財商、房貸收入比、五力分析與跨頻道訪談，搭配購屋診斷器及互動學習工具。">
+  <meta property="og:title" content="吳淡如《房商必修課》＆買房實戰談話全集｜跨頻道深度整理與互動工具">
+  <meta property="og:description" content="吳淡如房商必修課：整理財商、房貸收入比、五力分析與跨頻道訪談，搭配購屋診斷器及互動學習工具。">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://house-trade-strategy.snakelee72.workers.dev/icons/icon-512x512.png">
+  <link rel="stylesheet" href="./site-ui.css?v=20261021_sticky1">
+<!-- Lucide inline SVG; Copyright (c) Lucide Contributors. ISC/MIT notices: ./icons/lucide-license.txt -->
 </head>
-<body class="min-h-screen flex flex-col selection:bg-amber-200 selection:text-slate-900">
+<body class="cyber-grid min-h-screen flex flex-col selection:bg-amber-500 selection:text-slate-950">
 
   <!-- Top Notification Toast -->
-  <div id="toast" class="fixed bottom-5 right-5 z-50 pointer-events-none transition-all duration-300 opacity-0 translate-y-4 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl flex items-center gap-3 text-sm font-medium">
+  <div id="toast" class="fixed bottom-5 right-5 z-50 pointer-events-none transition-all duration-300 opacity-0 translate-y-4 bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl flex items-center gap-3 text-sm font-medium">
     <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
     <span id="toastMsg">已複製連結至剪貼簿！</span>
   </div>
 
   <!-- Top Unified Navigation Bar -->
-  <nav class="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/95 backdrop-blur-md">
+  <nav id="siteTopbar" class="site-topbar site-compact-topbar sticky top-0 z-50 border-b border-slate-800 bg-slate-950/95 backdrop-blur-md">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-14 flex items-center justify-between gap-2 sm:gap-4">
       <a href="index.html" class="flex items-center gap-2 text-white hover:opacity-90 transition shrink-0">
-        <span class="text-base sm:text-lg">🏛️</span>
+        <span class="text-base sm:text-lg"><svg class="site-icon lucide lucide-landmark" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M10 18v-7" />
+  <path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" />
+  <path d="M14 18v-7" />
+  <path d="M18 18v-7" />
+  <path d="M3 22h18" />
+  <path d="M6 18v-7" />
+</svg>
+</span>
         <div class="flex items-center gap-1.5">
-          <span class="font-black text-xs sm:text-sm tracking-tight">HOUSE TRADE STRATEGY</span>
-          <span class="hidden md:inline-block px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">雙師智庫</span>
+          <span class="font-bold text-sm sm:text-sm tracking-tight">HOUSE TRADE STRATEGY</span>
+          <span class="hidden md:inline-block px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">雙師智庫</span>
         </div>
       </a>
 
@@ -83,29 +113,161 @@
       <div class="flex items-center gap-1.5 sm:gap-2">
         <!-- Mobile Dropdown Selector (支援下拉式選單) -->
         <div class="md:hidden relative">
-          <select id="mobilePageNavSelect" class="bg-slate-900 text-amber-300 border border-slate-700 text-xs font-bold rounded-xl px-2 py-1.5 pr-6 appearance-none focus:outline-none focus:ring-1 focus:ring-amber-500 cursor-pointer" aria-label="手機切換專區下拉選單">
+          <select id="mobilePageNavSelect" class="bg-slate-900 text-amber-300 border border-slate-700 text-sm font-bold rounded-xl px-2 py-1.5 pr-6 appearance-none focus:outline-none focus:ring-1 focus:ring-amber-500 cursor-pointer" aria-label="手機切換專區下拉選單">
             <option value="">切換專區 ▾</option>
-            <option value="index.html">🏛️ 雙師總首頁</option>
-            <option value="吳淡如_房商必修課.html" selected>🐎 吳淡如《房商必修課》（目前）</option>
-            <option value="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_07">🗡️ 陳侯勳《房產剎價學》</option>
-            <option value="second_house.html">🏦 第二屋實戰決策</option>
+            <option value="index.html"><svg class="site-icon lucide lucide-landmark" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M10 18v-7" />
+  <path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" />
+  <path d="M14 18v-7" />
+  <path d="M18 18v-7" />
+  <path d="M3 22h18" />
+  <path d="M6 18v-7" />
+</svg>
+ 雙師總首頁</option>
+            <option value="吳淡如_房商必修課.html" selected><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 吳淡如《房商必修課》（目前）</option>
+            <option value="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_07"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 陳侯勳《房產剎價學》</option>
+            <option value="second_house.html"><svg class="site-icon lucide lucide-landmark" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M10 18v-7" />
+  <path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" />
+  <path d="M14 18v-7" />
+  <path d="M18 18v-7" />
+  <path d="M3 22h18" />
+  <path d="M6 18v-7" />
+</svg>
+ 第二屋實戰決策</option>
           </select>
           <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-1 text-amber-400 text-[9px]">▼</div>
         </div>
 
         <!-- Desktop Direct Buttons -->
         <div class="hidden md:flex items-center gap-2 sm:gap-3">
-          <a href="index.html" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold transition flex items-center gap-1.5">
-            <span>🏛️</span>
+          <a href="index.html" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-sm font-semibold transition flex items-center gap-1.5">
+            <span><svg class="site-icon lucide lucide-landmark" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M10 18v-7" />
+  <path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" />
+  <path d="M14 18v-7" />
+  <path d="M18 18v-7" />
+  <path d="M3 22h18" />
+  <path d="M6 18v-7" />
+</svg>
+</span>
             <span>返回共同首頁</span>
           </a>
-          <a href="second_house.html" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-300 hover:text-emerald-200 border border-emerald-500/30 text-xs font-semibold transition flex items-center gap-1.5">
-            <span>🏦</span>
+          <a href="second_house.html" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-300 hover:text-emerald-200 border border-emerald-500/30 text-sm font-semibold transition flex items-center gap-1.5">
+            <span><svg class="site-icon lucide lucide-landmark" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M10 18v-7" />
+  <path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" />
+  <path d="M14 18v-7" />
+  <path d="M18 18v-7" />
+  <path d="M3 22h18" />
+  <path d="M6 18v-7" />
+</svg>
+</span>
             <span>第二屋實戰決策</span>
           </a>
-          <a href="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_07" class="px-3 py-1.5 rounded-lg bg-gradient-to-r from-sky-400 to-sky-600 hover:from-sky-300 hover:to-sky-500 text-slate-950 font-bold text-xs transition flex items-center gap-1 shadow-md shadow-sky-500/20">
-            <span>🗡️</span>
-            <span>切換至「陳侯勳」專區 ↗</span>
+          <a href="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_07" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-sky-400 to-sky-600 hover:from-sky-300 hover:to-sky-500 text-slate-950 font-bold text-sm transition flex items-center gap-1 shadow-md shadow-sky-500/20">
+            <span><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</span>
+            <span>切換至「陳侯勳」專區 <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</span>
           </a>
         </div>
       </div>
@@ -113,28 +275,138 @@
 
     <!-- Mobile Horizontal Cross-Page Bar (選單左右移動) -->
     <div class="md:hidden border-t border-slate-800/80 bg-slate-950/95 px-3 py-1.5 flex items-center gap-2 overflow-x-auto whitespace-nowrap no-scrollbar mobile-scroll-x" aria-label="切換專區滑動選單">
-      <a href="index.html" class="px-2.5 py-1 rounded-lg bg-slate-900 text-slate-300 border border-slate-700 text-xs font-semibold shrink-0">
-        🏛️ 總首頁
+      <a href="index.html" class="px-2.5 py-1 rounded-xl bg-slate-900 text-slate-300 border border-slate-700 text-sm font-semibold shrink-0">
+        <svg class="site-icon lucide lucide-landmark" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M10 18v-7" />
+  <path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" />
+  <path d="M14 18v-7" />
+  <path d="M18 18v-7" />
+  <path d="M3 22h18" />
+  <path d="M6 18v-7" />
+</svg>
+ 總首頁
       </a>
-      <span class="px-2.5 py-1 rounded-lg bg-amber-500 text-slate-950 text-xs font-bold shrink-0">
-        🐎 吳淡如 (本頁)
+      <span class="px-2.5 py-1 rounded-full bg-amber-500 text-slate-950 text-sm font-bold shrink-0">
+        <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 吳淡如 (本頁)
       </span>
-      <a href="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_07" class="px-2.5 py-1 rounded-lg bg-sky-500/20 text-sky-300 border border-sky-500/40 text-xs font-bold shrink-0">
-        🗡️ 陳侯勳專區 ↗
+      <a href="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_07" class="px-2.5 py-1 rounded-xl bg-sky-500/20 text-sky-300 border border-sky-500/40 text-sm font-bold shrink-0">
+        <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 陳侯勳專區 <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+
       </a>
-      <a href="second_house.html" class="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs font-bold shrink-0">
-        🏦 第二屋決策 ↗
+      <a href="second_house.html" class="px-2.5 py-1 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-sm font-bold shrink-0">
+        <svg class="site-icon lucide lucide-landmark" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M10 18v-7" />
+  <path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" />
+  <path d="M14 18v-7" />
+  <path d="M18 18v-7" />
+  <path d="M3 22h18" />
+  <path d="M6 18v-7" />
+</svg>
+ 第二屋決策 <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+
       </a>
     </div>
   </nav>
 
   <!-- Hero Header -->
-  <header class="relative bg-slate-900 text-white overflow-hidden border-b border-amber-500/30">
+  <header class="site-hero relative bg-slate-900 text-white overflow-hidden border-b border-amber-500/30">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         <div class="lg:col-span-7 space-y-4">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-semibold tracking-wide">
-            <span>🏠 35年海內外買賣逾百間實戰淬煉</span>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-sm font-semibold tracking-wide">
+            <span><svg class="site-icon lucide lucide-house" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+  <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+</svg>
+ 35年海內外買賣逾百間實戰淬煉</span>
             <span>•</span>
             <span>收錄 22 部個人與受訪頻道精華</span>
           </div>
@@ -146,11 +418,56 @@
           </p>
           <div class="flex flex-wrap items-center gap-3 pt-2">
             <a href="https://gemini.google.com/notebook/96e4c011-9966-4284-92d8-308cf1923120" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm transition shadow-lg shadow-amber-500/20">
-              <span>📓 開啟專屬 Gemini Notebook 知識庫 (23個來源)</span>
-              <span>↗</span>
+              <span><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 開啟專屬 Gemini Notebook 知識庫 (23個來源)</span>
+              <span><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</span>
             </a>
             <button id="copyAllLinksBtn" type="button" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-600 font-semibold text-sm transition">
-              <span>📋 一鍵複製全部 22 部 YouTube 連結</span>
+              <span><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 一鍵複製全部 22 部 YouTube 連結</span>
             </button>
           </div>
         </div>
@@ -160,15 +477,15 @@
             <div class="p-3.5 bg-slate-900/95 border-t border-slate-800 grid grid-cols-3 gap-2 text-center">
               <div>
                 <div class="text-amber-400 font-extrabold text-lg sm:text-xl">馬・雞・豬</div>
-                <div class="text-slate-400 text-xs">自住 / 收租 / 增值</div>
+                <div class="text-slate-400 text-sm">自住 / 收租 / 增值</div>
               </div>
               <div class="border-x border-slate-800">
                 <div class="text-emerald-400 font-extrabold text-lg sm:text-xl">≤ 35%~40%</div>
-                <div class="text-slate-400 text-xs">房貸佔收入安全紅線</div>
+                <div class="text-slate-400 text-sm">房貸佔收入安全紅線</div>
               </div>
               <div>
                 <div class="text-sky-400 font-extrabold text-lg sm:text-xl">22 部影片</div>
-                <div class="text-slate-400 text-xs">已同步上傳 Notebook</div>
+                <div class="text-slate-400 text-sm">已同步上傳 Notebook</div>
               </div>
             </div>
           </div>
@@ -178,41 +495,134 @@
   </header>
 
   <!-- Sticky Navigation Tabs -->
-  <nav class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
+  <nav id="siteTabs" class="site-tabbar z-40 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
       <!-- Mobile Dropdown Selector (支援下拉式選單) -->
       <div class="md:hidden mb-2">
         <div class="relative">
-          <select id="mobileTabSelect" class="w-full bg-slate-50 text-slate-800 border-2 border-amber-500/40 rounded-xl px-3.5 py-2.5 pr-8 text-xs font-extrabold focus:outline-none focus:ring-2 focus:ring-amber-500 appearance-none shadow-sm cursor-pointer" aria-label="切換章節下拉選單">
-            <option value="tab-core" selected>📍 1. 底層邏輯＆市場真相</option>
-            <option value="tab-animals">🐎 2. 「馬・雞・豬」動物理論</option>
-            <option value="tab-strategy">🧭 3. 買房四步法＆五力分析</option>
-            <option value="tab-pitfalls">⚖️ 4. 6大踩坑血淚史＆法律防身</option>
-            <option value="tab-calc">🧮 5. 互動試算＆五力評分器</option>
-            <option value="tab-videos">📺 6. 22部YouTube片單＆連結庫</option>
+          <select id="mobileTabSelect" class="w-full bg-slate-50 text-slate-800 border-2 border-amber-500/40 rounded-xl px-3.5 py-2.5 pr-8 text-sm font-extrabold focus:outline-none focus:ring-2 focus:ring-amber-500 appearance-none shadow-sm cursor-pointer" aria-label="切換章節下拉選單">
+            <option value="tab-core" selected><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 1. 底層邏輯＆市場真相</option>
+            <option value="tab-animals"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 2. 「馬・雞・豬」動物理論</option>
+            <option value="tab-strategy"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 3. 買房四步法＆五力分析</option>
+            <option value="tab-pitfalls"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 4. 6大踩坑血淚史＆法律防身</option>
+            <option value="tab-calc"><svg class="site-icon lucide lucide-chart-no-axes-combined" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 16v5" />
+  <path d="M16 14.639V21" />
+  <path d="M20 10.656V21" />
+  <path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15" />
+  <path d="M4 18.463V21" />
+  <path d="M8 14.656V21" />
+</svg>
+ 5. 互動試算＆五力評分器</option>
+            <option value="tab-videos"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 6. 22部YouTube片單＆連結庫</option>
           </select>
-          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-amber-600 text-xs">▼</div>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-amber-600 text-sm">▼</div>
         </div>
       </div>
 
       <!-- Horizontal Scrollable Tabs (選單左右移動) -->
       <div class="flex items-center gap-1.5 overflow-x-auto py-1 no-scrollbar mobile-scroll-x" id="mainTabNav">
-        <button type="button" data-tab="tab-core" class="tab-btn active whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:bg-slate-100 transition shrink-0">
+        <button type="button" data-tab="tab-core" class="tab-btn active whitespace-nowrap px-3.5 py-2 rounded-xl text-sm sm:text-sm font-bold text-slate-700 hover:bg-slate-800 transition shrink-0">
           1. 底層邏輯＆市場真相
         </button>
-        <button type="button" data-tab="tab-animals" class="tab-btn whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:bg-slate-100 transition shrink-0">
+        <button type="button" data-tab="tab-animals" class="tab-btn whitespace-nowrap px-3.5 py-2 rounded-xl text-sm sm:text-sm font-bold text-slate-700 hover:bg-slate-800 transition shrink-0">
           2. 「馬・雞・豬」理論
         </button>
-        <button type="button" data-tab="tab-strategy" class="tab-btn whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:bg-slate-100 transition shrink-0">
+        <button type="button" data-tab="tab-strategy" class="tab-btn whitespace-nowrap px-3.5 py-2 rounded-xl text-sm sm:text-sm font-bold text-slate-700 hover:bg-slate-800 transition shrink-0">
           3. 買房四步法＆五力分析
         </button>
-        <button type="button" data-tab="tab-pitfalls" class="tab-btn whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:bg-slate-100 transition shrink-0">
+        <button type="button" data-tab="tab-pitfalls" class="tab-btn whitespace-nowrap px-3.5 py-2 rounded-xl text-sm sm:text-sm font-bold text-slate-700 hover:bg-slate-800 transition shrink-0">
           4. 6大踩坑血淚史＆法律防身
         </button>
-        <button type="button" data-tab="tab-calc" class="tab-btn whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:bg-slate-100 transition shrink-0">
+        <button type="button" data-tab="tab-calc" class="tab-btn whitespace-nowrap px-3.5 py-2 rounded-xl text-sm sm:text-sm font-bold text-slate-700 hover:bg-slate-800 transition shrink-0">
           5. 互動試算＆五力評分器
         </button>
-        <button type="button" data-tab="tab-videos" class="tab-btn whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:bg-slate-100 transition shrink-0">
+        <button type="button" data-tab="tab-videos" class="tab-btn whitespace-nowrap px-3.5 py-2 rounded-xl text-sm sm:text-sm font-bold text-slate-700 hover:bg-slate-800 transition shrink-0">
           6. 22部YouTube片單＆連結庫
         </button>
       </div>
@@ -226,19 +636,34 @@
     <section id="tab-core" class="tab-panel space-y-8">
       <!-- Golden Quotes Banner -->
       <div class="bg-gradient-to-r from-blue-950 via-slate-900 to-blue-950 text-white rounded-2xl p-6 shadow-md border border-blue-800/40">
-        <h2 class="text-lg sm:text-xl font-bold text-amber-400 mb-3">💡 吳淡如房商第一性原理：為什麼「先財商、再房商」？</h2>
+        <h2 class="text-lg sm:text-xl font-bold text-amber-400 mb-3"><svg class="site-icon lucide lucide-lightbulb" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
+  <path d="M9 18h6" />
+  <path d="M10 22h4" />
+</svg>
+ 吳淡如房商第一性原理：為什麼「先財商、再房商」？</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-          <blockquote class="bg-white/5 p-4 rounded-xl border-l-4 border-amber-400">
+          <blockquote class="bg-white/5 p-4 rounded-2xl border-l-4 border-amber-400">
             <p class="text-slate-100 font-medium leading-relaxed">「『先買房或先存股』是一個偽命題！沒有錢的人不需要問，因為你只能先存股；有錢的人全都要了，他也不會問。」</p>
-            <footer class="mt-2 text-xs text-amber-300">— <a href="https://www.youtube.com/watch?v=rh05Ktd4QQA" target="_blank" rel="noopener noreferrer" class="underline hover:text-white">《查理的創業化合物》專訪</a></footer>
+            <footer class="mt-2 text-sm text-amber-300">— <a href="https://www.youtube.com/watch?v=rh05Ktd4QQA" target="_blank" rel="noopener noreferrer" class="underline hover:text-white">《查理的創業化合物》專訪</a></footer>
           </blockquote>
-          <blockquote class="bg-white/5 p-4 rounded-xl border-l-4 border-emerald-400">
+          <blockquote class="bg-white/5 p-4 rounded-2xl border-l-4 border-emerald-400">
             <p class="text-slate-100 font-medium leading-relaxed">「租房 30 年，你是在幫房東打工，老了還被房東挑；繳房貸 30 年雖然辛苦，但房子最後是你的，還可以以房養老、增貸週轉。」</p>
-            <footer class="mt-2 text-xs text-emerald-300">— <a href="https://www.youtube.com/watch?v=u2NjoCbWkas" target="_blank" rel="noopener noreferrer" class="underline hover:text-white">《房商必修課》公開試聽</a></footer>
+            <footer class="mt-2 text-sm text-emerald-300">— <a href="https://www.youtube.com/watch?v=u2NjoCbWkas" target="_blank" rel="noopener noreferrer" class="underline hover:text-white">《房商必修課》公開試聽</a></footer>
           </blockquote>
-          <blockquote class="bg-white/5 p-4 rounded-xl border-l-4 border-sky-400">
+          <blockquote class="bg-white/5 p-4 rounded-2xl border-l-4 border-sky-400">
             <p class="text-slate-100 font-medium leading-relaxed">「如果一個人把股票講得頭頭是道，背後卻沒有任何不動產，他就像浮萍在浪花裡飄。台灣歷代炒股天王能活下來的，最後都把錢放進房地產。」</p>
-            <footer class="mt-2 text-xs text-sky-300">— <a href="https://www.youtube.com/watch?v=sXRbD204Lf8" target="_blank" rel="noopener noreferrer" class="underline hover:text-white">《下一本讀什麼?》</a>＆<a href="https://www.youtube.com/watch?v=xfdGHyynILY" target="_blank" rel="noopener noreferrer" class="underline hover:text-white">陳重銘對談</a></footer>
+            <footer class="mt-2 text-sm text-sky-300">— <a href="https://www.youtube.com/watch?v=sXRbD204Lf8" target="_blank" rel="noopener noreferrer" class="underline hover:text-white">《下一本讀什麼?》</a>＆<a href="https://www.youtube.com/watch?v=xfdGHyynILY" target="_blank" rel="noopener noreferrer" class="underline hover:text-white">陳重銘對談</a></footer>
           </blockquote>
         </div>
       </div>
@@ -252,8 +677,23 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
             <div class="flex items-center justify-between">
-              <span class="px-2.5 py-1 rounded-md bg-rose-100 text-rose-800 text-xs font-bold">迷思 1：買不如租，租房更自由？</span>
-              <a href="https://www.youtube.com/watch?v=ywO7e105f-E" target="_blank" rel="noopener noreferrer" class="text-xs text-blue-700 hover:underline font-medium">來源：中廣美的世界 ↗</a>
+              <span class="px-2.5 py-1 rounded-full bg-rose-100 text-rose-800 text-sm font-bold">迷思 1：買不如租，租房更自由？</span>
+              <a href="https://www.youtube.com/watch?v=ywO7e105f-E" target="_blank" rel="noopener noreferrer" class="text-sm text-blue-700 hover:underline font-medium">來源：中廣美的世界 <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</a>
             </div>
             <h3 class="font-bold text-slate-900 text-base">真相：租金會隨通膨漲，且 55 歲後面臨殘酷「高齡租屋歧視」</h3>
             <p class="text-sm text-slate-600 leading-relaxed">
@@ -263,8 +703,23 @@
 
           <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
             <div class="flex items-center justify-between">
-              <span class="px-2.5 py-1 rounded-md bg-rose-100 text-rose-800 text-xs font-bold">迷思 2：少子化、人口老化會讓房價崩盤？</span>
-              <a href="https://www.youtube.com/watch?v=eFrMjLYJk-g" target="_blank" rel="noopener noreferrer" class="text-xs text-blue-700 hover:underline font-medium">來源：師父商學院 EP57 ↗</a>
+              <span class="px-2.5 py-1 rounded-full bg-rose-100 text-rose-800 text-sm font-bold">迷思 2：少子化、人口老化會讓房價崩盤？</span>
+              <a href="https://www.youtube.com/watch?v=eFrMjLYJk-g" target="_blank" rel="noopener noreferrer" class="text-sm text-blue-700 hover:underline font-medium">來源：師父商學院 EP57 <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</a>
             </div>
             <h3 class="font-bold text-slate-900 text-base">真相：少子化是 2060 年的慢變數，結果是「城鄉兩極分化」而非普跌</h3>
             <p class="text-sm text-slate-600 leading-relaxed">
@@ -274,8 +729,23 @@
 
           <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
             <div class="flex items-center justify-between">
-              <span class="px-2.5 py-1 rounded-md bg-rose-100 text-rose-800 text-xs font-bold">迷思 3：房價太高是炒作，等央行打房就會大跌？</span>
-              <a href="https://www.youtube.com/watch?v=3KoICga8lNc" target="_blank" rel="noopener noreferrer" class="text-xs text-blue-700 hover:underline font-medium">來源：未來三年房市分析 ↗</a>
+              <span class="px-2.5 py-1 rounded-full bg-rose-100 text-rose-800 text-sm font-bold">迷思 3：房價太高是炒作，等央行打房就會大跌？</span>
+              <a href="https://www.youtube.com/watch?v=3KoICga8lNc" target="_blank" rel="noopener noreferrer" class="text-sm text-blue-700 hover:underline font-medium">來源：未來三年房市分析 <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</a>
             </div>
             <h3 class="font-bold text-slate-900 text-base">真相：「量縮」不等於「價跌」，好房價格是由買得起的人決定的</h3>
             <p class="text-sm text-slate-600 leading-relaxed">
@@ -285,8 +755,23 @@
 
           <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
             <div class="flex items-center justify-between">
-              <span class="px-2.5 py-1 rounded-md bg-rose-100 text-rose-800 text-xs font-bold">迷思 4：房子是報酬率最高的暴利商品？</span>
-              <a href="https://www.youtube.com/watch?v=sXRbD204Lf8" target="_blank" rel="noopener noreferrer" class="text-xs text-blue-700 hover:underline font-medium">來源：下一本讀什麼 ↗</a>
+              <span class="px-2.5 py-1 rounded-full bg-rose-100 text-rose-800 text-sm font-bold">迷思 4：房子是報酬率最高的暴利商品？</span>
+              <a href="https://www.youtube.com/watch?v=sXRbD204Lf8" target="_blank" rel="noopener noreferrer" class="text-sm text-blue-700 hover:underline font-medium">來源：下一本讀什麼 <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</a>
             </div>
             <h3 class="font-bold text-slate-900 text-base">真相：房子年化報酬率僅 3%~6% 輸給 0050，但贏在「五倍槓桿與鎖住財富」</h3>
             <p class="text-sm text-slate-600 leading-relaxed">
@@ -300,24 +785,57 @@
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         <div class="lg:col-span-6 bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
           <div class="flex items-center justify-between mb-3">
-            <h3 class="font-bold text-slate-900 text-base">📊 2011–2024 台灣各區房價 vs. 0050 累積漲幅實證</h3>
-            <span class="text-xs text-slate-500">資料基準：吳淡如整理信義房價指數與 0050</span>
+            <h3 class="font-bold text-slate-900 text-base"><svg class="site-icon lucide lucide-chart-no-axes-combined" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 16v5" />
+  <path d="M16 14.639V21" />
+  <path d="M20 10.656V21" />
+  <path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15" />
+  <path d="M4 18.463V21" />
+  <path d="M8 14.656V21" />
+</svg>
+ 2011–2024 台灣各區房價 vs. 0050 累積漲幅實證</h3>
+            <span class="text-sm text-slate-400">資料基準：吳淡如整理信義房價指數與 0050</span>
           </div>
           <div class="relative h-72 w-full">
             <canvas id="returnComparisonChart"></canvas>
           </div>
-          <p class="mt-3 text-xs text-slate-500 leading-relaxed">
+          <p class="mt-3 text-sm text-slate-400 leading-relaxed">
             註：台北因基期已高，13 年總漲幅約 52%（年化約 3.3%）；桃園（+126%）、台中（+127%）、高雄（+104%）與新竹竹北則受惠於人口淨移入、高學歷高所得科技園區與軌道經濟而翻倍（<a href="https://www.youtube.com/watch?v=sXRbD204Lf8" target="_blank" rel="noopener noreferrer" class="text-blue-700 underline">來源影片</a>）。
           </p>
         </div>
 
         <div class="lg:col-span-6 bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
-          <h3 class="font-bold text-slate-900 text-base mb-3">🪜 吳淡如「財富階梯」資產配置建議表</h3>
-          <p class="text-xs text-slate-600 mb-3">
+          <h3 class="font-bold text-slate-900 text-base mb-3"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 吳淡如「財富階梯」資產配置建議表</h3>
+          <p class="text-sm text-slate-600 mb-3">
             「資產配置比例永遠跟你的總資產規模有關，沒有死板的股債比！」（<a href="https://www.youtube.com/watch?v=sXRbD204Lf8" target="_blank" rel="noopener noreferrer" class="text-blue-700 underline">瓦基專訪</a>、<a href="https://www.youtube.com/watch?v=CEGgwdjxnCc" target="_blank" rel="noopener noreferrer" class="text-blue-700 underline">地產秘密客專訪</a>）
           </p>
           <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse text-xs sm:text-sm">
+            <table class="w-full text-left border-collapse text-sm sm:text-sm">
               <thead>
                 <tr class="bg-slate-100 text-slate-800 border-b border-slate-200">
                   <th class="p-2.5 font-bold">資產階梯 / 條件</th>
@@ -326,19 +844,19 @@
               </thead>
               <tbody class="divide-y divide-slate-200 text-slate-700">
                 <tr>
-                  <td class="p-2.5 font-semibold text-slate-900">月薪 3～4 萬<br><span class="text-xs text-slate-500">存款 &lt; 100～300 萬</span></td>
+                  <td class="p-2.5 font-semibold text-slate-900">月薪 3～4 萬<br><span class="text-sm text-slate-400">存款 &lt; 100～300 萬</span></td>
                   <td class="p-2.5"><strong>100% 先修財商（存市值型 ETF）</strong>：連頭期款都不夠時別硬買房。實踐「先存後花」，每月雷打不動存下 20% 買 0050 或 S&amp;P500 零股累積第一桶金。</td>
                 </tr>
                 <tr>
-                  <td class="p-2.5 font-semibold text-slate-900">中產穩定期<br><span class="text-xs text-slate-500">已有頭期款或家庭雙薪</span></td>
+                  <td class="p-2.5 font-semibold text-slate-900">中產穩定期<br><span class="text-sm text-slate-400">已有頭期款或家庭雙薪</span></td>
                   <td class="p-2.5"><strong>先買第一匹「馬」（自住房）＋持續存股</strong>：房貸月付控制在收入 35%～40% 內，善用寬限期，省下的本金繼續定期定額投 ETF。</td>
                 </tr>
                 <tr>
-                  <td class="p-2.5 font-semibold text-slate-900">進階富裕層<br><span class="text-xs text-slate-500">淨資產 3,000 萬～1 億</span></td>
+                  <td class="p-2.5 font-semibold text-slate-900">進階富裕層<br><span class="text-sm text-slate-400">淨資產 3,000 萬～1 億</span></td>
                   <td class="p-2.5"><strong>「1 匹馬 ＋ 1 隻雞（或豬）」永保安康</strong>：房產約佔 30%～40%（3,000～4,000 萬），其餘 6,000 萬放被動 ETF。若無自住房外加 3,000 萬閒錢，絕不碰海外房產。</td>
                 </tr>
                 <tr>
-                  <td class="p-2.5 font-semibold text-slate-900">高淨值資產家<br><span class="text-xs text-slate-500">淨資產 2 億～10 億+</span></td>
+                  <td class="p-2.5 font-semibold text-slate-900">高淨值資產家<br><span class="text-sm text-slate-400">淨資產 2 億～10 億+</span></td>
                   <td class="p-2.5"><strong>2 億規模</strong>：約 1 億放不動產（3～4 間收租/增貸工具）、8,000 萬放 ETF、2,000 萬現金定存等黑天鵝。<br><strong>10 億規模</strong>：70%（7 億）放不動產守財、30%（3 億）放股票，千萬別買長天期美債當接盤俠。</td>
                 </tr>
               </tbody>
@@ -353,8 +871,53 @@
       <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
           <div>
-            <span class="text-xs font-bold uppercase tracking-wider text-amber-600">吳淡如獨創分類框架</span>
-            <h2 class="text-2xl font-extrabold text-slate-900 mt-1">🐎 🐔 🐷 「馬・雞・豬」買房動物理論</h2>
+            <span class="text-sm font-bold uppercase tracking-wider text-amber-600">吳淡如獨創分類框架</span>
+            <h2 class="text-2xl font-extrabold text-slate-900 mt-1"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 「馬・雞・豬」買房動物理論</h2>
             <p class="text-sm text-slate-600 mt-1">
               買房最大的悲劇就是「既要自住舒服（馬）、又要高租金投報（雞）、還要短期暴漲賺價差（豬）」，把三種動物融合成「四不像」！請點擊下方卡片切換詳情：
             </p>
@@ -363,46 +926,151 @@
 
         <!-- Interactive Animal Selector Buttons -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6" id="animalSelector">
-          <button type="button" data-animal="horse" class="animal-btn active text-left p-5 rounded-2xl border-2 border-slate-200 hover:border-amber-500 transition">
+          <button type="button" data-animal="horse" class="animal-btn active text-left p-5 rounded-xl border-2 border-slate-200 hover:border-amber-500 transition">
             <div class="flex items-center justify-between mb-2">
-              <span class="text-3xl">🐎</span>
+              <span class="text-3xl"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</span>
               <span class="px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-bold">第一間必備：自住房</span>
             </div>
             <div class="font-extrabold text-lg text-slate-900">馬（自住坐騎）</div>
-            <p class="text-xs text-slate-600 mt-1">「不完美主義，騎驢找馬！先有馬騎，才能以馬換馬，別等真命天子般的汗血寶馬。」</p>
+            <p class="text-sm text-slate-600 mt-1">「不完美主義，騎驢找馬！先有馬騎，才能以馬換馬，別等真命天子般的汗血寶馬。」</p>
           </button>
 
-          <button type="button" data-animal="chicken" class="animal-btn text-left p-5 rounded-2xl border-2 border-slate-200 hover:border-amber-500 transition">
+          <button type="button" data-animal="chicken" class="animal-btn text-left p-5 rounded-xl border-2 border-slate-200 hover:border-amber-500 transition">
             <div class="flex items-center justify-between mb-2">
-              <span class="text-3xl">🐔</span>
+              <span class="text-3xl"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</span>
               <span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-900 text-xs font-bold">第二間首選：現金流房</span>
             </div>
             <div class="font-extrabold text-lg text-slate-900">雞（生蛋母雞）</div>
-            <p class="text-xs text-slate-600 mt-1">「看重租金投報率！用 72 法則讓蛋生雞、雞生蛋，養雞要養一群，最後變成戰鬥機。」</p>
+            <p class="text-sm text-slate-600 mt-1">「看重租金投報率！用 72 法則讓蛋生雞、雞生蛋，養雞要養一群，最後變成戰鬥機。」</p>
           </button>
 
-          <button type="button" data-animal="pig" class="animal-btn text-left p-5 rounded-2xl border-2 border-slate-200 hover:border-amber-500 transition">
+          <button type="button" data-animal="pig" class="animal-btn text-left p-5 rounded-xl border-2 border-slate-200 hover:border-amber-500 transition">
             <div class="flex items-center justify-between mb-2">
-              <span class="text-3xl">🐷</span>
-              <span class="px-2.5 py-1 rounded-full bg-purple-100 text-purple-900 text-xs font-bold">第三間/海外：資本利得房</span>
+              <span class="text-3xl"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</span>
+              <span class="px-2.5 py-1 rounded-full bg-slate-900 text-purple-300 text-xs font-bold">第三間/海外：資本利得房</span>
             </div>
             <div class="font-extrabold text-lg text-slate-900">豬（養肥賺價差）</div>
-            <p class="text-xs text-slate-600 mt-1">「跟著人均 GDP 3,000 到 10,000 美元的高成長期養肥宰殺，賺取數倍資本利得。」</p>
+            <p class="text-sm text-slate-600 mt-1">「跟著人均 GDP 3,000 到 10,000 美元的高成長期養肥宰殺，賺取數倍資本利得。」</p>
           </button>
         </div>
 
         <!-- Animal Detail Panels -->
-        <div id="animal-horse" class="animal-detail bg-amber-50/60 rounded-2xl p-6 border border-amber-200 space-y-4">
+        <div id="animal-horse" class="animal-detail bg-slate-900 rounded-2xl p-6 border border-amber-200 space-y-4">
           <div class="flex flex-wrap items-center justify-between gap-2 border-b border-amber-200 pb-3">
-            <h3 class="text-xl font-extrabold text-slate-900">🐎 馬（自住房）：安身立命、進可攻退可守的人生底牌</h3>
-            <div class="flex gap-2 text-xs">
-              <a href="https://www.youtube.com/watch?v=ywO7e105f-E" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded bg-white border border-amber-300 text-amber-900 font-semibold hover:bg-amber-100">美的世界專訪 ↗</a>
-              <a href="https://www.youtube.com/watch?v=eFrMjLYJk-g" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded bg-white border border-amber-300 text-amber-900 font-semibold hover:bg-amber-100">師父商學院 EP57 ↗</a>
+            <h3 class="text-xl font-extrabold text-slate-900"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 馬（自住房）：安身立命、進可攻退可守的人生底牌</h3>
+            <div class="flex gap-2 text-sm">
+              <a href="https://www.youtube.com/watch?v=ywO7e105f-E" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-xl bg-white border border-amber-300 text-amber-900 font-semibold hover:bg-amber-100">美的世界專訪 <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</a>
+              <a href="https://www.youtube.com/watch?v=eFrMjLYJk-g" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-xl bg-white border border-amber-300 text-amber-900 font-semibold hover:bg-amber-100">師父商學院 EP57 <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</a>
             </div>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
             <div class="space-y-3">
-              <h4 class="font-bold text-amber-900 text-base">✅ 選「馬」四大黃金準則</h4>
+              <h4 class="font-bold text-amber-900 text-base"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 選「馬」四大黃金準則</h4>
               <ul class="space-y-2 text-slate-700 list-disc pl-5">
                 <li><strong>不完美主義（騎驢找馬）</strong>：借鏡哲學家吉拉斯《不完美社會》，買房千萬別像等真命天子一樣死等「汗血寶馬」。錢不夠先買小馬、老馬、驢子或騾子，只要不是病騾，騎上去就能帶你走遠路，先上車才能享受經濟成長並「以馬換馬」。</li>
                 <li><strong>通勤時間鐵律（≤ 1小時）</strong>：軌道經濟（捷運）是首選，距離工作地點車程絕對不要超過 1 小時（如東京友人買在偏遠青梅市通勤 1 小時，房價從 4,000 萬跌剩不到 1,000 萬；或住新莊卻送小孩去林口唸書每天 6 點起床痛苦萬分）。</li>
@@ -411,11 +1079,26 @@
               </ul>
             </div>
             <div class="space-y-3">
-              <h4 class="font-bold text-rose-900 text-base">🚫 養「馬」最大禁忌：千萬別養第二匹馬（度假屋）！</h4>
-              <div class="bg-white p-4 rounded-xl border border-amber-200 space-y-2 text-slate-700">
+              <h4 class="font-bold text-rose-900 text-base"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 養「馬」最大禁忌：千萬別養第二匹馬（度假屋）！</h4>
+              <div class="bg-white p-4 rounded-2xl border border-amber-200 space-y-2 text-slate-700">
                 <p><strong>1. 為什麼不能買海邊/溫泉度假別墅？</strong></p>
                 <p>吳淡如引用名言：<em>「如果你買了一間度假屋，你人生最快樂的只有兩天：買它的那天，跟賣掉它的那天！」</em></p>
-                <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm">
+                <ul class="list-disc pl-5 space-y-1.5 text-sm sm:text-sm">
                   <li><strong>案例 A（日本熱海溫泉屋）</strong>：日本總經理友人退休買熱海溫泉宅，結果每年光「溫泉源泉費」就要繳 80 萬日圓！311 地震後輕井澤、日光、那須高原一堆帶溫泉權的度假別墅跌到 100～200 萬都沒人要，變成每年狂吸維護費的「負資產」。</li>
                   <li><strong>案例 B（白沙灣別墅 / 北投泳池別墅）</strong>：大學教授買白沙灣別墅最後養蚊子求學生去住；陳重銘原本想壓 1.5 億買北士科三層樓泳池別墅，被吳淡如一句「別買遙遠的馬，去參加五星級飯店游泳俱樂部划算太多」當場點醒（<a href="https://www.youtube.com/watch?v=xfdGHyynILY" target="_blank" rel="noopener noreferrer" class="text-blue-700 underline">陳重銘對談</a>）。</li>
                   <li><strong>案例 C（想自住兼做 Airbnb）</strong>：很多人幻想「暑假去日本自住，平時租人或做民宿」，難道暑假要把房客趕走？還不如直接去住頂級飯店「虹夕諾雅（Hoshinoya）」，省錢又尊榮！</li>
@@ -425,17 +1108,77 @@
           </div>
         </div>
 
-        <div id="animal-chicken" class="animal-detail hidden bg-emerald-50/60 rounded-2xl p-6 border border-emerald-200 space-y-4">
+        <div id="animal-chicken" class="animal-detail hidden bg-slate-900 rounded-2xl p-6 border border-emerald-200 space-y-4">
           <div class="flex flex-wrap items-center justify-between gap-2 border-b border-emerald-200 pb-3">
-            <h3 class="text-xl font-extrabold text-slate-900">🐔 雞（現金流收租房）：用 72 法則讓「蛋生雞、雞生蛋」</h3>
-            <div class="flex gap-2 text-xs">
-              <a href="https://www.youtube.com/watch?v=YZrA8pbCTQ4" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded bg-white border border-emerald-300 text-emerald-900 font-semibold hover:bg-emerald-100">查理專訪：日本淺草店面 ↗</a>
-              <a href="https://www.youtube.com/watch?v=rh05Ktd4QQA" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded bg-white border border-emerald-300 text-emerald-900 font-semibold hover:bg-emerald-100">查理專訪：養雞經濟學 ↗</a>
+            <h3 class="text-xl font-extrabold text-slate-900"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 雞（現金流收租房）：用 72 法則讓「蛋生雞、雞生蛋」</h3>
+            <div class="flex gap-2 text-sm">
+              <a href="https://www.youtube.com/watch?v=YZrA8pbCTQ4" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-xl bg-white border border-emerald-300 text-emerald-900 font-semibold hover:bg-emerald-100">查理專訪：日本淺草店面 <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</a>
+              <a href="https://www.youtube.com/watch?v=rh05Ktd4QQA" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-xl bg-white border border-emerald-300 text-emerald-900 font-semibold hover:bg-emerald-100">查理專訪：養雞經濟學 <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</a>
             </div>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
             <div class="space-y-3">
-              <h4 class="font-bold text-emerald-900 text-base">✅ 選「雞」核心公式與操作心法</h4>
+              <h4 class="font-bold text-emerald-900 text-base"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 選「雞」核心公式與操作心法</h4>
               <ul class="space-y-2 text-slate-700 list-disc pl-5">
                 <li><strong>好雞定義：租金投報率 ＞ 借貸利率 + 稅費維護成本</strong>：雞本身體積不一定會長大（房價不一定要暴漲），但必須源源不絕生出金雞蛋（穩定租金）。</li>
                 <li><strong>72 法則滾複利（「養雞要養一群，變戰鬥機」）</strong>：吳淡如在 2008～2010 年以公司名義赴日投資，當時日本借貸利率僅 <strong>1%</strong>（以波克夏股票等資產質押，一筆錢賺兩次），買入投報率 <strong>8%～12%</strong> 的商用物件，淨利差約 7%。依「72 法則」（72 ÷ 7 ≈ 10 年），她在日本收到的租金從不拿出來花，而是留在日本資產管理公司繼續買下一間店面，到 2018 年所有日本房產已全部零成本回本！</li>
@@ -443,8 +1186,23 @@
               </ul>
             </div>
             <div class="space-y-3">
-              <h4 class="font-bold text-emerald-900 text-base">🏆 吳淡如海內外「養雞」實戰案例</h4>
-              <div class="bg-white p-4 rounded-xl border border-emerald-200 space-y-2 text-slate-700 text-xs sm:text-sm">
+              <h4 class="font-bold text-emerald-900 text-base"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 吳淡如海內外「養雞」實戰案例</h4>
+              <div class="bg-white p-4 rounded-2xl border border-emerald-200 space-y-2 text-slate-700 text-sm sm:text-sm">
                 <p><strong>1. 東京淺草（Asakusa）法拍獨棟居酒屋店面：</strong><br>
                 311 大地震前後，駐日記者紛紛拋售日本房產並撰文嘲笑她是「傻瓜女作家」。她卻趁荒涼時，以 <strong>2,600 萬日圓（不到台幣 800 萬，原屋主曾抵押借款 1.2 億日圓）</strong>兩折價買下淺草商店街一整棟小樓，一樓租給居酒屋每月收租 20 萬日圓（投報率逾 8%），穩定收租十幾年至今。</p>
                 <p><strong>2. 新宿全家便利商店 ＆ Lawson 高速公路休息站：</strong><br>
@@ -456,17 +1214,77 @@
           </div>
         </div>
 
-        <div id="animal-pig" class="animal-detail hidden bg-purple-50/60 rounded-2xl p-6 border border-purple-200 space-y-4">
+        <div id="animal-pig" class="animal-detail hidden bg-slate-900 rounded-2xl p-6 border border-purple-200 space-y-4">
           <div class="flex flex-wrap items-center justify-between gap-2 border-b border-purple-200 pb-3">
-            <h3 class="text-xl font-extrabold text-slate-900">🐷 豬（資本利得房）：用宏觀經濟學捕捉「神豬」翻倍潮</h3>
-            <div class="flex gap-2 text-xs">
-              <a href="https://www.youtube.com/watch?v=sXRbD204Lf8" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded bg-white border border-purple-300 text-purple-900 font-semibold hover:bg-purple-100">下一本讀什麼：GDP養豬法 ↗</a>
-              <a href="https://www.youtube.com/watch?v=RXGYgjFNKoY" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded bg-white border border-purple-300 text-purple-900 font-semibold hover:bg-purple-100">小青書 EP128 ↗</a>
+            <h3 class="text-xl font-extrabold text-slate-900"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 豬（資本利得房）：用宏觀經濟學捕捉「神豬」翻倍潮</h3>
+            <div class="flex gap-2 text-sm">
+              <a href="https://www.youtube.com/watch?v=sXRbD204Lf8" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-xl bg-white border border-purple-300 text-purple-900 font-semibold hover:bg-purple-100">下一本讀什麼：GDP養豬法 <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</a>
+              <a href="https://www.youtube.com/watch?v=RXGYgjFNKoY" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-xl bg-white border border-purple-300 text-purple-900 font-semibold hover:bg-purple-100">小青書 EP128 <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</a>
             </div>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
             <div class="space-y-3">
-              <h4 class="font-bold text-purple-900 text-base">✅ 選「豬」宏觀經濟學公式</h4>
+              <h4 class="font-bold text-purple-900 text-base"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 選「豬」宏觀經濟學公式</h4>
               <ul class="space-y-2 text-slate-700 list-disc pl-5">
                 <li><strong>人均 GDP 3,000 → 10,000 美元黃金成長期</strong>：當一個國家人均 GDP 突破 3,000 美元，且每年以 <strong>5%～8% 以上</strong>速度持續往上爬向 1 萬美元時，人民收入增加、通膨高、東方家庭文化渴望買房儲蓄抗通膨，此時房價漲幅最猛烈！</li>
                 <li><strong>共產/發展中國家「先商後政」雙城定律</strong>：觀察中國大陸發展史，商業中心（上海）會先大漲 3 倍，但政治首都（北京）絕不會允許自己落後南方商業城，政府重金基建後必定補漲並超車。</li>
@@ -474,8 +1292,23 @@
               </ul>
             </div>
             <div class="space-y-3">
-              <h4 class="font-bold text-purple-900 text-base">🏆 越南胡志明市 ➔ 河內「神豬」實戰＆國家篩選</h4>
-              <div class="bg-white p-4 rounded-xl border border-purple-200 space-y-2 text-slate-700 text-xs sm:text-sm">
+              <h4 class="font-bold text-purple-900 text-base"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 越南胡志明市 ➔ 河內「神豬」實戰＆國家篩選</h4>
+              <div class="bg-white p-4 rounded-2xl border border-purple-200 space-y-2 text-slate-700 text-sm sm:text-sm">
                 <p><strong>1. 越南 20 間房獲利 1.5～3 倍實錄（2016–2025）：</strong><br>
                 2015 年底越南開放外國人與公司合法持有房產、且 2016 年人均 GDP 剛破 3,000 美元時，吳淡如第一時間進場胡志明市。當胡志明市漲到每平米近萬美元時，她發現首都<strong>河內</strong>房價竟不到胡志明市的 1/4（2017–2018 年河內電梯大樓每平米僅 <strong>1,100 美元，折合台幣一坪約 10 萬元</strong>），且正在蓋地鐵！她果斷賣掉胡志明市 2 間房，轉進河內買下 10 幾間（總計持有 20 間）。疫後河內新案飆上每平米 5,000～5,500 美元，她在 2024～2025 年出脫 80%（16～17 間），<strong>每間獲利 1.5 倍至 3 倍以上（年化報酬率高達 12.5%）</strong>。</p>
                 <p><strong>2. 為什麼絕對不碰泰國、柬埔寨？</strong><br>
@@ -487,13 +1320,58 @@
 
         <!-- Comparison Matrix Table -->
         <div class="mt-6 overflow-x-auto">
-          <table class="w-full text-left border-collapse text-xs sm:text-sm border border-slate-200 rounded-xl overflow-hidden">
+          <table class="w-full text-left border-collapse text-sm sm:text-sm border border-slate-200 rounded-2xl overflow-hidden">
             <thead>
               <tr class="bg-slate-900 text-white">
                 <th class="p-3 font-bold">比較維度</th>
-                <th class="p-3 font-bold text-amber-300">🐎 馬（自住房）</th>
-                <th class="p-3 font-bold text-emerald-300">🐔 雞（現金流房）</th>
-                <th class="p-3 font-bold text-purple-300">🐷 豬（資本利得房）</th>
+                <th class="p-3 font-bold text-amber-300"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 馬（自住房）</th>
+                <th class="p-3 font-bold text-emerald-300"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 雞（現金流房）</th>
+                <th class="p-3 font-bold text-purple-300"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 豬（資本利得房）</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-200 bg-white text-slate-700">
@@ -533,20 +1411,50 @@
       <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
         <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
           <div>
-            <span class="text-xs font-bold uppercase tracking-wider text-blue-800">《房商必修課》實戰SOP</span>
-            <h2 class="text-2xl font-extrabold text-slate-900 mt-1">🧭 買房基本功「四步法」：找資金 ➔ 選地點 ➔ 開槓桿 ➔ 挑時機談判</h2>
+            <span class="text-sm font-bold uppercase tracking-wider text-blue-800">《房商必修課》實戰SOP</span>
+            <h2 class="text-2xl font-extrabold text-slate-900 mt-1"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 買房基本功「四步法」：找資金 ➔ 選地點 ➔ 開槓桿 ➔ 挑時機談判</h2>
           </div>
-          <a href="https://www.youtube.com/watch?v=2Pc2H806JY4" target="_blank" rel="noopener noreferrer" class="text-xs px-3 py-1.5 rounded-lg bg-blue-50 text-blue-800 font-bold hover:bg-blue-100">觀看《吳淡如Ｘ查理》四步法解析 ↗</a>
+          <a href="https://www.youtube.com/watch?v=2Pc2H806JY4" target="_blank" rel="noopener noreferrer" class="text-sm px-3 py-1.5 rounded-xl bg-blue-50 text-blue-800 font-bold hover:bg-blue-100">觀看《吳淡如Ｘ查理》四步法解析 <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</a>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- Step 1 -->
           <div class="rounded-2xl border border-slate-200 p-5 bg-slate-50/50 space-y-3">
             <div class="flex items-center gap-3">
-              <span class="w-8 h-8 rounded-xl bg-blue-900 text-white font-extrabold flex items-center justify-center text-sm">01</span>
+              <span class="w-8 h-8 rounded-full bg-blue-900 text-white font-extrabold flex items-center justify-center text-sm">01</span>
               <h3 class="text-lg font-extrabold text-slate-900">找資金：頭期款準備、父母贊助與「先買給女兒」</h3>
             </div>
-            <ul class="space-y-2 text-xs sm:text-sm text-slate-700 list-disc pl-5 leading-relaxed">
+            <ul class="space-y-2 text-sm sm:text-sm text-slate-700 list-disc pl-5 leading-relaxed">
               <li><strong>限貸令下自備款抓 2.5～3 成</strong>：切勿聽信代銷「只要 2 成就能買」，央行管制下若核貸成數僅 7 成或 75 成，資金不足將面臨違約沒收頭期款的慘劇（<a href="https://www.youtube.com/watch?v=ywO7e105f-E" target="_blank" rel="noopener noreferrer" class="text-blue-700 underline">中廣專訪</a>）。</li>
               <li><strong>父母贊助頭期款的兩大鐵律</strong>：年輕人靠死薪水就像騎腳踏車追高鐵，<strong>若父母願意幫忙出頭期款，千萬別拒絕！</strong>但前提是：<strong>年輕人自己的薪水必須付得起寬限期利息（且不超過月收入 35%～40%）</strong>；若父母只付頭期款、而你連每月利息都付不起，千萬別接，否則會逼死自己（<a href="https://www.youtube.com/watch?v=YF9_Rr644Ec" target="_blank" rel="noopener noreferrer" class="text-blue-700 underline">房貸比例短片</a>）。</li>
               <li><strong>姑姑幫姪女買房的高段「ETF 滾複利法」</strong>：吳淡如幫月薪 3 萬的罕病姪女買每坪 120 萬、總價 2,500 萬預售屋，請弟弟出頭期款，她自己贊助 10%（250 萬）。但她不直接給現金，而是<strong>每月分批幫姪女買 5 萬元被動市值型 ETF（0050 / 009816）</strong>，利用預售屋 5 年興建期將 250 萬滾大成 500～750 萬來付交屋款（<a href="https://www.youtube.com/watch?v=sXRbD204Lf8" target="_blank" rel="noopener noreferrer" class="text-blue-700 underline">下一本讀什麼</a>）。</li>
@@ -557,10 +1465,10 @@
           <!-- Step 2 -->
           <div class="rounded-2xl border border-slate-200 p-5 bg-slate-50/50 space-y-3">
             <div class="flex items-center gap-3">
-              <span class="w-8 h-8 rounded-xl bg-blue-900 text-white font-extrabold flex items-center justify-center text-sm">02</span>
+              <span class="w-8 h-8 rounded-full bg-blue-900 text-white font-extrabold flex items-center justify-center text-sm">02</span>
               <h3 class="text-lg font-extrabold text-slate-900">選地點：軌道經濟、高薪聚落與「少裝潢買好位置」</h3>
             </div>
-            <ul class="space-y-2 text-xs sm:text-sm text-slate-700 list-disc pl-5 leading-relaxed">
+            <ul class="space-y-2 text-sm sm:text-sm text-slate-700 list-disc pl-5 leading-relaxed">
               <li><strong>三鐵共構裡只有「捷運」最重要</strong>：閉著眼睛挑未來會增值的區域，第一就是捷運沿線。少子化時代學區房已不再重要（學校太多），軌道交通與生活機能才是剛需。</li>
               <li><strong>跟著「高學歷、高所得就業區」買</strong>：如新竹竹北（台積電與竹科）、台北北士科（輝達進駐帶動北投/士林逆勢成長）、台北文山區（離東區 12 分鐘、人口正成長）、台中北屯機捷特區、高雄亞洲新灣區（<a href="https://www.youtube.com/watch?v=-JhT5grglMY" target="_blank" rel="noopener noreferrer" class="text-blue-700 underline">買房時機分析</a>）。<strong>故事啟發：</strong>台大醫院醫生比榮總醫生有錢，因為榮總有宿舍讓人安逸不買房，台大沒宿舍逼著醫生咬牙買在台大/仁愛路精華區，30 年後房產破億！</li>
               <li><strong>從眾要從「有錢人」</strong>：買不起帝寶（250 萬/坪），就買在帝寶旁邊一坪 40 萬的老公寓，同樣享受頂級地段與治安。</li>
@@ -571,10 +1479,10 @@
           <!-- Step 3 -->
           <div class="rounded-2xl border border-slate-200 p-5 bg-slate-50/50 space-y-3">
             <div class="flex items-center gap-3">
-              <span class="w-8 h-8 rounded-xl bg-blue-900 text-white font-extrabold flex items-center justify-center text-sm">03</span>
+              <span class="w-8 h-8 rounded-full bg-blue-900 text-white font-extrabold flex items-center justify-center text-sm">03</span>
               <h3 class="text-lg font-extrabold text-slate-900">開槓桿：40年房貸抗通膨 ＆ 25年「無限寬限之術」</h3>
             </div>
-            <ul class="space-y-2 text-xs sm:text-sm text-slate-700 list-disc pl-5 leading-relaxed">
+            <ul class="space-y-2 text-sm sm:text-sm text-slate-700 list-disc pl-5 leading-relaxed">
               <li><strong>對自己催眠：「我不怕債務，因為房子是我的資產！」</strong>公務員或鄉下孩子最常犯的錯就是「存夠全款才買房」或「一有錢就急著還清房貸本金」。房貸利率僅約 2%～2.5%，而台灣實質通膨率高達 3%～6%（經濟成長 9.45% 下貨幣持續貶值），借低利房貸等於讓通膨幫你賺錢！</li>
               <li><strong>30 年 vs. 40 年房貸怎麼選？</strong>只要兩者利率沒有相差太多，<strong>貸款年限越長越好（優先選 40 年），寬限期也越長越好</strong>，因為 40 年後的 2,000 萬購買力遠低於現在的 2,000 萬（<a href="https://www.youtube.com/watch?v=eFrMjLYJk-g" target="_blank" rel="noopener noreferrer" class="text-blue-700 underline">師父商學院 EP57</a>）。</li>
               <li><strong>吳淡如木柵自住房 25 年「從不繳本金」實戰</strong>：她 30 多歲在木柵買下 56 坪、總價 1,400 萬房子（貸 1,200 萬），使用 5 年寬限期只繳利息（月付不到 2.4 萬）；5 年期滿銀行要求還本金時，她就<strong>換一家銀行轉貸</strong>！因房價上漲，新銀行不僅再給 5 年寬限期，還讓她增貸到 1,400 萬、甚至後來貸出 2,000 多萬（「明明只付 1,400 萬，還從房子搬出 2,000 多萬資金」），並將省下的本金拿去定期定額買年化 10% 的 ETF（<a href="https://www.youtube.com/watch?v=YZrA8pbCTQ4" target="_blank" rel="noopener noreferrer" class="text-blue-700 underline">查理專訪</a>）。</li>
@@ -584,10 +1492,10 @@
           <!-- Step 4 -->
           <div class="rounded-2xl border border-slate-200 p-5 bg-slate-50/50 space-y-3">
             <div class="flex items-center gap-3">
-              <span class="w-8 h-8 rounded-xl bg-blue-900 text-white font-extrabold flex items-center justify-center text-sm">04</span>
+              <span class="w-8 h-8 rounded-full bg-blue-900 text-white font-extrabold flex items-center justify-center text-sm">04</span>
               <h3 class="text-lg font-extrabold text-slate-900">挑時機＆談判殺價：預售雞首策略 vs. 雙斡旋破錨定</h3>
             </div>
-            <ul class="space-y-2 text-xs sm:text-sm text-slate-700 list-disc pl-5 leading-relaxed">
+            <ul class="space-y-2 text-sm sm:text-sm text-slate-700 list-disc pl-5 leading-relaxed">
               <li><strong>預售屋策略：「看新不看舊、寧為雞首不為牛後」</strong>：現在品牌建商預售屋多為「不二價」（連吳淡如本人去買都沒折扣），且採香港模式分批調漲（賣過 7 成後單價拉高），因此若買預售屋要買「剛開案第一批（雞首）」。切忌買工期長達 8 年的中小建商案，以免遇到土方之亂與缺工淪為爛尾樓（<a href="https://www.youtube.com/watch?v=3KoICga8lNc" target="_blank" rel="noopener noreferrer" class="text-blue-700 underline">未來三年房市</a>、<a href="https://www.youtube.com/watch?v=-JhT5grglMY" target="_blank" rel="noopener noreferrer" class="text-blue-700 underline">最佳買房時機</a>）。</li>
               <li><strong>中古屋黃金殺價期：央行打房冷清期 ＆ 每年年底</strong>：限貸令下六都中古屋議價空間擴大至 15% 以上；尤其<strong>每年年底</strong>銀行放款額度用罄、買方最少，加上小老闆屋主急需現金發年終，是殺價最佳時機。</li>
               <li><strong>千萬別砍房仲 1% 服務費</strong>：與其砍買方仲介 0.4% 佣金讓仲介沒動力，不如大方給足 1% 甚至成交後另包紅包，請仲介幫你向高齡或急售屋主砍 10%～15%！</li>
@@ -607,44 +1515,74 @@
       <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
         <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
           <div>
-            <span class="text-xs font-bold uppercase tracking-wider text-emerald-700">20多年淬煉黃金判斷標準</span>
-            <h2 class="text-2xl font-extrabold text-slate-900 mt-1">⭐ 投資房「五力分析」模型（避開鐵公雞與瘦豬）</h2>
+            <span class="text-sm font-bold uppercase tracking-wider text-emerald-700">20多年淬煉黃金判斷標準</span>
+            <h2 class="text-2xl font-extrabold text-slate-900 mt-1"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 投資房「五力分析」模型（避開鐵公雞與瘦豬）</h2>
           </div>
-          <a href="https://www.youtube.com/watch?v=sXRbD204Lf8" target="_blank" rel="noopener noreferrer" class="text-xs px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-800 font-bold hover:bg-emerald-100">觀看瓦基專訪：五力分析詳解 ↗</a>
+          <a href="https://www.youtube.com/watch?v=sXRbD204Lf8" target="_blank" rel="noopener noreferrer" class="text-sm px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-800 font-bold hover:bg-emerald-100">觀看瓦基專訪：五力分析詳解 <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</a>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-            <div class="text-xs font-bold text-blue-800 bg-blue-100 inline-block px-2 py-0.5 rounded">第 1 力</div>
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+            <div class="text-sm font-bold text-blue-800 bg-blue-100 inline-block px-2 py-0.5 rounded-2xl">第 1 力</div>
             <h3 class="font-extrabold text-slate-900 text-base">1. 需求力</h3>
-            <p class="text-xs text-slate-600 leading-relaxed">
+            <p class="text-sm text-slate-600 leading-relaxed">
               人口是否持續淨流入？是否有高薪就業機會（如科學園區、輝達、台積電已動工廠區）與捷運軌道支撐？連 Uber Eats 都不送或純靠觀光的地方千萬別買。
             </p>
           </div>
-          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-            <div class="text-xs font-bold text-blue-800 bg-blue-100 inline-block px-2 py-0.5 rounded">第 2 力</div>
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+            <div class="text-sm font-bold text-blue-800 bg-blue-100 inline-block px-2 py-0.5 rounded-2xl">第 2 力</div>
             <h3 class="font-extrabold text-slate-900 text-base">2. 政策力</h3>
-            <p class="text-xs text-slate-600 leading-relaxed">
+            <p class="text-sm text-slate-600 leading-relaxed">
               台灣央行打房是全面性的，自住反而可趁打房好議價；但<strong>海外房產最怕當地政策突變</strong>（如中國硬著陸、越南/日本收緊外國人法規、日本民泊法限制大樓民宿）。
             </p>
           </div>
-          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-            <div class="text-xs font-bold text-blue-800 bg-blue-100 inline-block px-2 py-0.5 rounded">第 3 力</div>
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+            <div class="text-sm font-bold text-blue-800 bg-blue-100 inline-block px-2 py-0.5 rounded-2xl">第 3 力</div>
             <h3 class="font-extrabold text-slate-900 text-base">3. 稅法力</h3>
-            <p class="text-xs text-slate-600 leading-relaxed">
+            <p class="text-sm text-slate-600 leading-relaxed">
               算清持有稅與交易稅！台灣房地合一稅 5 年內賣形同「漲價歸公」；美國房產稅每年 1%～3% 極高（所以羅伯特清崎才說自住房是負債）；杜拜則靠 0.25% 超低稅與無遺產稅吸引全球富豪（因土地歸酋長所有）。
             </p>
           </div>
-          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-            <div class="text-xs font-bold text-blue-800 bg-blue-100 inline-block px-2 py-0.5 rounded">第 4 力</div>
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+            <div class="text-sm font-bold text-blue-800 bg-blue-100 inline-block px-2 py-0.5 rounded-2xl">第 4 力</div>
             <h3 class="font-extrabold text-slate-900 text-base">4. 融資力</h3>
-            <p class="text-xs text-slate-600 leading-relaxed">
+            <p class="text-sm text-slate-600 leading-relaxed">
               能否借到低利資金、拉長年限（30/40年）與使用寬限期？在台北買房最好貸款與增貸；而海外置產外國人幾乎無法在當地銀行貸款，必須全款或用台灣資產質押。
             </p>
           </div>
-          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-            <div class="text-xs font-bold text-blue-800 bg-blue-100 inline-block px-2 py-0.5 rounded">第 5 力</div>
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+            <div class="text-sm font-bold text-blue-800 bg-blue-100 inline-block px-2 py-0.5 rounded-2xl">第 5 力</div>
             <h3 class="font-extrabold text-slate-900 text-base">5. 脫手力</h3>
-            <p class="text-xs text-slate-600 leading-relaxed">
+            <p class="text-sm text-slate-600 leading-relaxed">
               買房前先想「下一棒賣給誰」？例如馬來西亞買房不能買錯到印度/回教區（因為只有華人愛買房接手）；郊區豪華大別墅、工業住宅、土地持分極低的老舊住商大樓皆極難脫手。
             </p>
           </div>
@@ -657,83 +1595,278 @@
       <!-- 6 Pitfalls -->
       <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
         <div class="mb-6">
-          <span class="text-xs font-bold uppercase tracking-wider text-rose-700">吳淡如 80/20 法則的反省智慧</span>
-          <h2 class="text-2xl font-extrabold text-slate-900 mt-1">⚠️ 吳淡如親身踩坑血淚史：6 大千萬別碰的房產陷阱</h2>
+          <span class="text-sm font-bold uppercase tracking-wider text-rose-700">吳淡如 80/20 法則的反省智慧</span>
+          <h2 class="text-2xl font-extrabold text-slate-900 mt-1"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 吳淡如親身踩坑血淚史：6 大千萬別碰的房產陷阱</h2>
           <p class="text-sm text-slate-600 mt-1">
             「我不是每次買房都贏，我也曾在台北市賠掉一半、在北海道買到送人都沒人要的負資產！但只要 80% 對、20% 錯，並從錯誤中找出底層邏輯，就永遠不會破產。」
           </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          <div class="rounded-2xl border border-rose-200 bg-rose-50/40 p-5 space-y-2">
+          <div class="rounded-2xl border border-slate-700 bg-slate-900 text-slate-200 p-5 space-y-2">
             <div class="flex items-center justify-between">
-              <span class="px-2.5 py-0.5 rounded bg-rose-200 text-rose-900 text-xs font-bold">慘賠 50%</span>
-              <a href="https://www.youtube.com/watch?v=wBFoXbGz5VU" target="_blank" rel="noopener noreferrer" class="text-xs text-blue-700 underline">小青書 EP129 ↗</a>
+              <span class="px-2.5 py-0.5 rounded-full bg-rose-950 text-rose-200 text-sm font-bold">慘賠 50%</span>
+              <a href="https://www.youtube.com/watch?v=wBFoXbGz5VU" target="_blank" rel="noopener noreferrer" class="text-sm text-blue-700 underline">小青書 EP129 <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</a>
             </div>
-            <h3 class="font-extrabold text-slate-900 text-base">1. 內湖大湖山莊「公墓旁＋凶宅」套房</h3>
-            <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+            <h3 class="font-extrabold text-slate-200 text-base">1. 內湖大湖山莊「公墓旁＋凶宅」套房</h3>
+            <p class="text-sm sm:text-sm text-slate-300 leading-relaxed">
               26 歲失意時不想貸款，拿 350 萬全款買了知名室內設計師設計、但後院緊鄰公墓的小套房，輕信代銷「公墓很快遷走」（結果十幾年後才遷），還站在五樓看公墓以為能「參透人生」。後來一樓半地下室淹大水淹死人，整棟變凶宅、房客跑光，最終 <strong>350 萬買入、160～170 萬認賠殺出</strong>。<br>
-              <strong class="text-rose-800">👉 教訓：心情不好或性格孤僻時別買房；別人嫌惡的設施（公墓、路衝）你也一定要嫌惡！</strong>
+              <strong class="text-rose-300"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 教訓：心情不好或性格孤僻時別買房；別人嫌惡的設施（公墓、路衝）你也一定要嫌惡！</strong>
             </p>
           </div>
 
-          <div class="rounded-2xl border border-rose-200 bg-rose-50/40 p-5 space-y-2">
+          <div class="rounded-2xl border border-slate-700 bg-slate-900 text-slate-200 p-5 space-y-2">
             <div class="flex items-center justify-between">
-              <span class="px-2.5 py-0.5 rounded bg-rose-200 text-rose-900 text-xs font-bold">白忙一場</span>
-              <a href="https://www.youtube.com/watch?v=CEGgwdjxnCc" target="_blank" rel="noopener noreferrer" class="text-xs text-blue-700 underline">地產秘密客專訪 ↗</a>
+              <span class="px-2.5 py-0.5 rounded-full bg-rose-950 text-rose-200 text-sm font-bold">白忙一場</span>
+              <a href="https://www.youtube.com/watch?v=CEGgwdjxnCc" target="_blank" rel="noopener noreferrer" class="text-sm text-blue-700 underline">地產秘密客專訪 <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</a>
             </div>
-            <h3 class="font-extrabold text-slate-900 text-base">2. 淡水竹圍捷運站旁「工業住宅」</h3>
-            <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+            <h3 class="font-extrabold text-slate-200 text-base">2. 淡水竹圍捷運站旁「工業住宅」</h3>
+            <p class="text-sm sm:text-sm text-slate-300 leading-relaxed">
               年輕時被美輪美奐的樣品屋吸引，加上貪圖單價比周邊便宜、又有竹圍捷運站，完全沒注意到地目是「工業用地（工業住宅）」。持有多年後周邊正常住宅大漲，這間工業住宅卻只微漲 1～2 成，扣掉仲介費與稅費幾乎沒賺，趕緊停損換買忠孝東路三段（北科大後巷）Sars 低點 20 萬老公寓才翻倍賺回。<br>
-              <strong class="text-rose-800">👉 教訓：區域內最便宜的建案肯定有鬼，切勿被樣品屋迷惑而買工業宅！</strong>
+              <strong class="text-rose-300"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 教訓：區域內最便宜的建案肯定有鬼，切勿被樣品屋迷惑而買工業宅！</strong>
             </p>
           </div>
 
-          <div class="rounded-2xl border border-rose-200 bg-rose-50/40 p-5 space-y-2">
+          <div class="rounded-2xl border border-slate-700 bg-slate-900 text-slate-200 p-5 space-y-2">
             <div class="flex items-center justify-between">
-              <span class="px-2.5 py-0.5 rounded bg-rose-200 text-rose-900 text-xs font-bold">機會成本大虧</span>
-              <a href="https://www.youtube.com/watch?v=YZrA8pbCTQ4" target="_blank" rel="noopener noreferrer" class="text-xs text-blue-700 underline">查理專訪實錄 ↗</a>
+              <span class="px-2.5 py-0.5 rounded-full bg-rose-950 text-rose-200 text-sm font-bold">機會成本大虧</span>
+              <a href="https://www.youtube.com/watch?v=YZrA8pbCTQ4" target="_blank" rel="noopener noreferrer" class="text-sm text-blue-700 underline">查理專訪實錄 <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</a>
             </div>
-            <h3 class="font-extrabold text-slate-900 text-base">3. 宜蘭梅花湖「小熊書房」與農舍群</h3>
-            <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+            <h3 class="font-extrabold text-slate-200 text-base">3. 宜蘭梅花湖「小熊書房」與農舍群</h3>
+            <p class="text-sm sm:text-sm text-slate-300 leading-relaxed">
               40 多歲因愛鄉情結與文青夢，花 1,500 萬買下黑道二胎抵押的梅花湖破屋、再砸 500 萬整修，全盛期在宜蘭買了 8～9 棟民宿與餐廳。結果實體店面找不到人（自己回宜蘭洗碗掃地）、颱風吹毀修繕百萬、遭地方人士黑函檢舉，更遇上地方政府將<strong>房屋稅從 4,000 元暴漲 20 倍至 8 萬元（「苛政猛於虎」）</strong>。雖然最後房產以 3,000 多萬賣出有賺價差，但她直言開實體店是「人生做過最蠢的投資」。<br>
-              <strong class="text-rose-800">👉 教訓：投資必須割斷愛鄉情結與浪漫文青夢！</strong>
+              <strong class="text-rose-300"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 教訓：投資必須割斷愛鄉情結與浪漫文青夢！</strong>
             </p>
           </div>
 
-          <div class="rounded-2xl border border-rose-200 bg-rose-50/40 p-5 space-y-2">
+          <div class="rounded-2xl border border-slate-700 bg-slate-900 text-slate-200 p-5 space-y-2">
             <div class="flex items-center justify-between">
-              <span class="px-2.5 py-0.5 rounded bg-rose-200 text-rose-900 text-xs font-bold">淪為負資產</span>
-              <a href="https://www.youtube.com/watch?v=2Pc2H806JY4" target="_blank" rel="noopener noreferrer" class="text-xs text-blue-700 underline">吳淡如Ｘ查理 ↗</a>
+              <span class="px-2.5 py-0.5 rounded-full bg-rose-950 text-rose-200 text-sm font-bold">淪為負資產</span>
+              <a href="https://www.youtube.com/watch?v=2Pc2H806JY4" target="_blank" rel="noopener noreferrer" class="text-sm text-blue-700 underline">吳淡如Ｘ查理 <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</a>
             </div>
-            <h3 class="font-extrabold text-slate-900 text-base">4. 日本北海道札幌 3 間「高投報老屋」</h3>
-            <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+            <h3 class="font-extrabold text-slate-200 text-base">4. 日本北海道札幌 3 間「高投報老屋」</h3>
+            <p class="text-sm sm:text-sm text-slate-300 leading-relaxed">
               早年貪圖帳面上高達 15%～20% 的租金投報率，在北海道買了 3 間房。結果因人口外流、冬季除雪與老舊大樓修繕管理費極高，維護成本遠超過房屋殘值，最後想免費送人都沒有人敢要！她更警告現在去北海道買房常遇到黑心包租代管「低買高賣、拿你的本金付你前兩年保證租金（羊毛出在羊身上）」。<br>
-              <strong class="text-rose-800">👉 教訓：當日本平均投報 3%～4%，卻有人宣稱 10%～20% 時，肯定有鬼！</strong>
+              <strong class="text-rose-300"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 教訓：當日本平均投報 3%～4%，卻有人宣稱 10%～20% 時，肯定有鬼！</strong>
             </p>
           </div>
 
-          <div class="rounded-2xl border border-rose-200 bg-rose-50/40 p-5 space-y-2">
+          <div class="rounded-2xl border border-slate-700 bg-slate-900 text-slate-200 p-5 space-y-2">
             <div class="flex items-center justify-between">
-              <span class="px-2.5 py-0.5 rounded bg-rose-200 text-rose-900 text-xs font-bold">政變與代管黑幕</span>
-              <a href="https://www.youtube.com/watch?v=eFrMjLYJk-g" target="_blank" rel="noopener noreferrer" class="text-xs text-blue-700 underline">師父商學院 EP57 ↗</a>
+              <span class="px-2.5 py-0.5 rounded-full bg-rose-950 text-rose-200 text-sm font-bold">政變與代管黑幕</span>
+              <a href="https://www.youtube.com/watch?v=eFrMjLYJk-g" target="_blank" rel="noopener noreferrer" class="text-sm text-blue-700 underline">師父商學院 EP57 <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</a>
             </div>
-            <h3 class="font-extrabold text-slate-900 text-base">5. 緬甸燕子湖豪宅套牢 ＆ 海外黑心代管</h3>
-            <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+            <h3 class="font-extrabold text-slate-200 text-base">5. 緬甸燕子湖豪宅套牢 ＆ 海外黑心代管</h3>
+            <p class="text-sm sm:text-sm text-slate-300 leading-relaxed">
               公司在緬甸仰光燕子湖畔買了 3 間最頂級豪宅（緬甸帝寶），卻遇上軍政府政變導致資金套牢；在東京東新宿的好房被代管拿去偷做違法 Airbnb，首月收 30 萬日圓、次月剩 2 萬，還差點被管委會報警；在越南賣房大賺 3 倍時，原本老實的當地仲介竟心生嫉妒，把 1% 佣金偷漲到 4% 獅子大開口。<br>
-              <strong class="text-rose-800">👉 教訓：海外置產必防政局突變與代管人性貪婪，且絕對不要跟任何人合夥買一間房！</strong>
+              <strong class="text-rose-300"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 教訓：海外置產必防政局突變與代管人性貪婪，且絕對不要跟任何人合夥買一間房！</strong>
             </p>
           </div>
 
-          <div class="rounded-2xl border border-rose-200 bg-rose-50/40 p-5 space-y-2">
+          <div class="rounded-2xl border border-slate-700 bg-slate-900 text-slate-200 p-5 space-y-2">
             <div class="flex items-center justify-between">
-              <span class="px-2.5 py-0.5 rounded bg-rose-200 text-rose-900 text-xs font-bold">無都更可能</span>
-              <a href="https://www.youtube.com/watch?v=sXRbD204Lf8" target="_blank" rel="noopener noreferrer" class="text-xs text-blue-700 underline">討論區與節目案例 ↗</a>
+              <span class="px-2.5 py-0.5 rounded-full bg-rose-950 text-rose-200 text-sm font-bold">無都更可能</span>
+              <a href="https://www.youtube.com/watch?v=sXRbD204Lf8" target="_blank" rel="noopener noreferrer" class="text-sm text-blue-700 underline">討論區與節目案例 <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</a>
             </div>
-            <h3 class="font-extrabold text-slate-900 text-base">6. 土地持分極低的老舊超高住商大樓</h3>
-            <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+            <h3 class="font-extrabold text-slate-200 text-base">6. 土地持分極低的老舊超高住商大樓</h3>
+            <p class="text-sm sm:text-sm text-slate-300 leading-relaxed">
               許多人以為「市中心老房子有土地、等都更會變鳳凰」，但吳淡如與節目分析指出：唯有土地持分夠或東區核心商辦才有重建價值；若是屋齡 30～46 年、樓高 20～35 層、總戶數破百上千戶的住商混合或微型套房大樓（每戶土地持分僅 0.5～1.5 坪、甚至地上權），拆除與整合成本過高，水泥老化後毫無都更可能。<br>
-              <strong class="text-rose-800">👉 教訓：買老屋必看土地持分與產權複雜度，切勿因低總價買進結構死局大樓！</strong>
+              <strong class="text-rose-300"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 教訓：買老屋必看土地持分與產權複雜度，切勿因低總價買進結構死局大樓！</strong>
             </p>
           </div>
         </div>
@@ -743,24 +1876,54 @@
       <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl p-6 shadow-md border border-slate-700">
         <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
           <div>
-            <span class="text-xs font-bold uppercase tracking-wider text-amber-400">台大法律系學姐的資產防身術</span>
-            <h2 class="text-xl font-extrabold mt-1">⚖️ 幫另一半或家人買房、付房貸，如何合法保障權益（甚至拿回 6,000 萬房子）？</h2>
+            <span class="text-sm font-bold uppercase tracking-wider text-amber-400">台大法律系學姐的資產防身術</span>
+            <h2 class="text-xl font-extrabold mt-1"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 幫另一半或家人買房、付房貸，如何合法保障權益（甚至拿回 6,000 萬房子）？</h2>
           </div>
-          <a href="https://www.youtube.com/watch?v=XtsMJAGn0L0" target="_blank" rel="noopener noreferrer" class="text-xs px-3 py-1.5 rounded-lg bg-amber-500 text-slate-950 font-bold hover:bg-amber-400">觀看 EP25 法律解析 ↗</a>
+          <a href="https://www.youtube.com/watch?v=XtsMJAGn0L0" target="_blank" rel="noopener noreferrer" class="text-sm px-3 py-1.5 rounded-xl bg-amber-500 text-slate-950 font-bold hover:bg-amber-400">觀看 EP25 法律解析 <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</a>
         </div>
-        <p class="text-xs sm:text-sm text-slate-300 mb-4 leading-relaxed">
+        <p class="text-sm sm:text-sm text-slate-300 mb-4 leading-relaxed">
           吳淡如以名醫婚姻糾紛（女方出資買 6,000 萬診所送前夫還繼續背房貸）及自身大一剛畢業差點幫親戚背房貸的經驗警告：<strong>「永遠不要把自己的房契拿去給別人抵押借款，也不要傻傻買別人的名字自己背貸款！」</strong>若真的要出資幫另一半或晚輩買房，務必透過代書做好以下 3 道法律防線：
         </p>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs sm:text-sm">
-          <div class="bg-white/10 p-4 rounded-xl border border-white/15">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm sm:text-sm">
+          <div class="bg-white/10 p-4 rounded-2xl border border-white/15">
             <div class="font-bold text-amber-300 text-base mb-1">防線 1：辦理「預告登記」</div>
             <p class="text-slate-200 leading-relaxed">在給對方房子時，同步到地政事務所辦理「預告登記」，載明未經出資人（你）本人同意，名義屋主不得將房屋出售、轉讓或設定二胎抵押。</p>
           </div>
-          <div class="bg-white/10 p-4 rounded-xl border border-white/15">
+          <div class="bg-white/10 p-4 rounded-2xl border border-white/15">
             <div class="font-bold text-amber-300 text-base mb-1">防線 2：簽署「附條件贈與契約」</div>
             <p class="text-slate-200 leading-relaxed">趁濃情蜜意時簽立附條件贈與契約（例如約定若發生外遇、背叛或離婚，贈與即自動失效，對方須無條件返還房屋與頭期款）。</p>
           </div>
-          <div class="bg-white/10 p-4 rounded-xl border border-white/15">
+          <div class="bg-white/10 p-4 rounded-2xl border border-white/15">
             <div class="font-bold text-amber-300 text-base mb-1">防線 3：設定「第一順位高額抵押權」</div>
             <p class="text-slate-200 leading-relaxed">例如 6,000 萬房屋，直接把出資人設定為第一順位抵押權人（如設定 4,000 萬債權），未來萬一對方賣房或翻臉，賣屋款必須優先清償給你！若對方已撕破臉而你還在幫他付店面貸款，寧可停繳讓銀行法拍止損，也別當一輩子的提款機。</p>
           </div>
@@ -774,32 +1937,50 @@
         <!-- Calculator A: 房貸收支比與購屋能力試算 -->
         <div class="lg:col-span-6 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-5">
           <div>
-            <span class="text-xs font-bold uppercase tracking-wider text-blue-800">互動工具 A</span>
-            <h2 class="text-xl font-extrabold text-slate-900 mt-1">🧮 吳淡如「35%～40% 房貸收支比」購屋診斷器</h2>
-            <p class="text-xs text-slate-600 mt-1">
+            <span class="text-sm font-bold uppercase tracking-wider text-blue-800">互動工具 A</span>
+            <h2 class="text-xl font-extrabold text-slate-900 mt-1"><svg class="site-icon lucide lucide-chart-no-axes-combined" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 16v5" />
+  <path d="M16 14.639V21" />
+  <path d="M20 10.656V21" />
+  <path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15" />
+  <path d="M4 18.463V21" />
+  <path d="M8 14.656V21" />
+</svg>
+ 吳淡如「35%～40% 房貸收支比」購屋診斷器</h2>
+            <p class="text-sm text-slate-600 mt-1">
               根據吳淡如原則：買房每月房貸支出<strong>絕對不可超過月收入的 35%～40%</strong>，且自備款建議準備 2.5～3 成。輸入您的財務條件立即診斷：
             </p>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
             <div>
-              <label for="calcIncome" class="block text-xs font-bold text-slate-700 mb-1">家庭/個人月收入 (萬元)</label>
+              <label for="calcIncome" class="block text-sm font-bold text-slate-700 mb-1">家庭/個人月收入 (萬元)</label>
               <input id="calcIncome" type="number" step="0.5" min="2" max="500" value="10" class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 font-semibold" />
             </div>
             <div>
-              <label for="calcDownpayment" class="block text-xs font-bold text-slate-700 mb-1">現有買房自備款 (萬元)</label>
+              <label for="calcDownpayment" class="block text-sm font-bold text-slate-700 mb-1">現有買房自備款 (萬元)</label>
               <input id="calcDownpayment" type="number" step="10" min="0" max="50000" value="450" class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 font-semibold" />
             </div>
             <div>
-              <label for="calcTargetPrice" class="block text-xs font-bold text-slate-700 mb-1">目標房屋總價 (萬元)</label>
+              <label for="calcTargetPrice" class="block text-sm font-bold text-slate-700 mb-1">目標房屋總價 (萬元)</label>
               <input id="calcTargetPrice" type="number" step="50" min="100" max="50000" value="1800" class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 font-semibold" />
             </div>
             <div>
-              <label for="calcRate" class="block text-xs font-bold text-slate-700 mb-1">預估房貸年利率 (%)</label>
-              <input id="calcRate" type="number" step="0.05" min="1" max="8" value="2.25" class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 font-semibold" />
+              <label for="calcRate" class="block text-sm font-bold text-slate-700 mb-1">預估房貸年利率 (%)</label>
+              <input id="calcRate" type="text" inputmode="decimal" data-rate-input="true" autocomplete="off" step="0.05" min="1" max="8" value="2.25" class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 font-semibold" />
             </div>
             <div class="sm:col-span-2">
-              <label for="calcYears" class="block text-xs font-bold text-slate-700 mb-1">貸款年限選擇</label>
+              <label for="calcYears" class="block text-sm font-bold text-slate-700 mb-1">貸款年限選擇</label>
               <select id="calcYears" class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 font-semibold">
                 <option value="40" selected>40 年期（吳淡如首推：利率相近下越長越抗通膨）</option>
                 <option value="30">30 年期（標準主流房貸年限）</option>
@@ -810,21 +1991,21 @@
 
           <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200 space-y-3">
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-center">
-              <div class="bg-white p-3 rounded-xl border border-slate-200">
-                <div class="text-xs text-slate-500">貸款總額 / 自備成數</div>
+              <div class="bg-white p-3 rounded-2xl border border-slate-200">
+                <div class="text-sm text-slate-400">貸款總額 / 自備成數</div>
                 <div id="resLoanAmount" class="font-extrabold text-base text-slate-900 mt-0.5">1,350 萬 (自備 25%)</div>
               </div>
-              <div class="bg-white p-3 rounded-xl border border-slate-200">
-                <div class="text-xs text-slate-500">寬限期內只繳息 / 佔比</div>
+              <div class="bg-white p-3 rounded-2xl border border-slate-200">
+                <div class="text-sm text-slate-400">寬限期內只繳息 / 佔比</div>
                 <div id="resInterestOnly" class="font-extrabold text-base text-amber-600 mt-0.5">2.53 萬/月 (25.3%)</div>
               </div>
-              <div class="bg-white p-3 rounded-xl border border-slate-200 col-span-2 sm:col-span-1">
-                <div class="text-xs text-slate-500">本息平均攤還 / 佔比</div>
+              <div class="bg-white p-3 rounded-2xl border border-slate-200 col-span-2 sm:col-span-1">
+                <div class="text-sm text-slate-400">本息平均攤還 / 佔比</div>
                 <div id="resMonthlyTotal" class="font-extrabold text-base text-blue-900 mt-0.5">4.26 萬/月 (42.6%)</div>
               </div>
             </div>
 
-            <div id="resAdviceBox" class="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-xs sm:text-sm text-slate-800 leading-relaxed">
+            <div id="resAdviceBox" class="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-sm sm:text-sm text-slate-800 leading-relaxed">
               <!-- Populated by JS -->
             </div>
           </div>
@@ -833,15 +2014,30 @@
         <!-- Calculator B: 投資房五力分析雷達評分器 -->
         <div class="lg:col-span-6 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-5">
           <div>
-            <span class="text-xs font-bold uppercase tracking-wider text-emerald-700">互動工具 B</span>
-            <h2 class="text-xl font-extrabold text-slate-900 mt-1">🎯 吳淡如「五力分析」看房實戰評分卡</h2>
-            <p class="text-xs text-slate-600 mt-1">
+            <span class="text-sm font-bold uppercase tracking-wider text-emerald-700">互動工具 B</span>
+            <h2 class="text-xl font-extrabold text-slate-900 mt-1"><svg class="site-icon lucide lucide-target" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <circle cx="12" cy="12" r="6" />
+  <circle cx="12" cy="12" r="2" />
+</svg>
+ 吳淡如「五力分析」看房實戰評分卡</h2>
+            <p class="text-sm text-slate-600 mt-1">
               調整下方 5 個維度滑桿（1～10 分），為您正在看的物件進行客觀健檢，避開感性衝動：
             </p>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
-            <div class="sm:col-span-6 space-y-3 text-xs">
+            <div class="sm:col-span-6 space-y-3 text-sm">
               <div>
                 <div class="flex justify-between font-bold text-slate-700 mb-1">
                   <span>1. 需求力（人口流入/就業/捷運）</span>
@@ -886,7 +2082,7 @@
             </div>
           </div>
 
-          <div id="fiveForcesVerdict" class="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs sm:text-sm text-slate-800 leading-relaxed">
+          <div id="fiveForcesVerdict" class="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-sm sm:text-sm text-slate-800 leading-relaxed">
             <!-- Populated by JS -->
           </div>
         </div>
@@ -898,15 +2094,75 @@
       <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-5">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <span class="text-xs font-bold uppercase tracking-wider text-blue-800">完整來源索引（已全數上傳至 Gemini Notebook）</span>
-            <h2 class="text-2xl font-extrabold text-slate-900 mt-1">🎬 吳淡如《房商必修課》＆買房談話 22 部 YouTube 影片總表</h2>
+            <span class="text-sm font-bold uppercase tracking-wider text-blue-800">完整來源索引（已全數上傳至 Gemini Notebook）</span>
+            <h2 class="text-2xl font-extrabold text-slate-900 mt-1"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 吳淡如《房商必修課》＆買房談話 22 部 YouTube 影片總表</h2>
           </div>
           <div class="flex flex-wrap items-center gap-2">
-            <a href="https://gemini.google.com/notebook/96e4c011-9966-4284-92d8-308cf1923120" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs sm:text-sm transition">
-              📓 前往 Gemini Notebook ↗
+            <a href="https://gemini.google.com/notebook/96e4c011-9966-4284-92d8-308cf1923120" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm sm:text-sm transition">
+              <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 前往 Gemini Notebook <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+
             </a>
-            <button id="copyAllLinksBtn2" type="button" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs sm:text-sm transition">
-              📋 複製全部連結
+            <button id="copyAllLinksBtn2" type="button" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm sm:text-sm transition">
+              <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 複製全部連結
             </button>
           </div>
         </div>
@@ -915,27 +2171,72 @@
         <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between pt-2 border-t border-slate-100">
           <!-- Mobile Video Filter Dropdown (支援下拉式選單) -->
           <div class="sm:hidden w-full mb-1">
-            <select id="mobileVideoFilterSelect" class="w-full bg-slate-50 text-slate-800 border border-slate-300 rounded-xl px-3 py-2 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-800 shadow-sm" aria-label="影片分類下拉選單">
-              <option value="all" selected>📺 全部影片 (22)</option>
-              <option value="personal">🎬 吳淡如個人官方頻道 (10)</option>
-              <option value="guest">🎙️ 受邀跨頻道深度訪談 (12)</option>
+            <select id="mobileVideoFilterSelect" class="w-full bg-slate-50 text-slate-800 border border-slate-300 rounded-xl px-3 py-2 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-blue-800 shadow-sm" aria-label="影片分類下拉選單">
+              <option value="all" selected><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 全部影片 (22)</option>
+              <option value="personal"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 吳淡如個人官方頻道 (10)</option>
+              <option value="guest"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 受邀跨頻道深度訪談 (12)</option>
             </select>
           </div>
 
           <!-- Horizontal Scrollable Buttons (選單左右移動) -->
           <div class="flex items-center gap-2 overflow-x-auto whitespace-nowrap no-scrollbar py-1 mobile-scroll-x" id="videoFilterGroup">
-            <button type="button" data-filter="all" class="filter-btn active px-3.5 py-1.5 rounded-xl text-xs font-bold border border-slate-200 transition shrink-0">
+            <button type="button" data-filter="all" class="filter-btn active px-3.5 py-1.5 rounded-xl text-sm font-bold border border-slate-200 transition shrink-0">
               全部影片 (22)
             </button>
-            <button type="button" data-filter="personal" class="filter-btn px-3.5 py-1.5 rounded-xl text-xs font-bold border border-slate-200 text-slate-700 hover:bg-slate-100 transition shrink-0">
+            <button type="button" data-filter="personal" class="filter-btn px-3.5 py-1.5 rounded-xl text-sm font-bold border border-slate-200 text-slate-700 hover:bg-slate-800 transition shrink-0">
               吳淡如個人官方頻道 (10)
             </button>
-            <button type="button" data-filter="guest" class="filter-btn px-3.5 py-1.5 rounded-xl text-xs font-bold border border-slate-200 text-slate-700 hover:bg-slate-100 transition shrink-0">
+            <button type="button" data-filter="guest" class="filter-btn px-3.5 py-1.5 rounded-xl text-sm font-bold border border-slate-200 text-slate-700 hover:bg-slate-800 transition shrink-0">
               受邀跨頻道深度訪談 (12)
             </button>
           </div>
           <div class="relative w-full sm:w-72">
-            <input id="videoSearchInput" type="text" placeholder="搜尋關鍵字（如：馬雞豬、殺價、寬限期、越南）..." class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-800" />
+            <input id="videoSearchInput" type="text" placeholder="搜尋關鍵字（如：馬雞豬、殺價、寬限期、越南）..." class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-800" />
           </div>
         </div>
 
@@ -949,29 +2250,126 @@
   </main>
 
   <!-- Footer -->
-  <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 py-6 mt-12 text-xs">
+  <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 py-6 mt-12 text-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div>
         整理自 YouTube 吳淡如個人頻道《吳淡如人生實用商學院》與各大專訪頻道公開談話內容（共 22 部影片）。
       </div>
       <div class="flex flex-wrap items-center gap-4 font-semibold">
         <a href="index.html" class="text-slate-300 hover:text-white hover:underline">
-          🏛️ 返回雙師總首頁
+          <svg class="site-icon lucide lucide-landmark" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M10 18v-7" />
+  <path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" />
+  <path d="M14 18v-7" />
+  <path d="M18 18v-7" />
+  <path d="M3 22h18" />
+  <path d="M6 18v-7" />
+</svg>
+ 返回雙師總首頁
         </a>
         <span class="text-slate-700">|</span>
         <a href="「談判大叔」陳侯勳｜買房投資與談判理論全集.html?v=20261020_07" class="text-sky-400 hover:text-sky-300 hover:underline">
-          🗡️ 切換至「談判大叔」陳侯勳專區 ↗
+          <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+ 切換至「談判大叔」陳侯勳專區 <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+
         </a>
         <span class="text-slate-700">|</span>
         <a href="second_house.html" class="text-emerald-400 hover:text-emerald-300 hover:underline font-bold">
-          🏦 第二屋實戰決策方案 ↗
+          <svg class="site-icon lucide lucide-landmark" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M10 18v-7" />
+  <path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" />
+  <path d="M14 18v-7" />
+  <path d="M18 18v-7" />
+  <path d="M3 22h18" />
+  <path d="M6 18v-7" />
+</svg>
+ 第二屋實戰決策方案 <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+
         </a>
         <span class="text-slate-700">|</span>
         <a href="https://gemini.google.com/notebook/96e4c011-9966-4284-92d8-308cf1923120" target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:underline font-semibold">
-          開啟 Gemini Notebook 知識庫 ↗
+          開啟 Gemini Notebook 知識庫 <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+
         </a>
       </div>
     </div>
+      <div class="site-footer-note"><p>© <span data-site-year>2026</span> House Trade Strategy</p><p>資料來源：本頁所列公開影片、文章及物件資料；試算依使用者輸入情境。</p><p>本站內容僅供教學參考，不構成投資建議</p></div>
   </footer>
 
   <script>
@@ -994,7 +2392,7 @@
         channel: '吳淡如人生實用商學院（官方頻道）',
         date: '2026-08-10',
         duration: '28:26',
-        title: '🚩【吳淡如Ｘ查理】買房不是有錢人的遊戲！先學會房商少走冤枉路',
+        title: '【吳淡如Ｘ查理】買房不是有錢人的遊戲！先學會房商少走冤枉路',
         url: 'https://www.youtube.com/watch?v=2Pc2H806JY4',
         tags: ['買房四步法', '五力分析', '大基地公設', '北海道踩坑', '0050對比'],
         summary: '與查理深入拆解買房四步法與五力分析：現代買房不再迷信雙併，改選「大基地、大公設、模範建商」；揭露杜拜 0.25% 低稅率背後的酋長土地邏輯、馬來西亞華人區接盤原則，以及北海道 3 間老屋維護費高於殘值「免費送人都沒人要」的慘痛教訓。'
@@ -1005,7 +2403,7 @@
         channel: '吳淡如人生實用商學院（官方頻道）',
         date: '2026-07-20',
         duration: '22:14',
-        title: '🚩【吳淡如Ｘ地產秘密客】買房前先分清楚：你是養馬、雞還是豬？',
+        title: '【吳淡如Ｘ地產秘密客】買房前先分清楚：你是養馬、雞還是豬？',
         url: 'https://www.youtube.com/watch?v=jseQc8DP3-o',
         tags: ['地產秘密客', '馬雞豬理論', '台大vs榮總醫師', '不二價預售屋'],
         summary: '與地產秘密客探討各世代買房策略：分享自身股房配置比例（股市 2 份、房產 3 份），剖析為何品牌建商預售屋全面採「不二價」，並以「台大醫師比榮總醫師有錢（因榮總有宿舍讓人安逸不買房，台大無宿舍逼醫師買在精華區）」說明咬牙上車的威力。'
@@ -1016,7 +2414,7 @@
         channel: '吳淡如人生實用商學院（官方頻道）',
         date: '2026-07-20',
         duration: '26:39',
-        title: '🚩【吳淡如Ｘ地產秘密客】沒有富爸媽，也要懂得用第一間房建立底氣',
+        title: '【吳淡如Ｘ地產秘密客】沒有富爸媽，也要懂得用第一間房建立底氣',
         url: 'https://www.youtube.com/watch?v=CEGgwdjxnCc',
         tags: ['第一間房', '孤女的願望', '宜蘭起家厝', '內湖凶宅', '淡水工業宅'],
         summary: '回顧 14 歲北上住北一女婦女會與台大 16 人宿舍、24 歲靠稿費 60 萬買下宜蘭 90 萬公寓（收租 6,000 元、兩年後 240 萬賣給醫院賺第一桶金），以及大湖山莊公墓凶宅慘賠一半、淡水工業住宅白忙一場，直到 2003 年 SARS 買進忠孝東路三段老公寓才打通任督二脈。'
@@ -1027,7 +2425,7 @@
         channel: '吳淡如人生實用商學院（官方頻道）',
         date: '2026-10-14',
         duration: '26:12',
-        title: '🚩【吳淡如Ｘ談判大叔】越想買房，越買不到！越想殺價，越殺不到！',
+        title: '【吳淡如Ｘ談判大叔】越想買房，越買不到！越想殺價，越殺不到！',
         url: 'https://www.youtube.com/watch?v=Dok86WLWoxw',
         tags: ['殺價談判', '雙斡旋技術', '價格錨定', '年底買房'],
         summary: '與台大經濟系學弟「談判大叔」陳侯勳拆解中古屋殺價實戰：如何將文德捷運站旁開價 55 萬（曾有人出 53 萬）的房子殺到 40.8 萬成交？完整公開「雙斡旋破錨定技術（先派朋友出 35 萬當天秒撤製造失去痛感）」、「最後一口價讓屋主自己說」與「達標先面露難色拒絕」心理戰。'
@@ -1038,7 +2436,7 @@
         channel: '吳淡如人生實用商學院（官方頻道）',
         date: '2026-02-16',
         duration: '17:02',
-        title: '🚩【吳淡如】買方收手！台灣未來三年房子會大跌嗎?',
+        title: '【吳淡如】買方收手！台灣未來三年房子會大跌嗎?',
         url: 'https://www.youtube.com/watch?v=3KoICga8lNc',
         tags: ['量縮價跌迷思', '土方之亂', '華山預售屋', '爛尾樓風險'],
         summary: '犀利解析為何央行限貸令讓 2025 年交易量驟減 25.5%，房價卻難大跌：因為營建工資、建材與「土方之亂（清運費暴漲）」墊高成本，加上貨幣貶值。分享自己 4 年前跟地產秘密客在華山旁以 118 萬/坪買預售屋、2026 年交屋實價登錄已漲至 159 萬/坪，並警告別買工期長達 8 年的小建商預售屋。'
@@ -1049,7 +2447,7 @@
         channel: '吳淡如人生實用商學院（官方頻道）',
         date: '2025-10-09',
         duration: '19:07',
-        title: '🚩【吳淡如】今年是買房時機最佳的一年？為什麼？',
+        title: '【吳淡如】今年是買房時機最佳的一年？為什麼？',
         url: 'https://www.youtube.com/watch?v=-JhT5grglMY',
         tags: ['928檔期', '中古屋議價15%', '北士科輝達', '不砍房仲服務費'],
         summary: '剖析限貸令下預售屋「有行無市」、六都中古屋議價率擴大至 15% 以上的買方良機。點名北士科（輝達效應）、台北文山區、台中北屯機捷與高雄亞灣區為逆勢抗跌熱區，並傳授預售屋「看新不看舊、寧為雞首不為牛後」與中古屋「不砍房仲 1% 佣金反讓仲介幫砍 10%」心法。'
@@ -1060,7 +2458,7 @@
         channel: '吳淡如人生實用商學院（官方頻道）',
         date: '2024-07-15',
         duration: '21:04',
-        title: '🚩【吳淡如】買房前你必須懂的不動產投資的底層邏輯',
+        title: '【吳淡如】買房前你必須懂的不動產投資的底層邏輯',
         url: 'https://www.youtube.com/watch?v=Qygg5qJynxM',
         tags: ['不動產底層邏輯', '日本商用店面', '家庭財富改善', '抗通膨'],
         summary: '針對日圓貶值潮想赴日買房的聽眾提出忠告：日本新房每年折舊、稅費重且外國人極難貸款，她是以日本資產管理公司持有拉麵店、居酒屋等剛需商用店面收租而非賺匯差。引用北大香帥教授觀點與全球 70 年大數據（14 個發達經濟體房價扣除物價仍漲 4 倍多），論證自住房是改善家庭財富的關鍵基石。'
@@ -1071,7 +2469,7 @@
         channel: '吳淡如人生實用商學院（官方頻道）',
         date: '2026-03-26',
         duration: '01:29',
-        title: '🚩 吳淡如「買房貸款，每月不超過多少%比較好？！」',
+        title: ' 吳淡如「買房貸款，每月不超過多少%比較好？！」',
         url: 'https://www.youtube.com/watch?v=YF9_Rr644Ec',
         tags: ['房貸收支比', '35%紅線', '父母贊助頭期款'],
         summary: '明確定義年輕人買房的財務安全紅線：每月房貸利息/本息支出絕對不要超過月收入的 35%（例如月入 10 萬，月付金不超過 3.5 萬）。若父母願幫出頭期款且自己付得起寬限期利息要接受；若連利息都付不起則千萬別接，應先存 ETF。'
@@ -1082,7 +2480,7 @@
         channel: '吳淡如人生實用商學院（官方頻道）',
         date: '2026-09-23',
         duration: '13:43',
-        title: '🚩【吳淡如】EP25-送人6000萬的房子怎麼合法拿回來？',
+        title: '【吳淡如】EP25-送人6000萬的房子怎麼合法拿回來？',
         url: 'https://www.youtube.com/watch?v=XtsMJAGn0L0',
         tags: ['房產法律', '預告登記', '附條件贈與', '高額抵押權'],
         summary: '以台大法律系背景剖析婚姻中贈與房產與代繳房貸的法律自保之道：傳授「預告登記（未經同意不得買賣過戶）」、「附條件贈與契約（外遇或離婚即取消贈與）」與「設定第一順位高額抵押權」三招，並提醒千萬別把房契借給親戚或伴侶抵押貸款。'
@@ -1340,12 +2738,16 @@
     const calcYears = document.getElementById('calcYears');
 
     function updateMortgageCalculator() {
-      const income = parseFloat(calcIncome.value) || 10;
-      const down = parseFloat(calcDownpayment.value) || 0;
-      const price = parseFloat(calcTargetPrice.value) || 1800;
-      const annualRate = parseFloat(calcRate.value) || 2.25;
-      const years = parseInt(calcYears.value, 10) || 40;
-
+      const income = SiteUI.readNumber(calcIncome);
+      const down = SiteUI.readNumber(calcDownpayment);
+      const price = SiteUI.readNumber(calcTargetPrice);
+      const annualRate = SiteUI.readRate(calcRate);
+      const years = SiteUI.readNumber(calcYears);
+      if (![calcIncome,calcDownpayment,calcTargetPrice,calcRate,calcYears].every(SiteUI.withinBounds) || [income,down,price,annualRate,years].some(v=>v===null) || income<=0 || down<0 || price<=0 || annualRate<0 || years<=0) {
+        ['resLoanAmount','resInterestOnly','resMonthlyTotal'].forEach(id=>document.getElementById(id).textContent='待確認');
+        document.getElementById('resAdviceBox').textContent=SiteUI.invalidMessage;
+        return;
+      }
       const loan = Math.max(0, price - down);
       const downRatio = price > 0 ? (down / price) * 100 : 0;
       const monthlyRate = (annualRate / 100) / 12;
@@ -1370,24 +2772,24 @@
       const messages = [];
 
       if (down < 300 && price >= 1200) {
-        messages.push('⚠️ <strong>自備款偏低警告</strong>：吳淡如提醒若存款不到 300 萬且無父母贊助，硬買高總價房屋風險極高，建議先實踐「財商（每月存 20% 買市值型 ETF）」累積第一桶金。');
+        messages.push(' <strong>自備款偏低警告</strong>：吳淡如提醒若存款不到 300 萬且無父母贊助，硬買高總價房屋風險極高，建議先實踐「財商（每月存 20% 買市值型 ETF）」累積第一桶金。');
       } else if (downRatio < 25) {
-        messages.push(`⚠️ <strong>限貸令成數風險</strong>：您目前的自備款佔總價 <strong>${downRatio.toFixed(1)}%</strong>（低於吳淡如建議的 25%～30% 安全線），近期銀行核貸嚴格，務必先向往來銀行確認可貸成數，避免違約斷頭。`);
+        messages.push(` <strong>限貸令成數風險</strong>：您目前的自備款佔總價 <strong>${downRatio.toFixed(1)}%</strong>（低於吳淡如建議的 25%～30% 安全線），近期銀行核貸嚴格，務必先向往來銀行確認可貸成數，避免違約斷頭。`);
       } else {
-        messages.push(`✅ <strong>自備款充足</strong>：自備款佔比達 <strong>${downRatio.toFixed(1)}%</strong>，符合吳淡如建議「買 1,000 萬房至少確定自己只欠 750 萬（自備 25% 以上）」的安全標準。`);
+        messages.push(` <strong>自備款充足</strong>：自備款佔比達 <strong>${downRatio.toFixed(1)}%</strong>，符合吳淡如建議「買 1,000 萬房至少確定自己只欠 750 萬（自備 25% 以上）」的安全標準。`);
       }
 
       if (piRatio <= 35) {
-        messages.push(`🌟 <strong>收支比極佳（本息攤還僅佔收入 ${piRatio.toFixed(1)}%）</strong>：完全符合吳淡如「房貸不超過收入 35%～40%」黃金法則！建議善用寬限期，將省下的本金每月定期定額投入 0050 / S&P500 創造利差複利。`);
-        adviceBox.className = 'p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs sm:text-sm text-slate-800 leading-relaxed space-y-1.5';
+        messages.push(` <strong>收支比極佳（本息攤還僅佔收入 ${piRatio.toFixed(1)}%）</strong>：完全符合吳淡如「房貸不超過收入 35%～40%」黃金法則！建議善用寬限期，將省下的本金每月定期定額投入 0050 / S&P500 創造利差複利。`);
+        adviceBox.className = 'p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-sm sm:text-sm text-slate-800 leading-relaxed space-y-1.5';
       } else if (piRatio <= 40 || ioRatio <= 35) {
-        messages.push(`💡 <strong>建議善用「寬限期＋轉貸策略」</strong>：本息攤還佔月收入 <strong>${piRatio.toFixed(1)}%</strong> 略緊繃，但寬限期內只繳息僅佔 <strong>${ioRatio.toFixed(1)}%</strong>。可參考吳淡如給年輕人的建議：第一間房善用寬限期與 40 年房貸，把每月省下的本金拿去存 ETF，5 年後視資產增值情況轉貸或換屋。`);
-        adviceBox.className = 'p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-xs sm:text-sm text-slate-800 leading-relaxed space-y-1.5';
+        messages.push(` <strong>建議善用「寬限期＋轉貸策略」</strong>：本息攤還佔月收入 <strong>${piRatio.toFixed(1)}%</strong> 略緊繃，但寬限期內只繳息僅佔 <strong>${ioRatio.toFixed(1)}%</strong>。可參考吳淡如給年輕人的建議：第一間房善用寬限期與 40 年房貸，把每月省下的本金拿去存 ETF，5 年後視資產增值情況轉貸或換屋。`);
+        adviceBox.className = 'p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-sm sm:text-sm text-slate-800 leading-relaxed space-y-1.5';
       } else {
         const safeLoan = (income * 0.38) / monthlyRate;
         const safeTotal = down + safeLoan;
-        messages.push(`🚨 <strong>收支比超標警報（連寬限期只繳息都佔收入 ${ioRatio.toFixed(1)}%）</strong>：已超過吳淡如 35%～40% 紅線！建議實踐「不完美主義（騎驢找馬）」，將目標總價下修至約 <strong>${safeTotal.toFixed(0)} 萬元</strong>以內的蛋白區捷運宅，先求有再求好。`);
-        adviceBox.className = 'p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-xs sm:text-sm text-slate-800 leading-relaxed space-y-1.5';
+        messages.push(` <strong>收支比超標警報（連寬限期只繳息都佔收入 ${ioRatio.toFixed(1)}%）</strong>：已超過吳淡如 35%～40% 紅線！建議實踐「不完美主義（騎驢找馬）」，將目標總價下修至約 <strong>${safeTotal.toFixed(0)} 萬元</strong>以內的蛋白區捷運宅，先求有再求好。`);
+        adviceBox.className = 'p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-sm sm:text-sm text-slate-800 leading-relaxed space-y-1.5';
       }
 
       adviceBox.innerHTML = messages.map((m) => `<p>${m}</p>`).join('');
@@ -1416,7 +2818,7 @@
       });
 
       if (filtered.length === 0) {
-        grid.innerHTML = `<div class="col-span-2 text-center py-10 text-slate-500 text-sm">找不到符合「${currentSearch}」的影片，請嘗試其他關鍵字。</div>`;
+        grid.innerHTML = `<div class="col-span-2 text-center py-10 text-slate-400 text-sm">找不到符合「${currentSearch}」的影片，請嘗試其他關鍵字。</div>`;
         return;
       }
 
@@ -1425,27 +2827,27 @@
           ? 'bg-blue-100 text-blue-900 border-blue-200'
           : 'bg-amber-100 text-amber-900 border-amber-200';
         const badgeLabel = v.category === 'personal' ? '個人官方頻道' : '受邀專訪對談';
-        const tagsHtml = v.tags.map((t) => `<span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 text-xs font-medium">#${t}</span>`).join('');
+        const tagsHtml = v.tags.map((t) => `<span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 text-sm font-medium">#${t}</span>`).join('');
 
         return `
           <article class="bg-slate-50/70 hover:bg-white rounded-2xl p-5 border border-slate-200 shadow-sm transition flex flex-col justify-between space-y-4">
             <div class="space-y-2.5">
-              <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
+              <div class="flex flex-wrap items-center justify-between gap-2 text-sm">
                 <span class="px-2.5 py-0.5 rounded-full border font-bold ${badgeClass}">${badgeLabel}｜${v.channel}</span>
-                <span class="text-slate-500 font-medium">${v.date} ・ ⏱ ${v.duration}</span>
+                <span class="text-slate-400 font-medium">${v.date} ・  ${v.duration}</span>
               </div>
               <h3 class="font-extrabold text-slate-900 text-base leading-snug">
                 <a href="${v.url}" target="_blank" rel="noopener noreferrer" class="hover:text-blue-800 hover:underline">${v.id}. ${v.title}</a>
               </h3>
-              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">${v.summary}</p>
+              <p class="text-sm sm:text-sm text-slate-600 leading-relaxed">${v.summary}</p>
               <div class="flex flex-wrap gap-1.5 pt-1">${tagsHtml}</div>
             </div>
             <div class="flex items-center justify-between pt-3 border-t border-slate-200/80">
-              <a href="${v.url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-bold text-blue-800 hover:text-blue-950">
-                <span>▶ 前往 YouTube 觀看影片</span>
-                <span>↗</span>
+              <a href="${v.url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-sm font-bold text-blue-800 hover:text-blue-950">
+                <span> 前往 YouTube 觀看影片</span>
+                <span></span>
               </a>
-              <button type="button" data-copy-url="${v.url}" class="copy-single-btn text-xs text-slate-500 hover:text-slate-800 font-medium px-2 py-1 rounded hover:bg-slate-200/60 transition">
+              <button type="button" data-copy-url="${v.url}" class="copy-single-btn text-sm text-slate-400 hover:text-slate-800 font-medium px-2 py-1 rounded-xl hover:bg-slate-200/60 transition">
                 複製連結
               </button>
             </div>
@@ -1517,14 +2919,14 @@
       const total = f1 + f2 + f3 + f4 + f5;
       const verdictEl = document.getElementById('fiveForcesVerdict');
       if (f1 <= 4 || f5 <= 4) {
-        verdictEl.className = 'p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-xs sm:text-sm text-slate-800 leading-relaxed';
-        verdictEl.innerHTML = `🚨 <strong>總分 ${total} / 50（高風險鐵公雞／負資產陷阱）</strong>：該物件的「需求力」或「脫手力」不及格！吳淡如再三警告：沒有就業人口與軌道支撐、或含有嫌惡設施/工業宅/低土地持分老樓的物件，未來少子化兩極分化下極易套牢，建議果斷放棄。`;
+        verdictEl.className = 'p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-sm sm:text-sm text-slate-800 leading-relaxed';
+        verdictEl.innerHTML = ` <strong>總分 ${total} / 50（高風險鐵公雞／負資產陷阱）</strong>：該物件的「需求力」或「脫手力」不及格！吳淡如再三警告：沒有就業人口與軌道支撐、或含有嫌惡設施/工業宅/低土地持分老樓的物件，未來少子化兩極分化下極易套牢，建議果斷放棄。`;
       } else if (total >= 38) {
-        verdictEl.className = 'p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs sm:text-sm text-slate-800 leading-relaxed';
-        verdictEl.innerHTML = `🏆 <strong>總分 ${total} / 50（黃金級千里馬／金雞母標的）</strong>：五力均衡且具備強勁剛需、融資優勢與高脫手性！若為自住且房貸在月收入 35%～40% 內，值得把握買方市場果斷出價。`;
+        verdictEl.className = 'p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-sm sm:text-sm text-slate-800 leading-relaxed';
+        verdictEl.innerHTML = ` <strong>總分 ${total} / 50（黃金級千里馬／金雞母標的）</strong>：五力均衡且具備強勁剛需、融資優勢與高脫手性！若為自住且房貸在月收入 35%～40% 內，值得把握買方市場果斷出價。`;
       } else {
-        verdictEl.className = 'p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-xs sm:text-sm text-slate-800 leading-relaxed';
-        verdictEl.innerHTML = `💡 <strong>總分 ${total} / 50（務實「騎驢找馬」過渡型標的）</strong>：雖非十全十美，但具備基本流通與居住價值。只要地點在捷運或就業圈內、無重大嫌惡設施，可作為先上車的「小馬／驢子」，未來再以馬換馬。`;
+        verdictEl.className = 'p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-sm sm:text-sm text-slate-800 leading-relaxed';
+        verdictEl.innerHTML = ` <strong>總分 ${total} / 50（務實「騎驢找馬」過渡型標的）</strong>：雖非十全十美，但具備基本流通與居住價值。只要地點在捷運或就業圈內、無重大嫌惡設施，可作為先上車的「小馬／驢子」，未來再以馬換馬。`;
       }
     }
 

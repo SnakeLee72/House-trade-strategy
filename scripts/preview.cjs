@@ -22,4 +22,4 @@ http.createServer(async (req, res) => {
     const data = await fs.readFile(file);
     res.writeHead(200, { 'Content-Type': mime[path.extname(file)], 'Cache-Control': 'no-store' }).end(data);
   } catch { res.writeHead(404).end(); }
-}).listen(18743, '127.0.0.1', () => console.log('Preview: http://127.0.0.1:18743'));
+}).listen(Number(process.env.PORT || 18743), '127.0.0.1', () => console.log('Preview: http://127.0.0.1:'+(process.env.PORT || 18743)));
