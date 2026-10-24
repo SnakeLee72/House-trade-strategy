@@ -273,3 +273,29 @@ test('Cloned property is labelled distinctly from its source', () => {
   assert.equal(ctx.propertyLabel({ community: '測試社區', clonedFrom: 'x' }), '測試社區（複製案）');
   assert.equal(ctx.propertyLabel({ name: '物件 (複製案)', clonedFrom: 'x' }), '物件 (複製案)');
 });
+
+test('Three-year window covers exactly 36 months and listing walk claims stay unconfirmed', () => {
+  const { ctx } = setupTestEnvironment();
+  const reg = { status: 'complete', reportedCount: 2, rows: [
+    { id: 'in', date: '2023-11', floor: 5, houseAreaPing: 30, housePriceWan: 1800, hasParking: false, special: false },
+    { id: 'out', date: '2023-10', floor: 5, houseAreaPing: 30, housePriceWan: 1800, hasParking: false, special: false }
+  ] };
+  const s = Core.summarize(reg, { now: '2026-10-20' });
+  assert.equal(s.usedCount, 1);
+  assert.equal(s.excluded.outsidePeriod, 1);
+  assert.match(s.period, /^2023-11 至 2026-10$/);
+
+  const p = ctx.parseListingText('社區：測試　台北市大安區 捷運大安站 步行5分鐘 總價：3000萬');
+  assert.equal(p.walkMinutes ?? null, null);
+  assert.equal(p.listingWalkMinutes, 5);
+  assert.match(p.mrt, /刊登宣稱步行 5 分鐘（未核對）/);
+  assert.equal(Core.evaluateKnives(p).states[3], 'unknown');
+});
+
+test('Cash-flow red alert distinguishes stress-test failure from a manual mark', () => {
+  const { ctx } = setupTestEnvironment();
+  const auto = ctx.evaluateProperty({ modelVersion: 2, cashReserveWan: 10, monthlyIncomeWan: 5, monthlyExpenseWan: 3, stressMortgageWan: 3 });
+  assert.match(auto.redAlerts[0], /壓力測試未通過/);
+  const manual = ctx.evaluateProperty({ modelVersion: 2, knifeOverrides: { 9: 'fail' } });
+  assert.match(manual.redAlerts[0], /已手動標記/);
+});

@@ -31,7 +31,7 @@ function initUserProperties() {
 function evaluateProperty(prop) {
   const pricing=RC.derivePricing(prop), k=RC.evaluateKnives(prop,pricing);
   const pending=k.unknown.length>0;
-  return { ...k,count:k.passed.length,score:pending?'--':Math.round(k.passed.length/9*100),tier:pending?'資料待確認':k.failed.length?'有條件未通過':'已確認9項',tierClass:pending?'bg-amber-50 text-amber-800 border-amber-300':'bg-sky-50 text-sky-800 border-sky-300',verdict:`已確認通過 ${k.passed.length} 項、不通過 ${k.failed.length} 項、待確認 ${k.unknown.length} 項。未查證項目不會自動視為通過。此為條件檢核，不代表投資安全或獲利保證。`,redAlerts:k.failed.includes(9)?['已手動確認現金流條件未通過，請先完成財務規劃。']:[],pricing };
+  return { ...k,count:k.passed.length,score:pending?'--':Math.round(k.passed.length/9*100),tier:pending?'資料待確認':k.failed.length?'有條件未通過':'已確認9項',tierClass:pending?'bg-amber-50 text-amber-800 border-amber-300':'bg-sky-50 text-sky-800 border-sky-300',verdict:`已確認通過 ${k.passed.length} 項、不通過 ${k.failed.length} 項、待確認 ${k.unknown.length} 項。未查證項目不會自動視為通過。此為條件檢核，不代表投資安全或獲利保證。`,redAlerts:k.failed.includes(9)?[k.states[9]==='fail'&&prop.knifeOverrides?.[9]==='fail'?'已手動標記現金流條件未通過，請先完成財務規劃。':'現金流壓力測試未通過（停薪 6 個月後再 30 個月，存款出現負值），請先完成財務規劃。']:[],pricing };
 }
 function autoEvaluateKnives(p){return RC.evaluateKnives(p).passed;}
 function buildPropertyFromApiData(data,sourceUrl='') {
@@ -52,7 +52,7 @@ function parseListingText(input,sourceUrl='') {
   const mrtMatch=input.match(/(?:捷運|近)\s*([^\s,，。()（）]+站)/);
   if(mrtMatch)p.mrt=mrtMatch[0];
   const walkMatch=input.match(/(?:步行|走路|走)\s*約?\s*(\d+)\s*分鐘/);
-  if(walkMatch){p.walkMinutes=Number(walkMatch[1]);p.walkEvidence='confirmed';}
+  if(walkMatch){p.listingWalkMinutes=Number(walkMatch[1]);p.mrt=[p.mrt,`刊登宣稱步行 ${p.listingWalkMinutes} 分鐘（未核對）`].filter(Boolean).join('｜');}
   p.dataWarning='本機僅萃取明示欄位，尚未取得成交資料。請貼物件網址以連結實登。';
   p.knives=autoEvaluateKnives(p);return p;
 }
@@ -185,7 +185,7 @@ async function refreshPropertySource(){
     const current=userProperties.find(item=>item.id===id);
     if(!current || current.sourceUrl!==url || JSON.stringify([current.community,current.district])!==identity)return;
     for(const key of ['askingPrice','totalAreaPing','size','parkingAreaPing','parkingPriceWan','hasParking','community','district','geo','mrt','mrtDetails','walkMinutes','walkEvidence','households','communityInfo','registration'])current[key]=data[key] ?? null;
-    current.knifeOverrides={};current.dataWarning='已重新取得來源；人工財務與現場條件保留，請核對是否仍有效。';
+    current.knifeOverrides={};current.isSaved=false;current.dataWarning='已重新取得來源；人工財務與現場條件保留，請核對是否仍有效。';
     persistUserProperties();renderEvaluationView();showToast('此物件資料已更新');
   }catch(error){rt('property-source-status',`更新失敗：${error.message}。原紀錄保留。`);}
   finally{if(button)button.disabled=false;}
@@ -200,7 +200,7 @@ function reRenderEvidence(p,price) {
     <p>期間：${rh(s.period)}。剔除：${Object.entries(s.excluded).map(([key,n])=>`${reasons[key]} ${n}`).join('／')}。</p><p>採用中車位估算 ${s.usedEstimatedCount} 筆。${s.sufficient?'樣本達5筆，仍需確認可比性。':'未滿5筆或資料不完整，不建立自動比較總價。'} 不做機械式去頭去尾。</p>
     <p>房屋淨單價中位數：<b>${rf(s.medianUnit,' 萬/坪')}</b>；面積加權均價：<b>${rf(s.weightedUnit,' 萬/坪')}</b>。來源價格與面積有四捨五入，重算可能有尾差。</p>
     <details><summary class="cursor-pointer font-semibold text-sky-800">檢視成交明細與採用原因（${s.inspectedRows.length}筆）</summary><div class="overflow-x-auto mt-3"><table class="w-full text-left text-sm min-w-[750px]"><thead><tr><th>年月／地址</th><th>樓層／格局</th><th>房屋價／扣車位坪數</th><th>車位價／坪數</th><th>淨單價重算</th><th>採用狀態</th><th>來源備註</th></tr></thead><tbody>${s.inspectedRows.map(row=>`<tr class="border-t border-slate-200"><td class="p-2">${rh(row.date)}<br>${rh(row.address)}</td><td>${rf(row.floor,'樓')}<br>${rh(row.layout)}</td><td>${rf(row.housePriceWan,'萬')}<br>${rf(row.houseAreaPing,'坪')}</td><td>${rf(row.parkingPriceWan,'萬')}${row.parkingEstimated?'（估算）':''}<br>${rf(row.parkingAreaPing,'坪')}</td><td>${rf(row.calculatedUnit,'萬/坪')}</td><td>${rh(row.exclusion?reasons[row.exclusion]:'採用')}</td><td>${rh(row.notes || '無')}</td></tr>`).join('')}</tbody></table></div></details></div>`;
-  const update=()=>{p.analysisOptions={months:Number(document.getElementById('reg-period').value),includeEstimatedParking:document.getElementById('reg-include-estimated').checked,excludeFirstFloor:document.getElementById('reg-exclude-floor').checked};persistUserProperties();renderEvaluationView();};
+  const update=()=>{p.analysisOptions={months:Number(document.getElementById('reg-period').value),includeEstimatedParking:document.getElementById('reg-include-estimated').checked,excludeFirstFloor:document.getElementById('reg-exclude-floor').checked};p.isSaved=false;persistUserProperties();renderEvaluationView();};
   ['reg-period','reg-include-estimated','reg-exclude-floor'].forEach(id=>document.getElementById(id)?.addEventListener('change',update));
 }
 function safeRegistrationUrl(url){try{const u=new URL(url);return u.protocol==='https:'&&u.hostname==='market.591.com.tw'?u.href:'#';}catch{return '#';}}

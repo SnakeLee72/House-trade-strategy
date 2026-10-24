@@ -43,7 +43,7 @@
     const months = options.months === 60 ? 60 : 36;
     const now = new Date(options.now || Date.now());
     const endMonth = now.getUTCFullYear() * 12 + now.getUTCMonth();
-    const startMonth = endMonth - months;
+    const startMonth = endMonth - months + 1; // 含當月共 months 個月
     const excluded = { duplicate: 0, invalidDate: 0, special: 0, firstFloor: 0, outsidePeriod: 0, estimatedParking: 0, missingValues: 0 };
     const rows = Array.isArray(registration?.rows) ? registration.rows : [];
     const seen = new Set(); const usedRows = []; const inspectedRows = [];

@@ -20,7 +20,7 @@
   <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192x192.png">
   <link rel="icon" type="image/png" sizes="512x512" href="./icons/icon-512x512.png">
   <link rel="stylesheet" href="./chen-reading.css?v=20261020_07">
-  <script src="./registration-core.js?v=20261024_chen3"></script>
+  <script src="./registration-core.js?v=20261024_chen4"></script>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="./site-ui.js?v=20261021_sticky1"></script>
@@ -3169,7 +3169,7 @@
             const inputEl = document.getElementById('auto-analyzer-input');
             if (inputEl) inputEl.value = raw;
             switchTab('nine-knives');
-            runAutoAnalysis(raw, false);
+            runAutoAnalysis(raw);
             showToast(" 已成功匯入 591 即時物件資料！");
           } catch(e) {
             console.error("Import hash error", e);
@@ -3222,6 +3222,6 @@
       window.location.href = url.toString();
     };
   </script>
-  <script src="./registration-ui.js?v=20261024_chen3"></script>
+  <script src="./registration-ui.js?v=20261024_chen4"></script>
 </body>
 </html>
