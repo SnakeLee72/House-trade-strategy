@@ -4,7 +4,7 @@
  * 支援 PWA 離線快取、即時網路優先策略與背景更新
  */
 
-const CACHE_NAME = 'hts-cache-v20261021_pigbadge7';
+const CACHE_NAME = 'hts-cache-v20261021_pigbadge8';
 
 const PRECACHE_URLS = [
   './',
@@ -82,7 +82,10 @@ self.addEventListener('fetch', event => {
       })
       .catch(() => {
         // 離線時從快取提供
-        return caches.match(event.request).then(cachedResponse => {
+        // 頁面以 ?v= 版本參數載入腳本與頁面，預快取則是無參數網址；精確比對不到時改以忽略 query 比對
+        return caches.match(event.request)
+          .then(cachedResponse => cachedResponse || caches.match(event.request, { ignoreSearch: true }))
+          .then(cachedResponse => {
           if (cachedResponse) {
             return cachedResponse;
           }

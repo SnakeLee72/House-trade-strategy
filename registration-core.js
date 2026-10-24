@@ -102,12 +102,8 @@
       else if (nearestKm > 15) set(1, false);
     }
 
-    // Knife 2: 捷運通勤 30 分鐘內
+    // Knife 2: 捷運通勤 30 分鐘內（只認人工核對的通勤時間；步行到站時間不能代表通勤時間）
     if (number(p.commuteMinutes)!=null && p.commuteMinutes>=0) set(2, Number(p.commuteMinutes)<=30);
-    else if (p.mrtDetails?.station && number(p.walkMinutes)!=null && ['confirmed','map_route'].includes(p.walkEvidence)) {
-      if (p.walkMinutes <= 15) set(2, true);
-      else if (p.walkMinutes > 25) set(2, false);
-    }
 
     // Knife 3: 走路到捷運 10 分鐘內
     if (number(p.walkMinutes) != null && p.walkMinutes>=0 && ['confirmed','map_route'].includes(p.walkEvidence)) set(3, Number(p.walkMinutes)<=10);

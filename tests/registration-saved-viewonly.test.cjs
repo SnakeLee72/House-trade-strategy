@@ -192,7 +192,9 @@ test('Nine Knives smart auto-evaluations correctly determine pass/fail states', 
   const knives1 = Core.evaluateKnives(prop1, pricing1);
 
   assert.equal(knives1.states[1], 'pass'); // Within 5km of employment center
-  assert.equal(knives1.states[2], 'pass'); // Commute <= 30 min (walk 8 min + MRT)
+  assert.equal(knives1.states[2], 'unknown'); // Walk-to-station time is not a commute time
+  assert.equal(Core.evaluateKnives({ ...prop1, commuteMinutes: 25 }).states[2], 'pass');
+  assert.equal(Core.evaluateKnives({ ...prop1, commuteMinutes: 40 }).states[2], 'fail');
   assert.equal(knives1.states[3], 'pass'); // Walk <= 10 min
   assert.equal(knives1.states[4], 'pass'); // Premium 12% <= 16%
   assert.equal(knives1.states[5], 'pass'); // 2800 <= 3200 ceiling
@@ -242,4 +244,32 @@ test('Information linkage: 4-tier pricing, net area and calculator update proper
   assert.equal(pricing.trueBottom, 2080); // 80% of 2600
   assert.equal(pricing.netSeller, 3072); // 96% of 3200
   assert.equal(pricing.premiumPct, 23.08); // (3200/2600 - 1)*100
+});
+
+test('Committed identity edits clear stale evidence but keep manual reference and finances', () => {
+  const { ctx } = setupTestEnvironment();
+  const p = { modelVersion: 2, id: 'p1', community: '舊社區', district: '台北市大安區', mrt: '大安站', walkMinutes: 8, walkEvidence: 'confirmed', officeDistanceKm: 3, commuteMinutes: 25, households: 180, manualReferenceWan: 3500, askingPrice: 3800, cashReserveWan: 500, hotelApartment: false, registration: { rows: [] }, knifeOverrides: { 1: 'pass', 6: 'pass' }, clonedFrom: 'p0' };
+  const note = ctx.invalidatePropertyEvidence(p, 'district');
+  assert.match(note, /已清除/);
+  for (const key of ['walkMinutes', 'officeDistanceKm', 'commuteMinutes', 'households', 'registration', 'hotelApartment']) assert.equal(p[key], null, key);
+  assert.equal(p.manualReferenceWan, 3500);
+  assert.equal(p.cashReserveWan, 500);
+  assert.equal(p.mrt, '大安站');
+  assert.equal(JSON.stringify(p.knifeOverrides), '{}');
+  assert.equal(p.clonedFrom, undefined);
+  const k = Core.evaluateKnives(p);
+  for (const id of [1, 2, 3, 7]) assert.equal(k.states[id], 'unknown', 'knife ' + id);
+
+  const q = { modelVersion: 2, mrt: '大安站', walkMinutes: 8, walkEvidence: 'confirmed', knifeOverrides: { 3: 'pass', 5: 'fail' } };
+  assert.match(ctx.invalidatePropertyEvidence(q, 'mrt'), /步行時間已清除/);
+  assert.equal(q.walkMinutes, null);
+  assert.equal(Core.evaluateKnives(q).states[3], 'unknown');
+  assert.equal(JSON.stringify(q.knifeOverrides), '{"5":"fail"}');
+});
+
+test('Cloned property is labelled distinctly from its source', () => {
+  const { ctx } = setupTestEnvironment();
+  assert.equal(ctx.propertyLabel({ community: '測試社區' }), '測試社區');
+  assert.equal(ctx.propertyLabel({ community: '測試社區', clonedFrom: 'x' }), '測試社區（複製案）');
+  assert.equal(ctx.propertyLabel({ name: '物件 (複製案)', clonedFrom: 'x' }), '物件 (複製案)');
 });
