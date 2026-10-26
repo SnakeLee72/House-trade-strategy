@@ -2,7 +2,7 @@ const {test}=require('node:test');const assert=require('node:assert/strict');con
 const wu='吳淡如_房商必修課.html',second='second_house.html';
 const expected=fs.existsSync('tests/fixtures/ab-valid-outputs.json')?JSON.parse(fs.readFileSync('tests/fixtures/ab-valid-outputs.json','utf8')):null;
 // 公式回歸測試沿用改預設前的情境（一屋 2,000 萬、二屋 3,350 萬…），current=true 才用頁面現行預設
-const LEGACY_SECOND={'inp-h1-val':'2000','inp-h1-rent':'38000','inp-rent-net-factor':'90','inp-h2-price':'3350','inp-etf-return':'8.5','inp-loan-rate':'2.45','inp-buyer-cash':'950','inp-t4-loan':'1600','range-t4-loan':'1600','inp-loan-calc-amt':'2680','inp-h1-growth':'3.0'};
+const LEGACY_SECOND={'inp-h1-val':'2000','inp-h1-loan':'450','inp-h1-loan-interest':'2.20','inp-h1-rent':'38000','inp-rent-net-factor':'90','inp-h2-price':'3350','inp-etf-return':'8.5','inp-loan-rate':'2.45','inp-buyer-cash':'950','inp-t4-loan':'1600','range-t4-loan':'1600','inp-loan-calc-amt':'2680','inp-h1-growth':'3.0'};
 function setup(file,before=false,current=false){
  const html=fs.readFileSync((before?'.wrangler/ab-before/':'')+file,'utf8'),nodes={};
  for(const m of html.matchAll(/<([\w-]+)\b([^>]*\bid="([^"]+)"[^>]*)>/g)){
@@ -67,14 +67,14 @@ test('second-house 作法 4 sells H1 into the H2 down payment, borrows only the 
  assert.match(base,/作法 4（3,186 萬，不買 0050）/);assert.match(base,/淨得 1,510 萬/);assert.match(base,/只需貸 1,090 萬（32\.5%）/);assert.match(base,/：寬限期 19,983 元、之後 41,387 元/);
  assert.equal(m4('0').match(/作法 4（([\d,]+)/)[1],'3,186');assert.equal(m4('15').match(/作法 4（([\d,]+)/)[1],'3,186');
 });
-test('second-house new defaults (一屋 1,800 萬 0% 增值、二屋 3,500 萬 3%、0050 5%、科目四 1,000 萬 @2.6%) and 10-year breakdown',()=>{
+test('second-house new defaults (一屋 1,800 萬 0% 增值、殘貸 392 萬 @2.19%、二屋 3,500 萬 3%、0050 5%、科目四 1,000 萬 @2.6%) and 10-year breakdown',()=>{
  const s=setup(second,false,true);s.run('updateSimulation');
- assert.equal(s.nodes['inp-t4-loan'].value,'1000');
+ assert.equal(s.nodes['inp-t4-loan'].value,'1000');assert.equal(s.nodes['inp-h1-loan'].value,'392');assert.equal(s.nodes['inp-h1-loan-interest'].value,'2.19');
  assert.equal(s.nodes['out-h1-interest'].textContent,'-21,667 元/月');
- assert.equal(s.nodes['out-10yr-advantage'].textContent,'+121 萬元');
- assert.match(s.nodes['out-m1-diff-note'].textContent,/作法 1（3,028 萬）/);assert.match(s.nodes['out-m4-sale-note'].textContent,/作法 4（2,907 萬，不買 0050）.*淨得 1,314 萬.*只需貸 1,489 萬/);
+ assert.equal(s.nodes['out-10yr-advantage'].textContent,'+144 萬元');
+ assert.match(s.nodes['out-m1-diff-note'].textContent,/作法 1（3,121 萬）/);assert.match(s.nodes['out-m4-sale-note'].textContent,/作法 4（2,977 萬，不買 0050）.*淨得 1,372 萬.*只需貸 1,431 萬/);
  const body=s.nodes['tenyr-breakdown-body'].innerHTML;
  const totals=[...body.matchAll(/10 年後淨資產合計<\/td>(.*?)<\/tr>/g)][0][1].match(/>([\d,]+)</g).map(x=>x.slice(1,-1));
- assert.deepEqual(totals,['3,028','3,027','2,907']);
- assert.match(body,/1,800 × \(1 \+ 0%\)\^10/);assert.match(body,/3,500 × \(1 \+ 3%\)\^10/);assert.match(body,/＝ 547 × \(1 \+ 5%\)\^10/);
+ assert.deepEqual(totals,['3,121','3,121','2,977']);
+ assert.match(body,/1,800 × \(1 \+ 0%\)\^10/);assert.match(body,/3,500 × \(1 \+ 3%\)\^10/);assert.match(body,/− 頭期現金缺口 3\) ＝ 605 × \(1 \+ 5%\)\^10/);
 });

@@ -1471,11 +1471,11 @@
         </div>
         <div class="p-3 rounded-2xl bg-slate-900/90 border border-slate-800">
           <label for="inp-h1-loan" class="block font-bold text-slate-400 mb-1">第一屋殘貸 (萬)</label>
-          <input id="inp-h1-loan" type="number" value="450" step="10" class="w-full px-2.5 py-1.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono-num font-bold text-sm focus:outline-none focus:border-amber-400" />
+          <input id="inp-h1-loan" type="number" value="392" step="10" class="w-full px-2.5 py-1.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono-num font-bold text-sm focus:outline-none focus:border-amber-400" />
         </div>
         <div class="p-3 rounded-2xl bg-slate-900/90 border border-slate-800">
           <label for="inp-h1-loan-interest" class="block font-bold text-slate-400 mb-1" title="作法 2（保留第一屋舊貸）之舊貸利率">第一屋殘貸利率 (%)</label>
-          <input id="inp-h1-loan-interest" type="number" value="2.20" min="0" max="15" step="0.05" class="w-full px-2.5 py-1.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono-num font-bold text-sm focus:outline-none focus:border-amber-400" />
+          <input id="inp-h1-loan-interest" type="number" value="2.19" min="0" max="15" step="0.05" class="w-full px-2.5 py-1.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono-num font-bold text-sm focus:outline-none focus:border-amber-400" />
         </div>
         <div class="p-3 rounded-2xl bg-slate-900/90 border border-slate-800">
           <label for="inp-h1-loan-years" class="block font-bold text-slate-400 mb-1" title="作法 2（保留第一屋舊貸）之舊貸剩餘年期">第一屋殘貸剩餘年期 (年)</label>
@@ -2889,14 +2889,14 @@
       }
       if(!SiteUI.validateSecondHouse())return;
       const h1Val = numericInput('inp-h1-val', 1800);
-      const h1Loan = numericInput('inp-h1-loan', 450);
+      const h1Loan = numericInput('inp-h1-loan', 392);
       const h1RawRent = numericInput('inp-h1-rent', 30000);
       const rentNetFactorPct = Math.min(100, Math.max(10, numericInput('inp-rent-net-factor', 80)));
       const h1EffRent = Math.round(h1RawRent * (rentNetFactorPct / 100));
       const h2Price = numericInput('inp-h2-price', 3500);
       const etfReturn = numericInput('inp-etf-return', 5);
       const loanRate = numericInput('inp-loan-rate', 2.6);
-      const h1LoanRate = Math.max(0, numericInput('inp-h1-loan-interest', 2.20));
+      const h1LoanRate = Math.max(0, numericInput('inp-h1-loan-interest', 2.19));
       const h1LoanYears = Math.max(1, Math.round(numericInput('inp-h1-loan-years', 20)));
       const propGrowthPct = numericInput('inp-prop-growth', 3);
       const h1GrowthPct = numericInput('inp-h1-growth', 0);
@@ -3321,7 +3321,7 @@
       const breakdownRows = [
         ['第一屋 10 年後市值', `${n0(h1Val)} × (1 + ${h1GrowthPct}%)^10；作法 4 已賣出`, h1Future, h1Future, null],
         ['第二屋 10 年後市值', `${n0(h2Price)} × (1 + ${propGrowthPct}%)^10`, h2Future, h2Future, h2Future],
-        ['0050 部位 10 年後市值', `(科目四 ${n0(chosenLoan)} − 還舊貸 ${n0(h1Loan)} ${cashDiffM3 >= 0 ? '＋' : '−'} 頭期後剩餘現金 ${n0(Math.abs(cashDiffM3))}) ＝ ${n0(etfPoolM1)} × (1 + ${etfReturn}%)^10；作法 4 不買 0050`, etfPoolM1 * etfGrowth10Yr, etfPoolM1 * etfGrowth10Yr, null],
+        ['0050 部位 10 年後市值', `(科目四 ${n0(chosenLoan)} − 還舊貸 ${n0(h1Loan)} ${cashDiffM3 >= 0 ? '＋ 頭期後剩餘現金' : '− 頭期現金缺口'} ${n0(Math.abs(cashDiffM3))}) ＝ ${n0(etfPoolM1)} × (1 + ${etfReturn}%)^10；作法 4 不買 0050`, etfPoolM1 * etfGrowth10Yr, etfPoolM1 * etfGrowth10Yr, null],
         ['科目四租金淨流 10 年累計', `(有效租金 ${n0(h1EffRent)} − 科目四月付 ${n0(h1MonthlyPay)}) 元 × 120 期`, netRent10YrWan, netRent10YrWan, null],
         ['第一屋科目四 10 年後仍欠', h1RepayMode === 'io' ? `只繳息，本金 ${n0(chosenLoan)} 萬不減少` : `${n0(chosenLoan)} 萬 30 年本息攤還 120 期後餘額`, -h1Loan10Yr.remainWan, -h1Loan10Yr.remainWan, null],
         ['第二屋 10 年後仍欠房貸', `作法 1/3 貸 ${n0(loanAmt)} 萬、作法 4 貸 ${n0(loanM4)} 萬；寬限 ${graceYears} 年後 ${loanTermYears} 年本息攤還`, -h2Loan10YrStatus.remainWan, -h2Loan10YrStatus.remainWan, -h2Loan10YrM4.remainWan],
@@ -3624,7 +3624,7 @@
         const loanRate = numericInput('inp-loan-rate', 2.6);
         const unitPmt = Math.max(1, mortgagePayment(100, loanRate, 360));
         const safe = Math.round((effRent / unitPmt) * 100);
-        const h1Loan = numericInput('inp-h1-loan', 450);
+        const h1Loan = numericInput('inp-h1-loan', 392);
         const h1Max = Math.round(numericInput('inp-h1-val', 1800) * 0.8);
         const val = Math.min(h1Max, Math.max(h1Loan, safe));
         if (numInputEl) numInputEl.value = val;
@@ -3670,7 +3670,7 @@
       document.getElementById('btn-copy-summary')?.addEventListener('click', () => {
         if(!SiteUI.validateSecondHouse()){showToast(SiteUI.invalidMessage);return;}
         const h1Val = numericInput('inp-h1-val', 1800);
-        const h1Loan = numericInput('inp-h1-loan', 450);
+        const h1Loan = numericInput('inp-h1-loan', 392);
         const h1RawRent = numericInput('inp-h1-rent', 30000);
         const netFactorPct = Math.min(100, Math.max(10, numericInput('inp-rent-net-factor', 80)));
         const h1EffRent = Math.round(h1RawRent * (netFactorPct / 100));
