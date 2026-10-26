@@ -111,6 +111,23 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     .mobile-scroll-x { -webkit-overflow-scrolling: touch; }
+    /* Portrait phones: the simulator nests 3 card levels, so trim padding, keep inputs 2-up,
+       let label/value rows wrap instead of squeezing, and stack the combo table into cards. */
+    @media (max-width: 639px) {
+      #simulator-section { padding: 14px !important; }
+      #simulator-section :is(.p-4, .p-5, .p-6) { padding: 12px !important; }
+      #simulator-section :is(.p-3, .p-3\.5) { padding: 10px !important; }
+      #simulator-section .sim-input-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 8px !important; }
+      #simulator-section .sim-input-grid > * { min-width: 0; }
+      #simulator-section .flex.justify-between:not(.flex-col):not(:has(input, select, button, canvas)) { flex-wrap: wrap; column-gap: 8px; row-gap: 2px; }
+      #simulator-section .flex.justify-between:not(.flex-col):not(:has(input, select, button, canvas)) > :last-child:not(:first-child) { margin-left: auto; text-align: right; }
+      #monthly-pay-conclusion .combo-table { min-width: 0 !important; }
+      #monthly-pay-conclusion .combo-table thead { display: none; }
+      #monthly-pay-conclusion .combo-table tr { display: block; padding: 10px 8px; }
+      #monthly-pay-conclusion .combo-table td { display: flex; justify-content: space-between; gap: 8px; padding: 2px 0 !important; }
+      #monthly-pay-conclusion .combo-table td:first-child { display: block; padding-bottom: 6px !important; }
+      #monthly-pay-conclusion .combo-table td[data-label]::before { content: attr(data-label); color: #94a3b8; font-family: 'Inter', 'Noto Sans TC', sans-serif; font-weight: 400; }
+    }
   </style>
   <meta name="description" content="第二屋資產槓桿實戰決策：以第一屋、第二屋與0050連動情境，檢視租金、房貸、現金流及資產配置的教學試算。">
   <meta property="og:title" content="第二屋購屋與資產槓桿決策中心（V3 統一財務模型版）｜科目一轉科目四 × 首購八成 × 0050 套利全解析">
@@ -1445,7 +1462,7 @@
       </div>
 
       <!-- Primary Simulator Input Controls (10 Inputs including Effective Rent Ratio) -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3 text-sm">
+      <div class="sim-input-grid grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3 text-sm">
         <div class="p-3 rounded-2xl bg-slate-900/90 border border-slate-800">
           <label for="inp-h1-val" class="block font-bold text-slate-400 mb-1">第一屋現值 (萬)</label>
           <input id="inp-h1-val" type="number" value="2000" step="50" class="w-full px-2.5 py-1.5 rounded-xl bg-slate-950 border border-slate-700 text-amber-300 font-mono-num font-bold text-sm focus:outline-none focus:border-amber-400" />
@@ -1525,7 +1542,7 @@
         </div>
 
         <!-- 4 Down Payment & Renovation Input Controls -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
+        <div class="sim-input-grid grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
           <div class="p-3.5 rounded-2xl bg-slate-950/90 border border-sky-500/30">
             <label for="inp-buyer-cash" class="block font-bold text-sky-300 mb-1"><svg class="site-icon lucide lucide-landmark" aria-hidden="true" focusable="false"
   xmlns="http://www.w3.org/2000/svg"
@@ -1631,7 +1648,7 @@
   <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
 </svg>
  購屋上限反推：自備款到底能買多少總價？</span>
-              <span class="text-[10px] px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 font-bold">消除科目一貸 8 成基準</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 font-bold">貸 <span id="disp-m1-ltv">8</span> 成基準</span>
             </div>
 
             <div class="space-y-2 text-sm">
@@ -1656,7 +1673,7 @@
                   <strong id="out-safe-h2-price" class="text-xl sm:text-2xl font-black text-emerald-400 font-mono-num">3,488 萬元</strong>
                 </div>
                 <div class="text-[11px] text-emerald-300/90 leading-relaxed flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                  <span>保留 <span id="disp-safe-reserve" class="font-mono-num font-bold">50</span> 萬備用金＋扣除裝潢規費後，2 成頭期可負擔總價</span>
+                  <span>保留 <span id="disp-safe-reserve" class="font-mono-num font-bold">50</span> 萬備用金＋扣除裝潢規費後，<span id="disp-m1-down">2</span> 成頭期可負擔總價</span>
                   <button type="button" id="btn-apply-safe-price" class="shrink-0 px-2.5 py-1 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-[11px] shadow transition">
                     <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
   xmlns="http://www.w3.org/2000/svg"
@@ -2055,8 +2072,8 @@
         </div>
 
         <div class="p-3 rounded-2xl bg-slate-900/80 border border-slate-800 text-[11px] text-slate-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <div class="flex items-center gap-2">
-            <span class="text-amber-400 font-bold"><svg class="site-icon lucide lucide-lightbulb" aria-hidden="true" focusable="false"
+          <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+            <span class="text-amber-400 font-bold shrink-0"><svg class="site-icon lucide lucide-lightbulb" aria-hidden="true" focusable="false"
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -2117,7 +2134,7 @@
         </div>
 
         <!-- Loan Configuration Interactive Bar -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3 text-sm">
+        <div class="sim-input-grid grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3 text-sm">
           <div class="p-3.5 rounded-2xl bg-slate-950/90 border border-purple-500/30 col-span-2 sm:col-span-2 lg:col-span-2 space-y-2">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
               <label for="inp-loan-calc-amt" class="font-bold text-purple-300 shrink-0"><svg class="site-icon lucide lucide-landmark" aria-hidden="true" focusable="false"
@@ -2212,7 +2229,7 @@
             <span class="text-[10px] text-slate-400 block">40年期可大幅壓低本息月付</span>
           </div>
 
-          <div class="p-3.5 rounded-2xl bg-slate-950/90 border border-slate-800 space-y-1">
+          <div class="p-3.5 rounded-2xl bg-slate-950/90 border border-slate-800 space-y-1 col-span-2 sm:col-span-1">
             <label for="sel-h2-grace-years" class="block font-bold text-amber-300 mb-1"><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
   xmlns="http://www.w3.org/2000/svg"
   width="24"
@@ -2553,7 +2570,7 @@
           </div>
         </div>
         <div class="overflow-x-auto">
-          <table class="w-full text-sm text-left min-w-[640px]">
+          <table class="combo-table w-full text-sm text-left min-w-[640px]">
             <thead>
               <tr class="text-[11px] text-slate-400 border-b border-slate-800">
                 <th class="py-2 pr-2 font-semibold">還款組合</th>
@@ -2985,7 +3002,7 @@
       // Module 3: Second House Loan & Repayment Scenarios
       const loanCalcInputEl = document.getElementById('inp-loan-calc-amt');
       let loanAmt = parseFloat(loanCalcInputEl?.value);
-      const h2Loan80Default = Math.round(h2Price * 0.8);
+      const h2Loan80Default = Math.round(h2Price * currentLtvFactor);
       if (isNaN(loanAmt) || loanAmt < 0) {
         loanAmt = h2Loan80Default;
         if (loanCalcInputEl) loanCalcInputEl.value = loanAmt;
@@ -2995,8 +3012,9 @@
         if (loanCalcInputEl) loanCalcInputEl.value = loanAmt;
       }
 
+      // Display-only: the integer loan / price ratio must not feed back into currentLtvFactor,
+      // otherwise typing through small transient prices (e.g. "3") ratchets the LTV down.
       const actualLtvPct = h2Price > 0 ? (loanAmt / h2Price) : 0.8;
-      currentLtvFactor = actualLtvPct;
       updateLtvButtonStyles(actualLtvPct);
       document.getElementById('disp-current-ltv-pct').textContent = `${(actualLtvPct * 100).toFixed(1)}%`;
 
@@ -3096,7 +3114,8 @@
         const isCurrent = m1 === h1RepayMode && m2 === currentH2Mode;
         const rowClass = isCurrent ? 'bg-emerald-500/10 text-white font-bold' : (notApplicable ? 'text-slate-400 opacity-60' : 'text-slate-300');
         const label = `一屋${h1ModeName[m1]} ＋ 二屋${notApplicable ? '只繳息（不適用）' : h2ModeName[m2]}${isCurrent ? '（目前）' : ''}`;
-        return `<tr class="border-b border-slate-800/70 ${rowClass}"><td class="py-2 pr-2 font-sans">${label}</td><td class="py-2 px-2 text-right whitespace-nowrap">${h1Pay.toLocaleString()} 元</td><td class="py-2 px-2 text-right whitespace-nowrap">${h2Pay.toLocaleString()} 元</td><td class="py-2 px-2 text-right whitespace-nowrap">${total.toLocaleString()} 元</td><td class="py-2 px-2 text-right whitespace-nowrap ${total - h1EffRent < 0 ? 'text-emerald-400' : 'text-amber-300'}">${fmtSelfPay(total - h1EffRent)}</td><td class="py-2 pl-2 text-right whitespace-nowrap text-rose-300">${fmtSelfPay(total)}</td></tr>`;
+        // data-label feeds the stacked card layout on phones (thead is hidden there)
+        return `<tr class="border-b border-slate-800/70 ${rowClass}"><td class="py-2 pr-2 font-sans">${label}</td><td data-label="第一屋科目四" class="py-2 px-2 text-right whitespace-nowrap">${h1Pay.toLocaleString()} 元</td><td data-label="第二屋房貸" class="py-2 px-2 text-right whitespace-nowrap">${h2Pay.toLocaleString()} 元</td><td data-label="兩屋房貸合計" class="py-2 px-2 text-right whitespace-nowrap">${total.toLocaleString()} 元</td><td data-label="有租金：每月自付" class="py-2 px-2 text-right whitespace-nowrap ${total - h1EffRent < 0 ? 'text-emerald-400' : 'text-amber-300'}">${fmtSelfPay(total - h1EffRent)}</td><td data-label="空租：每月自付" class="py-2 pl-2 text-right whitespace-nowrap text-rose-300">${fmtSelfPay(total)}</td></tr>`;
       });
       document.getElementById('monthly-combo-body').innerHTML = comboRows.join('');
       const currentTotal = h1MonthlyPay + h2PayByMode[currentH2Mode];
@@ -3117,7 +3136,7 @@
       const feeRatePct = numericInput('inp-fee-rate', 1.5);
       const feeRate = feeRatePct / 100;
 
-      const downRatio = Math.max(0.05, 1 - actualLtvPct);
+      const downRatio = Math.max(0.05, 1 - currentLtvFactor);
       const netDownCashSafe = Math.max(0, buyerCash - renovation - reserveFund);
       const netDownCashMax = Math.max(0, buyerCash - renovation);
       const safeMaxH2Price = Math.round(netDownCashSafe / (downRatio + feeRate));
@@ -3130,6 +3149,9 @@
       document.getElementById('out-second-50-price').textContent = `約 ${secondHouse2ndHomeMaxPrice.toLocaleString()} 萬`;
       document.getElementById('out-leverage-gap').textContent = `+${leverageGap.toLocaleString()} 萬`;
       document.getElementById('disp-safe-reserve').textContent = reserveFund;
+      const fmtCheng = v => String(Math.round(v * 100) / 10);
+      document.getElementById('disp-m1-ltv').textContent = fmtCheng(1 - downRatio);
+      document.getElementById('disp-m1-down').textContent = fmtCheng(downRatio);
 
       document.getElementById('disp-eval-target-price').textContent = `${h2Price.toLocaleString()} 萬`;
       document.getElementById('disp-curr-target-price-title').textContent = `${h2Price.toLocaleString()} 萬`;
@@ -3368,8 +3390,16 @@
       draw();
     }
 
+    // LTV intent = loan / price, taken only from values the user set (restored form state, loan field edits)
+    function syncLtvFactorFromLoan() {
+      const price = parseFloat(document.getElementById('inp-h2-price')?.value);
+      const loan = parseFloat(document.getElementById('inp-loan-calc-amt')?.value);
+      if (price > 0 && loan >= 0) currentLtvFactor = Math.min(1, loan / price);
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       initCanvas();
+      syncLtvFactorFromLoan();
       updateSimulation();
       window.addEventListener('resize', () => {
         if (!strategyChartInstance) updateSimulation();
@@ -3436,6 +3466,7 @@
         const h2LoanEl = document.getElementById('inp-loan-calc-amt');
         if (h2LoanEl) h2LoanEl.value = Math.round(numericInput('inp-h2-price', 3350) * currentLtvFactor);
       });
+      document.getElementById('inp-loan-calc-amt')?.addEventListener('input', syncLtvFactorFromLoan);
 
       ['inp-h1-val', 'inp-h1-loan', 'inp-h1-rent', 'inp-rent-net-factor', 'inp-h2-price', 'inp-etf-return', 'inp-loan-rate', 'inp-buyer-cash', 'inp-renovation', 'inp-reserve-fund', 'inp-fee-rate', 'inp-loan-calc-amt', 'inp-h2-mortgage-rate', 'sel-h2-loan-term', 'sel-h2-grace-years', 'inp-h1-loan-interest', 'inp-h1-loan-years', 'inp-prop-growth', 'inp-sale-cost-pct', 'sel-h1-repay-mode', 'sel-h1-io-period', 'inp-h1-refi-cost'].forEach(id => {
         const el = document.getElementById(id);
@@ -3601,7 +3632,7 @@
         const reserveFund = numericInput('inp-reserve-fund', 50);
         const feeRatePct = numericInput('inp-fee-rate', 1.5);
         const feeRate = feeRatePct / 100;
-        const loanAmt = numericInput('inp-loan-calc-amt', Math.round(h2Price * 0.8));
+        const loanAmt = numericInput('inp-loan-calc-amt', Math.round(h2Price * currentLtvFactor));
         const pureDown = Math.max(0, h2Price - loanAmt);
         const pureFee = Math.round(h2Price * feeRate);
         const totalCashNeeded = pureDown + renovation + pureFee;

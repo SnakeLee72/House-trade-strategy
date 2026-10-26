@@ -47,3 +47,13 @@ test('second-house invalid-state reset never wipes nested output elements',()=>{
  while((m=re.exec(h))){const tag=m[1],tok=new RegExp('<'+tag+'\b|</'+tag+'>','g');tok.lastIndex=re.lastIndex;let depth=1,x;while(depth&&(x=tok.exec(h)))depth+=x[0][1]==='/'?-1:1;if(/\bid="/.test(h.slice(re.lastIndex,x.index)))nested.push(m[2]);}
  assert.deepEqual(nested,[]);
 });
+test('second-house LTV intent survives typing through small transient prices',()=>{
+ // 3350 → 3500 逐鍵輸入會經過「3」：借款 round(3×0.8)=2 若回寫成數會變 66.7%，安全推薦總價因而掉到約 2,096 萬
+ const s=setup(second);s.run('updateSimulation');assert.equal(s.nodes['out-safe-h2-price'].textContent,'3,488 萬元');
+ for(const v of ['335','33','3','3','35','350','3500']){s.nodes['inp-h2-price'].value=v;s.nodes['inp-loan-calc-amt'].value=String(Math.round(Number(v)*vm.runInContext('currentLtvFactor',s.c)));s.run('updateSimulation');}
+ assert.equal(s.nodes['inp-loan-calc-amt'].value,'2800');
+ assert.equal(s.nodes['out-safe-h2-price'].textContent,'3,488 萬元');
+ assert.equal(s.nodes['disp-current-ltv-pct'].textContent,'80.0%');
+ s.nodes['inp-loan-calc-amt'].value='2450';s.run('syncLtvFactorFromLoan');s.run('updateSimulation');
+ assert.equal(s.nodes['disp-m1-ltv'].textContent,'7');assert.equal(s.nodes['disp-m1-down'].textContent,'3');
+});
