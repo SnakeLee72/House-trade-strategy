@@ -1281,7 +1281,7 @@
               </td>
               <td class="p-3.5 font-mono-num">
                 <strong>0 元額外現金</strong><br>
-                <span class="text-sm text-slate-400">賣屋扣除稅費實拿約 1,430 萬，付完 870 萬還剩 560 萬</span>
+                <span class="text-sm text-slate-400">賣屋扣 2% 仲介費與殘貸後淨得約 1,510 萬，連同自備款全數作第二屋頭期與裝潢規費，第二屋只需貸款約 720 萬</span>
               </td>
             </tr>
 
@@ -1300,8 +1300,8 @@
                 <span class="text-[11px] text-slate-400">1,320 萬現金扣除第 2 戶 7 成自備款 1,205 萬後僅剩 115 萬</span>
               </td>
               <td class="p-3.5 font-mono-num">
-                <strong class="text-slate-300 text-base">1,880 萬元</strong><br>
-                <span class="text-[11px] text-slate-400">原本 1,320 萬現金 ＋ 賣一屋結餘 560 萬投入 0050（但少了一間 2,000萬房產）</span>
+                <strong class="text-slate-300 text-base">0 萬元</strong><br>
+                <span class="text-[11px] text-slate-400">不買 0050：賣屋淨得與手頭現金全數壓進第二屋頭期，以降低房貸（少了一間 2,000 萬房產與租金）</span>
               </td>
             </tr>
           </tbody>
@@ -2502,7 +2502,7 @@
   <path d="M12 16v-4" />
   <path d="M12 8h.01" />
 </svg>
- V3 統一本金池 10 年後預估總淨值差距（作法 1/3 雙房＋0050 vs 作法 4 賣舊換新）</div>
+ V3 統一本金池 10 年後預估總淨值差距（作法 1/3 雙房＋0050 vs 作法 4 賣舊換新、不買 0050）</div>
               <p class="text-sm text-slate-300">
                 以相同初始資金池、房價年增 <span id="out-prop-growth-text">3</span>%、0050 年化 <span id="out-etf-rate-text">8.5</span>%、有效淨租金率 <span id="out-eff-rent-text">90</span>% 並計入 120 期房貸本息攤還精算（資金缺口以原額計入，未另計融資成本）：
               </p>
@@ -2547,11 +2547,11 @@
             <p id="out-m1-diff-note" class="text-amber-200/90">作法 1 與作法 3 公式相同，差異僅來自假設：作法 1 另扣「科目四撥款 3 個月時間差」機會成本約 24 萬。</p>
             <p id="out-m3-diff-note" class="text-sky-200/90">作法 3 與作法 1 公式相同，差異僅來自假設：作法 3 另扣固定 8 萬，為轉貸／過橋摩擦成本假設（不隨輸入變動）。</p>
             <div class="flex items-center gap-2">
-              <label for="inp-sale-cost-pct" class="font-bold text-slate-300 shrink-0">作法 4 賣屋稅費假設 (%)</label>
-              <input id="inp-sale-cost-pct" type="number" value="5" min="0" max="60" step="0.5" class="w-20 px-2 py-1 rounded-xl bg-slate-950 border border-slate-700 text-slate-200 font-mono-num font-bold text-sm focus:outline-none focus:border-slate-400" />
+              <label for="inp-sale-cost-pct" class="font-bold text-slate-300 shrink-0">作法 4 賣屋仲介費 (%)</label>
+              <input id="inp-sale-cost-pct" type="number" value="2" min="0" max="60" step="0.5" class="w-20 px-2 py-1 rounded-xl bg-slate-950 border border-slate-700 text-slate-200 font-mono-num font-bold text-sm focus:outline-none focus:border-slate-400" />
             </div>
-            <p id="out-m4-sale-note">作法 4：賣第一屋 2,000 萬 × (1 − 5%) − 殘貸 450 萬 ＝ 淨得 1,450 萬。</p>
-            <p id="m4-tax-warning" class="text-rose-300/90">本作法以單一百分比概括交易與稅務摩擦，未逐項計算房地合一稅；持有期間不同稅率差異極大（2 年內最高 45%、逾 10 年 15%），實際稅負請另行估算。</p>
+            <p id="out-m4-sale-note">作法 4（不買 0050）：賣第一屋 2,000 萬 × (1 − 2%) − 殘貸 450 萬 ＝ 淨得 1,510 萬，加自備款全數作第二屋頭期與裝潢規費，不足才貸款。</p>
+            <p id="m4-tax-warning" class="text-rose-300/90">本作法僅扣仲介費，未計入土增稅與房地合一稅；持有期間不同稅率差異極大（2 年內最高 45%、逾 10 年 15%），實際稅負請另行估算。</p>
           </div>
         </div>
       </div>
@@ -2874,7 +2874,7 @@
       const h1LoanRate = Math.max(0, numericInput('inp-h1-loan-interest', 2.20));
       const h1LoanYears = Math.max(1, Math.round(numericInput('inp-h1-loan-years', 20)));
       const propGrowthPct = numericInput('inp-prop-growth', 3);
-      const saleCostPct = Math.min(60, Math.max(0, numericInput('inp-sale-cost-pct', 5)));
+      const saleCostPct = Math.min(60, Math.max(0, numericInput('inp-sale-cost-pct', 2)));
 
       // Update Rent Factor UI
       document.getElementById('disp-raw-rent').textContent = h1RawRent.toLocaleString();
@@ -3263,20 +3263,29 @@
         - (h1Loan10YrM2.totalOutflowWan + h2Loan10YrM2.totalOutflowWan)
       );
 
-      // Method 4: Sell H1 (net proceeds after user-set agency + tax friction, default 5% = h1Val * 0.95 - h1Loan)
+      // Method 4: Sell H1 (net of agency fee, default 2%) → proceeds + own cash all go into H2 down payment,
+      // renovation and fees; only the gap is borrowed (no 0050). Seller then owns no home, so first-home 8成 cap applies.
       const h1SaleNetProceeds = Math.max(0, Math.round(h1Val * (1 - saleCostPct / 100)) - h1Loan);
-      const totalCashPoolM4 = buyerCash + h1SaleNetProceeds - totalCashNeededM3;
-      const etfPoolM4 = Math.max(0, totalCashPoolM4);
-      const shortfallM4 = Math.min(0, totalCashPoolM4);
+      const cashPoolM4 = buyerCash + h1SaleNetProceeds;
+      const loanNeededM4 = Math.max(0, h2Price + renovation + pureFee - cashPoolM4);
+      const loanM4 = Math.min(loanNeededM4, Math.round(h2Price * 0.8));
+      const shortfallM4 = loanM4 - loanNeededM4; // ≤ 0：超過 8 成上限的缺口以原額計入
+      const idleCashM4 = Math.max(0, cashPoolM4 - (h2Price + renovation + pureFee)); // 付清後的餘額，不投資
+      const h2Loan10YrM4 = calcLoan10YrStatus(loanM4, h2Rate, loanTermYears + graceYears, graceYears, 120);
       const netWealthM4 = Math.round(
-        (h2Future + (etfPoolM4 * etfGrowth10Yr) + shortfallM4)
-        - h2Loan10YrStatus.remainWan
-        - h2Loan10YrStatus.totalOutflowWan
+        (h2Future + idleCashM4 + shortfallM4)
+        - h2Loan10YrM4.remainWan
+        - h2Loan10YrM4.totalOutflowWan
       );
+      const m4MonthlyIo = graceYears > 0 ? Math.round(loanM4 * 10000 * (h2Rate / 1200)) : 0;
+      const m4MonthlyPi = mortgagePayment(loanM4, h2Rate, loanTermYears * 12);
 
       document.getElementById('out-m1-diff-note').textContent = `作法 1（${netWealthM1.toLocaleString()} 萬）與作法 3 公式相同，差異僅來自假設：作法 1 另扣「科目四撥款 3 個月時間差」機會成本約 ${timingLagCostM1.toLocaleString()} 萬（0050 部位 ${etfPrincipalFromLoan.toLocaleString()} 萬 × ${etfReturn}% × 3/12）。`;
       document.getElementById('out-m3-diff-note').textContent = `作法 3（${netWealthM3.toLocaleString()} 萬）與作法 1 公式相同，差異僅來自假設：作法 3 另扣固定 ${refiFrictionM3} 萬，為轉貸／過橋摩擦成本假設（不隨輸入變動）。`;
-      document.getElementById('out-m4-sale-note').textContent = `作法 4（${netWealthM4.toLocaleString()} 萬）：賣第一屋 ${h1Val.toLocaleString()} 萬 × (1 − ${saleCostPct}%) − 殘貸 ${h1Loan.toLocaleString()} 萬 ＝ 淨得 ${h1SaleNetProceeds.toLocaleString()} 萬。`;
+      const m4PayText = loanM4 > 0
+        ? `第二屋只需貸 ${loanM4.toLocaleString()} 萬（${(loanM4 / h2Price * 100).toFixed(1)}%），月付：${graceYears > 0 ? `寬限期 ${m4MonthlyIo.toLocaleString()} 元、之後 ` : ''}${m4MonthlyPi.toLocaleString()} 元`
+        : `第二屋免貸款，付清後剩 ${idleCashM4.toLocaleString()} 萬現金（不投資）`;
+      document.getElementById('out-m4-sale-note').textContent = `作法 4（${netWealthM4.toLocaleString()} 萬，不買 0050）：賣第一屋 ${h1Val.toLocaleString()} 萬 × (1 − ${saleCostPct}%) − 殘貸 ${h1Loan.toLocaleString()} 萬 ＝ 淨得 ${h1SaleNetProceeds.toLocaleString()} 萬，加自備款 ${buyerCash.toLocaleString()} 萬全數作第二屋頭期與裝潢規費；${m4PayText}${shortfallM4 < 0 ? `；超過 8 成上限尚缺 ${Math.abs(shortfallM4).toLocaleString()} 萬` : ''}。`;
       const bestHoldWealth = Math.max(netWealthM1, netWealthM3);
       const diffAdvantage = bestHoldWealth - netWealthM4;
       document.getElementById('out-10yr-advantage').textContent = `${diffAdvantage >= 0 ? '+' : ''}${diffAdvantage.toLocaleString()} 萬元`;

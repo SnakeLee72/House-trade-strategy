@@ -57,3 +57,10 @@ test('second-house LTV intent survives typing through small transient prices',()
  s.nodes['inp-loan-calc-amt'].value='2450';s.run('syncLtvFactorFromLoan');s.run('updateSimulation');
  assert.equal(s.nodes['disp-m1-ltv'].textContent,'7');assert.equal(s.nodes['disp-m1-down'].textContent,'3');
 });
+test('second-house 作法 4 sells H1 into the H2 down payment, borrows only the gap and holds no 0050',()=>{
+ // 賣屋淨得 2,000×98%−450＝1,510 萬＋自備款 950 萬全數作頭期與裝潢規費，二屋只貸 1,090 萬；作法 4 不隨 0050 報酬率變動
+ const m4=r=>{const s=setup(second);s.nodes['inp-etf-return'].value=r;s.run('updateSimulation');return s.nodes['out-m4-sale-note'].textContent;};
+ const base=m4('8.5');
+ assert.match(base,/作法 4（3,186 萬，不買 0050）/);assert.match(base,/淨得 1,510 萬/);assert.match(base,/只需貸 1,090 萬（32\.5%）/);assert.match(base,/：寬限期 19,983 元、之後 41,387 元/);
+ assert.equal(m4('0').match(/作法 4（([\d,]+)/)[1],'3,186');assert.equal(m4('15').match(/作法 4（([\d,]+)/)[1],'3,186');
+});
