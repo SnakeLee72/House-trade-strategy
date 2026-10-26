@@ -35,7 +35,7 @@
     "disp-io-cover-tip": "1,675 萬",
     "disp-calc-loan-amt": "2,680 萬",
     "disp-current-ltv-pct": "80.0%",
-    "disp-10yr-rem-loan": "2,130萬",
+    "disp-10yr-rem-loan": "2,203萬",
     "disp-sc1-grace-yrs": 3,
     "out-sc1-monthly": "",
     "out-sc1-interest": "49,133 元",
@@ -47,12 +47,7 @@
     "out-sc2-pure-interest": "49,133 元",
     "out-sc2-real-pay": "100,227 元/月",
     "out-sc2-income": "約 30.1 萬元",
-    "disp-sc3-remain-yrs": 27,
-    "out-sc3-monthly": "",
-    "out-sc3-jump": "+60,641 元/月 (+123%)",
-    "out-sc3-real-pay": "108,241 元/月",
-    "out-sc3-diff-no-grace": "+8,014 元",
-    "out-sc3-income": "32.5 萬",
+    "out-sc2-jump": "+52,627 元/月 (+107%)",
     "out-h1-badge": "⚖️ 租金正現金流",
     "out-h1-maxloan": "1,600 萬",
     "out-rent-safe-cap": "871 萬 (房客全包)",
@@ -70,12 +65,13 @@
     "out-saved-down": "省下 335 萬現金！",
     "out-h2-rate-card-b": "2.2%",
     "out-h2-io": "49,133 元/月",
-    "out-h2-pi": "已還 550萬 / 剩 2,130萬",
+    "out-h2-pi": "已還 477萬 / 剩 2,203萬",
     "out-h2-real-pay": "47,600 元/月",
     "disp-cardb-grace": 3,
     "disp-cardb-amort": 7,
     "out-etf-rate-text": 8.5,
     "out-eff-rent-text": 90,
-    "out-10yr-advantage": "+420 萬元"
+    "out-10yr-advantage": "+411 萬元",
+    "out-concl-current-pay": "47,600 元/月"
   }
 }

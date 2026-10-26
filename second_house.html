@@ -1317,7 +1317,7 @@
 </svg>
  第一屋（2,000萬）× 第二屋（3,200~3,500萬）× 0050 全景連動試算器</h2>
           <p class="text-sm text-slate-300 mt-0.5">
-            修改任一參數，下方<strong>「購屋上限反推」、「科目四印鈔機額度」、「房貸三情境懸崖月付」與「10 年本息攤還淨資產對決圖」</strong>將 100% 同步精算更新！
+            修改任一參數，下方<strong>「購屋上限反推」、「科目四印鈔機額度」、「房貸月付組合」與「10 年本息攤還淨資產對決圖」</strong>將 100% 同步精算更新！
           </p>
         </div>
 
@@ -1889,7 +1889,7 @@
               <span class="px-2 py-0.5 rounded-full text-[10px] bg-amber-500/20 text-amber-300 font-bold font-mono-num" id="tag-safe-loan">約 871 萬</span>
             </div>
             <div class="mt-2 text-[11px] text-slate-300 leading-relaxed">
-              依當前科目四利率計算每百萬 30 年本息月付（<span id="disp-unit-pmt" class="font-mono-num text-amber-300">3,925</span>元）。有效淨租金 100% 買單本息，<strong class="text-amber-300">零自掏腰包風險</strong>！
+              依科目四利率 <span id="disp-unit-rate" class="font-mono-num text-amber-300">2.45</span>% 計算，每借 100 萬、30 年本息月付 <span id="disp-unit-pmt" class="font-mono-num text-amber-300">3,925</span> 元。有效淨租金 100% 買單本息，<strong class="text-amber-300">零自掏腰包風險</strong>！
             </div>
             <div class="mt-2 pt-2 border-t border-slate-800 text-[10px] text-amber-400/90 font-semibold group-hover:text-amber-300 flex items-center justify-between w-full">
               <span>點擊一鍵套用此額度</span>
@@ -2028,6 +2028,32 @@
           </div>
         </div>
 
+        <!-- 科目四還款方式：只繳息（轉貸延續）vs 30 年本息 -->
+        <div class="p-4 rounded-2xl bg-slate-950/90 border border-slate-800 space-y-3">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+            <div class="space-y-1">
+              <label for="sel-h1-repay-mode" class="block font-bold text-amber-300">第一屋科目四還款方式</label>
+              <select id="sel-h1-repay-mode" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-amber-300 font-bold text-sm focus:outline-none focus:border-amber-400">
+                <option value="io" selected>只繳息（寬限期滿即轉貸，持續只繳息）</option>
+                <option value="pi">30 年本息攤還</option>
+              </select>
+            </div>
+            <div class="space-y-1" id="h1-io-period-wrap">
+              <label for="sel-h1-io-period" class="block font-bold text-slate-300">每段寬限（只繳息）年數</label>
+              <select id="sel-h1-io-period" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 font-mono-num font-bold text-sm focus:outline-none focus:border-amber-400">
+                <option value="3" selected>3 年後轉貸一次</option>
+                <option value="5">5 年後轉貸一次</option>
+              </select>
+            </div>
+            <div class="space-y-1" id="h1-refi-cost-wrap">
+              <label for="inp-h1-refi-cost" class="block font-bold text-slate-300">每次轉貸成本 (萬)</label>
+              <input id="inp-h1-refi-cost" type="number" value="3" min="0" step="0.5" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 font-mono-num font-bold text-sm focus:outline-none focus:border-amber-400" />
+            </div>
+          </div>
+          <p id="out-h1-repay-note" class="text-[11px] text-slate-400 leading-relaxed">只繳息：每月 32,667 元，本金不攤還；10 年內約轉貸 3 次、成本約 9 萬（已計入 10 年淨資產）。</p>
+          <p id="h1-io-risk-note" class="text-[11px] text-rose-300/90 leading-relaxed">轉貸延續只繳息的前提是每次都能重新核貸：屆時銀行會重新審核年齡、收入、房屋鑑價與當下信用管制；利率上升時月付同步上升；本金始終不會減少。</p>
+        </div>
+
         <div class="p-3 rounded-2xl bg-slate-900/80 border border-slate-800 text-[11px] text-slate-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div class="flex items-center gap-2">
             <span class="text-amber-400 font-bold"><svg class="site-icon lucide lucide-lightbulb" aria-hidden="true" focusable="false"
@@ -2076,7 +2102,7 @@
 </span>
             <div>
               <div class="flex flex-wrap items-center gap-2">
-                <span class="font-bold text-white text-sm sm:text-base">模組三：第二屋房貸月付金全周期精算（只還息 vs 無寬限本息 vs 寬限期後懸崖）</span>
+                <span class="font-bold text-white text-sm sm:text-base">模組三：第二屋房貸月付金精算（寬限期只還息 vs 30 年本息攤還）</span>
                 <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">連動 10 年本金攤還模型</span>
               </div>
               <p class="text-sm text-slate-300 mt-0.5">
@@ -2177,7 +2203,7 @@
   <path d="M12 16v-4" />
   <path d="M12 8h.01" />
 </svg>
- 貸款總年期</label>
+ 本息攤還年期（不含寬限期）</label>
             <select id="sel-h2-loan-term" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-sky-300 font-mono-num font-bold text-sm focus:outline-none focus:border-sky-400">
               <option value="30" selected>30 年期 (360期 主流)</option>
               <option value="40">40 年期 (480期 低月付)</option>
@@ -2214,12 +2240,12 @@
           </div>
         </div>
 
-        <!-- 3 Major Repayment Scenarios Parallel Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+        <!-- 2 Repayment Scenarios: Interest-only during grace vs P&I (amortization term excludes grace) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
           <!-- Scenario 1: Interest-Only -->
           <div class="p-4 rounded-2xl bg-slate-950/90 border border-emerald-500/40 flex flex-col justify-between space-y-3 relative overflow-hidden">
             <div class="absolute top-0 right-0 px-2.5 py-0.5 rounded-2xl bg-emerald-500/20 text-emerald-300 font-bold text-[10px] border-b border-l border-emerald-500/30">
-              前 <span id="disp-sc1-grace-yrs">3</span> 年期間
+              前 <span id="disp-sc1-grace-yrs">3</span> 年寬限期
             </div>
             <div>
               <div class="flex items-center gap-1.5 text-sm font-bold text-emerald-400">
@@ -2263,7 +2289,7 @@
           <!-- Scenario 2: P&I Without Grace Period -->
           <div class="p-4 rounded-2xl bg-slate-950/90 border border-amber-500/40 flex flex-col justify-between space-y-3 relative overflow-hidden">
             <div class="absolute top-0 right-0 px-2.5 py-0.5 rounded-2xl bg-amber-500/20 text-amber-300 font-bold text-[10px] border-b border-l border-amber-500/30">
-              整期 <span id="disp-sc2-term-yrs">30</span> 年均攤
+              <span id="disp-sc2-badge">寬限期滿後</span> <span id="disp-sc2-term-yrs">30</span> 年本息攤還
             </div>
             <div>
               <div class="flex items-center gap-1.5 text-sm font-bold text-amber-400">
@@ -2282,7 +2308,7 @@
   <path d="M12 16v-4" />
   <path d="M12 8h.01" />
 </svg>
- 情境二：本息一起還（無寬限期）</span>
+ 情境二：本息攤還（<span id="disp-sc2-when">寬限期滿後</span>）</span>
               </div>
               <div class="mt-2 text-2xl sm:text-3xl font-black text-amber-400 font-mono-num" id="out-sc2-monthly">
                 101,760 <span class="text-sm font-normal text-slate-400">元/月</span>
@@ -2290,6 +2316,7 @@
               <div class="text-[11px] text-slate-400 mt-1">
                 首期本金：<strong class="text-slate-300 font-mono-num" id="out-sc2-pure-principal">52,627 元</strong> ｜ 純利息：<strong class="text-slate-300 font-mono-num" id="out-sc2-pure-interest">49,133 元</strong>
               </div>
+              <div class="text-[11px] text-rose-300 mt-1 font-bold" id="out-sc2-jump-wrap">月付比寬限期跳升：<span id="out-sc2-jump" class="font-mono-num">+52,627 元/月 (+107%)</span></div>
             </div>
 
             <div class="space-y-1.5 text-sm pt-2 border-t border-slate-800">
@@ -2303,65 +2330,8 @@
               </div>
             </div>
           </div>
-
-          <!-- Scenario 3: P&I After Grace Period -->
-          <div class="p-4 rounded-2xl bg-slate-950/90 border border-rose-500/40 flex flex-col justify-between space-y-3 relative overflow-hidden">
-            <div class="absolute top-0 right-0 px-2.5 py-0.5 rounded-2xl bg-rose-500/20 text-rose-300 font-bold text-[10px] border-b border-l border-rose-500/30">
-              寬限期滿後剩 <span id="disp-sc3-remain-yrs">27</span> 年
-            </div>
-            <div>
-              <div class="flex items-center gap-1.5 text-sm font-bold text-rose-400">
-                <span><svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
-  xmlns="http://www.w3.org/2000/svg"
-  width="24"
-  height="24"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <circle cx="12" cy="12" r="10" />
-  <path d="M12 16v-4" />
-  <path d="M12 8h.01" />
-</svg>
- 情境三：寬限期後本息攤還（房貸懸崖）</span>
-              </div>
-              <div class="mt-2 text-2xl sm:text-3xl font-black text-rose-400 font-mono-num" id="out-sc3-monthly">
-                109,337 <span class="text-sm font-normal text-slate-400">元/月</span>
-              </div>
-              <div class="text-[11px] text-rose-300 mt-1 font-bold">
-                <svg class="site-icon lucide lucide-info" aria-hidden="true" focusable="false"
-  xmlns="http://www.w3.org/2000/svg"
-  width="24"
-  height="24"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <circle cx="12" cy="12" r="10" />
-  <path d="M12 16v-4" />
-  <path d="M12 8h.01" />
-</svg>
- 月付比寬限期跳升：<span id="out-sc3-jump" class="font-mono-num">+60,204 元/月 (+122%)</span>
-              </div>
-            </div>
-
-            <div class="space-y-1.5 text-sm pt-2 border-t border-slate-800">
-              <div class="flex justify-between items-center bg-rose-500/10 px-2 py-1 rounded-2xl border border-rose-500/20">
-                <span class="text-white text-[11px]">• 經第一屋有效租金支援後【實付】：</span>
-                <strong id="out-sc3-real-pay" class="font-mono-num text-rose-300 font-bold">107,804 元/月</strong>
-              </div>
-              <div class="flex justify-between text-[11px] text-slate-400">
-                <span>• 比無寬限期每月多繳：<strong id="out-sc3-diff-no-grace" class="font-mono-num text-rose-300">+7,577 元</strong>｜建議月收 <strong id="out-sc3-income" class="font-mono-num text-slate-300">32.3 萬</strong></span>
-              </div>
-            </div>
-          </div>
         </div>
+        <p id="out-m3-term-note" class="text-[11px] text-slate-400 leading-relaxed">寬限期不佔用攤還年期：寬限 3 年只繳息，期滿後再以 30 年本息攤還（總貸款期間 33 年），因此寬限期後的月付與無寬限期相同。實際是否「寬限期外加」請以銀行契約為準。</p>
       </div>
 
       <!-- Simulator Output Cards & V3 Unified 10-Year Net Worth Chart -->
@@ -2408,7 +2378,7 @@
                   <strong id="out-etf-principal" class="font-mono-num text-sky-300">1,150 萬</strong>
                 </div>
                 <div class="flex justify-between">
-                  <span>• 科目四每月只繳息 (<span id="out-rate-display">2.45%</span>)：</span>
+                  <span>• 科目四每月<span id="out-h1-pay-mode-label">只繳息</span> (<span id="out-rate-display">2.45%</span>)：</span>
                   <strong id="out-h1-interest" class="font-mono-num text-rose-300">-32,667 元/月</strong>
                 </div>
                 <div class="flex justify-between">
@@ -2416,7 +2386,7 @@
                   <strong id="out-h1-rent-display" class="font-mono-num text-emerald-400">+34,200 元/月</strong>
                 </div>
                 <div class="flex justify-between font-bold">
-                  <span>• 有效租金扣除利息每月淨損益：</span>
+                  <span>• 有效租金扣除科目四月付每月淨損益：</span>
                   <strong id="out-net-cashflow" class="font-mono-num text-emerald-300">+1,533 元/月</strong>
                 </div>
                 <div class="flex justify-between pt-1.5 border-t border-slate-800">
@@ -2567,6 +2537,41 @@
             <p id="m4-tax-warning" class="text-rose-300/90">本作法以單一百分比概括交易與稅務摩擦，未逐項計算房地合一稅；持有期間不同稅率差異極大（2 年內最高 45%、逾 10 年 15%），實際稅負請另行估算。</p>
           </div>
         </div>
+      </div>
+
+      <!-- Conclusion: monthly payment by repayment combination -->
+      <div id="monthly-pay-conclusion" class="p-5 rounded-2xl bg-slate-950/90 border-2 border-emerald-500/40 shadow-xl space-y-4">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-3 border-b border-slate-800 pb-3">
+          <div>
+            <div class="font-bold text-white text-sm sm:text-base">結論：我每個月實際要繳多少？</div>
+            <p class="text-sm text-slate-300 mt-0.5">第一屋科目四 <span id="out-concl-h1-desc" class="font-mono-num">1,600 萬 @ 2.45%</span> ＋ 第二屋購置貸款 <span id="out-concl-h2-desc" class="font-mono-num">2,680 萬 @ 2.2%</span> − 第一屋有效淨租金 <span id="out-concl-rent-desc" class="font-mono-num">34,200 元</span></p>
+          </div>
+          <div class="text-left md:text-right shrink-0">
+            <div class="text-[11px] text-slate-400">依目前選擇（<span id="out-concl-current-label">一屋只繳息＋二屋只繳息＋有租金</span>）每月自付</div>
+            <div id="out-concl-current-pay" class="text-2xl sm:text-3xl font-black text-emerald-400 font-mono-num">47,600 元/月</div>
+            <div id="out-concl-after-grace" class="text-[11px] text-amber-300 mt-0.5"></div>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm text-left min-w-[640px]">
+            <thead>
+              <tr class="text-[11px] text-slate-400 border-b border-slate-800">
+                <th class="py-2 pr-2 font-semibold">還款組合</th>
+                <th class="py-2 px-2 font-semibold text-right">第一屋科目四</th>
+                <th class="py-2 px-2 font-semibold text-right">第二屋房貸</th>
+                <th class="py-2 px-2 font-semibold text-right">兩屋房貸合計</th>
+                <th class="py-2 px-2 font-semibold text-right">有租金：每月自付</th>
+                <th class="py-2 pl-2 font-semibold text-right">無租金（空租）：每月自付</th>
+              </tr>
+            </thead>
+            <tbody id="monthly-combo-body" class="font-mono-num"></tbody>
+          </table>
+        </div>
+        <ul class="text-[11px] text-slate-400 space-y-1 leading-relaxed list-disc pl-4">
+          <li>「每月自付」＝ 兩屋房貸月付 − 第一屋有效淨租金；負數代表租金付完房貸後每月還有結餘。</li>
+          <li>第一屋「只繳息」需靠寬限期滿轉貸延續；第二屋「只繳息」只在寬限期內有效，期滿後改為本息攤還。</li>
+          <li id="out-concl-self-note" class="text-amber-300/90 hidden">目前為「本人名下已有第一屋」模式：第二屋無寬限期，只能本息攤還，標示「不適用」的組合僅供參考。</li>
+        </ul>
       </div>
     </section>
 
@@ -2865,6 +2870,7 @@
       const h1MaxLoan = Math.max(0, Math.round(h1Val * 0.8));
       const unitPmt100W = Math.max(1, mortgagePayment(100, loanRate, 360));
       document.getElementById('disp-unit-pmt').textContent = unitPmt100W.toLocaleString();
+      document.getElementById('disp-unit-rate').textContent = loanRate;
 
       const safeCoverLoan = Math.round((h1EffRent / unitPmt100W) * 100);
       const monthlyRate = (loanRate / 100) / 12;
@@ -2908,19 +2914,36 @@
 
       const etfPrincipalFromLoan = Math.max(0, chosenLoan - h1Loan);
       const h1MonthlyInterest = Math.round(chosenLoan * 10000 * monthlyRate);
+      // 科目四還款方式：只繳息（每段寬限期滿轉貸延續）或 30 年本息攤還
+      const h1RepayMode = document.getElementById('sel-h1-repay-mode')?.value === 'pi' ? 'pi' : 'io';
+      const h1IoPeriodYears = parseInt(document.getElementById('sel-h1-io-period')?.value) || 3;
+      const h1RefiCostWan = Math.max(0, numericInput('inp-h1-refi-cost', 3));
+      const h1MonthlyPi = mortgagePayment(chosenLoan, loanRate, 360);
+      const h1MonthlyPay = h1RepayMode === 'pi' ? h1MonthlyPi : h1MonthlyInterest;
+      // 10 年（120 期）內的轉貸次數：每段寬限期滿轉貸一次，第 120 期當下不再計
+      const h1RefiCount = h1RepayMode === 'io' ? Math.ceil(120 / (h1IoPeriodYears * 12)) - 1 : 0;
+      const h1RefiCost10Yr = h1RefiCount * h1RefiCostWan;
+      const h1Loan10Yr = h1RepayMode === 'pi' ? calcLoan10YrStatus(chosenLoan, loanRate, 30, 0, 120) : { remainWan: chosenLoan, paidPrincipalWan: 0 };
+      document.getElementById('h1-io-period-wrap').classList.toggle('hidden', h1RepayMode !== 'io');
+      document.getElementById('h1-refi-cost-wrap').classList.toggle('hidden', h1RepayMode !== 'io');
+      document.getElementById('h1-io-risk-note').classList.toggle('hidden', h1RepayMode !== 'io');
+      document.getElementById('out-h1-pay-mode-label').textContent = h1RepayMode === 'pi' ? '30 年本息' : '只繳息';
+      document.getElementById('out-h1-repay-note').textContent = h1RepayMode === 'pi'
+        ? `30 年本息：每月 ${h1MonthlyPi.toLocaleString()} 元（只繳息為 ${h1MonthlyInterest.toLocaleString()} 元）；10 年後已還本金約 ${h1Loan10Yr.paidPrincipalWan.toLocaleString()} 萬、剩 ${h1Loan10Yr.remainWan.toLocaleString()} 萬。`
+        : `只繳息：每月 ${h1MonthlyInterest.toLocaleString()} 元，本金不攤還（30 年本息則為 ${h1MonthlyPi.toLocaleString()} 元）；10 年內約轉貸 ${h1RefiCount} 次、成本約 ${h1RefiCost10Yr.toLocaleString()} 萬（已計入 10 年淨資產）。`;
       const etfAnnualGain = etfPrincipalFromLoan * (etfReturn / 100);
       const etfMonthlyGain = Math.round((etfAnnualGain * 10000) / 12);
 
       document.getElementById('out-h1-maxloan').textContent = `${h1MaxLoan.toLocaleString()} 萬`;
       document.getElementById('out-etf-principal').textContent = `${etfPrincipalFromLoan.toLocaleString()} 萬`;
-      document.getElementById('out-h1-interest').textContent = `-${h1MonthlyInterest.toLocaleString()} 元/月`;
+      document.getElementById('out-h1-interest').textContent = `-${h1MonthlyPay.toLocaleString()} 元/月`;
       document.getElementById('out-rate-display').textContent = `${loanRate}%`;
       document.getElementById('out-h1-rent-display').textContent = `+${h1EffRent.toLocaleString()} 元/月`;
       document.getElementById('out-etf-annual').textContent = `+${etfAnnualGain.toFixed(1)} 萬/年 (約 +${(etfMonthlyGain / 10000).toFixed(1)}萬/月)`;
       document.getElementById('out-etf-rate-pct').textContent = `${etfReturn}%`;
       document.getElementById('out-etf-rate-text').textContent = etfReturn;
 
-      const netRentDiff = h1EffRent - h1MonthlyInterest;
+      const netRentDiff = h1EffRent - h1MonthlyPay;
       const netCashflowEl = document.getElementById('out-net-cashflow');
       if (netCashflowEl) {
         netCashflowEl.textContent = `${netRentDiff >= 0 ? '+' : ''}${netRentDiff.toLocaleString()} 元/月`;
@@ -2930,7 +2953,19 @@
       const badgeEl = document.getElementById('out-h1-badge');
       const verdictEl = document.getElementById('out-h1-verdict');
 
-      if (chosenLoan <= safeCoverLoan) {
+      if (h1RepayMode === 'pi') {
+        const piCovered = netRentDiff >= 0;
+        badgeEl.className = piCovered
+          ? "text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30"
+          : "text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-bold border border-amber-500/30";
+        badgeEl.textContent = piCovered ? " 本息超自償" : " 本息攤還貼補";
+        verdictEl.className = piCovered
+          ? "p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-[11px] text-emerald-200 leading-relaxed"
+          : "p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-[11px] text-amber-200 leading-relaxed";
+        verdictEl.innerHTML = piCovered
+          ? ` <strong>【本息超自償】：</strong>申貸 <strong>${chosenLoan} 萬</strong> 採 30 年本息，每月 ${h1MonthlyPi.toLocaleString()} 元，有效淨租金（${h1EffRent.toLocaleString()}元）付完後每月仍有 <strong>+${netRentDiff.toLocaleString()} 元</strong>，本金攤還由房客全額買單！`
+          : ` <strong>【本息攤還貼補】：</strong>申貸 <strong>${chosenLoan} 萬</strong> 採 30 年本息，每月 ${h1MonthlyPi.toLocaleString()} 元（其中本金攤還屬強制儲蓄），有效淨租金折抵後每月需貼補 <strong>${Math.abs(netRentDiff).toLocaleString()} 元</strong>，換取 <strong>${etfPrincipalFromLoan} 萬</strong> 的 0050 部位。`;
+      } else if (chosenLoan <= safeCoverLoan) {
         badgeEl.className = "text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30";
         badgeEl.textContent = " 本息超自償";
         verdictEl.className = "p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-[11px] text-emerald-200 leading-relaxed";
@@ -2976,61 +3011,55 @@
       }
 
       const mRate = (h2Rate / 100) / 12;
-      const totalMonths = loanTermYears * 12;
-      const graceMonths = graceYears * 12;
-      const remainMonths = Math.max(1, totalMonths - graceMonths); // 與 calcLoan10YrStatus 一致，不人為墊高剩餘月數
+      // 寬限期外加於攤還年期：寬限期滿後仍以完整 loanTermYears 年本息攤還（總期間 = 寬限 + 攤還）
+      const amortMonths = loanTermYears * 12;
 
-      // Scenario 1: Interest-Only
+      // Scenario 1: Interest-Only (grace period)
       const pmtIo = Math.round(loanAmt * 10000 * mRate);
       const realPayIo = Math.max(0, pmtIo - netRentDiff);
       const incomeIo = (realPayIo * 3 / 10000).toFixed(1);
 
-      // Scenario 2: P&I Without Grace
-      const pmtPiNoGrace = mortgagePayment(loanAmt, h2Rate, totalMonths);
+      // Scenario 2: P&I over the full amortization term (after grace, or from month 1 without grace)
+      const pmtPi = mortgagePayment(loanAmt, h2Rate, amortMonths);
       const sc2PureInterest = pmtIo;
-      const sc2PurePrincipal = Math.max(0, pmtPiNoGrace - sc2PureInterest);
-      const realPayNoGrace = Math.max(0, pmtPiNoGrace - netRentDiff);
-      const incomeNoGrace = (realPayNoGrace * 3 / 10000).toFixed(1);
-
-      // Scenario 3: P&I After Grace
-      let pmtPiAfterGrace = pmtPiNoGrace;
-      let jumpDiff = 0;
-      let jumpPct = 0;
-      let diffVsNoGrace = 0;
-
-      if (graceYears > 0 && remainMonths < totalMonths) {
-        pmtPiAfterGrace = mortgagePayment(loanAmt, h2Rate, remainMonths);
-        jumpDiff = pmtPiAfterGrace - pmtIo;
-        jumpPct = pmtIo > 0 ? Math.round((jumpDiff / pmtIo) * 100) : 0;
-        diffVsNoGrace = pmtPiAfterGrace - pmtPiNoGrace;
-      }
-      const realPayAfterGrace = Math.max(0, pmtPiAfterGrace - netRentDiff);
-      const incomeAfterGrace = (realPayAfterGrace * 3 / 10000).toFixed(1);
+      const sc2PurePrincipal = Math.max(0, pmtPi - sc2PureInterest);
+      const realPayPi = Math.max(0, pmtPi - netRentDiff);
+      const incomePi = (realPayPi * 3 / 10000).toFixed(1);
+      const jumpDiff = pmtPi - pmtIo;
+      const jumpPct = pmtIo > 0 ? Math.round((jumpDiff / pmtIo) * 100) : 0;
 
       // 10-Year Amortization Status for Second House (Method 1 & 3)
-      const h2Loan10YrStatus = calcLoan10YrStatus(loanAmt, h2Rate, loanTermYears, graceYears, 120);
+      const h2Loan10YrStatus = calcLoan10YrStatus(loanAmt, h2Rate, loanTermYears + graceYears, graceYears, 120);
       document.getElementById('disp-10yr-rem-loan').textContent = `${h2Loan10YrStatus.remainWan.toLocaleString()}萬`;
 
       // Update Scenario DOMs
+      const ioUnit = '<span class="text-sm font-normal text-slate-400">元/月</span>';
       document.getElementById('disp-sc1-grace-yrs').textContent = graceYears;
-      document.getElementById('out-sc1-monthly').innerHTML = `${pmtIo.toLocaleString()} <span class="text-sm font-normal text-slate-400">元/月</span>`;
-      document.getElementById('out-sc1-interest').textContent = `${pmtIo.toLocaleString()} 元`;
-      document.getElementById('out-sc1-real-pay').textContent = `${realPayIo.toLocaleString()} 元/月`;
-      document.getElementById('out-sc1-income').textContent = `約 ${incomeIo} 萬元`;
+      if (graceYears > 0) {
+        document.getElementById('out-sc1-monthly').innerHTML = `${pmtIo.toLocaleString()} ${ioUnit}`;
+        document.getElementById('out-sc1-interest').textContent = `${pmtIo.toLocaleString()} 元`;
+        document.getElementById('out-sc1-real-pay').textContent = `${realPayIo.toLocaleString()} 元/月`;
+        document.getElementById('out-sc1-income').textContent = `約 ${incomeIo} 萬元`;
+      } else {
+        document.getElementById('out-sc1-monthly').innerHTML = `不適用 <span class="text-sm font-normal text-slate-400">（無寬限期）</span>`;
+        document.getElementById('out-sc1-interest').textContent = '—';
+        document.getElementById('out-sc1-real-pay').textContent = '—';
+        document.getElementById('out-sc1-income').textContent = '—';
+      }
 
       document.getElementById('disp-sc2-term-yrs').textContent = loanTermYears;
-      document.getElementById('out-sc2-monthly').innerHTML = `${pmtPiNoGrace.toLocaleString()} <span class="text-sm font-normal text-slate-400">元/月</span>`;
+      document.getElementById('disp-sc2-badge').textContent = graceYears > 0 ? `第 ${graceYears + 1} 年起` : '首期起';
+      document.getElementById('disp-sc2-when').textContent = graceYears > 0 ? `寬限期滿後 ${loanTermYears} 年` : `無寬限期 ${loanTermYears} 年`;
+      document.getElementById('out-sc2-monthly').innerHTML = `${pmtPi.toLocaleString()} ${ioUnit}`;
       document.getElementById('out-sc2-pure-principal').textContent = `${sc2PurePrincipal.toLocaleString()} 元`;
       document.getElementById('out-sc2-pure-interest').textContent = `${sc2PureInterest.toLocaleString()} 元`;
-      document.getElementById('out-sc2-real-pay').textContent = `${realPayNoGrace.toLocaleString()} 元/月`;
-      document.getElementById('out-sc2-income').textContent = `約 ${incomeNoGrace} 萬元`;
-
-      document.getElementById('disp-sc3-remain-yrs').textContent = Math.max(0, loanTermYears - graceYears);
-      document.getElementById('out-sc3-monthly').innerHTML = `${pmtPiAfterGrace.toLocaleString()} <span class="text-sm font-normal text-slate-400">元/月</span>`;
-      document.getElementById('out-sc3-jump').textContent = graceYears > 0 ? `+${jumpDiff.toLocaleString()} 元/月 (+${jumpPct}%)` : `無寬限期 (自首期即本息均攤)`;
-      document.getElementById('out-sc3-real-pay').textContent = `${realPayAfterGrace.toLocaleString()} 元/月`;
-      document.getElementById('out-sc3-income').textContent = `${incomeAfterGrace} 萬`;
-      document.getElementById('out-sc3-diff-no-grace').textContent = diffVsNoGrace > 0 ? `+${diffVsNoGrace.toLocaleString()} 元` : `0 元`;
+      document.getElementById('out-sc2-real-pay').textContent = `${realPayPi.toLocaleString()} 元/月`;
+      document.getElementById('out-sc2-income').textContent = `約 ${incomePi} 萬元`;
+      document.getElementById('out-sc2-jump-wrap').classList.toggle('hidden', graceYears === 0);
+      document.getElementById('out-sc2-jump').textContent = `+${jumpDiff.toLocaleString()} 元/月 (+${jumpPct}%)`;
+      document.getElementById('out-m3-term-note').textContent = graceYears > 0
+        ? `寬限期不佔用攤還年期：前 ${graceYears} 年只繳息，期滿後再以 ${loanTermYears} 年本息攤還（總貸款期間 ${graceYears + loanTermYears} 年），所以寬限期後的月付與無寬限期相同。實際是否「寬限期外加」請以銀行契約為準。`
+        : `無寬限期：自首期起以 ${loanTermYears} 年本息攤還。`;
       document.getElementById('disp-calc-loan-amt').textContent = `${loanAmt.toLocaleString()} 萬`;
 
       // Update Card B
@@ -3039,8 +3068,8 @@
       const h2Down2ndHome = h2Price - h2Loan2ndHome;
       const savedDown = Math.max(0, h2Down2ndHome - h2DownActual);
 
-      const initialH2Monthly = graceYears > 0 ? pmtIo : pmtPiNoGrace;
-      const initialRealH2Monthly = graceYears > 0 ? realPayIo : realPayNoGrace;
+      const initialH2Monthly = graceYears > 0 ? pmtIo : pmtPi;
+      const initialRealH2Monthly = graceYears > 0 ? realPayIo : realPayPi;
 
       document.getElementById('out-h2-loan80').textContent = `${loanAmt.toLocaleString()} 萬 (自備 ${h2DownActual.toLocaleString()}萬)`;
       document.getElementById('out-h2-loan50').textContent = `${h2Loan2ndHome.toLocaleString()} 萬 (自備 ${h2Down2ndHome.toLocaleString()}萬)`;
@@ -3051,6 +3080,35 @@
       document.getElementById('out-h2-real-pay').textContent = `${initialRealH2Monthly.toLocaleString()} 元/月`;
       document.getElementById('disp-cardb-grace').textContent = graceYears;
       document.getElementById('disp-cardb-amort').textContent = Math.max(0, 10 - graceYears);
+
+      // Conclusion: monthly out-of-pocket by repayment combination (H1 io/pi × H2 io/pi × rent yes/no)
+      const fmtSelfPay = v => v >= 0 ? `${v.toLocaleString()} 元` : `結餘 ${Math.abs(v).toLocaleString()} 元`;
+      const h1PayByMode = { io: h1MonthlyInterest, pi: h1MonthlyPi };
+      const h2PayByMode = { io: pmtIo, pi: pmtPi };
+      const h1ModeName = { io: '只繳息（轉貸延續）', pi: '30 年本息' };
+      const h2ModeName = { io: `只繳息（寬限 ${graceYears} 年內）`, pi: `${loanTermYears} 年本息` };
+      const currentH2Mode = graceYears > 0 ? 'io' : 'pi';
+      const comboRows = [['io', 'io'], ['io', 'pi'], ['pi', 'io'], ['pi', 'pi']].map(([m1, m2]) => {
+        const notApplicable = m2 === 'io' && graceYears === 0;
+        const h1Pay = h1PayByMode[m1];
+        const h2Pay = h2PayByMode[m2];
+        const total = h1Pay + h2Pay;
+        const isCurrent = m1 === h1RepayMode && m2 === currentH2Mode;
+        const rowClass = isCurrent ? 'bg-emerald-500/10 text-white font-bold' : (notApplicable ? 'text-slate-400 opacity-60' : 'text-slate-300');
+        const label = `一屋${h1ModeName[m1]} ＋ 二屋${notApplicable ? '只繳息（不適用）' : h2ModeName[m2]}${isCurrent ? '（目前）' : ''}`;
+        return `<tr class="border-b border-slate-800/70 ${rowClass}"><td class="py-2 pr-2 font-sans">${label}</td><td class="py-2 px-2 text-right whitespace-nowrap">${h1Pay.toLocaleString()} 元</td><td class="py-2 px-2 text-right whitespace-nowrap">${h2Pay.toLocaleString()} 元</td><td class="py-2 px-2 text-right whitespace-nowrap">${total.toLocaleString()} 元</td><td class="py-2 px-2 text-right whitespace-nowrap ${total - h1EffRent < 0 ? 'text-emerald-400' : 'text-amber-300'}">${fmtSelfPay(total - h1EffRent)}</td><td class="py-2 pl-2 text-right whitespace-nowrap text-rose-300">${fmtSelfPay(total)}</td></tr>`;
+      });
+      document.getElementById('monthly-combo-body').innerHTML = comboRows.join('');
+      const currentTotal = h1MonthlyPay + h2PayByMode[currentH2Mode];
+      document.getElementById('out-concl-h1-desc').textContent = `${chosenLoan.toLocaleString()} 萬 @ ${loanRate}%`;
+      document.getElementById('out-concl-h2-desc').textContent = `${loanAmt.toLocaleString()} 萬 @ ${h2Rate}%`;
+      document.getElementById('out-concl-rent-desc').textContent = `${h1EffRent.toLocaleString()} 元`;
+      document.getElementById('out-concl-current-label').textContent = `一屋${h1ModeName[h1RepayMode]}＋二屋${h2ModeName[currentH2Mode]}＋${h1EffRent > 0 ? '有租金' : '無租金'}`;
+      document.getElementById('out-concl-current-pay').textContent = `${fmtSelfPay(currentTotal - h1EffRent)}/月`;
+      document.getElementById('out-concl-after-grace').textContent = graceYears > 0
+        ? `第 ${graceYears + 1} 年起二屋轉本息：每月自付 ${fmtSelfPay(h1MonthlyPay + pmtPi - h1EffRent)}（空租時 ${fmtSelfPay(h1MonthlyPay + pmtPi)}）`
+        : `空租時每月自付 ${fmtSelfPay(currentTotal)}`;
+      document.getElementById('out-concl-self-note').classList.toggle('hidden', buyerMode !== 'self');
 
       // Module 1: Down Payment & Renovation Affordability & Cover Diagnostics
       const buyerCash = numericInput('inp-buyer-cash', 950);
@@ -3113,7 +3171,7 @@
 
       document.getElementById('out-h2-raw-io').textContent = `${initialH2Monthly.toLocaleString()} 元/月`;
       const outH1SupportEl = document.getElementById('out-h1-support-display');
-      outH1SupportEl.textContent = netRentDiff >= 0 ? `+${netRentDiff.toLocaleString()} 元/月 (淨租金補貼)` : `${netRentDiff.toLocaleString()} 元/月 (第一屋月息差額)`;
+      outH1SupportEl.textContent = netRentDiff >= 0 ? `+${netRentDiff.toLocaleString()} 元/月 (淨租金補貼)` : `${netRentDiff.toLocaleString()} 元/月 (第一屋月付差額)`;
       outH1SupportEl.className = netRentDiff >= 0 ? "font-mono-num text-emerald-400 font-bold" : "font-mono-num text-amber-300 font-bold";
       document.getElementById('out-real-monthly-io').textContent = `${initialRealH2Monthly.toLocaleString()} 元/月`;
 
@@ -3138,7 +3196,7 @@
       const h1Future = h1Val * propGrowth10Yr;
       const h2Future = h2Price * propGrowth10Yr;
 
-      // Baseline reference out-of-pocket monthly outflow = Method 1/3 H2 loan outflow net of H1 rent
+      // 第一屋有效淨租金扣除科目四月付（只繳息或本息，依還款方式）後之 10 年累計
       const netRent10YrWan = (netRentDiff * 120) / 10000;
 
       // Method 1: Pay off h1Loan (450) + pay totalCashNeededM3 (870), then borrow chosenLoan (1600) into ETF.
@@ -3149,9 +3207,10 @@
       const timingLagCostM1 = Math.round(etfPrincipalFromLoan * (etfReturn / 100) * 0.25);
       const netWealthM1 = Math.round(
         (h1Future + h2Future + (etfPoolM1 * etfGrowth10Yr) + cashShortfallDebtM1 + netRent10YrWan)
-        - (chosenLoan + h2Loan10YrStatus.remainWan)
+        - (h1Loan10Yr.remainWan + h2Loan10YrStatus.remainWan)
         - h2Loan10YrStatus.totalOutflowWan
         - timingLagCostM1
+        - h1RefiCost10Yr
       );
 
       // Method 3: Refinance H1 into chosenLoan (net etfPrincipalFromLoan into ETF) + leftover cashDiffM3 into ETF.
@@ -3159,9 +3218,10 @@
       const refiFrictionM3 = 8;
       const netWealthM3 = Math.round(
         (h1Future + h2Future + (etfPoolM1 * etfGrowth10Yr) + cashShortfallDebtM1 + netRent10YrWan)
-        - (chosenLoan + h2Loan10YrStatus.remainWan)
+        - (h1Loan10Yr.remainWan + h2Loan10YrStatus.remainWan)
         - h2Loan10YrStatus.totalOutflowWan
         - refiFrictionM3
+        - h1RefiCost10Yr
       );
 
       // Method 2: Keep h1Loan (450W), H2 capped at 2nd-home LTV 70% (h2Loan2ndHome), 0 grace period, higher rate (h2Rate + 0.35%)
@@ -3377,7 +3437,7 @@
         if (h2LoanEl) h2LoanEl.value = Math.round(numericInput('inp-h2-price', 3350) * currentLtvFactor);
       });
 
-      ['inp-h1-val', 'inp-h1-loan', 'inp-h1-rent', 'inp-rent-net-factor', 'inp-h2-price', 'inp-etf-return', 'inp-loan-rate', 'inp-buyer-cash', 'inp-renovation', 'inp-reserve-fund', 'inp-fee-rate', 'inp-loan-calc-amt', 'inp-h2-mortgage-rate', 'sel-h2-loan-term', 'sel-h2-grace-years', 'inp-h1-loan-interest', 'inp-h1-loan-years', 'inp-prop-growth', 'inp-sale-cost-pct'].forEach(id => {
+      ['inp-h1-val', 'inp-h1-loan', 'inp-h1-rent', 'inp-rent-net-factor', 'inp-h2-price', 'inp-etf-return', 'inp-loan-rate', 'inp-buyer-cash', 'inp-renovation', 'inp-reserve-fund', 'inp-fee-rate', 'inp-loan-calc-amt', 'inp-h2-mortgage-rate', 'sel-h2-loan-term', 'sel-h2-grace-years', 'inp-h1-loan-interest', 'inp-h1-loan-years', 'inp-prop-growth', 'inp-sale-cost-pct', 'sel-h1-repay-mode', 'sel-h1-io-period', 'inp-h1-refi-cost'].forEach(id => {
         const el = document.getElementById(id);
         if (el) {
           el.addEventListener('input', updateSimulation);
@@ -3528,7 +3588,9 @@
         const mRate = (rate / 100) / 12;
         const interestOnlyMaxCover = mRate > 0 ? Math.round((h1EffRent / mRate) / 10000) : 1600;
         const h1MonthlyInterest = Math.round(chosenLoan * 10000 * mRate);
-        const netRentDiff = h1EffRent - h1MonthlyInterest;
+        const h1RepayPi = document.getElementById('sel-h1-repay-mode')?.value === 'pi';
+        const h1MonthlyPay = h1RepayPi ? mortgagePayment(chosenLoan, rate, 360) : h1MonthlyInterest;
+        const netRentDiff = h1EffRent - h1MonthlyPay;
         const etfPrincipal = Math.max(0, chosenLoan - h1Loan);
         const etfReturn = numericInput('inp-etf-return', 8.5);
         const etfAnnualGain = (etfPrincipal * etfReturn) / 100;
@@ -3549,15 +3611,12 @@
         const loanTermYears = parseInt(document.getElementById('sel-h2-loan-term')?.value) || 30;
         const graceYears = parseInt(document.getElementById('sel-h2-grace-years')?.value) || 0;
         const mRateLoan = (h2Rate / 100) / 12;
-        const totalMonthsLoan = loanTermYears * 12;
-        const remainMonthsLoan = Math.max(12, totalMonthsLoan - (graceYears * 12));
-
+        // 寬限期外加：寬限期滿後仍以完整年期本息攤還
         const pmtIo = Math.round(loanAmt * 10000 * mRateLoan);
-        const pmtPiNoGrace = mortgagePayment(loanAmt, h2Rate, totalMonthsLoan);
-        const pmtPiAfterGrace = graceYears > 0 ? mortgagePayment(loanAmt, h2Rate, remainMonthsLoan) : pmtPiNoGrace;
+        const pmtPi = mortgagePayment(loanAmt, h2Rate, loanTermYears * 12);
         const realPayIo = Math.max(0, pmtIo - netRentDiff);
-        const realPayNoGrace = Math.max(0, pmtPiNoGrace - netRentDiff);
-        const realPayAfterGrace = Math.max(0, pmtPiAfterGrace - netRentDiff);
+        const realPayPi = Math.max(0, pmtPi - netRentDiff);
+        const conclusionRows = Array.from(document.querySelectorAll('#monthly-combo-body tr')).map(tr => '• ' + Array.from(tr.cells).map(td => td.textContent.trim()).join(' ｜ ')).join('\n');
 
         const summaryText = `【第二間購屋＆科目四財務槓桿決策總結 (V3 統一模型版)】
 ━━━━━━━━━━━━━━━
@@ -3572,13 +3631,15 @@
 • 二屋總需現金（作法3）：${totalCashNeeded.toLocaleString()} 萬（頭期 ${pureDown}萬 + 裝潢 ${renovation}萬 + 規費 ${pureFee}萬）
   ➔ 作法 3 現金結餘：${cashDiff >= 0 ? `+${cashDiff.toLocaleString()} 萬元` : `-${Math.abs(cashDiff).toLocaleString()} 萬元`}
 
-【第二屋房貸三情境月付精算 (${loanTermYears}年期・利率${h2Rate}%・寬限${graceYears}年)】：
-• 【只還息 (寬限期內)】：應繳 ${pmtIo.toLocaleString()} 元/月 ➔ 扣除一屋淨租後實付 ${realPayIo.toLocaleString()} 元/月
-• 【無寬限期本息均攤】：應繳 ${pmtPiNoGrace.toLocaleString()} 元/月 ➔ 實付 ${realPayNoGrace.toLocaleString()} 元/月
-• 【寬限期後本息均攤】：應繳 ${pmtPiAfterGrace.toLocaleString()} 元/月 ➔ 實付 ${realPayAfterGrace.toLocaleString()} 元/月
+【第二屋房貸月付精算 (寬限${graceYears}年＋${loanTermYears}年本息攤還・利率${h2Rate}%)】：
+${graceYears > 0 ? `• 【寬限期內只還息】：應繳 ${pmtIo.toLocaleString()} 元/月 ➔ 扣除一屋淨租後實付 ${realPayIo.toLocaleString()} 元/月
+` : ''}• 【${graceYears > 0 ? '寬限期滿後' : '無寬限期'} ${loanTermYears} 年本息】：應繳 ${pmtPi.toLocaleString()} 元/月 ➔ 實付 ${realPayPi.toLocaleString()} 元/月
+
+【結論：每月實際要繳多少（還款組合 ｜ 一屋 ｜ 二屋 ｜ 合計 ｜ 有租金自付 ｜ 空租自付）】：
+${conclusionRows}
 
 【第一屋科目四申貸與 0050 套利引擎】：
-• 科目四申貸額度：${chosenLoan.toLocaleString()} 萬（利率 ${rate}%，月繳息 ${h1MonthlyInterest.toLocaleString()} 元）
+• 科目四申貸額度：${chosenLoan.toLocaleString()} 萬（利率 ${rate}%，${h1RepayPi ? '30 年本息' : '只繳息（轉貸延續）'}，月付 ${h1MonthlyPay.toLocaleString()} 元）
 • 動態 30 年本息自償線：${safeCoverLoan.toLocaleString()} 萬 ｜ 只繳息打平線：${interestOnlyMaxCover.toLocaleString()} 萬
 • 扣除舊貸後淨釋放買 0050：${etfPrincipal.toLocaleString()} 萬元（首年預期收益約 +${etfAnnualGain.toFixed(1)} 萬元）
 • V3 統一模型 10 年後淨資產優勢：作法 1/3 比賣屋換屋（作法 4）多創造 ${diffAdvantage}！`;

@@ -29,3 +29,15 @@ test('second-house valid default outputs match original formulas across modules'
 });
 test('all pages expose B6 metadata and shared B1-B9 assets/footer',()=>{for(const f of ['index.html',wu,second,'「談判大叔」陳侯勳｜買房投資與談判理論全集.html']){const h=fs.readFileSync(f,'utf8');for(const token of ['site-ui.css','site-ui.js','og:title','og:description','og:type','og:image','site-footer-note','cyber-grid'])assert.ok(h.includes(token),f+': '+token);}});
 module.exports={setup};
+test('second-house 科目四 30 年本息 mode and grace-excluded amortization drive the monthly conclusion',()=>{
+ const b=setup(second);b.nodes['sel-h1-repay-mode'].value='pi';b.run('updateSimulation');
+ assert.equal(b.nodes['out-h1-interest'].textContent,'-62,804 元/月');
+ assert.equal(b.nodes['out-net-cashflow'].textContent,'-28,604 元/月');
+ assert.equal(b.nodes['out-concl-current-pay'].textContent,'77,737 元/月');
+ assert.match(b.nodes['out-concl-after-grace'].textContent,/第 4 年起二屋轉本息：每月自付 130,364 元（空租時 164,564 元）/);
+ assert.match(b.nodes['out-h1-repay-note'].textContent,/30 年本息：每月 62,804 元/);
+ const s=setup(second);s.nodes['sel-h2-grace-years'].value='0';s.run('updateSimulation');
+ assert.equal(s.nodes['out-sc2-monthly'].innerHTML.replace(/<[^>]+>/g,'').trim(),'101,760 元/月');
+ assert.equal(s.nodes['out-concl-current-pay'].textContent,'100,227 元/月');
+ assert.match(s.nodes['monthly-combo-body'].innerHTML,/二屋只繳息（不適用）/);
+});
