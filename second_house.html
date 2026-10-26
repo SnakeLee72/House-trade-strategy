@@ -2316,7 +2316,7 @@
               <div class="text-[11px] text-slate-400 mt-1">
                 首期本金：<strong class="text-slate-300 font-mono-num" id="out-sc2-pure-principal">52,627 元</strong> ｜ 純利息：<strong class="text-slate-300 font-mono-num" id="out-sc2-pure-interest">49,133 元</strong>
               </div>
-              <div class="text-[11px] text-rose-300 mt-1 font-bold" id="out-sc2-jump-wrap">月付比寬限期跳升：<span id="out-sc2-jump" class="font-mono-num">+52,627 元/月 (+107%)</span></div>
+              <div class="text-[11px] text-rose-300 mt-1 font-bold" id="sc2-jump-wrap">月付比寬限期跳升：<span id="out-sc2-jump" class="font-mono-num">+52,627 元/月 (+107%)</span></div>
             </div>
 
             <div class="space-y-1.5 text-sm pt-2 border-t border-slate-800">
@@ -2570,7 +2570,7 @@
         <ul class="text-[11px] text-slate-400 space-y-1 leading-relaxed list-disc pl-4">
           <li>「每月自付」＝ 兩屋房貸月付 − 第一屋有效淨租金；負數代表租金付完房貸後每月還有結餘。</li>
           <li>第一屋「只繳息」需靠寬限期滿轉貸延續；第二屋「只繳息」只在寬限期內有效，期滿後改為本息攤還。</li>
-          <li id="out-concl-self-note" class="text-amber-300/90 hidden">目前為「本人名下已有第一屋」模式：第二屋無寬限期，只能本息攤還，標示「不適用」的組合僅供參考。</li>
+          <li id="concl-self-note" class="text-amber-300/90 hidden">目前為「本人名下已有第一屋」模式：第二屋無寬限期，只能本息攤還，標示「不適用」的組合僅供參考。</li>
         </ul>
       </div>
     </section>
@@ -3055,7 +3055,7 @@
       document.getElementById('out-sc2-pure-interest').textContent = `${sc2PureInterest.toLocaleString()} 元`;
       document.getElementById('out-sc2-real-pay').textContent = `${realPayPi.toLocaleString()} 元/月`;
       document.getElementById('out-sc2-income').textContent = `約 ${incomePi} 萬元`;
-      document.getElementById('out-sc2-jump-wrap').classList.toggle('hidden', graceYears === 0);
+      document.getElementById('sc2-jump-wrap').classList.toggle('hidden', graceYears === 0);
       document.getElementById('out-sc2-jump').textContent = `+${jumpDiff.toLocaleString()} 元/月 (+${jumpPct}%)`;
       document.getElementById('out-m3-term-note').textContent = graceYears > 0
         ? `寬限期不佔用攤還年期：前 ${graceYears} 年只繳息，期滿後再以 ${loanTermYears} 年本息攤還（總貸款期間 ${graceYears + loanTermYears} 年），所以寬限期後的月付與無寬限期相同。實際是否「寬限期外加」請以銀行契約為準。`
@@ -3108,7 +3108,7 @@
       document.getElementById('out-concl-after-grace').textContent = graceYears > 0
         ? `第 ${graceYears + 1} 年起二屋轉本息：每月自付 ${fmtSelfPay(h1MonthlyPay + pmtPi - h1EffRent)}（空租時 ${fmtSelfPay(h1MonthlyPay + pmtPi)}）`
         : `空租時每月自付 ${fmtSelfPay(currentTotal)}`;
-      document.getElementById('out-concl-self-note').classList.toggle('hidden', buyerMode !== 'self');
+      document.getElementById('concl-self-note').classList.toggle('hidden', buyerMode !== 'self');
 
       // Module 1: Down Payment & Renovation Affordability & Cover Diagnostics
       const buyerCash = numericInput('inp-buyer-cash', 950);

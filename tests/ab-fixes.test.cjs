@@ -41,3 +41,9 @@ test('second-house 科目四 30 年本息 mode and grace-excluded amortization d
  assert.equal(s.nodes['out-concl-current-pay'].textContent,'100,227 元/月');
  assert.match(s.nodes['monthly-combo-body'].innerHTML,/二屋只繳息（不適用）/);
 });
+test('second-house invalid-state reset never wipes nested output elements',()=>{
+ // validateSecondHouse 失敗時會把 out-/disp-/tag-/slider- 元素的 textContent 全改為「待確認」，若其內含其他 id 元素會被刪除，恢復有效輸入時即找不到節點
+ const h=fs.readFileSync(second,'utf8'),nested=[];const re=/<(\w+)\b[^>]*\bid="((?:out-|disp-|tag-|slider-)[^"]*)"[^>]*>/g;let m;
+ while((m=re.exec(h))){const tag=m[1],tok=new RegExp('<'+tag+'\b|</'+tag+'>','g');tok.lastIndex=re.lastIndex;let depth=1,x;while(depth&&(x=tok.exec(h)))depth+=x[0][1]==='/'?-1:1;if(/\bid="/.test(h.slice(re.lastIndex,x.index)))nested.push(m[2]);}
+ assert.deepEqual(nested,[]);
+});
