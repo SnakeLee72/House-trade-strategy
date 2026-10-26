@@ -4,7 +4,7 @@
  * 支援 PWA 離線快取、即時網路優先策略與背景更新
  */
 
-const CACHE_NAME = 'hts-cache-v20261026_m4noetf1';
+const CACHE_NAME = 'hts-cache-v20261026_defaults1';
 
 const PRECACHE_URLS = [
   './',
